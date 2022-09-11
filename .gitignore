@@ -448,10 +448,12 @@ FodyWeavers.xsd
 ### Custom ###
 
 # Premake 
-Obj/**/*
 Build/**/*
 .cache
 *.make
+
+# Include premake so no one has to install it
+!premake5.exe
 
 # Builds
 Debug

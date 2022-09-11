@@ -5,8 +5,8 @@ workspace "sad"
 	flags { "MultiProcessorCompile" }
     startproject "Game"
 
-    targetdir "%{wks.location}/Build/%{prj.name}/%{cfg.buildcfg}"
-    objdir "%{wks.location}/Obj/%{prj.name}/%{cfg.buildcfg}"
+    targetdir "%{wks.location}/Build/Bin%{prj.name}/%{cfg.buildcfg}"
+    objdir "%{wks.location}/Build/Obj/%{prj.name}/%{cfg.buildcfg}"
 
     vpaths {
         ["./"] = { "**premake5.lua" },
@@ -14,22 +14,31 @@ workspace "sad"
 
     configurations {
 		"Debug",
-		"Release"
+		"Release",
+        "Test",
 	}
 
-    filter "Debug"
+    filter "configurations:Debug"
         defines { "DEBUG" }
+        symbols "On"
         optimize "Off"
         symbols "On"
-    filter "Release"
+    filter "configurations:Release"
         defines { "NDEBUG" }
         optimize "On"
         symbols "Off"
+    filter "configurations:Test"
+        defines { "NDEBUG" }
+        optimize "Off"
+        symbols "On"
     filter {}
 
     -- Core Projects 
-    include "%{wks.location}/../Code/Engine.premake5.lua"
     include "%{wks.location}/../Code/Game.premake5.lua"
+    include "%{wks.location}/../Code/Engine.premake5.lua"
+
+    -- Tests
+    include "%{wks.location}/../Tests/Tests.premake5.lua"
 
     group "Vendor" -- Individual Deps
         include "%{wks.location}/../Vendor/glfw.premake5.lua"

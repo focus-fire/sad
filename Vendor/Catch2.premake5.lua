@@ -4,21 +4,17 @@ project "Catch2"
     staticruntime "On"
     architecture "x86_64"
 
-    targetdir "%{wks.location}/Build/%{prj.name}/%{cfg.buildcfg}"
-    objdir "%{wks.location}/Obj/%{prj.name}/%{cfg.buildcfg}"
+    targetdir "%{wks.location}/Build/Bin/%{prj.name}/%{cfg.buildcfg}"
+    objdir "%{wks.location}/Build/Obj/%{prj.name}/%{cfg.buildcfg}"
     
-    files {
-        "Catch2/src/catch2/*.cpp",
-    }
-
     includedirs {
-        "Catch2/src/catch2/"
+        "Catch2/single_include/"
     }
 
     filter "system:windows"
         systemversion "latest"
         defines {
-            "_SPDLOG_WIN32",
+            "_CATCH2_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
 	filter "configurations:Debug"

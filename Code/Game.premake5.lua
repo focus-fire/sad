@@ -2,8 +2,8 @@ project "Game"
     kind "ConsoleApp"
     dependson { "Engine" }
 
-	targetdir "%{wks.location}/../Build/%{prj.name}"
-	objdir "%{wks.location}/../Obj/%{prj.name}"
+	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
+	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
     files { "Game/**.h", "Game/**.cpp" }
 

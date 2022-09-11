@@ -4,8 +4,8 @@ project "spdlog"
     staticruntime "On"
     architecture "x86_64"
 
-    targetdir "%{wks.location}/Build/%{prj.name}/%{cfg.buildcfg}"
-    objdir "%{wks.location}/Obj/%{prj.name}/%{cfg.buildcfg}"
+    targetdir "%{wks.location}/Build/Bin/%{prj.name}/%{cfg.buildcfg}"
+    objdir "%{wks.location}/Build/Obj/%{prj.name}/%{cfg.buildcfg}"
 
     includedirs {
         "spdlog/include"

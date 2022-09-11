@@ -7,11 +7,12 @@
 
 ECHO Cleaning intermediates...
 @RD /S /Q ".vs"
-@RD /S /Q "Obj"
+@RD /S /Q "Build"
 
 ECHO Cleaning auto-generated solution files...
 DEL /Q "sad.sln"
 DEL /Q "Code\*.vcxproj*"
+DEL /Q "Tests\*.vcxproj*"
 DEL /Q "Vendor\*.vcxproj*"
 
 ECHO Successfully cleaned premake and vs2022 output!

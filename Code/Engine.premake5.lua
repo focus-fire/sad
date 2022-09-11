@@ -2,8 +2,8 @@ project "Engine"
     kind "StaticLib"
     staticruntime "on"
 
-	targetdir "%{wks.location}/../Build/%{prj.name}"
-	objdir "%{wks.location}/../Obj/%{prj.name}"
+	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
+	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
     files { "Engine/**.h", "Engine/**.cpp" }
 

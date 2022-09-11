@@ -4,8 +4,8 @@ project "imgui"
     staticruntime "On"
     architecture "x86_64"
 
-	targetdir "%{wks.location}/../Build/%{prj.name}"
-	objdir "%{wks.location}/../Obj/%{prj.name}"
+	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
+	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
     files {
         "imgui/*.cpp",

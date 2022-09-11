@@ -3,7 +3,7 @@
 #include <Game/Application.h>
 #include <Engine/Application.h>
 
-int main(void)
+int main(int argc, char* argv[])
 {
     spdlog::info("this engine is sad.");
 

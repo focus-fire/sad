@@ -1,10 +1,7 @@
 <h3 align="center">😔</h3> 
 
-### Quick Install
-If you're confident you don't need to read the rest of the instructions, recursively clone the repo and run the `bet.bat` script.
-
 ### Installation
-Luckily most of the setup for the repository has been automated and as such no external dependencies need to be manually installed other than a default [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) installation.
+Luckily most of the setup for the repository has been automated using the a custom scripting pipeline. As a result, only [Python3](https://www.python.org/downloads/) is required to properly install the project.
 
 1. Recursively clone the repository and its submodules
 
@@ -16,22 +13,38 @@ or
 $ git clone --recursive https://github.com/focus-fire/sad.git
 ```
 
-**Note:** If you're using a GUI client for git such as GitHub Desktop or SourceTree look for a 'Recursive Clone' option. Otherwise copy the command above, right click your file explorer, run it in git bash, and then use GitHub Desktop for the rest of the installation. 
+**Note:** If you're using a GUI client for git such as GitHub Desktop or SourceTree it should automatically perform a recursive clone on the repository. Otherwise copy the command above, right click your file explorer, and run the command in git bash. 
 
 If the repository is not cloned recursively **nothing will work**.
 
-2. Double-click the `build.bat` script or run it from a terminal
+2. Execute the `bet.py` script from the terminal and specify the proper build flag for your target platform 
 
 ```
-$ .\Scripts\build.bat
+# Visual Studio 2022
+$ python3 .\Scripts\bet.py --build vs2022
+
+# Visual Studio 2019
+$ python3 .\Scripts\bet.py --build vs2019
+
+# OS Independent Makefiles 
+$ python3 .\Scripts\bet.py --build gmake2
+
+# XCode
+$ python3 .\Scripts\bet.py --build xcode4
 ```
 
-This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to the individual Visual Studio solution *may* not persist once this script is re-executed.  
+This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to the individual Visual Studio solution *may* not persist once this command is re-executed.  
 
-3. Open the `sad.sln` solution file in Visual Studio 2022
+3-1. Open the `sad.sln` solution file in Visual Studio 2022 or the `sad.xcworkspace` in XCode if `vs20XX` or `xcode4` were your desired toolsets
+
+3-2. *in-testing* If your target toolset is `gmake2`, run the makefiles in a terminal
+
+```
+$ make
+```
 
 ### Tests
-This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. 
+This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. Running tests is also tied into the scripting pipeline.
 
 #### Running Tests
 
@@ -45,17 +58,19 @@ or
 $ msbuild sad.sln
 ```
 
-2. Double-click the `tests.bat` script or run it from a terminal
+2. Run the `bet.py` script with the `--tests` flag enabled in a terminal
 
 ```
-$ .\Scripts\tests.bat
+$ python3 .\Scripts\bet.py --tests
 ```
 
 After running the script you should see some output similar to the following...
 
 ```
+[tests.py] Running Catch2 tests...
+
 ===============================================================================
 All tests passed (4 assertions in 1 test case)
 
-Press any key to continue . . .
+[tests.py] bet! Successfully ran tests.
 ```

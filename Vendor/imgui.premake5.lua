@@ -21,11 +21,17 @@ project "imgui"
         "IMGUI_IMPL_OPENGL_LOADER_GLAD"
     }
 
-    filter "system:windows"
+    filter "system:Windows"
         systemversion "latest"
         defines {
-            "_IMGUI_WIN32",
+            "_IMGUI_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS"
+        }
+    filter "system:Mac"
+        pic "On"
+        systemversion "latest"
+        defines {
+            "_IMGUI_MAC"
         }
 	filter "configurations:Debug"
 		runtime "Debug"

@@ -19,7 +19,7 @@ project "glfw"
 		"glfw/src/window.c"
 	}
 
-	filter "system:windows"
+	filter "system:Windows"
 		systemversion "latest"
 
 		files {
@@ -35,16 +35,34 @@ project "glfw"
 		}
 
 		defines {
-			"_GLFW_WIN32",
+			"_GLFW_WINDOWS",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
+	filter "system:Mac"
+		pic "On"
+		systemversion "latest"
 
+		files {
+			"glfw/src/cocoa_init.m",
+			"glfw/src/cocoa_monitor.m",
+			"glfw/src/cocoa_window.m",
+			"glfw/src/cocoa_joystick.m",
+			"glfw/src/cocoa_time.c",
+			"glfw/src/poix_thread.c",
+			"glfw/src/nsgl_context.m",
+			"glfw/src/egl_context.c",
+			"glfw/src/osmesa_context.c"
+		}
+
+		defines {
+			"_GLFW_MAC"
+		}
 	filter "configurations:Debug"
 		runtime "Debug"
 		symbols "On"
 		optimize "Off"
-
 	filter "configurations:Release"
 		runtime "Release"
 		symbols "Off"
 		optimize "On"
+	filter {}

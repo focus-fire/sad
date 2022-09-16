@@ -468,3 +468,6 @@ Release
 # XCode
 *.xcworkspace
 *.xcodeproj
+
+# Compile Commands
+*compile_commands/**/*

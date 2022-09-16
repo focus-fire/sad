@@ -22,6 +22,8 @@ project "Game"
         "Engine",
     }
 
-	filter "system:windows"
+	filter "system:Windows"
 		defines { "_WINDOWS" }
+    filter "system:Mac"
+        defines { "_MAC" }
     filter {}

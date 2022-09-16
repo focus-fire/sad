@@ -14,6 +14,7 @@ project "Engine"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/stb_image",
         "%{prj.location}/../Vendor/imgui",
+        "%{prj.location}",
     }
 
 	links {
@@ -29,6 +30,8 @@ project "Engine"
         ["Documentation"] = { "Engine/**.md", "Engine/**.txt" },
     }
 
-	filter "system:windows"
+	filter "system:Windows"
 		defines { "_WINDOWS" }
+    filter "system:Mac"
+        defines { "_MAC" }
     filter {}

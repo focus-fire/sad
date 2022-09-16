@@ -1,6 +1,6 @@
 project "Tests"
     kind "ConsoleApp"
-    dependson { "Catch2", "Engine" }
+    dependson { "Engine" }
 
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
@@ -23,3 +23,9 @@ project "Tests"
     links {
         "Engine",
     }
+
+    filter "system:Windows"
+        defines { "_WINDOWS" }
+    filter "system:Mac"
+        defines { "_MAC" }
+    filter {}

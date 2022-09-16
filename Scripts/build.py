@@ -1,5 +1,6 @@
 import os
 import subprocess
+import platform
 
 from utils import bet_log
 from constants import SCRIPT_DIR, PROJECT_DIR
@@ -25,9 +26,12 @@ def build(toolset):
         bet_log(file_name, f"Uh oh, awkward... {toolset} isn't a valid toolset, please try again.")
         return
 
+    # Executed subprocesses must enter a shell on Windows platforms
+    use_shell = platform.system == "Windows"
+
     # Execute OS subprocess for premake with the desired toolset
     bet_log(file_name, f"Building for {toolset} in {PROJECT_DIR}")
-    premake_cmd = subprocess.run([premake, toolset, f"--file={premake_config}"], shell=True)
+    premake_cmd = subprocess.run([premake, toolset, f"--file={premake_config}"], shell=use_shell)
 
     if premake_cmd.returncode == 0:
         bet_log(file_name, "bet! Successfully built project files.")

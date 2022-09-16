@@ -1,7 +1,7 @@
 <h3 align="center">😔</h3> 
 
 ### Installation
-Luckily most of the setup for the repository has been automated using the a custom scripting pipeline. As a result, only [Python3](https://www.python.org/downloads/) is required to properly install the project.
+Luckily most of the setup for the repository has been automated using the a custom scripting pipeline. As a result, only [Python3 v3.9+](https://www.python.org/downloads/) is required to properly install the project.
 
 1. Recursively clone the repository and its submodules
 
@@ -29,19 +29,21 @@ $ python3 .\Scripts\bet.py --build vs2019
 # OS Independent Makefiles 
 $ python3 .\Scripts\bet.py --build gmake2
 
-# XCode
+# XCode (WARNING: Untested and Unrecommended)
 $ python3 .\Scripts\bet.py --build xcode4
 ```
 
 This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to the individual Visual Studio solution *may* not persist once this command is re-executed.  
 
-3-1. Open the `sad.sln` solution file in Visual Studio 2022 or the `sad.xcworkspace` in XCode if `vs20XX` or `xcode4` were your desired toolsets
+3. Open the `sad.sln` solution file in Visual Studio 2022 if `vs2022` or `vs2019` was your desired toolset
 
-3-2. *in-testing* If your target toolset is `gmake2`, run the makefiles in a terminal
+4. If your target toolset was `gmake2`, run the makefiles in a terminal
 
 ```
 $ make
 ```
+
+The binaries and static libraries should be located in the `Build/Bin` directory of the project.
 
 ### Tests
 This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. Running tests is also tied into the scripting pipeline.

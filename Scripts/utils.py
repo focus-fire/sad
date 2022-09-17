@@ -3,11 +3,10 @@ import shutil
 
 
 """
-Shortcut for logging with file name
-ie: [bet.py]  Insert message here...
+BETter print()
 """
-def bet_log(file, msg):
-    print(f"[{file}] {msg}")
+def bet_log(msg):
+    print(f"[bet] {msg}")
 
 
 """

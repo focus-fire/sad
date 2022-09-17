@@ -1,4 +1,13 @@
 import os
+import platform
+
+
+"""
+Platform Information
+
+SUBPROCESS_USE_SHELL - Windows systems have to enter a shell when executing scripted subprocesses 
+"""
+SUBPROCESS_USE_SHELL = platform.system == 'Windows'
 
 
 """
@@ -14,6 +23,6 @@ VENDOR_DIR - Path to the 'Vendor' directory of the project
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 PROJECT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 
-CODE_DIR = os.path.join(PROJECT_DIR, "Code")
-TEST_DIR = os.path.join(PROJECT_DIR, "Tests")
-VENDOR_DIR = os.path.join(PROJECT_DIR, "Vendor")
+CODE_DIR = os.path.join(PROJECT_DIR, 'Code')
+TEST_DIR = os.path.join(PROJECT_DIR, 'Tests')
+VENDOR_DIR = os.path.join(PROJECT_DIR, 'Vendor')

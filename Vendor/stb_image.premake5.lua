@@ -15,7 +15,7 @@ project "stb_image"
 	filter "system:Windows"
 		systemversion "latest"
 		defines {
-			"_STB_IMAGE_WINDOWS",
+			"_STB_IMAGE_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 	filter "system:Mac"

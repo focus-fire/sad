@@ -13,7 +13,7 @@ project "glad"
 	filter "system:Windows"
 		systemversion "latest"
 		defines {
-			"_GLAD_WINDOWS",
+			"_GLAD_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 	filter "system:Mac"

@@ -14,7 +14,7 @@ project "spdlog"
     filter "system:windows"
         systemversion "latest"
         defines {
-            "_SPDLOG_WINDOWS",
+            "_SPDLOG_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
     filter "system:Mac"

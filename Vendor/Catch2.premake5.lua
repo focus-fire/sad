@@ -14,7 +14,7 @@ project "Catch2"
     filter "system:Windows"
         systemversion "latest"
         defines {
-            "_CATCH2_WINDOWS",
+            "_CATCH2_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
     filter "system:Mac"

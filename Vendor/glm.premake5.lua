@@ -22,7 +22,7 @@ project "glm"
 	filter "system:Windows"
 		systemversion "latest"
 		defines {
-			"_GLM_WINDOWS",
+			"_GLM_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 	filter "system:Mac"

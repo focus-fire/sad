@@ -41,7 +41,7 @@ def compile_tests(build_tool):
     if lowercase_build_tool == 'make':
         compile_cmd = subprocess.run([lowercase_build_tool], shell=SUBPROCESS_USE_SHELL)
 
-    if compile_cmd != 0:
+    if compile_cmd.returncode != 0:
         bet_log('Uh oh, awkward... something went wrong while executing the build command. Is there a solution or Makefile in the current directory?')
         return
 

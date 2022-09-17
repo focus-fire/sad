@@ -24,7 +24,7 @@ project "imgui"
     filter "system:Windows"
         systemversion "latest"
         defines {
-            "_IMGUI_WINDOWS",
+            "_IMGUI_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
     filter "system:Mac"

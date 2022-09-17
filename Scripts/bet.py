@@ -6,6 +6,7 @@ from clean import clean
 from tests import tests, compile_tests
 from cc import gen_cc
 from utils import bet_log
+from constants import PEEPO_BET
 
 
 """
@@ -13,7 +14,7 @@ bet (before even trying) - the sad engine scripting pipeline
 small cli tool that automates cleaning, building, and testing of the sad engine
 """
 def main():
-    bet_log()
+    bet_log(PEEPO_BET)
 
     parser = argparse.ArgumentParser(description='bet (before even trying) - the sad engine scripting pipeline')
 

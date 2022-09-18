@@ -12,71 +12,71 @@ on:
       - '**/*.md'
       - '*.git*'
 
-  jobs:
-    win32-debug:
-      name: Win32 Debug
-      runs-on: windows-latest
-      steps:
-        - name: Check out repository
-          uses: actions/checkout@v3
+jobs:
+  win32-debug:
+    name: Win32 Debug
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-        - name: Setup Python 3.10
-          uses: actions/setup-python@v4
-          with:
-            python-version: '3.10'
-          
-        - name: Setup msbuild
-          uses: microsoft/setup-msbuild@v1.1
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
         
-        - name: Build project
-          run: python .\Scripts\bet.py --build vs2022
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Build project
+        run: python .\Scripts\bet.py --build vs2022
 
-        - name: Run msbuild
-          run: msbuild sad.sln -interactive:False -property:Configuration=Debug
+      - name: Run msbuild
+        run: msbuild sad.sln -interactive:False -property:Configuration=Debug
 
-    win32-release:
-      name: Win32 Release
-      runs-on: windows-latest
-      steps:
-        - name: Check out repository
-          uses: actions/checkout@v3
+  win32-release:
+    name: Win32 Release
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-        - name: Setup Python 3.10
-          uses: actions/setup-python@v4
-          with:
-            python-version: '3.10'
-          
-        - name: Setup msbuild
-          uses: microsoft/setup-msbuild@v1.1
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
         
-        - name: Build project
-          run: python .\Scripts\bet.py --build vs2022
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1.1
+      
+      - name: Build project
+        run: python .\Scripts\bet.py --build vs2022
 
-        - name: Run msbuild
-          run: msbuild sad.sln -interactive:False -property:Configuration=Release
+      - name: Run msbuild
+        run: msbuild sad.sln -interactive:False -property:Configuration=Release
 
-    macos-debug:
-      name: MacOS Debug
-      runs-on: macos-latest
-      steps:
-        - name: Check out repository
-          uses: actions/checkout@v3
+  macos-debug:
+    name: MacOS Debug
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-        - name: Build project (gmake2)
-          run: python ./Scripts/bet.py --build gmake2
+      - name: Build project (gmake2)
+        run: python ./Scripts/bet.py --build gmake2
 
-        - name: Compile project
-          run: make config=debug
-    
-    macos-release:
-      name: MacOS Release
-      runs-on: macos-latest
-      steps:
-        - name: Check out repository
-          uses: actions/checkout@v3
+      - name: Compile project
+        run: make config=debug
+  
+  macos-release:
+    name: MacOS Release
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
 
-        - name: Build project (gmake2)
-          run: python ./Scripts/bet.py --build gmake2
-        
-        - name: Compile project
-          run: make config=release
+      - name: Build project (gmake2)
+        run: python ./Scripts/bet.py --build gmake2
+      
+      - name: Compile project
+        run: make config=release

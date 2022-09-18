@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
@@ -43,6 +45,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
       
       - name: Setup Python 3.10
         uses: actions/setup-python@v4

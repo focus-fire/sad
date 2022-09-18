@@ -3,7 +3,8 @@ name: Build
 on:
   push:
     branches:
-      - [main, dev]
+      - main
+      - dev
   pull_request:
     paths-ignore:
       - 'Build/**'
@@ -19,6 +20,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
@@ -40,6 +43,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with: 
+          submodules: 'true'
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v4
@@ -61,6 +66,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       - name: Build project (gmake2)
         run: python ./Scripts/bet.py --build gmake2
@@ -74,6 +81,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          submodules: 'true'
 
       - name: Build project (gmake2)
         run: python ./Scripts/bet.py --build gmake2

@@ -34,21 +34,28 @@ def rm_vs_files():
     bet_log("Cleaning Visual Studio project files...")
     proj_ext = ".vcxproj"
     proj_filters_ext = ".vcxproj.filters"
+    proj_user_ext = ".vcxproj.user"
 
     # sad/Code/*.vcxproj
     # sad/Code/*.vcxproj.filters 
+    # sad/Code/*.vcxproj.user
     rdfe(CODE_DIR, proj_ext)
     rdfe(CODE_DIR, proj_filters_ext)
+    rdfe(CODE_DIR, proj_user_ext)
 
     # sad/Tests/*.vcxproj
     # sad/Tests/*.vcxproj.filters 
+    # sad/Tests/*.vcxproj.user
     rdfe(TEST_DIR, proj_ext)
     rdfe(TEST_DIR, proj_filters_ext)
+    rdfe(TEST_DIR, proj_user_ext)
 
     # sad/Vendor/*.vcxproj
     # sad/Vendor/*.vcxproj.filters 
+    # sad/Vendor/*.vcxproj.user
     rdfe(VENDOR_DIR, proj_ext)
     rdfe(VENDOR_DIR, proj_filters_ext)
+    rdfe(VENDOR_DIR, proj_user_ext)
 
 
 """

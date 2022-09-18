@@ -1,7 +1,9 @@
-<h3 align="center">😔</h3> 
+<p align="center">
+    <img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100">
+</p>
 
 ## Installation
-Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python3 v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
+Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
 
 To start, recursively clone the repository and its submodules and follow the instructions below for your OS.
 
@@ -23,13 +25,13 @@ If the repository is not cloned recursively **nothing will work**.
 
 ```
 # Visual Studio 2022 Solution
-$ python3 .\Scripts\bet.py --build vs2022
+$ python .\Scripts\bet.py --build vs2022
 
 # Visual Studio 2019 Solution
-$ python3 .\Scripts\bet.py --build vs2019
+$ python .\Scripts\bet.py --build vs2019
 
 # OS Independent Makefiles (must have cygwin or mingw installed) 
-$ python3 .\Scripts\bet.py --build gmake2
+$ python .\Scripts\bet.py --build gmake2
 ```
 
 This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to generated files (such as a Visual Studio solution) *may* not persist once this command is re-executed.  
@@ -54,10 +56,10 @@ $ .\Build\Bin\Game\Game
 
 ```
 # OS Independent Makefiles 
-$ python3 ./Scripts/bet.py --build gmake2
+$ python ./Scripts/bet.py --build gmake2
 
 # XCode Workspace (WARNING: Untested, unsupported, and unrecommended)
-$ python3 ./Scripts/bet.py --build xcode4
+$ python ./Scripts/bet.py --build xcode4
 ```
 
 Similar to the Windows installation, this step will have to be redone **every** time a change is made to a `*premake5.lua*` file.
@@ -65,7 +67,7 @@ Similar to the Windows installation, this step will have to be redone **every** 
 2. Generate compile commands for the project 
 
 ```
-$ python3 ./Scripts/bet.py --gen-cc
+$ python ./Scripts/bet.py --gen-cc
 ```
 
 This will install a [tool](https://github.com/tarruda/premake-export-compile-commands) for premake to export compile commands for the current project if it is not yet installed. These will provide intellisense in projects without an IDE or configured compiler (ie: a default Visual Studio Code installation).
@@ -95,18 +97,28 @@ This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for un
 
 ```
 Launch Visual Studio > Right-click the 'Tests' project > Select 'Build'
-$ msbuild sad.sln
-$ make
 
-# Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
-$ python3 ./Scripts/bet.py --compile-tests msbuild
-$ python3 ./Scripts/bet.py --compile-tests make
+or
+
+$ msbuild sad.sln
+
+or
+
+$ make
 ```
 
 2. Run the `bet.py` script with the `--tests` flag enabled in a terminal
 
 ```
-$ python3 ./Scripts/bet.py --tests
+$ python ./Scripts/bet.py --tests
+```
+
+**Note:** Alternatively the `--compile-tests` flag can be used to compile the tests with a particular toolchain and then run the testbed (basically steps 1/2 combined).
+
+```
+# Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
+$ python ./Scripts/bet.py --compile-tests msbuild
+$ python ./Scripts/bet.py --compile-tests make
 ```
 
 After running the script you should see some output similar to the following...

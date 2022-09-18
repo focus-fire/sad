@@ -27,3 +27,8 @@ project "Game"
     filter "system:Mac"
         defines { "_MAC" }
     filter {}
+
+    postbuildcommands {
+        -- Copy the SDL .dll to the application directory
+        "{COPY} %{wks.location}/Vendor/SDL/lib/*.dll $(OutDir)"  
+    }

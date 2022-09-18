@@ -14,7 +14,12 @@ project "Engine"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/stb_image",
         "%{prj.location}/../Vendor/imgui",
+        "%{prj.location}/../Vendor/SDL/include",
         "%{prj.location}",
+    }
+
+    libdirs {
+        "%{prj.location}/../Vendor/SDL/lib"
     }
 
 	links {
@@ -22,6 +27,7 @@ project "Engine"
         "glad",
         "stb_image",
         "imgui",
+        "SDL2", -- Lib
 	}
 
     vpaths {

@@ -455,6 +455,10 @@ Build/**/*
 # Include premake so no one has to install it
 !premake5.exe
 
+# Include .lib and .dll files for SDL
+!Vendor/SDL/**/*.dll
+!Vendor/SDL/**/*.lib
+
 # Builds
 Debug
 Release

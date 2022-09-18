@@ -46,8 +46,9 @@ workspace "sad"
         include "Vendor/glm.premake5.lua"
         include "Vendor/stb_image.premake5.lua"
         include "Vendor/imgui.premake5.lua"
+        -- Placeholders
+        include "Vendor/SDL.premake5.lua"
         -- Header Only
         -- include "Vendor/spdlog.premake5.lua"
         -- include "Vendor/Catch2.premake5.lua"
     group ""
-

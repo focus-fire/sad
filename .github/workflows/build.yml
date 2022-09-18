@@ -32,7 +32,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
       
       - name: Build project
-        run: python .\Scripts\bet.py --build vs2022
+        run: python3 .\Scripts\bet.py --build vs2022
 
       - name: Run msbuild
         run: msbuild sad.sln -interactive:False -property:Configuration=Debug
@@ -55,7 +55,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
       
       - name: Build project
-        run: python .\Scripts\bet.py --build vs2022
+        run: python3 .\Scripts\bet.py --build vs2022
 
       - name: Run msbuild
         run: msbuild sad.sln -interactive:False -property:Configuration=Release
@@ -70,7 +70,7 @@ jobs:
           submodules: 'true'
 
       - name: Build project (gmake2)
-        run: python ./Scripts/bet.py --build gmake2
+        run: python3 ./Scripts/bet.py --build gmake2
 
       - name: Compile project
         run: make config=debug
@@ -85,7 +85,7 @@ jobs:
           submodules: 'true'
 
       - name: Build project (gmake2)
-        run: python ./Scripts/bet.py --build gmake2
+        run: python3 ./Scripts/bet.py --build gmake2
       
       - name: Compile project
         run: make config=release

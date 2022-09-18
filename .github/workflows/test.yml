@@ -31,13 +31,13 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Build project
-        run: python .\Scripts\bet.py --build vs2022 
+        run: python3 .\Scripts\bet.py --build vs2022 
       
       - name: Run msbuild
         run: msbuild sad.sln -interactive:False -property:Configuration=Debug
 
       - name: Run tests
-        run: python .\Scripts\bet.py --tests
+        run: python3 .\Scripts\bet.py --tests
   
   macos:
     name: MacOS
@@ -54,7 +54,7 @@ jobs:
           python-version: '3.10'
 
       - name: Build project
-        run: python ./Scripts/bet.py --build gmake2
+        run: python3 ./Scripts/bet.py --build gmake2
 
       - name: Compile project and run tests
-        run: python ./Scripts/bet.py --compile-tests make
+        run: python3 ./Scripts/bet.py --compile-tests make

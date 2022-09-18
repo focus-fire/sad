@@ -25,13 +25,13 @@ If the repository is not cloned recursively **nothing will work**.
 
 ```
 # Visual Studio 2022 Solution
-$ python .\Scripts\bet.py --build vs2022
+$ python3 .\Scripts\bet.py --build vs2022
 
 # Visual Studio 2019 Solution
-$ python .\Scripts\bet.py --build vs2019
+$ python3 .\Scripts\bet.py --build vs2019
 
 # OS Independent Makefiles (must have cygwin or mingw installed) 
-$ python .\Scripts\bet.py --build gmake2
+$ python3 .\Scripts\bet.py --build gmake2
 ```
 
 This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to generated files (such as a Visual Studio solution) *may* not persist once this command is re-executed.  
@@ -56,10 +56,10 @@ $ .\Build\Bin\Game\Game
 
 ```
 # OS Independent Makefiles 
-$ python ./Scripts/bet.py --build gmake2
+$ python3 ./Scripts/bet.py --build gmake2
 
 # XCode Workspace (WARNING: Untested, unsupported, and unrecommended)
-$ python ./Scripts/bet.py --build xcode4
+$ python3 ./Scripts/bet.py --build xcode4
 ```
 
 Similar to the Windows installation, this step will have to be redone **every** time a change is made to a `*premake5.lua*` file.
@@ -67,7 +67,7 @@ Similar to the Windows installation, this step will have to be redone **every** 
 2. Generate compile commands for the project 
 
 ```
-$ python ./Scripts/bet.py --gen-cc
+$ python3 ./Scripts/bet.py --gen-cc
 ```
 
 This will install a [tool](https://github.com/tarruda/premake-export-compile-commands) for premake to export compile commands for the current project if it is not yet installed. These will provide intellisense in projects without an IDE or configured compiler (ie: a default Visual Studio Code installation).
@@ -110,15 +110,15 @@ $ make
 2. Run the `bet.py` script with the `--tests` flag enabled in a terminal
 
 ```
-$ python ./Scripts/bet.py --tests
+$ python3 ./Scripts/bet.py --tests
 ```
 
 **Note:** Alternatively the `--compile-tests` flag can be used to compile the tests with a particular toolchain and then run the testbed (basically steps 1/2 combined).
 
 ```
 # Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
-$ python ./Scripts/bet.py --compile-tests msbuild
-$ python ./Scripts/bet.py --compile-tests make
+$ python3 ./Scripts/bet.py --compile-tests msbuild
+$ python3 ./Scripts/bet.py --compile-tests make
 ```
 
 After running the script you should see some output similar to the following...

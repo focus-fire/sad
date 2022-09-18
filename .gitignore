@@ -447,6 +447,9 @@ FodyWeavers.xsd
 
 ### Custom ###
 
+# MacOS
+*.DS_Store**
+
 # Premake 
 Build/**/*
 .cache

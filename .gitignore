@@ -473,5 +473,8 @@ Release
 *.xcworkspace
 *.xcodeproj
 
+# Mac
+.DS_Store
+
 # Compile Commands
 *compile_commands/**/*

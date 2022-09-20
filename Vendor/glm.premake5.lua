@@ -19,15 +19,13 @@ project "glm"
 		"GLM_FORCE_SWIZZLE"
 	}
 
-	filter "system:Windows"
-		systemversion "latest"
+	filter "system:windows"
 		defines {
 			"_GLM_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
-	filter "system:Mac"
+	filter "system:macosx"
 		pic "On"
-		systemversion "latest"
 		defines {
 			"_GLM_MAC"
 		}

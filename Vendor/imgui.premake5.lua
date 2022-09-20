@@ -21,15 +21,13 @@ project "imgui"
         "IMGUI_IMPL_OPENGL_LOADER_GLAD"
     }
 
-    filter "system:Windows"
-        systemversion "latest"
+    filter "system:windows"
         defines {
             "_IMGUI_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
-    filter "system:Mac"
+    filter "system:macosx"
         pic "On"
-        systemversion "latest"
         defines {
             "_IMGUI_MAC"
         }

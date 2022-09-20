@@ -14,21 +14,14 @@ project "Engine"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/stb_image",
         "%{prj.location}/../Vendor/imgui",
-        "%{prj.location}/../Vendor/SDL/include",
         "%{prj.location}",
     }
 
-    libdirs {
-        "%{prj.location}/../Vendor/SDL/lib"
-    }
-
-	links {
-		"glfw",
+    links {
         "glad",
         "stb_image",
         "imgui",
-        "SDL2", -- Lib
-	}
+    }
 
     vpaths {
         ["Headers"] = { "Engine/**.h", "Engine/**.hpp" },
@@ -36,8 +29,8 @@ project "Engine"
         ["Documentation"] = { "Engine/**.md", "Engine/**.txt" },
     }
 
-	filter "system:Windows"
+	filter "system:windows"
 		defines { "_WINDOWS" }
-    filter "system:Mac"
+    filter "system:macosx"
         defines { "_MAC" }
     filter {}

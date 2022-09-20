@@ -10,15 +10,13 @@ project "glad"
 	includedirs { "glad/include" }
 	files { "glad/src/glad.c" }
 
-	filter "system:Windows"
-		systemversion "latest"
+	filter "system:windows"
 		defines {
 			"_GLAD_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
-	filter "system:Mac"
+	filter "system:macosx"
 		pic "On"
-		systemversion "latest"
 		defines { 
 			"_GLAD_MAC" 
 		}

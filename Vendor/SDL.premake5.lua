@@ -5,11 +5,11 @@ project "SDL"
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
-    filter "system:Windows"
+    filter "system:windows"
         defines {
             "_SDL_WINDOWS"
         }
-    filter "system:Mac"
+    filter "system:macosx"
         defines {
             "_SDL_MAC"
         }

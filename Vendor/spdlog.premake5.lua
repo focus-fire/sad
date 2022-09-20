@@ -17,7 +17,7 @@ project "spdlog"
             "_SPDLOG_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
-    filter "system:Mac"
+    filter "system:macosx"
         pic "On"
         systemversion "latest"
         defines {

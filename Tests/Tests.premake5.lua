@@ -24,8 +24,8 @@ project "Tests"
         "Engine",
     }
 
-    filter "system:Windows"
+    filter "system:windows"
         defines { "_WINDOWS" }
-    filter "system:Mac"
+    filter "system:macosx"
         defines { "_MAC" }
     filter {}

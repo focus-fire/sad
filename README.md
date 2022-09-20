@@ -24,13 +24,13 @@ If the repository is not cloned recursively **nothing will work**.
 1. Run the `bet.py` script from the terminal and specify the proper build flag for your target toolset 
 
 ```
-# Visual Studio 2022 Solution
-$ python3 .\Scripts\bet.py --build vs2022
+# Visual Studio 2022 Solution (default)
+$ python3 .\Scripts\bet.py --build 
 
 # Visual Studio 2019 Solution
 $ python3 .\Scripts\bet.py --build vs2019
 
-# OS Independent Makefiles (must have cygwin or mingw installed) 
+# OS Independent Makefiles (must have WSL, cygwin, or mingw installed) 
 $ python3 .\Scripts\bet.py --build gmake2
 ```
 

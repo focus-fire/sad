@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from utils import bet_log
+from utils import bet_log, bet_err
 from constants import PROJECT_DIR, SUBPROCESS_USE_SHELL
 
 
@@ -17,8 +17,7 @@ def tests():
     if test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")
     else:
-        bet_log("Uh oh, awkward... something went wrong while executing the tests.")
-        bet_log("Did you build the platform executable for the 'Tests' project?")
+        bet_err("Uh oh, awkward... something went wrong while executing the tests. Did you build the platform executable for the 'Tests' project?")
 
 
 """
@@ -29,7 +28,7 @@ def compile_tests(build_tool):
     lowercase_build_tool = str(build_tool).lower()
 
     if lowercase_build_tool not in supported_build_tools:
-        bet_log(f"Uh oh, awkward... {build_tool} was not found in the supported list!")
+        bet_err(f"Uh oh, awkward... {build_tool} was not found in the supported list!")
         return
 
     compile_cmd = int()
@@ -42,7 +41,7 @@ def compile_tests(build_tool):
         compile_cmd = subprocess.run([lowercase_build_tool], shell=SUBPROCESS_USE_SHELL)
 
     if compile_cmd.returncode != 0:
-        bet_log('Uh oh, awkward... something went wrong while executing the build command. Is there a solution or Makefile in the current directory?')
+        bet_err('Uh oh, awkward... something went wrong while executing the build command. Is there a solution or Makefile in the current directory?')
         return
 
     tests()

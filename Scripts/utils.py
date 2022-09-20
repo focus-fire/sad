@@ -1,5 +1,8 @@
 import os
+import sys
 import shutil
+
+from constants import PENSIVE_COWBOY
 
 
 """
@@ -7,6 +10,14 @@ BETter print()
 """
 def bet_log(msg):
     print(f"[bet] {msg}")
+
+
+"""
+BETter error()
+"""
+def bet_err(msg):
+    print(PENSIVE_COWBOY, file=sys.stderr)
+    print(f"[bet] {msg}", file=sys.stderr)
 
 
 """

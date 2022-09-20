@@ -54,4 +54,8 @@ project "Game"
         }
     filter "system:macosx"
         defines { "_MAC" }
+        postbuildcommands {
+            -- Copy the SDL framework to the local framework directory where it can be found at runtime
+            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks"
+        }
     filter {}

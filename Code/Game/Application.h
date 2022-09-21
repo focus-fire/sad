@@ -11,6 +11,8 @@ namespace sad
         public:
             Application();
             ~Application() override;
+
+            void End() override;
         };
     }
 }

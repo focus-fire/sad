@@ -13,7 +13,7 @@ project "Game"
         ["Documentation"] = { "Game/**.md", "Game/**.txt" },
     }
 
-    -- Manually resolve includes by target platform
+    -- Manually resolve includes and links by target platform
     -- The following logic checks the premake target OS and matches it to the appropriate includes
     -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
     local includes = {
@@ -21,29 +21,29 @@ project "Game"
         "%{prj.location}",
     }
 
+    local linkers = {
+        "Engine",
+        "glad",
+        "stb_image",
+        "imgui",
+    }
+
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
+        table.insert(linkers, "SDL2") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
+        table.insert(linkers, "SDL2.framework")
     end
 
     includedirs { includes }
 
-    -- Linking SDL
-    -- Windows (.libs/.dll)
-    -- Mac (.framework)
+    links { linkers }
+
     filter "system:windows"
         libdirs { "%{prj.location}/../Vendor/SDL/lib/win" }
-        links { 
-            "Engine", 
-            "SDL2", 
-        }
     filter "system:macosx"
         frameworkdirs { "%{prj.location}/../Vendor/SDL/lib/mac" }
-        links { 
-            "Engine", 
-            "SDL2.framework", 
-        }
     filter {}
 
 	filter "system:windows"

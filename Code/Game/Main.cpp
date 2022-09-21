@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     spdlog::info("this engine is sad.");
 
     sad::Game::Application* app = new sad::Game::Application();
-    // Initialize game loop
+    app->Start();
     delete app;
 
     spdlog::info("this engine shutdown successfully.");

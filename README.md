@@ -1,12 +1,9 @@
 <h3 align="center">😔</h3> 
 
-### Quick Install
-If you're confident you don't need to read the rest of the instructions, recursively clone the repo and run the `bet.bat` script.
+## Installation
+Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python3 v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
 
-### Installation
-Luckily most of the setup for the repository has been automated and as such no external dependencies need to be manually installed other than a default [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) installation.
-
-1. Recursively clone the repository and its submodules
+To start, recursively clone the repository and its submodules and follow the instructions below for your OS.
 
 ```
 $ git clone --recursive git@github.com:focus-fire/sad.git
@@ -16,46 +13,109 @@ or
 $ git clone --recursive https://github.com/focus-fire/sad.git
 ```
 
-**Note:** If you're using a GUI client for git such as GitHub Desktop or SourceTree look for a 'Recursive Clone' option. Otherwise copy the command above, right click your file explorer, run it in git bash, and then use GitHub Desktop for the rest of the installation. 
+**Note:** If you're using a GUI client for git such as GitHub Desktop or SourceTree it should automatically perform a recursive clone on the repository. Otherwise copy the command above, right click your file explorer, and run the command in git bash. 
 
 If the repository is not cloned recursively **nothing will work**.
 
-2. Double-click the `build.bat` script or run it from a terminal
+### Windows
+
+1. Run the `bet.py` script from the terminal and specify the proper build flag for your target toolset 
 
 ```
-$ .\Scripts\build.bat
+# Visual Studio 2022 Solution
+$ python3 .\Scripts\bet.py --build vs2022
+
+# Visual Studio 2019 Solution
+$ python3 .\Scripts\bet.py --build vs2019
+
+# OS Independent Makefiles (must have cygwin or mingw installed) 
+$ python3 .\Scripts\bet.py --build gmake2
 ```
 
-This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to the individual Visual Studio solution *may* not persist once this script is re-executed.  
+This step will have to be rerun **each** time any premake file (`*.premake5.lua*`) is changed. Please note that personal changes to generated files (such as a Visual Studio solution) *may* not persist once this command is re-executed.  
 
-3. Open the `sad.sln` solution file in Visual Studio 2022
+3. Open the `sad.sln` solution file in Visual Studio if `vs2022` or `vs2019` was your desired toolset
 
-### Tests
-This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. 
+4. If your target toolset was `gmake2`, run the makefiles in a terminal
 
-#### Running Tests
+```
+$ make
+```
 
-1. Build the `Tests` project using Visual Studio or MSBuild (might have to be manually added to your system's environment variables)
+The binaries and static libraries should be located in the `Build/Bin` directory of the project. These can be run in a GUI using something like the Visual Studio Code [Makefile Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools) or can be run in the terminal.
+
+```
+$ .\Build\Bin\Game\Game
+```
+
+### Mac
+
+1. Execute the `bet.py` script from the terminal to build the project with the `gmake2` or `xcode4` toolsets 
+
+```
+# OS Independent Makefiles 
+$ python3 ./Scripts/bet.py --build gmake2
+
+# XCode Workspace (WARNING: Untested, unsupported, and unrecommended)
+$ python3 ./Scripts/bet.py --build xcode4
+```
+
+Similar to the Windows installation, this step will have to be redone **every** time a change is made to a `*premake5.lua*` file.
+
+2. Generate compile commands for the project 
+
+```
+$ python3 ./Scripts/bet.py --gen-cc
+```
+
+This will install a [tool](https://github.com/tarruda/premake-export-compile-commands) for premake to export compile commands for the current project if it is not yet installed. These will provide intellisense in projects without an IDE or configured compiler (ie: a default Visual Studio Code installation).
+
+3. Install the Microsoft C/C++ tools for Visual Studio Code and edit the project configuration (ex: cmd+shift+p > `C/C++: Edit Configurations`)
+
+4. Under 'Advanced Settings' modify the 'Compile Commands' to `compile_commands/debug.json` (or another `compile_commands/*.json` file for your desired configuration) 
+
+5. Run the target Makefiles in a terminal
+
+```
+$ make
+```
+
+The binaries and static libraries should be located in the `Build/Bin` directory of the project. These can be run in a GUI using something like the Visual Studio Code [Makefile Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools) or can be run in the terminal.
+
+```
+$ ./Build/Bin/Game/Game
+```
+
+## Tests
+This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. Running tests is also tied into the bet scripting pipeline.
+
+### Running Tests
+
+1. Build the `Tests` project using Visual Studio, msbuild (might have to be manually added to your system's environment variables), or make with respect to your desired toolset
 
 ```
 Launch Visual Studio > Right-click the 'Tests' project > Select 'Build'
-
-or
-
 $ msbuild sad.sln
+$ make
+
+# Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
+$ python3 ./Scripts/bet.py --compile-tests msbuild
+$ python3 ./Scripts/bet.py --compile-tests make
 ```
 
-2. Double-click the `tests.bat` script or run it from a terminal
+2. Run the `bet.py` script with the `--tests` flag enabled in a terminal
 
 ```
-$ .\Scripts\tests.bat
+$ python3 ./Scripts/bet.py --tests
 ```
 
 After running the script you should see some output similar to the following...
 
 ```
+[tests.py] Running Catch2 tests...
+
 ===============================================================================
 All tests passed (4 assertions in 1 test case)
 
-Press any key to continue . . .
+[tests.py] bet! Successfully ran tests.
 ```

@@ -17,6 +17,12 @@ project "spdlog"
             "_SPDLOG_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
+    filter "system:Mac"
+        pic "On"
+        systemversion "latest"
+        defines {
+            "_SPDLOG_MAC"
+        }
 	filter "configurations:Debug"
 		runtime "Debug"
 		symbols "On"

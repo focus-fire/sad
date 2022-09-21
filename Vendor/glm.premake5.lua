@@ -2,6 +2,7 @@ project "glm"
 	kind "StaticLib"
 	language "C"
 	architecture "x86_64"
+	staticruntime "On"
 
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
@@ -18,13 +19,17 @@ project "glm"
 		"GLM_FORCE_SWIZZLE"
 	}
 
-	filter "system:windows"
+	filter "system:Windows"
 		systemversion "latest"
-		staticruntime "On"
-
 		defines {
 			"_GLM_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
+		}
+	filter "system:Mac"
+		pic "On"
+		systemversion "latest"
+		defines {
+			"_GLM_MAC"
 		}
 	filter "configurations:Debug"
 		runtime "Debug"

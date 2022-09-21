@@ -12,12 +12,17 @@ project "stb_image"
 		"stb_image/stb_image.cpp"
 	}
 
-	filter "system:windows"
+	filter "system:Windows"
 		systemversion "latest"
-
 		defines {
 			"_STB_IMAGE_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
+		}
+	filter "system:Mac"
+		pic "On"
+		systemversion "latest"
+		defines {
+			"_STB_IMAGE_MAC"
 		}
 	filter "configurations:Debug"
 		runtime "Debug"

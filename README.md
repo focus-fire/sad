@@ -5,7 +5,7 @@
 ## Installation
 Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
 
-To start, recursively clone the repository and its submodules and follow the instructions below for your OS.
+To start, recursively clone the repository and follow the instructions below for your OS.
 
 ```
 $ git clone --recursive git@github.com:focus-fire/sad.git
@@ -18,6 +18,15 @@ $ git clone --recursive https://github.com/focus-fire/sad.git
 **Note:** If you're using a GUI client for git such as GitHub Desktop or SourceTree it should automatically perform a recursive clone on the repository. Otherwise copy the command above, right click your file explorer, and run the command in git bash. 
 
 If the repository is not cloned recursively **nothing will work**.
+
+### Quick Setup
+If you're not inspired to run a lot of the commands listed below, the `cry` script in the root of the project can be run to clean, build, and (optionally) test the project at once.
+
+On Windows, double-click the `cry.bat` script. Or, on either Windows or Mac enter the following command in a Terminal. This command can be used as an alternative to using separate commands to clean and build the project when required.
+
+```
+$ ./cry
+```
 
 ### Windows
 
@@ -38,7 +47,7 @@ This step will have to be rerun **each** time any premake file (`*.premake5.lua*
 
 3. Open the `sad.sln` solution file in Visual Studio if `vs2022` or `vs2019` was your desired toolset
 
-4. If your target toolset was `gmake2`, run the makefiles in a terminal
+4. If your target toolset was `gmake2`, run the Makefiles in a terminal
 
 ```
 $ make

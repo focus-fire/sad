@@ -1,7 +1,9 @@
-<h3 align="center">😔</h3> 
+<p align="center">
+    <img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100">
+</p>
 
 ## Installation
-Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python3 v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
+Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
 
 To start, recursively clone the repository and its submodules and follow the instructions below for your OS.
 
@@ -95,18 +97,28 @@ This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for un
 
 ```
 Launch Visual Studio > Right-click the 'Tests' project > Select 'Build'
-$ msbuild sad.sln
-$ make
 
-# Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
-$ python3 ./Scripts/bet.py --compile-tests msbuild
-$ python3 ./Scripts/bet.py --compile-tests make
+or
+
+$ msbuild sad.sln
+
+or
+
+$ make
 ```
 
 2. Run the `bet.py` script with the `--tests` flag enabled in a terminal
 
 ```
 $ python3 ./Scripts/bet.py --tests
+```
+
+**Note:** Alternatively the `--compile-tests` flag can be used to compile the tests with a particular toolchain and then run the testbed (basically steps 1/2 combined).
+
+```
+# Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed
+$ python3 ./Scripts/bet.py --compile-tests msbuild
+$ python3 ./Scripts/bet.py --compile-tests make
 ```
 
 After running the script you should see some output similar to the following...

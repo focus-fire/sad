@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from utils import bet_log
+from utils import bet_log, bet_err
 from constants import SCRIPT_DIR, PROJECT_DIR, SUBPROCESS_USE_SHELL
 
 
@@ -20,7 +20,7 @@ def build(toolset):
     available_toolsets = ["vs2022", "vs2019", "gmake2", "xcode4"]
 
     if toolset not in available_toolsets:
-        bet_log(f"Uh oh, awkward... {toolset} isn't a valid toolset, please try again.")
+        bet_err(f"Uh oh, awkward... {toolset} isn't a valid toolset, please try again.")
         return
 
     # Execute OS subprocess for premake with the desired toolset
@@ -30,4 +30,4 @@ def build(toolset):
     if premake_cmd.returncode == 0:
         bet_log("bet! Successfully built project files.")
     else:
-        bet_log("Uh oh, awkward... something went wrong while executing the build.")
+        bet_err("Uh oh, awkward... something went wrong while executing the build.")

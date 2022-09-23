@@ -1,8 +1,8 @@
 import os
 import subprocess
 
-from utils import bet_log
-from constants import SCRIPT_DIR, SUBPROCESS_USE_SHELL
+from utils import bet_log, bet_err
+from constants import SCRIPT_DIR, SUBPROCESS_USE_SHELL 
 
 
 """
@@ -31,7 +31,7 @@ def gen_cc():
         bet_log('Cloning `tarruda/premake-export-compile-commands`')
         clone_cmd = subprocess.run(['git', 'clone', 'https://github.com/tarruda/premake-export-compile-commands', cc_tool_dir], shell=SUBPROCESS_USE_SHELL)
         if clone_cmd.returncode != 0:
-            bet_log('Uh oh, awkward... failed to clone the `export-compile-commands` repository')
+            bet_err('Uh oh, awkward... failed to clone the `export-compile-commands` repository')
             return
 
     # Create the premake extension setup file if it isn't found
@@ -47,5 +47,5 @@ def gen_cc():
     if cc_cmd.returncode == 0:
         bet_log('bet! Successfully generated compile commands for the project.')
     else:
-        bet_log('Uh oh, awkward... something went wrong while exporting the compile commands')
+        bet_err('Uh oh, awkward... something went wrong while exporting the compile commands')
 

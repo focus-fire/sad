@@ -20,7 +20,7 @@ def main():
 
     # Initialize command line arguments
     parser.add_argument('--clean', action=argparse.BooleanOptionalAction, help='cleans the project of auto-generated premake files')
-    parser.add_argument('--build', metavar='toolset', type=str, help='build the premake project (toolsets: vs2022, vs2019, gmake2, xcode, etc.)')
+    parser.add_argument('--build', nargs="?", const="vs2022", metavar='toolset', type=str, help='build the premake project (toolsets: vs2022 [default], vs2019, or gmake2)')
     parser.add_argument('--tests', action=argparse.BooleanOptionalAction, help='tries to run the sad testbed')
     parser.add_argument('--compile-tests', metavar='build tool', type=str, help='tries to compile and run the sad testbed with the build tool specified')
     parser.add_argument('--gen-cc', action=argparse.BooleanOptionalAction, help='generates compile commands for intellisense using premake-export-compile-commands (ex: for vscode)')

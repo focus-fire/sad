@@ -1,11 +1,15 @@
 <p align="center">
     <img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100">
 </p>
+<p align="center">
+    <img src="https://github.com/focus-fire/sad/actions/workflows/build.yml/badge.svg" alt="build-badge">
+    <img src="https://github.com/focus-fire/sad/actions/workflows/test.yml/badge.svg" alt="test-badge">
+</p>
 
 ## Installation
 Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
 
-To start, recursively clone the repository and its submodules and follow the instructions below for your OS.
+To start, recursively clone the repository and follow the instructions below for your OS.
 
 ```
 $ git clone --recursive git@github.com:focus-fire/sad.git
@@ -19,18 +23,29 @@ $ git clone --recursive https://github.com/focus-fire/sad.git
 
 If the repository is not cloned recursively **nothing will work**.
 
+### Quick Setup
+When in doubt, just `cry`! 
+
+On Windows, double-click the `cry.bat` script. Or enter the following command in a Terminal on either Windows or Mac. 
+
+This command can be used as an alternative to using separate commands to clean and build the project when required.
+
+```
+$ ./cry
+```
+
 ### Windows
 
 1. Run the `bet.py` script from the terminal and specify the proper build flag for your target toolset 
 
 ```
-# Visual Studio 2022 Solution
-$ python3 .\Scripts\bet.py --build vs2022
+# Visual Studio 2022 Solution (default)
+$ python3 .\Scripts\bet.py --build 
 
 # Visual Studio 2019 Solution
 $ python3 .\Scripts\bet.py --build vs2019
 
-# OS Independent Makefiles (must have cygwin or mingw installed) 
+# OS Independent Makefiles (must have WSL, cygwin, or mingw installed) 
 $ python3 .\Scripts\bet.py --build gmake2
 ```
 
@@ -38,7 +53,7 @@ This step will have to be rerun **each** time any premake file (`*.premake5.lua*
 
 3. Open the `sad.sln` solution file in Visual Studio if `vs2022` or `vs2019` was your desired toolset
 
-4. If your target toolset was `gmake2`, run the makefiles in a terminal
+4. If your target toolset was `gmake2`, run the Makefiles in a terminal
 
 ```
 $ make

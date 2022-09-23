@@ -3,3 +3,6 @@ Vendor/glad/* linguist-vendored
 
 # Remove stb_image as a vendored path
 Vendor/stb_image/* linguist-vendored
+
+# Remove SDL as a vendored path
+Vendor/SDL/* linguist-vendored

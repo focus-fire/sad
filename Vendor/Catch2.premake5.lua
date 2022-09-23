@@ -11,15 +11,13 @@ project "Catch2"
         "Catch2/single_include/"
     }
 
-    filter "system:Windows"
-        systemversion "latest"
+    filter "system:windows"
         defines {
             "_CATCH2_WIN32",
             "_CRT_SECURE_NO_WARNINGS"
         }
-    filter "system:Mac"
+    filter "system:macosx"
         pic "On"
-        systemversion "latest"
         defines {
             "_CATCH2_MAC"
         }

@@ -3,7 +3,7 @@
 sad::Game::Application::Application()
 	: sad::Application()
 {
-	// Game initializes here
+	// Game can be initialized here
 }
 
 sad::Game::Application::~Application()
@@ -11,3 +11,7 @@ sad::Game::Application::~Application()
 	// Game is destroyed here
 }
 
+void sad::Game::Application::End()
+{
+	// Game is shut down here
+}

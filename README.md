@@ -1,6 +1,10 @@
 <p align="center">
     <img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100">
 </p>
+<p align="center">
+    <img src="https://github.com/focus-fire/sad/actions/workflows/build.yml/badge.svg" alt="build-badge">
+    <img src="https://github.com/focus-fire/sad/actions/workflows/test.yml/badge.svg" alt="test-badge">
+</p>
 
 ## Installation
 Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
@@ -20,9 +24,11 @@ $ git clone --recursive https://github.com/focus-fire/sad.git
 If the repository is not cloned recursively **nothing will work**.
 
 ### Quick Setup
-If you're not inspired to run a lot of the commands listed below, the `cry` script in the root of the project can be run to clean, build, and (optionally) test the project at once.
+When in doubt, just `cry`! 
 
-On Windows, double-click the `cry.bat` script. Or, on either Windows or Mac enter the following command in a Terminal. This command can be used as an alternative to using separate commands to clean and build the project when required.
+On Windows, double-click the `cry.bat` script. Or enter the following command in a Terminal on either Windows or Mac. 
+
+This command can be used as an alternative to using separate commands to clean and build the project when required.
 
 ```
 $ ./cry

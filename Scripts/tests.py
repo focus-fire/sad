@@ -11,8 +11,11 @@ Runs the compiled testbed on the given platform (exe/bin)
 def tests():
     bet_log('Running Catch2 tests...\n')
 
-    test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/Tests')
+    test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CodeTests')
     test_cmd = subprocess.run([test_bin], shell=True)
+
+    test_bin2 = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests')
+    test_cmd2 = subprocess.run([test_bin2], shell=True)
 
     if test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")

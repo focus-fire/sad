@@ -38,7 +38,9 @@ workspace "sad"
     include "Code/Engine.premake5.lua"
 
     -- Tests
-    include "Tests/Tests.premake5.lua"
+    group "Tests"
+        include "%{wks.location}/../Tests/Code/CodeTests.premake5.lua"
+        include "%{wks.location}/../Tests/Engine/EngineTests.premake5.lua"
 
     group "Vendor" -- Individual Deps
         include "Vendor/glad.premake5.lua"

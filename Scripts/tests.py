@@ -12,7 +12,7 @@ def tests():
     bet_log('Running Catch2 tests...\n')
 
     test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/Tests')
-    test_cmd = subprocess.run([test_bin], shell=True)
+    test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
 
     if test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")
@@ -27,9 +27,9 @@ def compile_tests(build_tool):
     supported_build_tools = ['msbuild', 'make']
     lowercase_build_tool = str(build_tool).lower()
 
+    # Exit with error if user passes invalid build tool
     if lowercase_build_tool not in supported_build_tools:
         bet_err(f"Uh oh, awkward... {build_tool} was not found in the supported list!")
-        return
 
     compile_cmd = int()
 
@@ -40,8 +40,8 @@ def compile_tests(build_tool):
     if lowercase_build_tool == 'make':
         compile_cmd = subprocess.run([lowercase_build_tool], shell=SUBPROCESS_USE_SHELL)
 
+    # Exit with error if command executes but no build artifacts exist
     if compile_cmd.returncode != 0:
         bet_err('Uh oh, awkward... something went wrong while executing the build command. Is there a solution or Makefile in the current directory?')
-        return
 
     tests()

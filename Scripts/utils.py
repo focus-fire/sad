@@ -17,7 +17,7 @@ BETter error()
 """
 def bet_err(msg):
     print(PENSIVE_COWBOY, file=sys.stderr)
-    print(f"[bet] {msg}", file=sys.stderr)
+    raise SystemExit(f"[bet] {msg}")
 
 
 """

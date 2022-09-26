@@ -10,7 +10,7 @@ project "Game"
     vpaths {
         ["Headers"] = { "Game/**.h", "Game/**.hpp" },
         ["Sources/*"] = { "Game/**.c", "Game/**.cpp" },
-        ["Documentation"] = { "Game/**.md", "Game/**.txt" },
+        ["Docs"] = { "Game/**.md", "Game/**.txt" },
     }
 
     -- Manually resolve includes and links by target platform
@@ -18,6 +18,8 @@ project "Game"
     -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/json/single_include",
+        "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}",
     }
 

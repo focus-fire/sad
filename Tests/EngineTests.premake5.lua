@@ -1,6 +1,6 @@
 project "EngineTests"
     kind "ConsoleApp"
-    dependson { "Catch2", "Engine" }
+    dependson { "Engine" }
 
 	targetdir "%{wks.location}/Build/Bin/Tests/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/Tests/%{prj.name}"
@@ -17,7 +17,7 @@ project "EngineTests"
     vpaths {
         ["Headers"] = { "**.h", "**.hpp" },
         ["Sources/*"] = { "**.c", "**.cpp" },
-        ["Documentation"] = { "**.md", "**.txt" },
+        ["Docs"] = { "**.md", "**.txt" },
     }
 
     links {

@@ -11,10 +11,13 @@ Runs the compiled testbed on the given platform (exe/bin)
 def tests():
     bet_log('Running Catch2 tests...\n')
 
-    test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/Tests')
-    test_cmd = subprocess.run([test_bin], shell=True)
+    code_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CodeTests')
+    code_test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
 
-    if test_cmd.returncode == 0:
+    eng_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests')
+    eng_test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
+
+    if code_test_cmd.returncode == 0 && eng_test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")
     else:
         bet_err("Uh oh, awkward... something went wrong while executing the tests. Did you build the platform executable for the 'Tests' project?")

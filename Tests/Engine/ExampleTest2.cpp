@@ -6,13 +6,16 @@
  * See https://github.com/catchorg/Catch2/tree/v2.x/examples for more examples
  */
 
-namespace sad {
-	unsigned int Multiplication(unsigned int number1, unsigned int number2) {
+namespace sad 
+{
+	unsigned int Multiplication(unsigned int number1, unsigned int number2) 
+	{
 		return number1 * number2;
 	}
 }
 
-TEST_CASE("Multiplying numbers", "[multiplication]") {
+TEST_CASE("Multiplying numbers", "[multiplication]") 
+{
 	REQUIRE(sad::Multiplication(2, 2) == 4);
 	REQUIRE(sad::Multiplication(3, 3) == 9);
 	REQUIRE(sad::Multiplication(4, 4) == 16);

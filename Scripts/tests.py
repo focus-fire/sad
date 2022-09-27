@@ -17,7 +17,7 @@ def tests():
     eng_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests')
     eng_test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
 
-    if code_test_cmd.returncode == 0 && eng_test_cmd.returncode == 0:
+    if code_test_cmd.returncode == 0 and eng_test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")
     else:
         bet_err("Uh oh, awkward... something went wrong while executing the tests. Did you build the platform executable for the 'Tests' project?")

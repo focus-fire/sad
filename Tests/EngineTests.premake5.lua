@@ -7,11 +7,11 @@ project "EngineTests"
 
     defines { "_TEST" }
 
-    files { "**.cpp" }
+    files { "EngineTests/**.cpp" }
 
     includedirs {
-        "%{prj.location}/../../Vendor/Catch2/single_include/",
-        "%{prj.location}/../../Code/Engine/",
+        "%{prj.location}/../Vendor/Catch2/single_include/",
+        "%{prj.location}/../Code/Engine/",
     }
 
     vpaths {

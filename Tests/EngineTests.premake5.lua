@@ -2,7 +2,7 @@ project "EngineTests"
     kind "ConsoleApp"
     dependson { "Engine" }
 
-	targetdir "%{wks.location}/Build/Bin/Tests/%{prj.name}"
+	targetdir "%{wks.location}/Build/Bin/Tests/"
 	objdir "%{wks.location}/Build/Obj/Tests/%{prj.name}"
 
     defines { "_TEST" }

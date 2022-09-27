@@ -19,5 +19,5 @@ TEST_CASE("Multiplying numbers", "[multiplication]")
 	REQUIRE(sad::Multiplication(2, 2) == 4);
 	REQUIRE(sad::Multiplication(3, 3) == 9);
 	REQUIRE(sad::Multiplication(4, 4) == 16);
-	REQUIRE(sad::Multiplication(5, 5) == 24);
+	REQUIRE(sad::Multiplication(5, 5) == 25);
 }

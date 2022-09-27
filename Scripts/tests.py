@@ -12,10 +12,10 @@ def tests():
     bet_log('Running Catch2 tests...\n')
 
     code_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CodeTests')
-    code_test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
+    code_test_cmd = subprocess.run([code_test_bin], shell=SUBPROCESS_USE_SHELL)
 
     eng_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests')
-    eng_test_cmd = subprocess.run([test_bin], shell=SUBPROCESS_USE_SHELL)
+    eng_test_cmd = subprocess.run([eng_test_bin], shell=SUBPROCESS_USE_SHELL)
 
     if code_test_cmd.returncode == 0 and eng_test_cmd.returncode == 0:
         bet_log("bet! Successfully ran tests.")

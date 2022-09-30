@@ -32,7 +32,6 @@ def gen_cc():
         clone_cmd = subprocess.run(['git', 'clone', 'https://github.com/tarruda/premake-export-compile-commands', cc_tool_dir], shell=SUBPROCESS_USE_SHELL)
         if clone_cmd.returncode != 0:
             bet_err('Uh oh, awkward... failed to clone the `export-compile-commands` repository')
-            return
 
     # Create the premake extension setup file if it isn't found
     if not os.path.isfile(cc_setup_file):

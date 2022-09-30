@@ -1,7 +1,7 @@
+#include "Application.h"
+
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
-
-#include "Application.h"
 
 sad::Application::Application()
 {

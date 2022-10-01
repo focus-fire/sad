@@ -1,11 +1,14 @@
 #pragma once
 
+#include <SDL2/SDL.h>
+
 namespace sad
 {
 
     class InputManager {
     public:
-        void Update();
+        void CatchKeyboardEvent(SDL_Event& event);
+        void CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy);
 
         bool GetKey(int key); // Returns true when key is held
         bool GetKeyPressed(int key); // Returns true if key is pressed
@@ -24,7 +27,5 @@ namespace sad
 
     private:
         static sad::InputManager s_Instance;
-        InputManager();
-        ~InputManager();
     };
 }

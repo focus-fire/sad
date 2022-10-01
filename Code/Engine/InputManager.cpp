@@ -10,92 +10,125 @@ sad::InputManager& sad::InputManager::GetInstance()
     return s_Instance;
 }
 
-sad::InputManager::InputManager() {}
-
-sad::InputManager::~InputManager() {}
-
-void sad::InputManager::Update()
+void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
 {
-    SDL_Event event;
-    while (SDL_PollEvent(&event))
+    if (event.type == SDL_JOYAXISMOTION)
     {
-        if (event.type == SDL_KEYDOWN) 
-        {
-            switch (event.key.keysym.sym) 
+        if (event.jaxis.which == 0) {
+            //X axis motion
+            if (event.jaxis.axis == 0)
             {
-            case SDLK_w:
-                if (!KeyForward) 
+                //Left of dead zone
+                if (event.jaxis.value < -8000)
                 {
-                    // Notify forward key pressed 
-                    spdlog::info("FORWARD key pressed.");
+                    spdlog::info("CONTROLLER LEFT");
                 }
-                KeyForward = true;
-                break;
-
-            case SDLK_s:
-                if (!KeyBackward)
+                //Right of dead zone
+                else if (event.jaxis.value > 8000)
                 {
-                    // Notify backward key pressed 
-                    spdlog::info("BACKWARD key pressed.");
+                    spdlog::info("CONTROLLER RIGHT");
                 }
-                KeyBackward = true;
-                break;
-
-            case SDLK_d:
-                if (!KeyRight)
+            }
+            //Y axis motion
+            else if (event.jaxis.axis == 1)
+            {
+                //Below of dead zone
+                if (event.jaxis.value < -8000)
                 {
-                    // Notify right key pressed 
-                    spdlog::info("RIGHT key pressed.");
+                    spdlog::info("CONTROLLER DOWN");
                 }
-                KeyRight = true;
-                break;
-
-            case SDLK_a:
-                if (!KeyLeft)
+                //Above of dead zone
+                else if (event.jaxis.value > 8000)
                 {
-                    // Notify left key pressed
-                    spdlog::info("LEFT key pressed.");
+                    spdlog::info("CONTROLLER UP");
                 }
-                KeyLeft = true;
-                break;
             }
         }
-        else if (event.type == SDL_KEYUP)
+    }
+}
+
+void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
+{
+    if (event.type == SDL_KEYDOWN)
+    {
+        switch (event.key.keysym.sym)
         {
-            switch (event.key.keysym.sym)
+        case SDLK_w:
+            if (!KeyForward)
             {
-            case SDLK_w:
-                if (KeyForward)
-                {
-                    // Notify forward key released 
-                }
-                KeyForward = false;
-                break;
+                // Notify forward key pressed 
 
-            case SDLK_s:
-                if (KeyBackward)
-                {
-                    // Notify backward key released 
-                }
-                KeyBackward = false;
-                break;
-
-            case SDLK_d:
-                if (KeyRight)
-                {
-                    // Notify right key released 
-                }
-                KeyRight = false;
-                break;
-
-            case SDLK_a:
-                if (KeyLeft)
-                {
-                    // Notify left key released
-                }
-                KeyLeft = false;
-                break;
             }
+            KeyForward = true;
+            spdlog::info("FORWARD key pressed.");
+            break;
+
+        case SDLK_s:
+            if (!KeyBackward)
+            {
+                // Notify backward key pressed 
+
+            }
+            KeyBackward = true;
+            spdlog::info("BACKWARD key pressed.");
+            break;
+
+        case SDLK_d:
+            if (!KeyRight)
+            {
+                // Notify right key pressed 
+
+            }
+            KeyRight = true;
+            spdlog::info("RIGHT key pressed.");
+            break;
+
+        case SDLK_a:
+            if (!KeyLeft)
+            {
+                // Notify left key pressed
+
+            }
+            KeyLeft = true;
+            spdlog::info("LEFT key pressed.");
+            break;
+        }
+    }
+    else if (event.type == SDL_KEYUP)
+    {
+        switch (event.key.keysym.sym)
+        {
+        case SDLK_w:
+            if (KeyForward)
+            {
+                // Notify forward key released 
+            }
+            KeyForward = false;
+            break;
+
+        case SDLK_s:
+            if (KeyBackward)
+            {
+                // Notify backward key released 
+            }
+            KeyBackward = false;
+            break;
+
+        case SDLK_d:
+            if (KeyRight)
+            {
+                // Notify right key released 
+            }
+            KeyRight = false;
+            break;
+
+        case SDLK_a:
+            if (KeyLeft)
+            {
+                // Notify left key released
+            }
+            KeyLeft = false;
+            break;
         }
     }
 }

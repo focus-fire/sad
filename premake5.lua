@@ -18,17 +18,34 @@ workspace "sad"
         "Test",
 	}
 
+    filter "system:windows"
+        defines {
+            "_SAD_WIN32"
+        }
+    filter "system:macosx"
+        defines {
+            "_SAD_MAC"
+        }
+    filter {}
+
     filter "configurations:Debug"
-        defines { "DEBUG" }
+        defines { 
+            "_SAD_DEBUG",
+            "_SAD_ENABLE_LOGGING", 
+        }
         symbols "On"
         optimize "Off"
         symbols "On"
     filter "configurations:Release"
-        defines { "NDEBUG" }
+        defines { 
+            "_SAD_RELEASE" 
+        }
         optimize "On"
         symbols "Off"
     filter "configurations:Test"
-        defines { "NDEBUG" }
+        defines { 
+            "_SAD_TEST" 
+        }
         optimize "Off"
         symbols "On"
     filter {}
@@ -36,6 +53,7 @@ workspace "sad"
     -- Core Projects 
     include "Code/Game.premake5.lua"
     include "Code/Engine.premake5.lua"
+    include "Code/Core.premake5.lua"
 
     -- Tests
     include "Tests/Tests.premake5.lua"

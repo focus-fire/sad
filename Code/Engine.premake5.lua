@@ -26,6 +26,7 @@ project "Engine"
     }
 
     local linkers = {
+        "Core",
         "glad",
         "stb_image",
         "imgui",

@@ -22,6 +22,7 @@ project "Game"
     }
 
     local linkers = {
+        "Core",
         "Engine",
         "glad",
         "stb_image",

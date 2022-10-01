@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "InputManager.h"
 
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
@@ -21,6 +22,7 @@ void sad::Application::Start()
 
 	while (!isClosed) 
 	{
+		InputManager::GetInstance().Update();
 		while (SDL_PollEvent(&event)) 
 		{
 			if (event.type == SDL_QUIT) 

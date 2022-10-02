@@ -1,6 +1,6 @@
 {
-  "person": {
-    "name": "Kiwon",
-    "age" : 25
+  "Person": {
+    "Name": "Kiwon",
+    "Age": 25
   }
 }

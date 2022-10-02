@@ -5,28 +5,22 @@ using json = nlohmann::json;
 sad::FileManager::FileManager(){}
 
 //File read function 
-void sad::FileManager::Read(std::string path)
+std::string sad::FileManager::Read(std::string path)
 {
 	std::string line;
-	std::ifstream myfile(path);
+	std::ifstream myfile("C://Users//kiwon//Desktop//SadEngine//sad//Code//Engine//example.json"); //pathing fixing required
 	if (myfile.is_open())
 	{
+		std::stringstream buffer;
 		while (getline(myfile, line))
 		{
-			std::cout << line << std::endl;
+			buffer << line;
 		}
 		myfile.close();
+		return buffer.str();
 	}
 	else std::cout << "Unable to open file";
-}
-
-void sad::FileManager::JSONRead(std::string path)
-{
-	std::ifstream ifs("example.json");
-	json jf = json::parse(ifs);
-
-	std::cout << jf << std::endl;
-	
+	return "";
 }
 
 void sad::FileManager::WriteExisting(std::string path, std::string content)
@@ -65,9 +59,4 @@ void sad::FileManager::CreateWrite(std::string path, std::string content)
 		myfile.close();
 	}
 	else std::cout << "Unable to open file"; //output to debugger?
-}
-
-int main() {
-	sad::FileManager().JSONRead("example.json");
-	return 0;
 }

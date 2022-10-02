@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <filesystem>
 #include <nlohmann/json.hpp>
@@ -12,7 +13,7 @@ namespace sad
 	public:
 		FileManager();
 
-		void Read(std::string path);
+		std::string Read(std::string path);
 		void JSONRead(std::string path);
 		void WriteExisting(std::string path, std::string content);
 		void AppendExisting(std::string path, std::string content);

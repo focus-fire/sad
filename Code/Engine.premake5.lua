@@ -9,7 +9,7 @@ project "Engine"
     vpaths {
         ["Headers"] = { "Engine/**.h", "Engine/**.hpp" },
         ["Sources/*"] = { "Engine/**.c", "Engine/**.cpp" },
-        ["Documentation"] = { "Engine/**.md", "Engine/**.txt" },
+        ["Docs"] = { "Engine/**.md", "Engine/**.txt" },
     }
 
     -- Manually resolve includes and links by target platform
@@ -19,6 +19,8 @@ project "Engine"
         "%{prj.location}/../Vendor/glfw/include",
         "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/json/single_include",
+        "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/stb_image",
         "%{prj.location}/../Vendor/imgui",

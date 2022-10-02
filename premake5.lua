@@ -56,16 +56,21 @@ workspace "sad"
     include "Code/Core.premake5.lua"
 
     -- Tests
-    include "Tests/Tests.premake5.lua"
+    group "Tests"
+        include "Tests/CodeTests.premake5.lua"
+        include "Tests/EngineTests.premake5.lua"
 
-    group "Vendor" -- Individual Deps
+    group "Vendor" 
+        -- Individual Deps
         include "Vendor/glad.premake5.lua"
         include "Vendor/glm.premake5.lua"
         include "Vendor/stb_image.premake5.lua"
         include "Vendor/imgui.premake5.lua"
         -- Placeholders
         include "Vendor/SDL.premake5.lua"
-        -- Header Only
-        -- include "Vendor/spdlog.premake5.lua"
-        -- include "Vendor/Catch2.premake5.lua"
+        -- Header Only Deps
+        -- spdlog
+        -- json
+        -- entt
+        -- Catch2
     group ""

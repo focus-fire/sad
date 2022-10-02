@@ -19,9 +19,9 @@ def build(toolset):
     # https://premake.github.io/docs/Using-Premake/#using-premake-to-generate-project-files
     available_toolsets = ["vs2022", "vs2019", "gmake2", "xcode4"]
 
+    # Exit with error if invalid toolset was passed 
     if toolset not in available_toolsets:
         bet_err(f"Uh oh, awkward... {toolset} isn't a valid toolset, please try again.")
-        return
 
     # Execute OS subprocess for premake with the desired toolset
     bet_log(f"Building for {toolset} in {PROJECT_DIR}")

@@ -1,13 +1,13 @@
-project "Tests"
+project "EngineTests"
     kind "ConsoleApp"
     dependson { "Engine" }
 
-	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
-	objdir "%{wks.location}/Build/Obj/%{prj.name}"
+	targetdir "%{wks.location}/Build/Bin/Tests/"
+	objdir "%{wks.location}/Build/Obj/Tests/%{prj.name}"
 
     defines { "_TEST" }
 
-    files { "**.cpp" }
+    files { "EngineTests/**.cpp" }
 
     includedirs {
         "%{prj.location}/../Vendor/Catch2/single_include/",
@@ -17,15 +17,9 @@ project "Tests"
     vpaths {
         ["Headers"] = { "**.h", "**.hpp" },
         ["Sources/*"] = { "**.c", "**.cpp" },
-        ["Documentation"] = { "**.md", "**.txt" },
+        ["Docs"] = { "**.md", "**.txt" },
     }
 
     links {
         "Engine",
     }
-
-    filter "system:windows"
-        defines { "_WINDOWS" }
-    filter "system:macosx"
-        defines { "_MAC" }
-    filter {}

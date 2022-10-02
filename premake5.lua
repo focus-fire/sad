@@ -57,7 +57,8 @@ workspace "sad"
 
     -- Tests
     group "Tests"
-        include "Tests/CodeTests.premake5.lua"
+        include "Tests/CoreTests.premake5.lua"
+        include "Tests/GameTests.premake5.lua"
         include "Tests/EngineTests.premake5.lua"
 
     group "Vendor" 

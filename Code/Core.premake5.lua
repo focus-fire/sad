@@ -1,4 +1,4 @@
-project "Core" 
+project "Core"
     kind "StaticLib"
 
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
@@ -12,7 +12,7 @@ project "Core"
         ["Documentation"] = { "Core/**.md", "Core/**.txt" },
     }
 
-    -- Realistically the 'Core' library should only be creating standard utils 
+    -- Realistically the 'Core' library should only be creating standard utils
     -- Only link/include library headers as needed here...
     includedirs {
         "%{prj.location}/../Vendor/spdlog/include",

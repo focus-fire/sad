@@ -5,12 +5,16 @@ project "Game"
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
-    files { "Game/**.h", "Game/**.cpp" }
+    pchheader "sadpch.h"
+    pchsource "sadpch.cpp"
+
+    files { "Game/**.h", "Game/**.cpp", "*.cpp" }
 
     vpaths {
         ["Headers"] = { "Game/**.h", "Game/**.hpp" },
         ["Sources/*"] = { "Game/**.c", "Game/**.cpp" },
         ["Docs"] = { "Game/**.md", "Game/**.txt" },
+        ["Resources"] = { "**pch.cpp" },
     }
 
     -- Manually resolve includes and links by target platform

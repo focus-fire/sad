@@ -1,8 +1,7 @@
+#include "sadpch.h"
 #include "Log.h"
 
 #ifdef _SAD_ENABLE_LOGGING
-#include <memory>
-
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -10,8 +9,6 @@
 #ifdef _SAD_WINDOWS
 #include <spdlog/sinks/msvc_sink.h>
 #endif
-
-#include "Base.h"
 
 namespace
 {
@@ -26,8 +23,11 @@ void core::InitializeLogging()
 	{
 		s_IsInitialized = true;
 
-		// Logs follow the format -> [MM-DD-YY HH:MM:SS.mm] [logger] message
-		std::string logPattern = "[%m-%d-%C %X.%e] %^[%n] %v%$";
+		// Logs follow the format: [MM-DD-YY HH:MM:SS.mm] [level] message
+		std::string debugLogPattern = "[%m-%d-%C %X.%e] %^[%l] %v%$";
+
+		// Asserts follow the format: [MM-DD-YY HH:MM:SS.mm] [logger] message
+		std::string assertLogPattern = "[%m-%d-%C %X.%e] %^[%n] %v%$";
 
 #ifdef _SAD_WINDOWS
 		// Create a sink for the VisualStudio 'Output' window
@@ -36,15 +36,15 @@ void core::InitializeLogging()
 #endif
 
 		// Standard logger outputs all logs to console and file
-		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> coreConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-		std::shared_ptr<spdlog::sinks::basic_file_sink_st> coreFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/debug.txt", true);
-		coreConsoleSink->set_level(spdlog::level::debug);
-		coreFileSink->set_level(spdlog::level::debug);
+		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> debugConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+		std::shared_ptr<spdlog::sinks::basic_file_sink_st> debugFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/debug.txt", true);
+		debugConsoleSink->set_level(spdlog::level::debug);
+		debugFileSink->set_level(spdlog::level::debug);
 
-		spdlog::sinks_init_list coreSinkList = { coreFileSink, coreConsoleSink, vsOutputSink };
-		s_DebugLogger = std::make_shared<spdlog::logger>("debug", begin(coreSinkList), end(coreSinkList));
+		spdlog::sinks_init_list debugSinkList = { debugFileSink, debugConsoleSink, vsOutputSink };
+		s_DebugLogger = std::make_shared<spdlog::logger>("debug", begin(debugSinkList), end(debugSinkList));
 		s_DebugLogger->set_level(spdlog::level::debug);
-		s_DebugLogger->set_pattern(logPattern);
+		s_DebugLogger->set_pattern(debugLogPattern);
 
 		// Assert logger should only log critical asserts to both the console and file
 		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> assertConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -55,7 +55,7 @@ void core::InitializeLogging()
 		spdlog::sinks_init_list assertSinkList = { assertConsoleSink, assertFileSink, vsOutputSink };
 		s_AssertLogger = std::make_shared<spdlog::logger>("assert", begin(assertSinkList), end(assertSinkList));
 		s_AssertLogger->set_level(spdlog::level::err);
-		s_AssertLogger->set_pattern(logPattern);
+		s_AssertLogger->set_pattern(assertLogPattern);
 	}
 }
 

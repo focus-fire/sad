@@ -9,7 +9,7 @@ from constants import PROJECT_DIR, SUBPROCESS_USE_SHELL
 Runs the compiled testbed on the given platform (exe/bin)
 """
 def tests():
-    bet_log('\nStarted running Catch2 tests!')
+    bet_log('Started running Catch2 tests!')
 
     bet_log('Running Core testbed...')
     core_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CoreTests/CoreTests')

@@ -10,7 +10,10 @@ namespace sad
 	public:
 		FileManager();
 
-		void Read();
-		void Write();
+		void Read(std::string path);
+		void JSONRead(std::string path);
+		void WriteExisting(std::string path, std::string content);
+		void AppendExisting(std::string path, std::string content);
+		void CreateWrite(std::string path, std::string content);
 	};
 }

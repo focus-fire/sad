@@ -1,20 +1,22 @@
 #include "Log.h"
 
 #ifdef _SAD_ENABLE_LOGGING
-#include <vector>
+#include <memory>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#ifdef _SAD_WIN32
+#ifdef _SAD_WINDOWS
 #include <spdlog/sinks/msvc_sink.h>
 #endif
+
+#include "Base.h"
 
 namespace
 {
 	static bool s_IsInitialized = false;
-	std::shared_ptr<spdlog::logger> s_CoreLogger;
+	std::shared_ptr<spdlog::logger> s_DebugLogger;
 	std::shared_ptr<spdlog::logger> s_AssertLogger;
 }
 
@@ -27,31 +29,32 @@ void core::InitializeLogging()
 		// Logs follow the format -> [MM-DD-YY HH:MM:SS.mm] [logger] message
 		std::string logPattern = "[%m-%d-%C %X.%e] %^[%n] %v%$";
 
-		// Standard logger outputs to console and file
-		auto coreConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-		auto coreFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/debug.txt", true);
-		coreConsoleSink->set_level(spdlog::level::info);
-		coreFileSink->set_level(spdlog::level::info);
-
-#ifdef _SAD_WIN32
-		auto vsOutputSink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
-		vsOutputSink->set_level(spdlog::level::info);
+#ifdef _SAD_WINDOWS
+		// Create a sink for the VisualStudio 'Output' window
+		std::shared_ptr<spdlog::sinks::msvc_sink_mt> vsOutputSink = std::make_shared<spdlog::sinks::msvc_sink_mt>();
+		vsOutputSink->set_level(spdlog::level::debug);
 #endif
 
-		spdlog::sinks_init_list coreSinkList = { coreFileSink, coreConsoleSink, vsOutputSink };
-		s_CoreLogger = std::make_shared<spdlog::logger>("log", begin(coreSinkList), end(coreSinkList));
-		s_CoreLogger->set_level(spdlog::level::debug);
-		s_CoreLogger->set_pattern(logPattern);
+		// Standard logger outputs all logs to console and file
+		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> coreConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+		std::shared_ptr<spdlog::sinks::basic_file_sink_st> coreFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/debug.txt", true);
+		coreConsoleSink->set_level(spdlog::level::debug);
+		coreFileSink->set_level(spdlog::level::debug);
 
-		// Assert logger should only log critical asserts
-		auto assertConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-		auto assertFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/asserts.txt", true);
-		assertConsoleSink->set_level(spdlog::level::critical);
-		assertFileSink->set_level(spdlog::level::critical);
+		spdlog::sinks_init_list coreSinkList = { coreFileSink, coreConsoleSink, vsOutputSink };
+		s_DebugLogger = std::make_shared<spdlog::logger>("debug", begin(coreSinkList), end(coreSinkList));
+		s_DebugLogger->set_level(spdlog::level::debug);
+		s_DebugLogger->set_pattern(logPattern);
+
+		// Assert logger should only log critical asserts to both the console and file
+		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> assertConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+		std::shared_ptr<spdlog::sinks::basic_file_sink_st> assertFileSink = std::make_shared<spdlog::sinks::basic_file_sink_st>("logs/asserts.txt", true);
+		assertConsoleSink->set_level(spdlog::level::err);
+		assertFileSink->set_level(spdlog::level::err);
 
 		spdlog::sinks_init_list assertSinkList = { assertConsoleSink, assertFileSink, vsOutputSink };
 		s_AssertLogger = std::make_shared<spdlog::logger>("assert", begin(assertSinkList), end(assertSinkList));
-		s_AssertLogger->set_level(spdlog::level::critical);
+		s_AssertLogger->set_level(spdlog::level::err);
 		s_AssertLogger->set_pattern(logPattern);
 	}
 }
@@ -63,7 +66,7 @@ void core::KillLogging()
 		s_IsInitialized = false;
 
 		s_AssertLogger->flush();
-		s_CoreLogger->flush();
+		s_DebugLogger->flush();
 	}
 }
 
@@ -72,16 +75,16 @@ void core::Log(const ELogType type, const char* message)
 	switch (type)
 	{
 	case ELogType::Assert:
-		s_AssertLogger->critical(message);
+		s_AssertLogger->error(message);
 		break;
 	case ELogType::Info:
-		s_CoreLogger->info(message);
+		s_DebugLogger->info(message);
 		break;
 	case ELogType::Debug:
-		s_CoreLogger->debug(message);
+		s_DebugLogger->debug(message);
 		break;
 	case ELogType::Warn:
-		s_CoreLogger->warn(message);
+		s_DebugLogger->warn(message);
 		break;
 	}
 }

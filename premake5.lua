@@ -20,7 +20,7 @@ workspace "sad"
 
     filter "system:windows"
         defines {
-            "_SAD_WIN32"
+            "_SAD_WINDOWS"
         }
     filter "system:macosx"
         defines {
@@ -29,28 +29,28 @@ workspace "sad"
     filter {}
 
     filter "configurations:Debug"
-        defines { 
+        defines {
             "_SAD_DEBUG",
-            "_SAD_ENABLE_LOGGING", 
+            "_SAD_ENABLE_LOGGING",
         }
         symbols "On"
         optimize "Off"
         symbols "On"
     filter "configurations:Release"
-        defines { 
-            "_SAD_RELEASE" 
+        defines {
+            "_SAD_RELEASE"
         }
         optimize "On"
         symbols "Off"
     filter "configurations:Test"
-        defines { 
-            "_SAD_TEST" 
+        defines {
+            "_SAD_TEST"
         }
         optimize "Off"
         symbols "On"
     filter {}
 
-    -- Core Projects 
+    -- Core Projects
     include "Code/Game.premake5.lua"
     include "Code/Engine.premake5.lua"
     include "Code/Core.premake5.lua"

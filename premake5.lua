@@ -33,6 +33,7 @@ workspace "sad"
             "_SAD_DEBUG",
             "_SAD_ENABLE_LOGGING",
             "_SAD_ENABLE_ASSERTS",
+            "SDL_MAIN_HANDLED",
         }
         symbols "On"
         optimize "Off"
@@ -48,6 +49,7 @@ workspace "sad"
             "_SAD_TEST",
             "_SAD_ENABLE_LOGGING",
             "_SAD_ENABLE_ASSERTS",
+            "SDL_MAIN_HANDLED",
         }
         optimize "Off"
         symbols "On"

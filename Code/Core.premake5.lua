@@ -20,11 +20,19 @@ project "Core"
     -- Only link/include library headers as needed here...
     includedirs {
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/glad/include", 
         "%{prj.location}",
     }
 
+    links {
+        "glad",
+    }
+
 	filter "system:windows"
-		defines { "_WINDOWS" }
+		defines { 
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
     filter "system:macosx"
         defines { "_MAC" }
     filter {}

@@ -2,18 +2,18 @@
 
 #include "Application.h"
 
-sad::Game::Application::Application()
+cry::Application::Application()
 	: sad::Application()
 {
 	// Game can be initialized here
 }
 
-sad::Game::Application::~Application()
+cry::Application::~Application()
 {
 	// Game is destroyed here
 }
 
-void sad::Game::Application::End()
+void cry::Application::Teardown()
 {
 	// Game is shut down here
 }

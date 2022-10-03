@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "Window.h"
+
 struct SDL_Window;
 
 namespace sad
@@ -11,9 +13,9 @@ namespace sad
 		virtual ~Application();
 
 		void Start();
-		virtual void End();
+		virtual void Teardown();
 
 	private:
-		SDL_Window* m_Window = nullptr;
+		Window* m_Window = nullptr;
 	};
 }

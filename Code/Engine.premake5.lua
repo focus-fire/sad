@@ -57,7 +57,10 @@ project "Engine"
     filter {}
 
 	filter "system:windows"
-		defines { "_WINDOWS" }
+		defines { 
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
     filter "system:macosx"
         defines { "_MAC" }
     filter {}

@@ -54,7 +54,10 @@ project "Game"
     filter {}
 
 	filter "system:windows"
-		defines { "_WINDOWS" }
+		defines { 
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
         postbuildcommands {
             -- Copy the SDL .dll to the application directory where it can be found at runtime
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)", 

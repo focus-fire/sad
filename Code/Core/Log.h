@@ -36,10 +36,10 @@ namespace core
 		}
 	}
 #else
-	void InitializeLogging() { }
-	void KillLogging() { }
+	inline void InitializeLogging() { }
+	inline void KillLogging() { }
 
-	void Log(const ELogType type, const char* message) { }
+	inline void Log(const ELogType type, const char* message) { }
 
 	template<typename... TArgs>
 	inline void Log(const ELogType type, const char* message, TArgs... args) { }

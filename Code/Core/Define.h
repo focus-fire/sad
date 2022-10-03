@@ -5,7 +5,7 @@
 #ifdef _SAD_DEBUG
 	#if defined(_SAD_WINDOWS)
 		#define SAD_DEBUGBREAK() __debugbreak() 
-	#elif defines(_SAD_MAC)
+	#elif defined(_SAD_MAC)
 		#include <signal.h>
 		#define SAD_DEBUGBREAK() raise(SIGTRAP)
 	#endif

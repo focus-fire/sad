@@ -32,6 +32,7 @@ workspace "sad"
         defines {
             "_SAD_DEBUG",
             "_SAD_ENABLE_LOGGING",
+            "_SAD_ENABLE_ASSERTS",
         }
         symbols "On"
         optimize "Off"
@@ -44,7 +45,9 @@ workspace "sad"
         symbols "Off"
     filter "configurations:Test"
         defines {
-            "_SAD_TEST"
+            "_SAD_TEST",
+            "_SAD_ENABLE_LOGGING",
+            "_SAD_ENABLE_ASSERTS",
         }
         optimize "Off"
         symbols "On"

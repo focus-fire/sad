@@ -7,6 +7,8 @@
 #include <array>
 #include <vector>
 #include <unordered_map>
+#include <algorithm>
 
-#include "Core/Base.h"
+#include "Core/Define.h"
+#include "Core/Assert.h"
 #include "Core/Log.h"

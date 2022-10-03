@@ -3,11 +3,10 @@
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
 
-sad::InputManager sad::InputManager::s_Instance;
-
 sad::InputManager& sad::InputManager::GetInstance()
 {
-    return s_Instance;
+    static sad::InputManager instance;
+    return instance;
 }
 
 void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
@@ -54,22 +53,22 @@ void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
         switch (event.key.keysym.sym)
         {
         case SDLK_w:
-            if (!KeyForward)
+            if (!KeyUp)
             {
                 // Notify forward key pressed 
 
             }
-            KeyForward = true;
+            KeyUp = true;
             spdlog::info("FORWARD key pressed.");
             break;
 
         case SDLK_s:
-            if (!KeyBackward)
+            if (!KeyDown)
             {
                 // Notify backward key pressed 
 
             }
-            KeyBackward = true;
+            KeyDown = true;
             spdlog::info("BACKWARD key pressed.");
             break;
 
@@ -99,19 +98,19 @@ void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
         switch (event.key.keysym.sym)
         {
         case SDLK_w:
-            if (KeyForward)
+            if (KeyUp)
             {
                 // Notify forward key released 
             }
-            KeyForward = false;
+            KeyUp = false;
             break;
 
         case SDLK_s:
-            if (KeyBackward)
+            if (KeyDown)
             {
                 // Notify backward key released 
             }
-            KeyBackward = false;
+            KeyDown = false;
             break;
 
         case SDLK_d:
@@ -133,17 +132,17 @@ void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
     }
 }
 
-bool sad::InputManager::GetKey(int key)
+bool sad::InputManager::GetKey(Direction key)
+{
+    return GetKeyState(key);
+}
+
+bool sad::InputManager::GetKeyPressed(Direction key)
 {
     return false;
 }
 
-bool sad::InputManager::GetKeyPressed(int key)
-{
-    return false;
-}
-
-bool sad::InputManager::GetKeyReleased(int key)
+bool sad::InputManager::GetKeyReleased(Direction key)
 {
     return false;
 }

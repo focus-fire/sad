@@ -1,6 +1,9 @@
 #pragma once 
 
+#include <Editor/Cap.h>
+
 #include "Window.h"
+#include "Renderer/Renderer.h"
 
 struct SDL_Window;
 
@@ -17,5 +20,7 @@ namespace sad
 
 	private:
 		Window* m_Window = nullptr;
+		sad::rad::Renderer* m_Renderer = nullptr;
+		cap::Cap* m_Editor = nullptr;
 	};
 }

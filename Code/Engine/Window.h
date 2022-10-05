@@ -11,6 +11,7 @@ namespace sad
 		std::string Title;
 		unsigned int Width;
 		unsigned int Height;
+		float AspectRatio;
 		std::pair<unsigned int, unsigned int> MaxDimensions;
 		std::pair<unsigned int, unsigned int> MinDimensions;
 
@@ -24,6 +25,7 @@ namespace sad
 			: Title(title)
 			, Width(width)
 			, Height(height)
+			, AspectRatio(static_cast<float>(width) / static_cast<float>(height))
 			, MaxDimensions(maxWidth, maxHeight)
 			, MinDimensions(minWidth, minHeight)
 		{ }
@@ -36,6 +38,7 @@ namespace sad
 
 		void Start();
 		void CreateGLContext();
+		void Render();
 		void Teardown();
 
 		SDL_Window* GetSDLWindow() const { return m_Window; }
@@ -43,6 +46,7 @@ namespace sad
 
 		unsigned int GetWidth() const { return m_Properties.Width; }
 		unsigned int GetHeight() const { return m_Properties.Height; }
+		float GetAspectRatio() const { return static_cast<float>(m_Properties.Width) / static_cast<float>(m_Properties.Height); }
 
 	private:
 		SDL_Window* m_Window = nullptr;

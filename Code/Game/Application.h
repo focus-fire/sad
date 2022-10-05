@@ -2,7 +2,7 @@
 
 #include <Engine/Application.h>
 
-namespace cry
+namespace pog
 {
 	class Application final : public sad::Application
 	{

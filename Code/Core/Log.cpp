@@ -83,6 +83,9 @@ void core::Log(const ELogType type, const char* message)
 	case ELogType::Assert:
 		s_AssertLogger->error(message);
 		break;
+	case ELogType::Error:
+		s_DebugLogger->critical(message);
+		break;
 	case ELogType::Info:
 		s_DebugLogger->info(message);
 		break;

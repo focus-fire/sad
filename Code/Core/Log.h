@@ -5,6 +5,7 @@
 enum class ELogType
 {
 	Assert,
+	Error,
 	Info,
 	Debug,
 	Warn,

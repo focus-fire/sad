@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     core::InitializeLogging();
     core::Log(ELogType::Info, "this engine is sad.");
 
-    cry::Application* app = new cry::Application();
+    pog::Application* app = new pog::Application();
     app->Start();
     delete app;
 

@@ -2,18 +2,18 @@
 
 #include "Application.h"
 
-cry::Application::Application()
+pog::Application::Application()
 	: sad::Application()
 {
 	// Game can be initialized here
 }
 
-cry::Application::~Application()
+pog::Application::~Application()
 {
 	// Game is destroyed here
 }
 
-void cry::Application::Teardown()
+void pog::Application::Teardown()
 {
 	// Game is shut down here
 }

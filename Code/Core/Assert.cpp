@@ -4,18 +4,18 @@
 
 #include <glad/glad.h>
 
-void GLClearErrors()
+void GLClearErrorLog()
 {
 	while (glGetError() != GL_NO_ERROR);
 }
 
-bool GLWriteLog(const char* function, const char* file, int line)
+bool GLWriteErrorLog(const char* function, const char* file, int line)
 {
 	GLenum error;
 
 	while ((error = glGetError()))
 	{
-		core::Log(ELogType::Assert, "OpenGLES Error #{} - {} @ {} line {}", error, function, file, line);
+		core::Log(ELogType::Assert, "OpenGL Error #{} - {} @ {} line {}", error, function, file, line);
 		return false;
 	}
 

@@ -14,9 +14,8 @@
 
 // GL Asserts
 
-void GLClearErrors();
-bool GLWriteLog(const char* function, const char* file, int line);
+void GLClearErrorLog();
+bool GLWriteErrorLog(const char* function, const char* file, int line);
 
-#define GL_CALL(x) GLClearErrors();\
-	x;\
-	SAD_ASSERT(GLWriteLog(#x, SAD_FILE_NAME_C_STR, __LINE__), "Error checking on a GL_CALL failed. Refer to OpenGL trace for more information.");
+#define GL_CALL(x) GLClearErrorLog(); x;\
+	SAD_ASSERT(GLWriteErrorLog(#x, SAD_FILE_NAME_C_STR, __LINE__), "GL_CALL failed, refer to OpenGL trace above for more information");

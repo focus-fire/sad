@@ -10,7 +10,7 @@ sad::Window::Window(const WindowProperties& properties)
 	core::Log(ELogType::Info, "Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
     int result = SDL_Init(SDL_INIT_VIDEO);
-	SAD_ASSERT(result >= 0, "Failed to initialize SDL");
+	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
 
 	// OpenGL Attribute Sets for SDL
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -41,16 +41,21 @@ void sad::Window::Start()
 void sad::Window::CreateGLContext()
 {
 	m_GLContext = SDL_GL_CreateContext(m_Window);
-	SAD_ASSERT(m_GLContext, "Failed to create GL context");
+	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
 
 	int vsync = SDL_GL_SetSwapInterval(1); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
 
 	int glad = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
-	SAD_ASSERT(glad, "Glad should initialize properly");
+	SAD_ASSERT(glad, "Failed to initialize GLAD");
 
 	const char* version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
 	core::Log(ELogType::Info, "Aha! Welcome to OpenGL v{}", version);
+}
+
+void sad::Window::Render()
+{
+	SDL_GL_SwapWindow(m_Window);
 }
 
 void sad::Window::Teardown()

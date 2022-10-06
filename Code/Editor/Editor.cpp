@@ -1,42 +1,43 @@
 #include "sadpch.h"
 
-#include "Cap.h"
+#include "Editor.h"
 
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
 
-cap::Cap::Cap(sad::Window* mainWindow)
-	: m_MainWindow(mainWindow)
-	, m_ShowGameWindow(true)
+#include <Engine/Application.h>
+
+cap::Editor::Editor()
+	: m_ShowGameWindow(true)
 	, m_ShowWelcomeWindow(true)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 
-	m_GameWindowWidth = static_cast<float>(m_MainWindow->GetWidth()) / 2.0f;
-	m_GameWindowHeight = static_cast<float>(m_MainWindow->GetHeight()) / 2.0f;
+	m_GameWindowWidth = static_cast<float>(sad::Application::s_MainWindow->GetWidth()) / 1.25f;
+	m_GameWindowHeight = static_cast<float>(sad::Application::s_MainWindow->GetHeight()) / 1.25f;
 }
 
-void cap::Cap::Start(SDL_Window* sdlWindow, SDL_GLContext glContext)
+void cap::Editor::Start(SDL_Window* sdlWindow, SDL_GLContext glContext)
 {
 	ImGui_ImplSDL2_InitForOpenGL(sdlWindow, glContext);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
-void cap::Cap::CatchSDLEvents(const SDL_Event& event)
+void cap::Editor::CatchSDLEvents(const SDL_Event& event)
 {
 	ImGui_ImplSDL2_ProcessEvent(&event);
 }
 
-void cap::Cap::Clear()
+void cap::Editor::Clear()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 }
 
-void cap::Cap::RenderGameWindow(unsigned int frameBufferTextureId)
+void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
 	bool showGameWindow = true;
 
@@ -50,12 +51,12 @@ void cap::Cap::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImGui::End();
 }
 
-void cap::Cap::Render()
+void cap::Editor::Render()
 {
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin("Welcome", &m_ShowWelcomeWindow);  
-		ImGui::SetWindowPos(ImVec2(60.0f, 525.0f), ImGuiCond_Once);
+		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
 		ImGui::Text("Welcome to the sadEngine!");
 		
 		if (ImGui::Button("Close"))
@@ -68,7 +69,7 @@ void cap::Cap::Render()
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void cap::Cap::Teardown()
+void cap::Editor::Teardown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();

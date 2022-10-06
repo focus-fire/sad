@@ -19,10 +19,11 @@ project "Editor"
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/imgui",
+        "%{prj.location}/../Vendor/glm",
+        "%{prj.location}/../Vendor/glad/include", 
         "%{prj.location}",
     }
 
-    -- Only link SDL in the Engine
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
     else

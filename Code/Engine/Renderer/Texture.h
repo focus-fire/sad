@@ -4,12 +4,12 @@
 
 namespace sad::rad
 {
-	class TextureBuffer
+	class Texture 
 	{
 	public:
-		TextureBuffer(const std::string& filePath);
-		TextureBuffer(int width, int height);
-		~TextureBuffer();
+		explicit Texture(const std::string& filePath);
+		explicit Texture(int width, int height);
+		~Texture();
 
 		void AttachToFramebuffer();
 

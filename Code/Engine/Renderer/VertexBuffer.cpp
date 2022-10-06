@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-#include "TextureBuffer.h"
+#include "Texture.h"
 
 sad::rad::VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {

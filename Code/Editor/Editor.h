@@ -10,10 +10,10 @@
 
 namespace cap 
 {
-	class Cap
+	class Editor
 	{
 	public:
-		explicit Cap(sad::Window* mainWindow);
+		explicit Editor();
 
 		void Start(SDL_Window* sdlWindow, SDL_GLContext glContext);
 		void CatchSDLEvents(const SDL_Event& event);

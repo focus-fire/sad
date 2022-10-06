@@ -15,23 +15,27 @@
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/FrameBuffer.h"
 #include "Renderer/RenderBuffer.h"
-#include "Renderer/TextureBuffer.h"
+#include "Renderer/Texture.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Sample/Cube.h"
 
+sad::Window* sad::Application::s_MainWindow;
+
 sad::Application::Application()
-	: m_Window(new Window())
-	, m_Renderer(new sad::rad::Renderer)
-	, m_Editor(new cap::Cap(m_Window))
 { 
-	m_Window->Start();
-	m_Window->CreateGLContext();
+	s_MainWindow = new sad::Window;
+	s_MainWindow->Start();
+	s_MainWindow->CreateGLContext();
+
+	// Renderer and Editor have to be initialized after the main window
+	m_Renderer = new sad::rad::Renderer;
+	m_Editor = new cap::Editor;
 }
 
 sad::Application::~Application()
 {
-	if (m_Window) 
-		delete m_Window;
+	if (s_MainWindow) 
+		delete s_MainWindow;
 
 	if (m_Renderer)
 		delete m_Renderer;
@@ -42,14 +46,14 @@ sad::Application::~Application()
 
 void sad::Application::Start()
 {
-	SDL_Window* sdlWindow = m_Window->GetSDLWindow();
-	SDL_GLContext glContext = m_Window->GetGLContext();
+	SDL_Window* sdlWindow = s_MainWindow->GetSDLWindow();
+	SDL_GLContext glContext = s_MainWindow->GetGLContext();
 
 	// Launch editor alongside Engine
 	m_Editor->Start(sdlWindow, glContext);
 
 	// Initialize GL
-	GL_CALL(glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight()));
+	GL_CALL(glViewport(0, 0, s_MainWindow->GetWidth(), s_MainWindow->GetHeight()));
 	GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 	GL_CALL(glEnable(GL_BLEND));
 	GL_CALL(glEnable(GL_CULL_FACE));
@@ -71,7 +75,7 @@ void sad::Application::Start()
 	sad::rad::IndexBuffer cubeIb = sad::rad::IndexBuffer(CubeIndices, CubeIndexCount);
 
 	// Create view matrices
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), m_Window->GetAspectRatio(), 1.0f, 20.0f);
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 	glm::mat4 viewMatrix = glm::lookAt(
 		glm::vec3(0.0f, 0.0f, -3.0f),
 		glm::vec3(0.0f, 0.0f, 0.0f),
@@ -82,24 +86,24 @@ void sad::Application::Start()
 	// Create Shader
 	sad::rad::Shader flatShader = sad::rad::Shader("..\\Data\\Shaders\\Default.glsl");
 	flatShader.Bind();
-	flatShader.SetUniform4f("u_Color", 0.85f, 0.85f, 0.85f, 1.0f);
+	flatShader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
 	// Create Texture and bind it to GL_TEXTURE0 or slot 0
-	sad::rad::TextureBuffer defaultTexture = sad::rad::TextureBuffer("..\\Data\\Textures\\Default.png");
+	sad::rad::Texture defaultTexture = sad::rad::Texture("..\\Data\\Textures\\Default.png");
 	defaultTexture.Bind(1);
 	flatShader.SetUniform1i("u_Texture", 1);
 
 	// Create framebuffer 
-	sad::rad::FrameBuffer frameBuffer = sad::rad::FrameBuffer(m_Window->GetWidth(), m_Window->GetHeight());
+	sad::rad::FrameBuffer frameBuffer = sad::rad::FrameBuffer(s_MainWindow->GetWidth(), s_MainWindow->GetHeight());
 	frameBuffer.Bind();
 
 	// Create empty texture and bind it to the framebuffer
-	sad::rad::TextureBuffer frameBufferTexture = sad::rad::TextureBuffer(m_Window->GetWidth(), m_Window->GetHeight());
+	sad::rad::Texture frameBufferTexture = sad::rad::Texture(s_MainWindow->GetWidth(), s_MainWindow->GetHeight());
 	frameBufferTexture.Bind(0);
 	frameBufferTexture.AttachToFramebuffer();
 
 	// Create renderbuffer and bind it to the framebuffer
-	sad::rad::RenderBuffer renderBuffer = sad::rad::RenderBuffer(m_Window->GetWidth(), m_Window->GetHeight());
+	sad::rad::RenderBuffer renderBuffer = sad::rad::RenderBuffer(s_MainWindow->GetWidth(), s_MainWindow->GetHeight());
 	renderBuffer.AttachToFrameBuffer();
 
 	// Clear buffers
@@ -157,8 +161,6 @@ void sad::Application::Start()
 		flatShader.Bind();
 		flatShader.SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		m_Renderer->Draw(cubeVa, cubeIb, flatShader);
-
-
 		frameBuffer.Unbind();
 
 		/* Editor */
@@ -166,7 +168,7 @@ void sad::Application::Start()
 		m_Editor->Render();
 
 		/* Window */
-		m_Window->Render();
+		s_MainWindow->Render();
 	}
 
 	Teardown();
@@ -174,7 +176,6 @@ void sad::Application::Start()
 
 void sad::Application::Teardown()
 { 
-	// Teardown the engine application here
 	m_Editor->Teardown();
-	m_Window->Teardown();
+	s_MainWindow->Teardown();
 }

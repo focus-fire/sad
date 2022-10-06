@@ -1,6 +1,6 @@
 #pragma once 
 
-#include <Editor/Cap.h>
+#include <Editor/Editor.h>
 
 #include "Window.h"
 #include "Renderer/Renderer.h"
@@ -18,9 +18,11 @@ namespace sad
 		void Start();
 		virtual void Teardown();
 
+	public:
+		static Window* s_MainWindow;
+
 	private:
-		Window* m_Window = nullptr;
 		sad::rad::Renderer* m_Renderer = nullptr;
-		cap::Cap* m_Editor = nullptr;
+		cap::Editor* m_Editor = nullptr;
 	};
 }

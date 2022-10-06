@@ -1,6 +1,6 @@
 #include "sadpch.h"
 
-#include "TextureBuffer.h"
+#include "Texture.h"
 
 #include <stb_image.h>
 #include <glad/glad.h>
@@ -9,7 +9,7 @@
 /// Allocates texture memory and sets default texture parameters for an image
 /// </summary>
 /// <param name="filePath">Path to the target texture resource</param>
-sad::rad::TextureBuffer::TextureBuffer(const std::string& filePath)
+sad::rad::Texture::Texture(const std::string& filePath)
 {
 	// Flip texture upside-down as OpenGL expects pixels to start at bottom-left	
 	stbi_set_flip_vertically_on_load(1);
@@ -38,7 +38,7 @@ sad::rad::TextureBuffer::TextureBuffer(const std::string& filePath)
 /// </summary>
 /// <param name="width">Width of the target texture image</param>
 /// <param name="height">Height of the target texture image</param>
-sad::rad::TextureBuffer::TextureBuffer(int width, int height)
+sad::rad::Texture::Texture(int width, int height)
 	: m_Width(width)
 	, m_Height(height)
 {
@@ -54,23 +54,23 @@ sad::rad::TextureBuffer::TextureBuffer(int width, int height)
 	Unbind();
 }
 
-sad::rad::TextureBuffer::~TextureBuffer()
+sad::rad::Texture::~Texture()
 {
 	GL_CALL(glDeleteTextures(1, &m_RendererId));
 }
 
-void sad::rad::TextureBuffer::AttachToFramebuffer()
+void sad::rad::Texture::AttachToFramebuffer()
 {
 	GL_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_RendererId, 0));
 }
 
-void sad::rad::TextureBuffer::Bind(unsigned int slot /* = 0 */) const
+void sad::rad::Texture::Bind(unsigned int slot /* = 0 */) const
 {
 	GL_CALL(glActiveTexture(GL_TEXTURE0 + slot));
 	GL_CALL(glBindTexture(GL_TEXTURE_2D, m_RendererId));
 }
 
-void sad::rad::TextureBuffer::Unbind() const
+void sad::rad::Texture::Unbind() const
 {
 	GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
 }

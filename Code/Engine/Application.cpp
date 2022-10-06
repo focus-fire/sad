@@ -9,18 +9,20 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <imgui.h>
-#include <backends/imgui_impl_opengl3.h>
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/FrameBuffer.h"
+#include "Renderer/RenderBuffer.h"
+#include "Renderer/TextureBuffer.h"
 #include "Renderer/Shader.h"
-#include "Renderer/Texture.h"
 #include "Renderer/Sample/Cube.h"
 
 sad::Application::Application()
 	: m_Window(new Window())
 	, m_Renderer(new sad::rad::Renderer)
-	, m_Editor(new cap::Cap())
+	, m_Editor(new cap::Cap(m_Window))
 { 
 	m_Window->Start();
 	m_Window->CreateGLContext();
@@ -78,12 +80,12 @@ void sad::Application::Start()
 	glm::mat4 vpMatrix = projectionMatrix * viewMatrix;
 
 	// Create Shader
-	sad::rad::Shader flatShader = sad::rad::Shader("..\\Data\\Shaders\\Flat.glsl");
+	sad::rad::Shader flatShader = sad::rad::Shader("..\\Data\\Shaders\\Default.glsl");
 	flatShader.Bind();
 	flatShader.SetUniform4f("u_Color", 0.85f, 0.85f, 0.85f, 1.0f);
 
 	// Create Texture and bind it to GL_TEXTURE0 or slot 0
-	sad::rad::Texture defaultTexture = sad::rad::Texture("..\\Data\\Textures\\Default.png");
+	sad::rad::TextureBuffer defaultTexture = sad::rad::TextureBuffer("..\\Data\\Textures\\Default.png");
 	defaultTexture.Bind(1);
 	flatShader.SetUniform1i("u_Texture", 1);
 
@@ -92,7 +94,7 @@ void sad::Application::Start()
 	frameBuffer.Bind();
 
 	// Create empty texture and bind it to the framebuffer
-	sad::rad::Texture frameBufferTexture = sad::rad::Texture(m_Window->GetWidth(), m_Window->GetHeight());
+	sad::rad::TextureBuffer frameBufferTexture = sad::rad::TextureBuffer(m_Window->GetWidth(), m_Window->GetHeight());
 	frameBufferTexture.Bind(0);
 	frameBufferTexture.AttachToFramebuffer();
 
@@ -156,10 +158,11 @@ void sad::Application::Start()
 		flatShader.SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		m_Renderer->Draw(cubeVa, cubeIb, flatShader);
 
+
 		frameBuffer.Unbind();
 
 		/* Editor */
-		m_Editor->RenderGameWindow(frameBufferTexture.GetTextureId(), m_Window->GetWidth() / 2, m_Window->GetHeight() / 2);
+		m_Editor->RenderGameWindow(frameBufferTexture.GetTextureId());
 		m_Editor->Render();
 
 		/* Window */

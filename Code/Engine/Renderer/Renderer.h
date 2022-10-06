@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 
 #include "VertexArray.h"
-#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 #include "Shader.h"
 
 namespace sad::rad

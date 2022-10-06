@@ -4,12 +4,11 @@
 
 namespace sad::rad
 {
-
-	class VertexBuffer final : public IGLBuffer
+	class FrameBuffer final : public IGLBuffer 
 	{
 	public:
-		explicit VertexBuffer(const void* data, unsigned int size);
-		~VertexBuffer() override;
+		explicit FrameBuffer(unsigned int width, unsigned int height);
+		~FrameBuffer() override;
 
 		void Bind() const override;
 		void Unbind() const override;

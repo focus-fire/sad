@@ -5,12 +5,17 @@
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
 
-cap::Cap::Cap()
-	: m_ShowWelcomeWindow(true)
+cap::Cap::Cap(sad::Window* mainWindow)
+	: m_MainWindow(mainWindow)
+	, m_ShowGameWindow(true)
+	, m_ShowWelcomeWindow(true)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
+
+	m_GameWindowWidth = static_cast<float>(m_MainWindow->GetWidth()) / 2.0f;
+	m_GameWindowHeight = static_cast<float>(m_MainWindow->GetHeight()) / 2.0f;
 }
 
 void cap::Cap::Start(SDL_Window* sdlWindow, SDL_GLContext glContext)
@@ -31,35 +36,26 @@ void cap::Cap::Clear()
 	ImGui::NewFrame();
 }
 
-void cap::Cap::RenderGameWindow(unsigned int frameBufferTextureId, unsigned int width, unsigned int height)
+void cap::Cap::RenderGameWindow(unsigned int frameBufferTextureId)
 {
 	bool showGameWindow = true;
+
+	// Set the window size once when the window opens
 	ImGui::Begin("level.json - sadEngine", &showGameWindow);
-	
-	// Set the starting window size
-	ImGui::SetWindowSize(ImVec2(width + 15.0f, height + 35.0f), 0);
+	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth, m_GameWindowHeight), ImGuiCond_Once);
+	ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
-	// Add the rendered image of the game to the panel 
-	// Use the upper left/lower right corners to ensure that image remains in the frame
-	ImVec2 uvUpperLeftCorner = ImGui::GetCursorScreenPos();
-	ImVec2 uvLowerRightCorner = ImVec2(uvUpperLeftCorner.x + width, uvUpperLeftCorner.y + height);
-
-	// Pass frameBuffer texture to window
-	ImGui::GetWindowDrawList()->AddImage(INT_TO_VOIDP(frameBufferTextureId),
-		uvUpperLeftCorner,
-		uvLowerRightCorner,
-		ImVec2(0, 1),
-		ImVec2(1, 0));
-
+	// Pass frameBuffer texture to be rendered in window
+	ImGui::Image(INT_TO_VOIDP(frameBufferTextureId), availableSize, ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
 }
 
 void cap::Cap::Render()
 {
-	// Welcome Window
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin("Welcome", &m_ShowWelcomeWindow);  
+		ImGui::SetWindowPos(ImVec2(60.0f, 525.0f), ImGuiCond_Once);
 		ImGui::Text("Welcome to the sadEngine!");
 		
 		if (ImGui::Button("Close"))
@@ -67,7 +63,6 @@ void cap::Cap::Render()
 
 		ImGui::End();
 	}
-
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

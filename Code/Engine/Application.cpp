@@ -2,13 +2,18 @@
 
 #include "Application.h"
 
-#include <SDL2/SDL.h>
+#include <entt/entt.hpp>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 #include <imgui.h>
+#include <SDL2/SDL.h>
+
+#include "ECS/Registry.h"
+#include "ECS/Entity.h"
+#include "ECS/RenderableObjectSystem.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/VertexBuffer.h"
@@ -18,6 +23,9 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Sample/Cube.h"
+
+#include "RenderableResource.h"
+#include "RenderableObject.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -34,20 +42,24 @@ sad::Application::Application()
 
 sad::Application::~Application()
 {
-	if (s_MainWindow) 
-		delete s_MainWindow;
-
-	if (m_Renderer)
-		delete m_Renderer;
-
-	if (m_Editor) 
-		delete m_Editor;
+	delete s_MainWindow;
+	delete m_Renderer;
+	delete m_Editor;
 }
 
 void sad::Application::Start()
 {
 	SDL_Window* sdlWindow = s_MainWindow->GetSDLWindow();
 	SDL_GLContext glContext = s_MainWindow->GetGLContext();
+
+	// Create sample resource for a cube
+	RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
+	RenderableResource cubeResource = RenderableResource(&cubeGeometry);
+
+	// Get entity world and create entity
+	sad::ecs::EntityWorld* world = sad::ecs::Registry::GetEntityWorld();
+	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
+	cubeEntity.AddComponent<RenderableResourceComponent>({ &cubeResource });
 
 	// Launch editor alongside Engine
 	m_Editor->Start(sdlWindow, glContext);
@@ -59,21 +71,6 @@ void sad::Application::Start()
 	GL_CALL(glEnable(GL_CULL_FACE));
 	GL_CALL(glEnable(GL_DEPTH_TEST));
 
-	// Initialize a vertex buffer with the proper geometry
-	sad::rad::VertexArray cubeVa = sad::rad::VertexArray();
-	sad::rad::VertexBuffer cubeVb = sad::rad::VertexBuffer(CubePoints, sizeof(CubePoints));
-
-	// Set vertex attributes in attribute container
-	sad::rad::VertexAttributeContainer cubeAttributeContainer;
-	cubeAttributeContainer.AddFloatAttribute(3); // Positions, Vec3, Attribute Position 0
-	cubeAttributeContainer.AddFloatAttribute(2); // Texture Coordinates, Vec2, Attribute Position 1
-
-	// Set vertex array with geometry and attribute data
-	cubeVa.AddBufferWithAttributes(cubeVb, cubeAttributeContainer);
-
-	// Create index buffer for cube indices
-	sad::rad::IndexBuffer cubeIb = sad::rad::IndexBuffer(CubeIndices, CubeIndexCount);
-
 	// Create view matrices
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 	glm::mat4 viewMatrix = glm::lookAt(
@@ -82,16 +79,6 @@ void sad::Application::Start()
 		glm::vec3(0.0f, 1.0f, 0.0f)
 	);
 	glm::mat4 vpMatrix = projectionMatrix * viewMatrix;
-
-	// Create Shader
-	sad::rad::Shader flatShader = sad::rad::Shader("..\\Data\\Shaders\\Default.glsl");
-	flatShader.Bind();
-	flatShader.SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
-
-	// Create Texture and bind it to GL_TEXTURE0 or slot 0
-	sad::rad::Texture defaultTexture = sad::rad::Texture("..\\Data\\Textures\\Default.png");
-	defaultTexture.Bind(1);
-	flatShader.SetUniform1i("u_Texture", 1);
 
 	// Create framebuffer 
 	sad::rad::FrameBuffer frameBuffer = sad::rad::FrameBuffer(s_MainWindow->GetWidth(), s_MainWindow->GetHeight());
@@ -107,10 +94,6 @@ void sad::Application::Start()
 	renderBuffer.AttachToFrameBuffer();
 
 	// Clear buffers
-	cubeVa.Unbind();
-	cubeVb.Unbind();
-	cubeIb.Unbind();
-	flatShader.Unbind();
 	frameBuffer.Unbind();
 
 	// Rotation Logic
@@ -157,10 +140,24 @@ void sad::Application::Start()
 		modelMatrix = glm::rotate(modelMatrix, rotAngle, glm::vec3(1.0f, 1.0f, 1.0f));
 		glm::mat4 mvpMatrix = vpMatrix * modelMatrix;
 
+		/* Update ECS Systems */
+		sad::ecs::RenderableObjectSystem::Update();
+
 		/* Draw */
-		flatShader.Bind();
-		flatShader.SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-		m_Renderer->Draw(cubeVa, cubeIb, flatShader);
+		auto view = world->view<const RenderableObjectComponent>();
+		for (auto [entity, obj] : view.each())
+		{
+			RenderableObjectComponent renderable = obj;
+
+			sad::rad::VertexArray* va = renderable.m_RenderableObject->GetVertexArray();
+			sad::rad::IndexBuffer* ib = renderable.m_RenderableObject->GetIndexBuffer();
+			sad::rad::Shader* shader = renderable.m_RenderableObject->GetShader();
+			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+
+			m_Renderer->Draw(va, ib, shader);
+		}
+
+		// Unbind framebuffer for next pass
 		frameBuffer.Unbind();
 
 		/* Editor */

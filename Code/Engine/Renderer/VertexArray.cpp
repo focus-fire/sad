@@ -11,7 +11,7 @@ sad::rad::VertexArray::VertexArray()
 
 sad::rad::VertexArray::~VertexArray()
 {
-	glDeleteVertexArrays(1, &m_RendererId);
+	GL_CALL(glDeleteVertexArrays(1, &m_RendererId));
 }
 
 void sad::rad::VertexArray::AddBufferWithAttributes(const VertexBuffer& vertexBuffer, const VertexAttributeContainer& vertexAttribContainer)

@@ -87,7 +87,7 @@ const float CubeNormals[72] =
      1.0f,  0.0f,  0.0f,
 };
 
-const float CubeTextureCoords[48] =
+const float CubeTexCoords[48] =
 {
     0.0f, 0.0f,
     0.0f, 1.0f,

@@ -12,6 +12,6 @@ namespace sad::rad
 	{
 	public:
 		void Clear(float r, float g, float b, float a) const;
-		void Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const;
+		void Draw(VertexArray* va, IndexBuffer* ib, Shader* shader) const;
 	};
 }

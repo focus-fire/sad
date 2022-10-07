@@ -8,10 +8,11 @@ void sad::rad::Renderer::Clear(float r, float g, float b, float a) const
 	GL_CALL(glClearColor(r * a, g * a, b * a, a));
 }
 
-void sad::rad::Renderer::Draw(const VertexArray& vertexArray, const IndexBuffer& indexBuffer, const Shader& shader) const
+void sad::rad::Renderer::Draw(VertexArray* vertexArray, IndexBuffer* indexBuffer, Shader* shader) const
 {
-	vertexArray.Bind();
-	indexBuffer.Bind();
+	shader->Bind();
+	vertexArray->Bind();
+	indexBuffer->Bind();
 
-	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer.GetIndexCount(), GL_UNSIGNED_INT, nullptr));
+	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }

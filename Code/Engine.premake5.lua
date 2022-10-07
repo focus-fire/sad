@@ -10,8 +10,8 @@ project "Engine"
     files { "Engine/**.h", "Engine/**.cpp", "*.cpp" }
 
     vpaths {
-        ["Headers/*"] = { "Engine/**.h", "Engine/**.hpp" },
-        ["Sources/*"] = { "Engine/**.c", "Engine/**.cpp" },
+        ["Headers/**"] = { "Engine/**.h", "Engine/**.hpp" },
+        ["Sources/**"] = { "Engine/**.c", "Engine/**.cpp" },
         ["Docs"] = { "Engine/**.md", "Engine/**.txt" },
         ["Resources"] = { "**pch.cpp" },
     }

@@ -48,116 +48,56 @@ void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
 
 void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
 {
-    if (event.type == SDL_KEYDOWN)
+    if (GetKeyReleased(SDL_SCANCODE_W))
     {
-        switch (event.key.keysym.sym)
-        {
-        case SDLK_w:
-            if (!KeyUp)
-            {
-                // Notify forward key pressed 
-
-            }
-            KeyUp = true;
-            spdlog::info("FORWARD key pressed.");
-            break;
-
-        case SDLK_s:
-            if (!KeyDown)
-            {
-                // Notify backward key pressed 
-
-            }
-            KeyDown = true;
-            spdlog::info("BACKWARD key pressed.");
-            break;
-
-        case SDLK_d:
-            if (!KeyRight)
-            {
-                // Notify right key pressed 
-
-            }
-            KeyRight = true;
-            spdlog::info("RIGHT key pressed.");
-            break;
-
-        case SDLK_a:
-            if (!KeyLeft)
-            {
-                // Notify left key pressed
-
-            }
-            KeyLeft = true;
-            spdlog::info("LEFT key pressed.");
-            break;
-        }
+        spdlog::info("W key released.");
     }
-    else if (event.type == SDL_KEYUP)
+
+    if (GetKeyPressed(SDL_SCANCODE_E))
     {
-        switch (event.key.keysym.sym)
-        {
-        case SDLK_w:
-            if (KeyUp)
-            {
-                // Notify forward key released 
-            }
-            KeyUp = false;
-            break;
+        spdlog::info("E key pressed.");
+    }
 
-        case SDLK_s:
-            if (KeyDown)
-            {
-                // Notify backward key released 
-            }
-            KeyDown = false;
-            break;
-
-        case SDLK_d:
-            if (KeyRight)
-            {
-                // Notify right key released 
-            }
-            KeyRight = false;
-            break;
-
-        case SDLK_a:
-            if (KeyLeft)
-            {
-                // Notify left key released
-            }
-            KeyLeft = false;
-            break;
-        }
+    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+    {
+        UpdateKeyboardState(event.key.keysym.scancode, CurrentKeyboardStates[event.key.keysym.scancode]);
     }
 }
 
-bool sad::InputManager::GetKey(Direction key)
+bool sad::InputManager::GetKey(SDL_Scancode key) 
 {
-    return GetKeyState(key);
+    return GetKeyboardState(key);
 }
 
-bool sad::InputManager::GetKeyPressed(Direction key)
+bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
+{
+    if (!GetKeyboardState(key) && CurrentKeyboardStates[key]) {
+        UpdateKeyboardState(key, true);
+        return true;
+    }
+    return false;
+}
+
+bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
+{
+    if (GetKeyboardState(key) && !CurrentKeyboardStates[key]) {
+        UpdateKeyboardState(key, false);
+        return true;
+    }
+    return false;
+}
+
+bool sad::InputManager::GetMouseButton(SDL_MouseButtonEvent button)
 {
     return false;
 }
 
-bool sad::InputManager::GetKeyReleased(Direction key)
+bool sad::InputManager::GetMouseButtonPressed(SDL_MouseButtonEvent button)
 {
     return false;
 }
 
-bool sad::InputManager::GetMouseButton(int button)
-{
-    return false;
-}
-
-bool sad::InputManager::GetMouseButtonPressed(int button)
-{
-    return false;
-}
-
-bool sad::InputManager::GetMouseButtonReleased(int button)
+bool sad::InputManager::GetMouseButtonReleased(SDL_MouseButtonEvent button)
 {
     return false;
 }

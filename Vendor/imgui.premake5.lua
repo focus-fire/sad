@@ -24,7 +24,7 @@ project "imgui"
         table.insert(filers, "imgui/backends/imgui_impl_win32.cpp")
         table.insert(includes, "SDL/include/win/SDL2/")
     else
-        table.insert(files, "imgui/backends/imgui_impl_osx.mm")
+        table.insert(filers, "imgui/backends/imgui_impl_osx.mm")
         table.insert(includes, "SDL/include/mac/SDL2/")
     end
 

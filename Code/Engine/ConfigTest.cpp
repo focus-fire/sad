@@ -29,7 +29,6 @@ void empty_config(std::string filename)
     // delete file if it exists
     if (std::filesystem::exists(filename))
     {
-        std::cout << "Deleting file " << filename << std::endl;
         std::filesystem::remove(filename);
     }
     else 
@@ -50,18 +49,17 @@ int main()
     users.push_back("name=Bob Smith");
 
     // generate test file
-    empty_config("test1.ini");
-    generate_config("test1.ini", "[protocol]", protocols);
-    generate_config("test1.ini", "[user]", users);
+    empty_config("config.ini");
+    generate_config("config.ini", "[protocol]", protocols);
+    generate_config("config.ini", "[user]", users);
 
     // retrieve some information from config file
-    ConfigManager cfg("test1.ini");
-    section* usersection = cfg.get_section("user");
+    section* usersection = ConfigManager::getsection("user");;
 
     if (usersection != NULL)
     {
         std::cout << "section name: " << usersection->name << std::endl;
-        std::cout << "email=" << cfg.get_value("user", "email") << '\n';
+        std::cout << "email=" << ConfigManager::getvalue("user", "email") << '\n';
     }
     else
     {

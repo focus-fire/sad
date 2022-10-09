@@ -6,10 +6,12 @@
 #include <unordered_map>
 #include <list>
 
-ConfigManager::ConfigManager(const std::string& filename)
-{
-    parse(filename);
-}
+std::list<section> ConfigManager::sections;
+
+//ConfigManager::ConfigManager(const std::string& filename)
+//{
+//    parse(filename);
+//}
 
 // trim leading white-spaces
 static std::string& ltrim(std::string& s) 
@@ -126,4 +128,25 @@ void ConfigManager::parse(const std::string& filename)
     }
 }
 
+bool ConfigManager::m_isFileRead = false;
 
+ConfigManager& ConfigManager::GetInstance()
+{
+    if(!m_isFileRead)
+    {
+        parse("config.ini");
+        m_isFileRead = true;
+    }
+    static ConfigManager instance;
+    return instance;
+}
+
+section* ConfigManager::getsection(const std::string& sectionname) 
+{
+    return GetInstance().get_section(sectionname);
+}
+
+std::string ConfigManager::getvalue(const std::string& sectionname, const std::string& keyname)
+{
+    return GetInstance().get_value(sectionname, keyname);
+}

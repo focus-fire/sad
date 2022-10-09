@@ -1,3 +1,5 @@
+#include "sadpch.h"
+
 #include "InputManager.h"
 
 #include <SDL2/SDL.h>

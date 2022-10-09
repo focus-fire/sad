@@ -97,7 +97,7 @@ void sad::Application::Start()
 		{
 			m_Editor->CatchSDLEvents(event);
 
-      InputManager::GetInstance().CatchKeyboardEvent(event);
+			InputManager::GetInstance().CatchKeyboardEvent(event);
 			InputManager::GetInstance().CatchGamepadEvent(event, joy);
 
 			if (event.type == SDL_QUIT) 

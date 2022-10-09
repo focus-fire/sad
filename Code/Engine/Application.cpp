@@ -133,7 +133,12 @@ void sad::Application::Start()
 
 		rotAngle += 0.001f * elapsedTime;
 		if (rotAngle >= 360.0f)
+		{
 			rotAngle = 0.0f;
+
+			// Call Event Functions with name group "UI"
+			core::SignalEvent("UI");
+		}
 
 		glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 1.0f));
 		modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));

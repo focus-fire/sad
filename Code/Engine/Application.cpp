@@ -166,6 +166,9 @@ void sad::Application::Start()
 
 		/* Window */
 		s_MainWindow->Render();
+
+		/* Events */
+		core::UpdateEvents();
 	}
 
 	Teardown();

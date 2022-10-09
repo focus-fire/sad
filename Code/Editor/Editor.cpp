@@ -7,6 +7,15 @@
 
 #include <Engine/Application.h>
 
+const char* UI_TEXT = "Welcome to the sadEngine!";
+int m_Counter = 0;
+
+void edit_text()
+{
+	m_Counter++;
+	UI_TEXT = "Welcome to the game! " + char(m_Counter);
+}
+
 cap::Editor::Editor()
 	: m_ShowGameWindow(true)
 	, m_ShowWelcomeWindow(true)
@@ -23,6 +32,9 @@ void cap::Editor::Start(SDL_Window* sdlWindow, SDL_GLContext glContext)
 {
 	ImGui_ImplSDL2_InitForOpenGL(sdlWindow, glContext);
 	ImGui_ImplOpenGL3_Init("#version 150");
+
+	// Create test event
+	core::InitializeListener("UI", edit_text, 0, false);
 }
 
 void cap::Editor::CatchSDLEvents(const SDL_Event& event)
@@ -53,11 +65,12 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 
 void cap::Editor::Render()
 {
+	core::SignalEvent("UI");
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin("Welcome", &m_ShowWelcomeWindow);  
 		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
-		ImGui::Text("Welcome to the sadEngine!");
+		ImGui::Text(UI_TEXT);
 		
 		if (ImGui::Button("Close"))
 			m_ShowWelcomeWindow = false;

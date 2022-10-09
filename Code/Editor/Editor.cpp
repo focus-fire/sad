@@ -19,9 +19,9 @@ cap::Editor::Editor()
 	m_GameWindowHeight = static_cast<float>(sad::Application::s_MainWindow->GetHeight()) / 1.25f;
 }
 
-void cap::Editor::Start(SDL_Window* sdlWindow, SDL_GLContext glContext)
+void cap::Editor::Start()
 {
-	ImGui_ImplSDL2_InitForOpenGL(sdlWindow, glContext);
+	ImGui_ImplSDL2_InitForOpenGL(sad::Application::s_MainWindow->GetSDLWindow(), sad::Application::s_MainWindow->GetGLContext());
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 

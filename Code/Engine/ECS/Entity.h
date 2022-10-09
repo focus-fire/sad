@@ -2,6 +2,8 @@
 
 #include <entt/entt.hpp>
 
+#include <Engine/Transform.h>
+
 #include "Registry.h"
 
 namespace sad::ecs
@@ -12,25 +14,38 @@ namespace sad::ecs
 		Entity();
 		Entity(const Entity& entity) = delete;
 
-		entt::entity GetHandle() { return m_EntityHandle; }
+		const entt::entity GetHandle() const { return m_EntityHandle; }
 
 		template<typename T>
 		T& AddComponent(T component)
 		{
-			return Registry::GetEntityWorld()->emplace<T>(m_EntityHandle, component);
+			return Registry::GetEntityWorld().emplace<T>(m_EntityHandle, component);
 		}
 
 		template<typename T>
 		T& RemoveComponent()
 		{
-			return Registry::GetEntityWorld()->remove<T>(m_EntityHandle);
+			return Registry::GetEntityWorld().remove<T>(m_EntityHandle);
 		}
 
 		template<typename T>
 		T& GetComponent()
 		{
-			return Registry::GetEntityWorld()->get<T>(m_EntityHandle);
+			return Registry::GetEntityWorld().get<T>(m_EntityHandle);
 		}
+
+		bool operator==(const Entity& other) const
+		{ 
+			return m_EntityHandle == other.m_EntityHandle;
+		}
+
+		bool operator!=(const Entity& other) const
+		{
+			return !(*this == other);
+		}
+
+	public:
+		Transform Transform;
 
 	private:
 		entt::entity m_EntityHandle;

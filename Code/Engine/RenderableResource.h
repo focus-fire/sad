@@ -16,22 +16,11 @@ namespace sad
 			const unsigned int IndexCount;
 		};
 
-		explicit RenderableResource(Geometry* geometry);
+		explicit RenderableResource(const Geometry& geometry);
 
-		Geometry* GetGeometry() const { return m_Geometry; }
+		const Geometry GetGeometry() const { return m_Geometry; }
 
 	private:
-		Geometry* m_Geometry;
-	};
-
-	struct RenderableResourceComponent
-	{
-		RenderableResource* m_RenderableResource;
-		bool m_IsResourceDirty;
-
-		RenderableResourceComponent(RenderableResource* renderableResource)
-			: m_RenderableResource(renderableResource)
-			, m_IsResourceDirty(true)
-		{ }
+		Geometry m_Geometry;
 	};
 }

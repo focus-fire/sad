@@ -7,7 +7,17 @@ namespace sad::rad
 	class Texture 
 	{
 	public:
+		/**
+		 * @brief Allocates texture memory and sets default texture parameters for an image 
+		 * @param filePath Path to the target texture resource
+		*/
 		explicit Texture(const std::string& filePath);
+
+		/**
+		 * @brief Allocates memory for an empty texture without an image 
+		 * @param width Width of the target texture image
+		 * @param height Height of the target texture image
+		*/
 		explicit Texture(int width, int height);
 		~Texture();
 

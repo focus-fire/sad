@@ -14,9 +14,8 @@ namespace sad::ecs
 	public:
 		Registry(const Registry&) = delete;
 
-		static Registry* GetInstance();
-
-		static EntityWorld* GetEntityWorld();
+		static Registry& GetInstance();
+		static EntityWorld& GetEntityWorld();
 
 		static entt::entity GenerateEntityHandle();
 

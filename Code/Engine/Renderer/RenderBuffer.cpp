@@ -8,9 +8,11 @@ sad::rad::RenderBuffer::RenderBuffer(unsigned int width, unsigned int height)
 {
 	GL_CALL(glGenRenderbuffers(1, &m_RendererId));
 
-	// Bind and create render buffer for specified width and height
 	Bind();
+
+	// Create render buffer for specified width and height
 	GL_CALL(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
+
 	Unbind();
 }
 

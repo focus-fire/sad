@@ -5,11 +5,11 @@
 sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	: m_RenderableResource(resource)
 {
-	RenderableResource::Geometry* geometry = m_RenderableResource->GetGeometry();
+	const RenderableResource::Geometry& geometry = m_RenderableResource->GetGeometry();
 
 	// Create vertex array and buffer  
 	m_VertexArray = new sad::rad::VertexArray();
-	m_VertexBuffer = new sad::rad::VertexBuffer(geometry->Vertices, geometry->VertexSize); 
+	m_VertexBuffer = new sad::rad::VertexBuffer(geometry.Vertices, geometry.VertexSize); 
 	m_VertexAttributes = new sad::rad::VertexAttributeContainer();
 
 	// Stripe the data in 'Vertices' appropriately
@@ -18,7 +18,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	m_VertexArray->AddBufferWithAttributes(*m_VertexBuffer, *m_VertexAttributes);
 
 	// Create the index buffer for indices
-	m_IndexBuffer = new sad::rad::IndexBuffer(geometry->Indices, geometry->IndexCount);
+	m_IndexBuffer = new sad::rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
 	// All RenderableObjects start with this 'Material' by default
 	m_Shader = new sad::rad::Shader("..\\Data\\Shaders\\Default.glsl");

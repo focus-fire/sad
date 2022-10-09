@@ -33,9 +33,4 @@ namespace sad
 		sad::rad::Texture* m_Texture;
 		sad::rad::Shader* m_Shader;
 	};
-
-	struct RenderableObjectComponent
-	{
-		std::shared_ptr<RenderableObject> m_RenderableObject;
-	};
 }

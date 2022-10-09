@@ -12,7 +12,7 @@ sad::rad::Shader::Shader(const std::string& combinedShaderPath)
 
     m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
     SAD_ASSERT(m_RendererId, "Shader was properly created in the renderer")
-    core::Log(ELogType::Info, "Shader program object created for shader with Id #{}", m_RendererId);
+    core::Log(ELogType::Trace, "Shader program object created for shader with ID #{}", m_RendererId);
 
     GL_CALL(glUseProgram(m_RendererId));
 }
@@ -25,7 +25,7 @@ sad::rad::Shader::Shader(const std::string& vertexFilePath, const std::string& f
 
     m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
     SAD_ASSERT(m_RendererId, "Shader was properly created in the renderer")
-    core::Log(ELogType::Info, "Shader program object created for shader with Id #{}", m_RendererId);
+    core::Log(ELogType::Trace, "Shader program object created for shader with ID #{}", m_RendererId);
 
     GL_CALL(glUseProgram(m_RendererId));
 }
@@ -40,11 +40,6 @@ void sad::rad::Shader::Unbind() const
     GL_CALL(glUseProgram(0));
 }
 
-/// <summary>
-/// Retrives the index position of a shader's uniform  
-/// </summary>
-/// <param name="name">The name of a uniform declared in the shader source</param>
-/// <returns>Integer representing the uniform's position</returns>
 int sad::rad::Shader::GetUniformLocation(const std::string& name)
 {
     // Return uniform location if it exists in the cache
@@ -82,9 +77,6 @@ void sad::rad::Shader::SetUniformMatrix4fv(const std::string& name, const float*
     GL_CALL(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, matrix));
 }
 
-/// <summary>
-/// Parses a single shader with either a fragment or a vertex component denoted by a '#shader TYPE' header
-/// </summary>
 std::string sad::rad::Shader::ParseSingleShader(const std::string& filePath)
 {
     std::ifstream stream(filePath);
@@ -113,9 +105,6 @@ std::string sad::rad::Shader::ParseSingleShader(const std::string& filePath)
     return ss.str();
 }
 
-/// <summary>
-/// Parses a shader file with both fragment and vertex components indicated with appropriate '#shader TYPE' headers 
-/// </summary>
 sad::rad::Shader::Source sad::rad::Shader::ParseCombinedShader(const std::string& filePath)
 {
     std::ifstream stream(filePath);
@@ -146,9 +135,6 @@ sad::rad::Shader::Source sad::rad::Shader::ParseCombinedShader(const std::string
     return { ss[0].str(), ss[1].str() };
 }
 
-/// <summary>
-/// Compiles shaders from a source string with shader contents 
-/// </summary>
 unsigned int sad::rad::Shader::CompileShader(unsigned int type, const std::string& shaderSource)
 {
     unsigned int shaderId = glCreateShader(type);
@@ -179,9 +165,6 @@ unsigned int sad::rad::Shader::CompileShader(unsigned int type, const std::strin
     return shaderId;
 }
 
-/// <summary>
-/// Creates, compiles, and attaches shader programs and deletes shader sources after compilation
-/// </summary>
 unsigned int sad::rad::Shader::CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
     unsigned int glProgram = glCreateProgram();

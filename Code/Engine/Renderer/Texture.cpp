@@ -5,10 +5,6 @@
 #include <stb_image.h>
 #include <glad/glad.h>
 
-/// <summary>
-/// Allocates texture memory and sets default texture parameters for an image
-/// </summary>
-/// <param name="filePath">Path to the target texture resource</param>
 sad::rad::Texture::Texture(const std::string& filePath)
 {
 	// Flip texture upside-down as OpenGL expects pixels to start at bottom-left	
@@ -16,6 +12,8 @@ sad::rad::Texture::Texture(const std::string& filePath)
 	m_LocalBuffer = stbi_load(filePath.c_str(), &m_Width, &m_Height, &m_BitsPerPixel, 4);
 
 	GL_CALL(glGenTextures(1, &m_RendererId));
+	SAD_ASSERT(m_RendererId, "Failed to generate texture in GL");
+
 	Bind();
 
 	// Set default texture parameters
@@ -26,6 +24,8 @@ sad::rad::Texture::Texture(const std::string& filePath)
 
 	// Create 2D texture
 	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer));
+	core::Log(ELogType::Trace, "Texture created with ID #{}", m_RendererId);
+
 	Unbind();
 
 	// Free unneeded image data 
@@ -33,23 +33,21 @@ sad::rad::Texture::Texture(const std::string& filePath)
 		stbi_image_free(m_LocalBuffer);
 }
 
-/// <summary>
-/// Allocates texture memory without an image
-/// </summary>
-/// <param name="width">Width of the target texture image</param>
-/// <param name="height">Height of the target texture image</param>
 sad::rad::Texture::Texture(int width, int height)
 	: m_Width(width)
 	, m_Height(height)
 {
 	GL_CALL(glGenTextures(1, &m_RendererId));
-	Bind();
+	SAD_ASSERT(m_RendererId, "Failed to generate texture in GL");
 
-	// ALlocate memory for empty texture
-	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
+	Bind();
 
 	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+
+	// ALlocate memory for empty texture
+	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL));
+	core::Log(ELogType::Trace, "Texture created with ID #{}", m_RendererId);
 
 	Unbind();
 }

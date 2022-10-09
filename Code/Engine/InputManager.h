@@ -24,6 +24,12 @@ namespace sad
         
         const Uint8* CurrentKeyboardStates = SDL_GetKeyboardState(nullptr);
         std::map<SDL_Scancode, bool> KeyboardStates;
+
+        /**
+         * @brief Saves the down state of a key.
+         * @param key 
+         * @param pressed 
+        */
         void UpdateKeyboardState(SDL_Scancode key, bool pressed)
         {
             std::map<SDL_Scancode, bool>::iterator iter = KeyboardStates.find(key);
@@ -34,6 +40,12 @@ namespace sad
             }
             KeyboardStates.insert({key, pressed});
         }
+
+        /**
+         * @brief Returns true if a key is down in the previous frame.
+         * @param key 
+         * @return 
+        */
         bool GetKeyboardState(SDL_Scancode key)
         {
             std::map<SDL_Scancode, bool>::iterator iter = KeyboardStates.find(key);

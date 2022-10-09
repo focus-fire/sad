@@ -46,29 +46,33 @@ void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
     }
 }
 
+/**
+ * @brief Catches keyboard events from SDL_Event and updates the keyboard state;
+ * @param event 
+*/
 void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
 {
-    if (GetKeyReleased(SDL_SCANCODE_W))
-    {
-        spdlog::info("W key released.");
-    }
-
-    if (GetKeyPressed(SDL_SCANCODE_E))
-    {
-        spdlog::info("E key pressed.");
-    }
-
     if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
     {
         UpdateKeyboardState(event.key.keysym.scancode, CurrentKeyboardStates[event.key.keysym.scancode]);
     }
 }
 
+/**
+ * @brief Returns true if the key coresponding to the scancode is down.
+ * @param key 
+ * @return 
+*/
 bool sad::InputManager::GetKey(SDL_Scancode key) 
 {
     return GetKeyboardState(key);
 }
 
+/**
+ * @brief Returns true if key coresponding to the scancode is pressed before the last frame.
+ * @param key 
+ * @return 
+*/
 bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
 {
     if (!GetKeyboardState(key) && CurrentKeyboardStates[key]) {
@@ -78,6 +82,11 @@ bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
     return false;
 }
 
+/**
+ * @brief Returns true if key coresponding to the scancode is released before the last frame.
+ * @param key
+ * @return
+*/
 bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
 {
     if (GetKeyboardState(key) && !CurrentKeyboardStates[key]) {

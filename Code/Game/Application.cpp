@@ -1,3 +1,5 @@
+#include "sadpch.h"
+
 #include "Application.h"
 
 sad::Game::Application::Application()

@@ -4,12 +4,16 @@ project "Engine"
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
-    files { "Engine/**.h", "Engine/**.cpp" }
+    pchheader "sadpch.h"
+    pchsource "sadpch.cpp"
+
+    files { "Engine/**.h", "Engine/**.cpp", "*.cpp" }
 
     vpaths {
         ["Headers"] = { "Engine/**.h", "Engine/**.hpp" },
         ["Sources/*"] = { "Engine/**.c", "Engine/**.cpp" },
         ["Docs"] = { "Engine/**.md", "Engine/**.txt" },
+        ["Resources"] = { "**pch.cpp" },
     }
 
     -- Manually resolve includes and links by target platform
@@ -28,6 +32,7 @@ project "Engine"
     }
 
     local linkers = {
+        "Core",
         "glad",
         "stb_image",
         "imgui",

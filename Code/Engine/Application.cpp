@@ -1,3 +1,5 @@
+#include "sadpch.h"
+
 #include "Application.h"
 
 #include <SDL2/SDL.h>

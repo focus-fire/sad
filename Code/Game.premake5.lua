@@ -5,12 +5,16 @@ project "Game"
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
-    files { "Game/**.h", "Game/**.cpp" }
+    pchheader "sadpch.h"
+    pchsource "sadpch.cpp"
+
+    files { "Game/**.h", "Game/**.cpp", "*.cpp" }
 
     vpaths {
         ["Headers"] = { "Game/**.h", "Game/**.hpp" },
         ["Sources/*"] = { "Game/**.c", "Game/**.cpp" },
         ["Docs"] = { "Game/**.md", "Game/**.txt" },
+        ["Resources"] = { "**pch.cpp" },
     }
 
     -- Manually resolve includes and links by target platform
@@ -18,12 +22,15 @@ project "Game"
     -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/glad/include",
+        "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}",
     }
 
     local linkers = {
+        "Core",
         "Engine",
         "glad",
         "stb_image",
@@ -49,7 +56,10 @@ project "Game"
     filter {}
 
 	filter "system:windows"
-		defines { "_WINDOWS" }
+		defines { 
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
         postbuildcommands {
             -- Copy the SDL .dll to the application directory where it can be found at runtime
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)", 

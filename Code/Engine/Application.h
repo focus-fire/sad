@@ -1,5 +1,10 @@
 #pragma once 
 
+#include <Editor/Editor.h>
+
+#include "Window.h"
+#include "Renderer/Renderer.h"
+
 struct SDL_Window;
 
 namespace sad
@@ -11,9 +16,13 @@ namespace sad
 		virtual ~Application();
 
 		void Start();
-		virtual void End();
+		virtual void Teardown();
+
+	public:
+		static Window* s_MainWindow;
 
 	private:
-		SDL_Window* m_Window = nullptr;
+		sad::rad::Renderer* m_Renderer = nullptr;
+		cap::Editor* m_Editor = nullptr;
 	};
 }

@@ -1,3 +1,5 @@
+#include "sadpch.h"
+
 #include <spdlog/spdlog.h>
 
 #include <Game/Application.h>
@@ -5,13 +7,15 @@
 
 int main(int argc, char* argv[])
 {
-    spdlog::info("this engine is sad.");
+    core::InitializeLogging();
+    core::Log(ELogType::Info, "this engine is sad.");
 
-    sad::Game::Application* app = new sad::Game::Application();
+    pog::Application* app = new pog::Application();
     app->Start();
     delete app;
 
-    spdlog::info("this engine shutdown successfully.");
+    core::Log(ELogType::Info, "this engine is dead.");
+    core::KillLogging();
 
     return 0;
 }

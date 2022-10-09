@@ -1,5 +1,10 @@
 #include <catch2/catch.hpp>
 
+/*
+ * Disable optimize in unit tests for more verbose traces/errors
+ */
+#pragma optimize("", off)
+
 /**
  * Catch2 v.2.x
  * https://github.com/catchorg/catch2/tree/v2.x
@@ -17,7 +22,7 @@ namespace sad
 
 TEST_CASE("Factorials are computed", "[factorial]")
 {
-	REQUIRE(sad::Factorial(1) == 1);
+	REQUIRE_FALSE(sad::Factorial(1) == 2);
 	REQUIRE(sad::Factorial(2) == 2);
 	REQUIRE(sad::Factorial(3) == 6);
 	REQUIRE(sad::Factorial(10) == 3628800);

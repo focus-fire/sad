@@ -9,18 +9,26 @@ from constants import PROJECT_DIR, SUBPROCESS_USE_SHELL
 Runs the compiled testbed on the given platform (exe/bin)
 """
 def tests():
-    bet_log('Running Catch2 tests...\n')
+    bet_log('Started running Catch2 tests!')
 
-    code_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CodeTests')
-    code_test_cmd = subprocess.run([code_test_bin], shell=SUBPROCESS_USE_SHELL)
+    bet_log('Running Core testbed...')
+    core_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/CoreTests/CoreTests')
+    core_test_cmd = subprocess.run([core_test_bin], shell=SUBPROCESS_USE_SHELL)
 
-    eng_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests')
+    bet_log('Running Game testbed...')
+    game_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/GameTests/GameTests')
+    game_test_cmd = subprocess.run([game_test_bin], shell=SUBPROCESS_USE_SHELL)
+
+    bet_log('Running Engine testbed...')
+    eng_test_bin = os.path.join(PROJECT_DIR, 'Build/Bin/Tests/EngineTests/EngineTests')
     eng_test_cmd = subprocess.run([eng_test_bin], shell=SUBPROCESS_USE_SHELL)
 
-    if code_test_cmd.returncode == 0 and eng_test_cmd.returncode == 0:
-        bet_log("bet! Successfully ran tests.")
-    else:
-        bet_err("Uh oh, awkward... something went wrong while executing the tests. Did you build the platform executable for the 'Tests' project?")
+    tests_passed = core_test_cmd.returncode == 0 and game_test_cmd.returncode == 0 and eng_test_cmd.returncode == 0  
+
+    if not tests_passed: 
+        bet_err("Uh oh, awkward... either the tests failed or something went wrong while running the testbeds.")
+
+    bet_log("bet! Successfully ran tests.")
 
 
 """

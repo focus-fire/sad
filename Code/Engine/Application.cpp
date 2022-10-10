@@ -71,8 +71,8 @@ void sad::Application::Start()
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
 
-	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
-	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
+	//secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
+	//secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
 
 	// Create view matrices 
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
@@ -128,15 +128,61 @@ void sad::Application::Start()
 		if (translate >= glm::pi<float>())
 			translate = -1.0f * glm::pi<float>();
 
-		// Manipulate first entity transform
-		cubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		cubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(translate) / 100.0f, 0.0f));
-		cubeEntity.Transform.SetScale(glm::vec3(0.75f));
+		float movespeed = 0.025f;
 
-		// Manipulate second entity transform
-		secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
-		secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
+		// forward/back
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
+		}
+
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_S))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
+		}
+
+		// left/right
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_A))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
+		}
+
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_D))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
+		}
+
+		// up/down
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_SPACE))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+		}
+
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LSHIFT))
+		{
+			cubeEntity.Transform.Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+		}
+
+		// rotate left/right
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LEFT))
+		{
+			cubeEntity.Transform.Rotate(glm::vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_RIGHT))
+		{
+			cubeEntity.Transform.Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
+		}
+
+		//// Manipulate first entity transform
+		//cubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
+		//cubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(translate) / 100.0f, 0.0f));
+		//cubeEntity.Transform.SetScale(glm::vec3(0.75f));
+
+		//// Manipulate second entity transform
+		//secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
+		//secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
+		//secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
 
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update();

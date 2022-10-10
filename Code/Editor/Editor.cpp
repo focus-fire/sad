@@ -65,6 +65,14 @@ void cap::Editor::Render()
 		ImGui::End();
 	}
 
+	ImGui::Begin("Controls");
+	ImGui::SetWindowSize(ImVec2(300.0f, 100.0f));
+	ImGui::SetWindowPos(ImVec2(260.0f, 790.0f), ImGuiCond_Once);
+	ImGui::Text("Move:   WASD");
+	ImGui::Text("Fly:    space/shift");
+	ImGui::Text("Rotate: left/right arrows");
+	ImGui::End();
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

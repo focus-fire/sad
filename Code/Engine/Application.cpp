@@ -19,6 +19,7 @@
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
+#include "ECS/Components/PlayerControllerComponent.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
@@ -29,6 +30,7 @@
 #include "Transform.h"
 #include "RenderableResource.h"
 #include "RenderableObject.h"
+#include "PlayerController.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -67,9 +69,12 @@ void sad::Application::Start()
 	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
 	sad::ecs::Entity secondCubeEntity = sad::ecs::Entity();
 
+	PlayerController controller = PlayerController(&cubeEntity.Transform);
+
 	// Add resource and transform components to the entities
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
+	cubeEntity.AddComponent<sad::ecs::PlayerControllerComponent>({ &controller });
 
 	//secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	//secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
@@ -118,6 +123,7 @@ void sad::Application::Start()
 		m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
 
 		/* Update */
+		cubeEntity.GetComponent<sad::ecs::PlayerControllerComponent>().m_PlayerController->Update();
 
 		/* Update Game Logic */
 		auto currentTime = std::chrono::steady_clock::now();
@@ -128,51 +134,7 @@ void sad::Application::Start()
 		if (translate >= glm::pi<float>())
 			translate = -1.0f * glm::pi<float>();
 
-		float movespeed = 0.025f;
-
-		// forward/back
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
-		}
-
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_S))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
-		}
-
-		// left/right
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_A))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
-		}
-
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_D))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
-		}
-
-		// up/down
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_SPACE))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
-		}
-
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LSHIFT))
-		{
-			cubeEntity.Transform.Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
-		}
-
-		// rotate left/right
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LEFT))
-		{
-			cubeEntity.Transform.Rotate(glm::vec3(0.0f, 1.0f, 0.0f));
-		}
-
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_RIGHT))
-		{
-			cubeEntity.Transform.Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
-		}
+		
 
 		//// Manipulate first entity transform
 		//cubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
@@ -183,6 +145,7 @@ void sad::Application::Start()
 		//secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
 		//secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
 		//secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
+
 
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update();
@@ -203,6 +166,7 @@ void sad::Application::Start()
 
 			m_Renderer->Draw(va, ib, shader);
 		}
+		
 
 		// Unbind framebuffer for next pass
 		m_Renderer->UnbindFrameBuffer();

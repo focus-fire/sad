@@ -22,10 +22,12 @@ project "imgui"
     -- Add OS specific implementations of ImGui and SDL
     if os.target() == "windows" then
         table.insert(filers, "imgui/backends/imgui_impl_win32.cpp")
-        table.insert(includes, "SDL/include/win/SDL2/")
+        table.insert(includes, "SDL/include/win")
+        table.insert(includes, "SDL/include/win/SDL2")
     else
         table.insert(filers, "imgui/backends/imgui_impl_osx.mm")
-        table.insert(includes, "SDL/include/mac/SDL2/")
+        table.insert(includes, "SDL/include/mac")
+        table.insert(includes, "SDL/include/mac/SDL2")
     end
 
     files { filers }
@@ -33,7 +35,7 @@ project "imgui"
     includedirs { includes }
 
     defines {
-        "IMGUI_IMPL_OPENGL_LOADER_GLAD"
+        "IMGUI_IMPL_OPENGL_LOADER_GLAD",
     }
 
     filter "system:windows"

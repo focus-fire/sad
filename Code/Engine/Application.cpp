@@ -76,8 +76,8 @@ void sad::Application::Start()
 	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
 	cubeEntity.AddComponent<sad::ecs::PlayerControllerComponent>({ &controller });
 
-	//secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
-	//secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
+	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
+	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
 
 	// Create view matrices 
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
@@ -134,17 +134,10 @@ void sad::Application::Start()
 		if (translate >= glm::pi<float>())
 			translate = -1.0f * glm::pi<float>();
 
-		
-
-		//// Manipulate first entity transform
-		//cubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		//cubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(translate) / 100.0f, 0.0f));
-		//cubeEntity.Transform.SetScale(glm::vec3(0.75f));
-
 		//// Manipulate second entity transform
-		//secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		//secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
-		//secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
+		secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
+		secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
+		secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
 
 
 		/* Update ECS Systems */

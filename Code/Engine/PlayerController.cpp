@@ -8,9 +8,10 @@ sad::PlayerController::~PlayerController() {}
 
 void sad::PlayerController::Update()
 {
+	// Movespeed, to later get on config instead.
 	float movespeed = 0.025f;
 
-	// forward/back
+	// Handles forward/back movement using W and S.
 	if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W))
 	{
 		transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
@@ -21,7 +22,7 @@ void sad::PlayerController::Update()
 		transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
 	}
 
-	// left/right
+	// Handles left/right movement using A and D.
 	if (InputManager::GetInstance().GetKey(SDL_SCANCODE_A))
 	{
 		transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
@@ -32,7 +33,7 @@ void sad::PlayerController::Update()
 		transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
 	}
 
-	// up/down
+	// Handles up/down flight using SPACE and LSHIFT.
 	if (InputManager::GetInstance().GetKey(SDL_SCANCODE_SPACE))
 	{
 		transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
@@ -43,7 +44,7 @@ void sad::PlayerController::Update()
 		transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
 	}
 
-	// rotate left/right
+	// Handles left/right rotation using LEFT and RIGHT arrow keys.
 	if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LEFT))
 	{
 		transform->Rotate(glm::vec3(0.0f, 1.0f, 0.0f));

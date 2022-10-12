@@ -5,9 +5,11 @@
 enum class ELogType
 {
 	Assert,
+	Error,
+	Warn,
 	Info,
 	Debug,
-	Warn,
+	Trace,
 };
 
 namespace core

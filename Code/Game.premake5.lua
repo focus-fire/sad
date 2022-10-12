@@ -22,6 +22,8 @@ project "Game"
     -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/glad/include",
+        "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}",
@@ -30,6 +32,7 @@ project "Game"
     local linkers = {
         "Core",
         "Engine",
+        "Editor",
         "glad",
         "stb_image",
         "imgui",
@@ -53,8 +56,11 @@ project "Game"
         frameworkdirs { "%{prj.location}/../Vendor/SDL/lib/mac" }
     filter {}
 
-	filter "system:windows"
-		defines { "_WINDOWS" }
+    filter "system:windows"
+	defines { 
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
         postbuildcommands {
             -- Copy the SDL .dll to the application directory where it can be found at runtime
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)", 

@@ -1,4 +1,4 @@
-project "Engine" 
+project "Engine"
     kind "StaticLib"
 
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
@@ -10,17 +10,16 @@ project "Engine"
     files { "Engine/**.h", "Engine/**.cpp", "*.cpp" }
 
     vpaths {
-        ["Headers"] = { "Engine/**.h", "Engine/**.hpp" },
-        ["Sources/*"] = { "Engine/**.c", "Engine/**.cpp" },
+        ["Headers/**"] = { "Engine/**.h", "Engine/**.hpp" },
+        ["Sources/**"] = { "Engine/**.c", "Engine/**.cpp" },
         ["Docs"] = { "Engine/**.md", "Engine/**.txt" },
         ["Resources"] = { "**pch.cpp" },
     }
 
     -- Manually resolve includes and links by target platform
     -- The following logic checks the premake target OS and matches it to the appropriate includes
-    -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
+    -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior
     local includes = {
-        "%{prj.location}/../Vendor/glfw/include",
         "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/json/single_include",
@@ -33,9 +32,9 @@ project "Engine"
 
     local linkers = {
         "Core",
+        "Editor",
         "glad",
         "stb_image",
-        "imgui",
     }
 
     if os.target() == "windows" then
@@ -47,7 +46,7 @@ project "Engine"
     end
 
     includedirs { includes }
-    
+
     links { linkers }
 
     filter "system:windows"
@@ -57,7 +56,10 @@ project "Engine"
     filter {}
 
 	filter "system:windows"
-		defines { "_WINDOWS" }
+		defines {
+            "_WINDOWS",
+            "_CRT_SECURE_NO_WARNINGS",
+        }
     filter "system:macosx"
         defines { "_MAC" }
     filter {}

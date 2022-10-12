@@ -7,24 +7,41 @@ project "imgui"
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
 	objdir "%{wks.location}/Build/Obj/%{prj.name}"
 
-    files {
+    local filers = {
         "imgui/*.cpp",
+        "imgui/backends/imgui_impl_opengl3.cpp",
+        "imgui/backends/imgui_impl_sdl.cpp",
     }
 
-    includedirs {
+    local includes = {
         "imgui/",
         "glad/include",
-        "glfw/include/",
     }
 
+    -- ImGui requires includes from GLAD and SDL
+    -- Add OS specific implementations of ImGui and SDL
+    if os.target() == "windows" then
+        table.insert(filers, "imgui/backends/imgui_impl_win32.cpp")
+        table.insert(includes, "SDL/include/win")
+        table.insert(includes, "SDL/include/win/SDL2")
+    else
+        table.insert(filers, "imgui/backends/imgui_impl_osx.mm")
+        table.insert(includes, "SDL/include/mac")
+        table.insert(includes, "SDL/include/mac/SDL2")
+    end
+
+    files { filers }
+
+    includedirs { includes }
+
     defines {
-        "IMGUI_IMPL_OPENGL_LOADER_GLAD"
+        "IMGUI_IMPL_OPENGL_LOADER_GLAD",
     }
 
     filter "system:windows"
         defines {
             "_IMGUI_WIN32",
-            "_CRT_SECURE_NO_WARNINGS"
+            "_CRT_SECURE_NO_WARNINGS",
         }
     filter "system:macosx"
         pic "On"

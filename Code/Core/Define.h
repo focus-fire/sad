@@ -17,3 +17,6 @@
 #define SAD_STRINGIFY_MACRO(x) #x
 
 #define SAD_FILE_NAME std::filesystem::path(__FILE__).filename().string()
+#define SAD_FILE_NAME_C_STR std::filesystem::path(__FILE__).filename().string().c_str()
+
+#define INT_TO_VOIDP(i) (void*)(uintptr_t)(i)

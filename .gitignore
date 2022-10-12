@@ -458,6 +458,9 @@ Build/**/*
 # Include premake so no one has to install it
 !premake5.exe
 
+# Let imgui create its own inline config
+imgui.ini
+
 # Include .lib and .dll files for SDL
 !Vendor/SDL/**/*.dll
 !Vendor/SDL/**/*.lib

@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#define SDL_MAIN_HANDLED
+
 #include <Game/Application.h>
 #include <Engine/Application.h>
 
@@ -10,7 +12,7 @@ int main(int argc, char* argv[])
     core::InitializeLogging();
     core::Log(ELogType::Info, "this engine is sad.");
 
-    sad::Game::Application* app = new sad::Game::Application();
+    pog::Application* app = new pog::Application();
     app->Start();
     delete app;
 

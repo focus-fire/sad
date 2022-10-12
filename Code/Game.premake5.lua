@@ -32,6 +32,7 @@ project "Game"
     local linkers = {
         "Core",
         "Engine",
+        "Editor",
         "glad",
         "stb_image",
         "imgui",
@@ -55,8 +56,8 @@ project "Game"
         frameworkdirs { "%{prj.location}/../Vendor/SDL/lib/mac" }
     filter {}
 
-	filter "system:windows"
-		defines { 
+    filter "system:windows"
+	defines { 
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }

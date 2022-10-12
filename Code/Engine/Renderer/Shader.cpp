@@ -3,6 +3,7 @@
 #include "Shader.h"
 
 #include <fstream>
+#include <sstream>
 
 #include <glad/glad.h>
 

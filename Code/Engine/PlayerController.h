@@ -9,13 +9,13 @@ namespace sad
 	public:
 		PlayerController(Transform* t)
 		{
-			transform = t;
+			m_Transform = t;
 		}
 		~PlayerController();
 
 		void Update();
 
 	private:
-		Transform* transform;
+		Transform* m_Transform;
 	};
 }

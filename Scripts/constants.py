@@ -21,7 +21,7 @@ TEST_DIR - Path to the 'Tests' directory of the proejct
 VENDOR_DIR - Path to the 'Vendor' directory of the project
 """
 SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
-PROJECT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir).replace(" ", "\ "))
+PROJECT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, os.pardir))
 
 CODE_DIR = os.path.join(PROJECT_DIR, 'Code')
 TEST_DIR = os.path.join(PROJECT_DIR, 'Tests')

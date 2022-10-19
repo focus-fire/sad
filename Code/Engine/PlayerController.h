@@ -1,21 +1,15 @@
 #pragma once
 
-#include "Transform.h"
+#include "ECS/Registry.h"
 
 namespace sad
 {
 	class PlayerController
 	{
 	public:
-		PlayerController(Transform* t)
-		{
-			m_Transform = t;
-		}
+		PlayerController();
 		~PlayerController();
 
-		void Update();
-
-	private:
-		Transform* m_Transform;
+		void Update(sad::ecs::EntityWorld& world);
 	};
 }

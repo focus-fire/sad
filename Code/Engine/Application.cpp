@@ -69,7 +69,7 @@ void sad::Application::Start()
 	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
 	sad::ecs::Entity secondCubeEntity = sad::ecs::Entity();
 
-	PlayerController controller = PlayerController(&cubeEntity.Transform);
+	PlayerController controller = PlayerController();
 
 	// Add resource and transform components to the entities
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
@@ -123,7 +123,7 @@ void sad::Application::Start()
 		m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
 
 		/* Update */
-		cubeEntity.GetComponent<sad::ecs::PlayerControllerComponent>().m_PlayerController->Update();
+		cubeEntity.GetComponent<sad::ecs::PlayerControllerComponent>().m_PlayerController->Update(world);
 
 		/* Update Game Logic */
 		auto currentTime = std::chrono::steady_clock::now();

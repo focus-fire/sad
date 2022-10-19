@@ -11,37 +11,44 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
+/**
+ * @brief Catches joystick and button input from controller
+ * @param event sdl event
+ * @param joy sdl joystick
+*/
 void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
 {
     if (event.type == SDL_JOYAXISMOTION)
     {
         if (event.jaxis.which == 0) {
+            
             //X axis motion
             if (event.jaxis.axis == 0)
             {
                 //Left of dead zone
                 if (event.jaxis.value < -8000)
                 {
-                    spdlog::info("CONTROLLER LEFT");
+                    core::Log(ELogType::Info, "JOYSTICK LEFT");
                 }
                 //Right of dead zone
                 else if (event.jaxis.value > 8000)
                 {
-                    spdlog::info("CONTROLLER RIGHT");
+                    core::Log(ELogType::Info, "JOYSTICK RIGHT");
                 }
             }
+
             //Y axis motion
             else if (event.jaxis.axis == 1)
             {
                 //Below of dead zone
                 if (event.jaxis.value < -8000)
                 {
-                    spdlog::info("CONTROLLER DOWN");
+                    core::Log(ELogType::Info, "JOYSTICK DOWN");
                 }
                 //Above of dead zone
                 else if (event.jaxis.value > 8000)
                 {
-                    spdlog::info("CONTROLLER UP");
+                    core::Log(ELogType::Info, "JOYSTICK UP");
                 }
             }
         }

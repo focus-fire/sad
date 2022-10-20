@@ -15,11 +15,12 @@ sad::PlayerController::PlayerController() {}
 
 sad::PlayerController::~PlayerController() {}
 
-void sad::PlayerController::Update(sad::ecs::EntityWorld& world)
+void sad::PlayerController::Update()
 {
 	// Movespeed, to later get on config instead.
 	float movespeed = 0.025f;
-
+	
+	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
 	auto view = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
 	for (auto [entity, controllerComponent, transformComponent] : view.each())
 	{

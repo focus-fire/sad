@@ -10,6 +10,6 @@ namespace sad
 		PlayerController();
 		~PlayerController();
 
-		void Update(sad::ecs::EntityWorld& world);
+		void Update();
 	};
 }

@@ -123,7 +123,7 @@ void sad::Application::Start()
 		m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
 
 		/* Update */
-		cubeEntity.GetComponent<sad::ecs::PlayerControllerComponent>().m_PlayerController->Update(world);
+		cubeEntity.GetComponent<sad::ecs::PlayerControllerComponent>().m_PlayerController->Update();
 
 		/* Update Game Logic */
 		auto currentTime = std::chrono::steady_clock::now();

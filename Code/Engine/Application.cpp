@@ -109,6 +109,10 @@ void sad::Application::Start()
 				isClosed = true;
 			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
 				isClosed = true;
+			if (event.type == SDL_CONTROLLERDEVICEADDED)
+				InputManager::GetInstance().OnControllerConnected(event.cdevice);
+			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
+				InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
 		}
 
 		// First 'pass' sets up the framebuffer

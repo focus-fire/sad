@@ -40,19 +40,60 @@ void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
             //Y axis motion
             else if (event.jaxis.axis == 1)
             {
-                //Below of dead zone
+                //Above of dead zone
                 if (event.jaxis.value < -8000)
                 {
-                    core::Log(ELogType::Info, "JOYSTICK DOWN");
+                    core::Log(ELogType::Info, "JOYSTICK UP");
                 }
-                //Above of dead zone
+                //Below of dead zone
                 else if (event.jaxis.value > 8000)
                 {
-                    core::Log(ELogType::Info, "JOYSTICK UP");
+                    core::Log(ELogType::Info, "JOYSTICK DOWN");
                 }
             }
         }
     }
+}
+
+void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
+{
+    if (SDL_IsGameController(e.which))
+    {
+        ControllerIsActive = true;
+        controller = SDL_GameControllerOpen(e.which);
+        core::Log(ELogType::Info, "Controller connected successfully!");
+    }
+    else
+    {
+        core::Log(ELogType::Error, "There was an error connecting controller");
+    }
+}
+
+void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
+{
+    core::Log(ELogType::Info, "Controller Disconnected");
+    ControllerIsActive = false;
+    controller = nullptr;
+}
+
+bool sad::InputManager::GetButton(Button button)
+{
+    return false;
+}
+
+bool sad::InputManager::GetButtonPressed(Button button)
+{
+    return false;
+}
+
+bool sad::InputManager::GetButtonReleased(Button button)
+{
+    return false;
+}
+
+float sad::InputManager::GetAxis(Axis axis)
+{
+    return 0.0f;
 }
 
 /**

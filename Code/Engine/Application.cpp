@@ -94,16 +94,12 @@ void sad::Application::Start()
 
 	bool isClosed = false;
 	SDL_Event event;
-	SDL_Joystick* joy = SDL_JoystickOpen(0);
 
 	while (!isClosed) 
 	{	
 		while (SDL_PollEvent(&event)) 
 		{
 			m_Editor->CatchSDLEvents(event);
-
-			InputManager::GetInstance().CatchKeyboardEvent(event);
-			InputManager::GetInstance().CatchGamepadEvent(event, joy);
 
 			if (event.type == SDL_QUIT) 
 				isClosed = true;

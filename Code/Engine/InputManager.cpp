@@ -12,53 +12,19 @@ sad::InputManager& sad::InputManager::GetInstance()
 }
 
 /**
- * @brief Catches joystick and button input from controller
- * @param event sdl event
- * @param joy sdl joystick
+ * @brief Set the controller when a new controller is connected;
+ * @param e 
 */
-void sad::InputManager::CatchGamepadEvent(SDL_Event& event, SDL_Joystick *joy)
-{
-    if (event.type == SDL_JOYAXISMOTION)
-    {
-        if (event.jaxis.which == 0) {
-            
-            //X axis motion
-            if (event.jaxis.axis == 0)
-            {
-                //Left of dead zone
-                if (event.jaxis.value < -8000)
-                {
-                    core::Log(ELogType::Info, "JOYSTICK LEFT");
-                }
-                //Right of dead zone
-                else if (event.jaxis.value > 8000)
-                {
-                    core::Log(ELogType::Info, "JOYSTICK RIGHT");
-                }
-            }
-
-            //Y axis motion
-            else if (event.jaxis.axis == 1)
-            {
-                //Above of dead zone
-                if (event.jaxis.value < -8000)
-                {
-                    core::Log(ELogType::Info, "JOYSTICK UP");
-                }
-                //Below of dead zone
-                else if (event.jaxis.value > 8000)
-                {
-                    core::Log(ELogType::Info, "JOYSTICK DOWN");
-                }
-            }
-        }
-    }
-}
-
 void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
 {
     if (SDL_IsGameController(e.which))
     {
+        if (ControllerIsActive)
+        {
+            core::Log(ELogType::Error, "Tried to connect a controller but there is already one connected");
+            return;
+        }
+
         ControllerIsActive = true;
         controller = SDL_GameControllerOpen(e.which);
         core::Log(ELogType::Info, "Controller connected successfully!");
@@ -76,36 +42,41 @@ void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
     controller = nullptr;
 }
 
-bool sad::InputManager::GetButton(Button button)
+bool sad::InputManager::GetButton(SDL_GameControllerButton button)
 {
+    if (controller == nullptr)
+        return false;
+
+    return SDL_GameControllerGetButton(controller, button);
+}
+
+bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
+{
+    if (controller == nullptr)
+        return false;
+
+    if (!GetControllerButtonState(button) && SDL_GameControllerGetButton(controller, button)) {
+        UpdateControllerButtonState(button, true);
+        return true;
+    }
     return false;
 }
 
-bool sad::InputManager::GetButtonPressed(Button button)
+bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
 {
+    if (controller == nullptr)
+        return false;
+
+    if (GetControllerButtonState(button) && !SDL_GameControllerGetButton(controller, button)) {
+        UpdateControllerButtonState(button, false);
+        return true;
+    }
     return false;
 }
 
-bool sad::InputManager::GetButtonReleased(Button button)
-{
-    return false;
-}
-
-float sad::InputManager::GetAxis(Axis axis)
+float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 {
     return 0.0f;
-}
-
-/**
- * @brief Catches keyboard events from SDL_Event and updates the keyboard state;
- * @param event 
-*/
-void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
-{
-    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
-    {
-        UpdateKeyboardState(event.key.keysym.scancode, CurrentKeyboardStates[event.key.keysym.scancode]);
-    }
 }
 
 /**
@@ -115,6 +86,7 @@ void sad::InputManager::CatchKeyboardEvent(SDL_Event& event)
 */
 bool sad::InputManager::GetKey(SDL_Scancode key) 
 {
+    UpdateKeyboardState(key, CurrentKeyboardStates[key]);
     return GetKeyboardState(key);
 }
 

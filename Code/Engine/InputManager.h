@@ -7,42 +7,11 @@ namespace sad
 {
 
     class InputManager {
-
-        enum class Button
-        {
-            ButtonUp,
-            ButtonDown,
-            ButtonLeft,
-            ButtonRight,
-            DPadUp,
-            DPadDown,
-            DpadLeft,
-            DpadRight,
-            L1,
-            L2,
-            R1,
-            R2
-        };
-
-        enum class Axis
-        {
-            LeftStickUp,
-            LeftStickDown,
-            LeftStickLeft,
-            LeftStickRight,
-            RightStickUp,
-            RightStickDown,
-            RightStickLeft,
-            RightStickRight
-        };
-
     public:
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
 
         // Keyboard Events
-        void CatchKeyboardEvent(SDL_Event& event);
-        
         bool GetKey(SDL_Scancode key); // Returns true if key is held
         bool GetKeyPressed(SDL_Scancode key); // Returns true if key is pressed
         bool GetKeyReleased(SDL_Scancode key); // Returns true if key is released
@@ -54,24 +23,10 @@ namespace sad
         const Uint8* CurrentKeyboardStates = SDL_GetKeyboardState(nullptr);
         std::map<SDL_Scancode, bool> KeyboardStates;
 
-        // Controller Events
-        void CatchGamepadEvent(SDL_Event& event, SDL_Joystick* joy);
-
-        bool ControllerIsActive = false;
-        void OnControllerConnected(SDL_ControllerDeviceEvent& e);
-        void OnControllerDisconnected(SDL_ControllerDeviceEvent& e);
-
-        bool GetButton(Button button); // Returns true if button is held
-        bool GetButtonPressed(Button button); // Returns true if button is pressed
-        bool GetButtonReleased(Button button); // Returns true if button is released
-        float GetAxis(Axis axis);
-
-        SDL_GameController* controller = nullptr;
-
         /**
          * @brief Saves the down state of a key.
-         * @param key 
-         * @param pressed 
+         * @param key
+         * @param pressed
         */
         void UpdateKeyboardState(SDL_Scancode key, bool pressed)
         {
@@ -81,18 +36,62 @@ namespace sad
                 iter->second = pressed;
                 return;
             }
-            KeyboardStates.insert({key, pressed});
+            KeyboardStates.insert({ key, pressed });
         }
 
         /**
          * @brief Returns true if a key is down in the previous frame.
-         * @param key 
-         * @return 
+         * @param key
+         * @return
         */
         bool GetKeyboardState(SDL_Scancode key)
         {
             std::map<SDL_Scancode, bool>::iterator iter = KeyboardStates.find(key);
             if (iter != KeyboardStates.end())
+            {
+                return iter->second;
+            }
+            return false;
+        }
+
+        // Controller Events
+        bool ControllerIsActive = false;
+        void OnControllerConnected(SDL_ControllerDeviceEvent& e);
+        void OnControllerDisconnected(SDL_ControllerDeviceEvent& e);
+
+        bool GetButton(SDL_GameControllerButton button); // Returns true if button is held
+        bool GetButtonPressed(SDL_GameControllerButton button); // Returns true if button is pressed
+        bool GetButtonReleased(SDL_GameControllerButton button); // Returns true if button is released
+        float GetAxis(SDL_GameControllerAxis axis);
+
+        SDL_GameController* controller = nullptr;
+        std::map<SDL_GameControllerButton, bool> ButtonStates;
+
+        /**
+         * @brief Saves the down state of a controller button.
+         * @param button
+         * @param pressed
+        */
+        void UpdateControllerButtonState(SDL_GameControllerButton button, bool pressed)
+        {
+            std::map<SDL_GameControllerButton, bool>::iterator iter = ButtonStates.find(button);
+            if (iter != ButtonStates.end())
+            {
+                iter->second = pressed;
+                return;
+            }
+            ButtonStates.insert({ button, pressed });
+        }
+
+        /**
+         * @brief Returns true if a controller button is down in the previous frame.
+         * @param button
+         * @return
+        */
+        bool GetControllerButtonState(SDL_GameControllerButton button)
+        {
+            std::map<SDL_GameControllerButton, bool>::iterator iter = ButtonStates.find(button);
+            if (iter != ButtonStates.end())
             {
                 return iter->second;
             }

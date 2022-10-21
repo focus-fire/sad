@@ -9,7 +9,7 @@ sad::Window::Window(const WindowProperties& properties)
 {
 	core::Log(ELogType::Info, "Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
-  int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
+  int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
 
 	// OpenGL Attribute Sets for SDL

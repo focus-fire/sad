@@ -35,6 +35,10 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
     }
 }
 
+/**
+ * @brief Unsets the controller when controller disconnected;
+ * @param e
+*/
 void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
 {
     core::Log(ELogType::Info, "Controller Disconnected");
@@ -42,6 +46,11 @@ void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
     controller = nullptr;
 }
 
+/**
+ * @brief Returns true if a specified controller button is held.
+ * @param button
+ * @return
+*/
 bool sad::InputManager::GetButton(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
@@ -50,6 +59,11 @@ bool sad::InputManager::GetButton(SDL_GameControllerButton button)
     return SDL_GameControllerGetButton(controller, button);
 }
 
+/**
+ * @brief Returns true if a specified controller button is pressed in the current frame.
+ * @param button
+ * @return
+*/
 bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
@@ -62,6 +76,11 @@ bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
     return false;
 }
 
+/**
+ * @brief Returns true if a specified controller button is released in the current frame.
+ * @param button
+ * @return
+*/
 bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
@@ -74,9 +93,20 @@ bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
     return false;
 }
 
+/**
+ * @brief Returns the value rounded to 1.0 of a given axis
+ * @param axis 
+ * @return 
+*/
 float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 {
-    return 0.0f;
+    if (controller == nullptr)
+        return 0.f;
+
+    float roundedAxis = SDL_GameControllerGetAxis(controller, axis) / 32767.f;
+    roundedAxis = std::ceil(roundedAxis * 10.0) / 10.0;
+
+    return roundedAxis;
 }
 
 /**
@@ -91,7 +121,7 @@ bool sad::InputManager::GetKey(SDL_Scancode key)
 }
 
 /**
- * @brief Returns true if key coresponding to the scancode is pressed before the last frame.
+ * @brief Returns true if key coresponding to the scancode is pressed in the current frame.
  * @param key 
  * @return 
 */
@@ -105,7 +135,7 @@ bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
 }
 
 /**
- * @brief Returns true if key coresponding to the scancode is released before the last frame.
+ * @brief Returns true if key coresponding to the scancode is released in the current frame.
  * @param key
  * @return
 */

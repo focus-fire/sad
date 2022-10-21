@@ -7,6 +7,7 @@ namespace sad
 {
 
     class InputManager {
+
     public:
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
@@ -62,7 +63,7 @@ namespace sad
         bool GetButton(SDL_GameControllerButton button); // Returns true if button is held
         bool GetButtonPressed(SDL_GameControllerButton button); // Returns true if button is pressed
         bool GetButtonReleased(SDL_GameControllerButton button); // Returns true if button is released
-        float GetAxis(SDL_GameControllerAxis axis);
+        float GetAxis(SDL_GameControllerAxis axis); // Returns the value rounded to 1.0f of a given axis
 
         SDL_GameController* controller = nullptr;
         std::map<SDL_GameControllerButton, bool> ButtonStates;

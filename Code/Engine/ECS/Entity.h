@@ -23,6 +23,12 @@ namespace sad::ecs
 		}
 
 		template<typename T>
+		void AddEmptyComponent(T component)
+		{
+			return Registry::GetEntityWorld().emplace<T>(m_EntityHandle, component);
+		};
+
+		template<typename T>
 		T& RemoveComponent()
 		{
 			return Registry::GetEntityWorld().remove<T>(m_EntityHandle);

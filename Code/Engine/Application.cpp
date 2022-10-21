@@ -1,6 +1,7 @@
 #include "sadpch.h"
 
 #include "Application.h"
+#include "InputManager.h"
 
 #include <SDL2/SDL.h>
 #include <imgui.h>
@@ -18,6 +19,7 @@
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
+#include "ECS/Components/PlayerControllerComponent.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
@@ -28,6 +30,7 @@
 #include "Transform.h"
 #include "RenderableResource.h"
 #include "RenderableObject.h"
+#include "PlayerController.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -66,9 +69,12 @@ void sad::Application::Start()
 	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
 	sad::ecs::Entity secondCubeEntity = sad::ecs::Entity();
 
+	PlayerController controller = PlayerController();
+
 	// Add resource and transform components to the entities
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
+	cubeEntity.AddEmptyComponent<sad::ecs::PlayerControllerComponent>({});
 
 	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
@@ -90,7 +96,7 @@ void sad::Application::Start()
 	SDL_Event event;
 
 	while (!isClosed) 
-	{
+	{	
 		while (SDL_PollEvent(&event)) 
 		{
 			m_Editor->CatchSDLEvents(event);
@@ -99,6 +105,10 @@ void sad::Application::Start()
 				isClosed = true;
 			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
 				isClosed = true;
+			if (event.type == SDL_CONTROLLERDEVICEADDED)
+				InputManager::GetInstance().OnControllerConnected(event.cdevice);
+			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
+				InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
 		}
 
 		// First 'pass' sets up the framebuffer
@@ -123,18 +133,15 @@ void sad::Application::Start()
 		if (translate >= glm::pi<float>())
 			translate = -1.0f * glm::pi<float>();
 
-		// Manipulate first entity transform
-		cubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		cubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(translate) / 100.0f, 0.0f));
-		cubeEntity.Transform.SetScale(glm::vec3(0.75f));
-
-		// Manipulate second entity transform
+		//// Manipulate second entity transform
 		secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
 		secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
 		secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
 
+
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update();
+		PlayerController::Update();
 
 		/* Draw */
 		auto view = world.view<const sad::ecs::RenderableObjectComponent, const sad::ecs::TransformComponent>();
@@ -152,6 +159,7 @@ void sad::Application::Start()
 
 			m_Renderer->Draw(va, ib, shader);
 		}
+		
 
 		// Unbind framebuffer for next pass
 		m_Renderer->UnbindFrameBuffer();

@@ -7,8 +7,5 @@ namespace sad::ecs
 	/**
 	 * @brief Contains reference to a PlayerController
 	*/
-	struct PlayerControllerComponent
-	{
-		PlayerController* m_PlayerController;
-	};
+	struct PlayerControllerComponent {};
 }

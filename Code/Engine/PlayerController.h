@@ -10,6 +10,6 @@ namespace sad
 		PlayerController();
 		~PlayerController();
 
-		void Update();
+		static void Update();
 	};
 }

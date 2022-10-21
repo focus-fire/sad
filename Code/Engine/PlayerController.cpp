@@ -22,7 +22,7 @@ void sad::PlayerController::Update()
 	
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
 	auto view = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
-	for (auto [entity, controllerComponent, transformComponent] : view.each())
+	for (auto [controllerComponent, transformComponent] : view.each())
 	{
 		// Handles forward/back movement using W and S.
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W))

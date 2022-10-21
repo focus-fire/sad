@@ -106,6 +106,9 @@ float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
     float roundedAxis = SDL_GameControllerGetAxis(controller, axis) / 32767.f;
     roundedAxis = std::ceil(roundedAxis * 10.0) / 10.0;
 
+    if (roundedAxis < 0.1f)
+        return 0.f;
+
     return roundedAxis;
 }
 

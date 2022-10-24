@@ -11,6 +11,7 @@ namespace sad
     public:
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
+        float ControllerDeadZone;
 
         // Keyboard Events
         bool GetKey(SDL_Scancode key); // Returns true if key is held

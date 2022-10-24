@@ -2,6 +2,8 @@
 
 #include "InputManager.h"
 
+#include "ConfigManager.h"
+
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
 
@@ -27,6 +29,10 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
 
         ControllerIsActive = true;
         controller = SDL_GameControllerOpen(e.which);
+
+        core::Log(ELogType::Trace, "Initializing Control Settings");
+        ControllerDeadZone = std::stof(sad::ConfigManager::GetValue("controls", "deadzone"));
+
         core::Log(ELogType::Info, "Controller connected successfully!");
     }
     else
@@ -105,9 +111,6 @@ float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 
     float roundedAxis = SDL_GameControllerGetAxis(controller, axis) / 32767.f;
     roundedAxis = std::ceil(roundedAxis * 10.0) / 10.0;
-
-    if (roundedAxis < 0.1f)
-        return 0.f;
 
     return roundedAxis;
 }

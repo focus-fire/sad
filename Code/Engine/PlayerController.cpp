@@ -30,7 +30,7 @@ void sad::PlayerController::Update()
 		bool usingController = false; // bool that disables movement keys when joystick being used to prevent double speed
 
 		// Handles forward/back movement using W and S + controller left joystick.
-		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTY)) > 0.1f)
+		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTY)) > InputManager::GetInstance().ControllerDeadZone)
 		{
 			usingController = true;
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTY) * movespeed));
@@ -47,7 +47,7 @@ void sad::PlayerController::Update()
 		}
 
 		// Handles left/right movement using A and D + controller left joystick.
-		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX)) > 0.1f)
+		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX)) > InputManager::GetInstance().ControllerDeadZone)
 		{
 			usingController = true;
 			transformComponent.m_Transform->Translate(glm::vec3(-InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX) * movespeed, 0.0f, 0.0f));

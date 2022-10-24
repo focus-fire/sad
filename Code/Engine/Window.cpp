@@ -4,6 +4,8 @@
 
 #include "Window.h"
 
+#include "ConfigManager.h"
+
 sad::Window::Window(const WindowProperties& properties)
 	: m_Properties(properties)
 {
@@ -45,7 +47,7 @@ void sad::Window::CreateGLContext()
 	m_GLContext = SDL_GL_CreateContext(m_Window);
 	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
 
-	int vsync = SDL_GL_SetSwapInterval(1); // Enable VSync
+	int vsync = SDL_GL_SetSwapInterval(std::stoi(ConfigManager::GetValue("graphics", "vsync"))); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
 
 	int glad = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);

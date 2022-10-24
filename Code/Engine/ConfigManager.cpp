@@ -1,11 +1,8 @@
 #include "sadpch.h"
+
 #include "ConfigManager.h"
-#include <iostream>
+
 #include <fstream>
-#include <string>
-#include <algorithm>
-#include <unordered_map>
-#include <list>
 
 std::list<sad::ConfigSection> sad::ConfigManager::sections;
 bool sad::ConfigManager::m_IsFileRead = false;
@@ -136,7 +133,9 @@ sad::ConfigManager& sad::ConfigManager::GetInstance()
 {
     if(!m_IsFileRead)
     {
-        Parse("config.ini");
+        std::string configPath = std::filesystem::current_path().string();
+        configPath += "\\config.ini";
+        Parse(configPath);
         m_IsFileRead = true;
     }
     static ConfigManager instance;

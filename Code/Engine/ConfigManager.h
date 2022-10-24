@@ -1,12 +1,10 @@
-#ifndef CONFIG_HPP_
-#define CONFIG_HPP_
+#pragma once
 
 #include <string>
 #include <unordered_map>
 #include <list>
 
-
-struct section
+struct ConfigSection
 {
     std::string name;
     std::unordered_map<std::string, std::string> keyvalues;
@@ -15,29 +13,26 @@ struct section
 class ConfigManager
 {
 public:
-    //ConfigManager(const std::string& filename);
-
-    static ConfigManager& GetInstance();
-
     ConfigManager(const ConfigManager&) = delete;
 
-    section* get_section(const std::string& sectionname);
-    std::list<section>& get_sections();
+    static ConfigSection* GetSection(const std::string& sectionname);
 
-    static section* getsection(const std::string& sectionname);
+    static std::string GetValue(const std::string& sectionname, const std::string& keyname);
 
-    std::string get_value(const std::string& sectionname, const std::string& keyname);
-
-    static std::string getvalue(const std::string& sectionname, const std::string& keyname);
+    static ConfigManager& GetInstance();
 
 private:
     ConfigManager() {}
 
-    static bool m_isFileRead;
+    static bool m_IsFileRead;
 
-    static void parse(const std::string& filename);
+    static std::list<ConfigSection> sections;
 
-    static std::list<section> sections;
+    static void Parse(const std::string& filename);
+
+    ConfigSection* MGetSection(const std::string& sectionname);
+
+    std::list<ConfigSection>& MGetSections();
+
+    std::string MGetValue(const std::string& sectionname, const std::string& keyname);
 };
-
-#endif //CONFIG_HPP_

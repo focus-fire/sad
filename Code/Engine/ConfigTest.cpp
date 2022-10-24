@@ -54,12 +54,12 @@ int main()
     generate_config("config.ini", "[user]", users);
 
     // retrieve some information from config file
-    section* usersection = ConfigManager::getsection("user");;
+    ConfigSection* usersection = ConfigManager::GetSection("user");;
 
     if (usersection != NULL)
     {
         std::cout << "section name: " << usersection->name << std::endl;
-        std::cout << "email=" << ConfigManager::getvalue("user", "email") << '\n';
+        std::cout << "email=" << ConfigManager::GetValue("user", "email") << '\n';
     }
     else
     {

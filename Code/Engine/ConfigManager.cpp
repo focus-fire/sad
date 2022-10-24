@@ -1,3 +1,4 @@
+#include "sadpch.h"
 #include "ConfigManager.h"
 #include <iostream>
 #include <fstream>
@@ -6,14 +7,14 @@
 #include <unordered_map>
 #include <list>
 
-std::list<section> ConfigManager::sections;
+std::list<ConfigSection> ConfigManager::sections;
+bool ConfigManager::m_IsFileRead = false;
 
-//ConfigManager::ConfigManager(const std::string& filename)
-//{
-//    parse(filename);
-//}
-
-// trim leading white-spaces
+/**
+ * @brief trim leading white-spaces
+ * @param s
+ * @return
+*/
 static std::string& ltrim(std::string& s) 
 {
     size_t startpos = s.find_first_not_of(" \t\r\n\v\f");
@@ -24,7 +25,11 @@ static std::string& ltrim(std::string& s)
     return s;
 }
 
-// trim trailing white-spaces 
+/**
+ * @brief trim trailing white-spaces 
+ * @param s 
+ * @return 
+*/
 static std::string& rtrim(std::string& s) 
 {
     size_t endpos = s.find_last_not_of(" \t\r\n\v\f");
@@ -35,23 +40,23 @@ static std::string& rtrim(std::string& s)
     return s;
 }
 
-section* ConfigManager::get_section(const std::string& sectionname) 
+ConfigSection* ConfigManager::MGetSection(const std::string& sectionname) 
 {
-    std::list<section>::iterator found = std::find_if(sections.begin(), sections.end(), 
-        [sectionname](const section& sect) { 
+    std::list<ConfigSection>::iterator found = std::find_if(sections.begin(), sections.end(), 
+        [sectionname](const ConfigSection& sect) { 
             return sect.name.compare(sectionname) == 0; 
         });
     return found != sections.end() ? &*found : NULL;
 }
 
-std::list<section>& ConfigManager::get_sections() 
+std::list<ConfigSection>& ConfigManager::MGetSections() 
 {
     return sections;
 }
 
-std::string ConfigManager::get_value(const std::string& sectionname, const std::string&keyname) 
+std::string ConfigManager::MGetValue(const std::string& sectionname, const std::string&keyname) 
 {
-    section* sect = get_section(sectionname);
+    ConfigSection* sect = MGetSection(sectionname);
     if (sect != NULL) 
     {
         std::unordered_map<std::string, std::string>::const_iterator it = sect->keyvalues.find(keyname);
@@ -61,9 +66,9 @@ std::string ConfigManager::get_value(const std::string& sectionname, const std::
     return "";
 }
 
-void ConfigManager::parse(const std::string& filename) 
+void ConfigManager::Parse(const std::string& filename) 
 {
-    section currentsection;
+    ConfigSection currentsection;
     std::ifstream fstrm;
     fstrm.open(filename);
 
@@ -109,7 +114,6 @@ void ConfigManager::parse(const std::string& filename)
                 ltrim(rtrim(value));
 
                 currentsection.keyvalues[name] = value;
-
             }
             else 
             {
@@ -128,25 +132,23 @@ void ConfigManager::parse(const std::string& filename)
     }
 }
 
-bool ConfigManager::m_isFileRead = false;
-
 ConfigManager& ConfigManager::GetInstance()
 {
-    if(!m_isFileRead)
+    if(!m_IsFileRead)
     {
-        parse("config.ini");
-        m_isFileRead = true;
+        Parse("config.ini");
+        m_IsFileRead = true;
     }
     static ConfigManager instance;
     return instance;
 }
 
-section* ConfigManager::getsection(const std::string& sectionname) 
+ConfigSection* ConfigManager::GetSection(const std::string& sectionname) 
 {
-    return GetInstance().get_section(sectionname);
+    return GetInstance().MGetSection(sectionname);
 }
 
-std::string ConfigManager::getvalue(const std::string& sectionname, const std::string& keyname)
+std::string ConfigManager::GetValue(const std::string& sectionname, const std::string& keyname)
 {
-    return GetInstance().get_value(sectionname, keyname);
+    return GetInstance().MGetValue(sectionname, keyname);
 }

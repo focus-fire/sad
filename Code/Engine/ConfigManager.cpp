@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <list>
 
-std::list<ConfigSection> ConfigManager::sections;
-bool ConfigManager::m_IsFileRead = false;
+std::list<sad::ConfigSection> sad::ConfigManager::sections;
+bool sad::ConfigManager::m_IsFileRead = false;
 
 /**
  * @brief trim leading white-spaces
@@ -40,21 +40,21 @@ static std::string& rtrim(std::string& s)
     return s;
 }
 
-ConfigSection* ConfigManager::MGetSection(const std::string& sectionname) 
+sad::ConfigSection* sad::ConfigManager::MGetSection(const std::string& sectionname)
 {
-    std::list<ConfigSection>::iterator found = std::find_if(sections.begin(), sections.end(), 
+    std::list<ConfigSection>::iterator found = std::find_if(sections.begin(), sections.end(),
         [sectionname](const ConfigSection& sect) { 
             return sect.name.compare(sectionname) == 0; 
         });
     return found != sections.end() ? &*found : NULL;
 }
 
-std::list<ConfigSection>& ConfigManager::MGetSections() 
+std::list<sad::ConfigSection>& sad::ConfigManager::MGetSections()
 {
     return sections;
 }
 
-std::string ConfigManager::MGetValue(const std::string& sectionname, const std::string&keyname) 
+std::string sad::ConfigManager::MGetValue(const std::string& sectionname, const std::string&keyname)
 {
     ConfigSection* sect = MGetSection(sectionname);
     if (sect != NULL) 
@@ -66,7 +66,7 @@ std::string ConfigManager::MGetValue(const std::string& sectionname, const std::
     return "";
 }
 
-void ConfigManager::Parse(const std::string& filename) 
+void sad::ConfigManager::Parse(const std::string& filename)
 {
     ConfigSection currentsection;
     std::ifstream fstrm;
@@ -132,7 +132,7 @@ void ConfigManager::Parse(const std::string& filename)
     }
 }
 
-ConfigManager& ConfigManager::GetInstance()
+sad::ConfigManager& sad::ConfigManager::GetInstance()
 {
     if(!m_IsFileRead)
     {
@@ -143,12 +143,12 @@ ConfigManager& ConfigManager::GetInstance()
     return instance;
 }
 
-ConfigSection* ConfigManager::GetSection(const std::string& sectionname) 
+sad::ConfigSection* sad::ConfigManager::GetSection(const std::string& sectionname)
 {
     return GetInstance().MGetSection(sectionname);
 }
 
-std::string ConfigManager::GetValue(const std::string& sectionname, const std::string& keyname)
+std::string sad::ConfigManager::GetValue(const std::string& sectionname, const std::string& keyname)
 {
     return GetInstance().MGetValue(sectionname, keyname);
 }

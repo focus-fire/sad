@@ -4,35 +4,38 @@
 #include <unordered_map>
 #include <list>
 
-struct ConfigSection
+namespace sad
 {
-    std::string name;
-    std::unordered_map<std::string, std::string> keyvalues;
-};
+    struct ConfigSection
+    {
+        std::string name;
+        std::unordered_map<std::string, std::string> keyvalues;
+    };
 
-class ConfigManager
-{
-public:
-    ConfigManager(const ConfigManager&) = delete;
+    class ConfigManager
+    {
+    public:
+        ConfigManager(const ConfigManager&) = delete;
 
-    static ConfigSection* GetSection(const std::string& sectionname);
+        static ConfigSection* GetSection(const std::string& sectionname);
 
-    static std::string GetValue(const std::string& sectionname, const std::string& keyname);
+        static std::string GetValue(const std::string& sectionname, const std::string& keyname);
 
-    static ConfigManager& GetInstance();
+        static ConfigManager& GetInstance();
 
-private:
-    ConfigManager() {}
+    private:
+        ConfigManager() {}
 
-    static bool m_IsFileRead;
+        static bool m_IsFileRead;
 
-    static std::list<ConfigSection> sections;
+        static std::list<ConfigSection> sections;
 
-    static void Parse(const std::string& filename);
+        static void Parse(const std::string& filename);
 
-    ConfigSection* MGetSection(const std::string& sectionname);
+        ConfigSection* MGetSection(const std::string& sectionname);
 
-    std::list<ConfigSection>& MGetSections();
+        std::list<ConfigSection>& MGetSections();
 
-    std::string MGetValue(const std::string& sectionname, const std::string& keyname);
-};
+        std::string MGetValue(const std::string& sectionname, const std::string& keyname);
+    };
+}

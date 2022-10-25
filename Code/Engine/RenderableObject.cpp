@@ -24,22 +24,18 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 
 	// Platform specific path resolution
 	// TODO: Create method to generate paths for each platform
-	std::string dataDirectory = std::filesystem::current_path().string();
-	std::string shaderFile, textureFile;
-
+	std::string dataDirectory = core::FileUtils::GetDataDirectory();
+/*
 #ifdef _SAD_WINDOWS
-	// By default current_path loads from the 'Code' directory on Windows
-	std::size_t codeDirectory = dataDirectory.find_last_of("/\\");
-	dataDirectory = dataDirectory.substr(0, codeDirectory);
-
-	dataDirectory += "\\Data";
 	shaderFile = dataDirectory + "\\Shaders\\Default.glsl";
 	textureFile = dataDirectory + "\\Textures\\Default.png";
 #else
-	dataDirectory += "/Data";
 	shaderFile = dataDirectory + "/Shaders/Default.glsl";
 	textureFile = dataDirectory + "/Textures/Default.png";
 #endif
+*/
+	std::string shaderFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Shaders/Default.glsl");
+	std::string textureFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Textures/Default.png");
 
 	// All RenderableObjects start with this 'Material' by default
 	m_Shader = new sad::rad::Shader(shaderFile);

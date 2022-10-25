@@ -13,7 +13,7 @@ const char* UI_TITLE_TEXT = "Welcome Title";
 // Sample Event Functions - Can Delete
 void UIChangeBodyText()
 {
-	UI_BODY_TEXT = "Translated";
+	UI_BODY_TEXT = "Event System up and running";
 }
 void UIChangeTitleText()
 {

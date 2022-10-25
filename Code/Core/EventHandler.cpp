@@ -1,30 +1,23 @@
-/*
-
-Used:
-https://linuxhint.com/callback-function-in-cpp/
-https://www.youtube.com/watch?v=IiKyRcLnrP0&ab_channel=DylanFalconer
-
-Other Resources:
-https://riptutorial.com/cplusplus/example/24695/observer-pattern
-https://gameprogrammingpatterns.com/observer.html
-https://isetta.io/blogs/week-9/#event-messaging-system
-
-*/
-
 #include "sadpch.h"
 
-struct EventListener {
-	std::vector<void (*)()> eventFunction;
-	bool inUpdateLoop;
-};
+std::unordered_map<const char*, core::EventListener> Listeners;
 
-std::unordered_map<const char*, EventListener> Listeners;
-
+/**
+ * @brief Initializes an event listener for a function
+ * @param name const char* Key name used to signal
+ * @param eventFunction void Function
+ * @param inUpdateLoop bool Optional parameter which is default false. Setting to true adds this listener to the event update loop which updates every frame 
+*/
 void core::InitializeListener(const char* name, void(*eventFunction)(), bool inUpdateLoop)
 {
 	// If a listener with the same name already exists, push the callback to it's eventFunction list
 	if (Listeners.count(name)>0)
 	{
+		if (Listeners[name].inUpdateLoop != inUpdateLoop)
+		{
+			core::Log(ELogType::Warn, "Event listener initialization attempted with a different update state than it's parent listener, ignoring initialization");
+			return;
+		}
 		Listeners[name].eventFunction.push_back({ *eventFunction });
 	}
 	// Otherwise, create a new listener
@@ -36,18 +29,26 @@ void core::InitializeListener(const char* name, void(*eventFunction)(), bool inU
 	}
 }
 
-void core::RemoveListener(const char* name)
-{
-	Listeners.erase(name);
-}
-
+/**
+ * @brief Signal all event functions within a listener
+ * @param name const char* Key Name
+*/
 void core::SignalEvent(const char* name)
 {
 	// Loop through callbacks within the listener
-	for (auto &eventFunction : Listeners[name].eventFunction)
+	for (auto& eventFunction : Listeners[name].eventFunction)
 	{
 		eventFunction();
 	}
+}
+
+/**
+ * @brief Delete a whole event listener
+ * @param name const char* Key Name
+*/
+void core::RemoveListener(const char* name)
+{
+	Listeners.erase(name);
 }
 
 void core::UpdateEvents()

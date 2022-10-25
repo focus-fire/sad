@@ -7,36 +7,6 @@
 std::list<sad::ConfigSection> sad::ConfigManager::sections;
 bool sad::ConfigManager::m_IsFileRead = false;
 
-/**
- * @brief trim leading white-spaces
- * @param s
- * @return
-*/
-static std::string& ltrim(std::string& s) 
-{
-    size_t startpos = s.find_first_not_of(" \t\r\n\v\f");
-    if (std::string::npos != startpos)
-    {
-        s = s.substr(startpos);
-    }
-    return s;
-}
-
-/**
- * @brief trim trailing white-spaces 
- * @param s 
- * @return 
-*/
-static std::string& rtrim(std::string& s) 
-{
-    size_t endpos = s.find_last_not_of(" \t\r\n\v\f");
-    if (std::string::npos != endpos)
-    {
-        s = s.substr(0, endpos + 1);
-    }
-    return s;
-}
-
 sad::ConfigSection* sad::ConfigManager::MGetSection(const std::string& sectionname)
 {
     std::list<ConfigSection>::iterator found = std::find_if(sections.begin(), sections.end(),
@@ -107,8 +77,8 @@ void sad::ConfigManager::Parse(const std::string& filename)
             {
                 std::string name = line.substr(0, end);
                 std::string value = line.substr(end + 1);
-                ltrim(rtrim(name));
-                ltrim(rtrim(value));
+                core::StringUtils::LeftTrim(core::StringUtils::RightTrim(name));
+                core::StringUtils::LeftTrim(core::StringUtils::RightTrim(value));
 
                 currentsection.keyvalues[name] = value;
             }

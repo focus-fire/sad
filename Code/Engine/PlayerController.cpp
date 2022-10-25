@@ -84,6 +84,36 @@ void sad::PlayerController::Update()
 		{
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
 		}
+
+		if (InputManager::GetInstance().GetMouseButtonPressed(SDL_BUTTON_LEFT)) 
+		{
+			core::Log(ELogType::Info, "Left mouse down!");
+		}
+
+		if (InputManager::GetInstance().GetMouseButtonReleased(SDL_BUTTON_LEFT)) 
+		{
+			core::Log(ELogType::Info, "Left mouse up!");
+		}
+
+		if (InputManager::GetInstance().GetMouseButtonPressed(SDL_BUTTON_RIGHT)) 
+		{
+			core::Log(ELogType::Info, "Right mouse down!");
+		}
+
+		if (InputManager::GetInstance().GetMouseButtonReleased(SDL_BUTTON_RIGHT)) 
+		{
+			core::Log(ELogType::Info, "Right mouse up!");
+		}
+
+		if (InputManager::GetInstance().GetMouseButtonPressed(SDL_BUTTON_MIDDLE)) 
+		{
+			core::Log(ELogType::Info, "Middle mouse down!");
+		}
+
+		if (InputManager::GetInstance().GetMouseButtonReleased(SDL_BUTTON_MIDDLE)) 
+		{
+			core::Log(ELogType::Info, "Middle mouse up!");
+		}
 	}
 	
 }

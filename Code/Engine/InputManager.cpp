@@ -154,18 +154,30 @@ bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
     return false;
 }
 
-bool sad::InputManager::GetMouseButton(SDL_MouseButtonEvent button)
+bool sad::InputManager::GetMouseButton(int button)
 {
+    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool sad::InputManager::GetMouseButtonPressed(int button)
+{
+    if (!GetMouseButtonState(button) && SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
+        UpdateMouseButtonState(button, true);
+        return true;
+    }
     return false;
 }
 
-bool sad::InputManager::GetMouseButtonPressed(SDL_MouseButtonEvent button)
+bool sad::InputManager::GetMouseButtonReleased(int button)
 {
-    return false;
-}
-
-bool sad::InputManager::GetMouseButtonReleased(SDL_MouseButtonEvent button)
-{
+    if (GetMouseButtonState(button) && !SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
+        UpdateMouseButtonState(button, false);
+        return true;
+    }
     return false;
 }
 

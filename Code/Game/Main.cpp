@@ -2,6 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
+#define SDL_MAIN_HANDLED
+
 #include <Game/Application.h>
 #include <Engine/Application.h>
 

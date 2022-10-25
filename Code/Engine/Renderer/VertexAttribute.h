@@ -8,9 +8,9 @@
 
 namespace sad::rad
 {
-	/// <summary>
-	/// Layout for a VertexAttribute that can be bound using glVertexAttribArray()
-	/// </summary>
+	/**
+	 * @brief Layout for a VertexAttribute that can be bound using glVertexAttribArray() 
+	*/
 	struct VertexAttribute
 	{
 		unsigned int Count;
@@ -32,9 +32,9 @@ namespace sad::rad
 		}
 	};
 
-	/// <summary>
-	/// Container for holding the various attributes and current stride for a set of VertexAttributes 
-	/// </summary>
+	/**
+	 * @brief Container for holding the various attributes and current stride for a set of VertexAttributes
+	*/
 	class VertexAttributeContainer
 	{
 	public:

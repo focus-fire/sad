@@ -4,27 +4,31 @@
 
 #include "Window.h"
 
+#include "ConfigManager.h"
+
 sad::Window::Window(const WindowProperties& properties)
 	: m_Properties(properties)
 {
 	core::Log(ELogType::Info, "Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
-    int result = SDL_Init(SDL_INIT_VIDEO);
+  int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
 
 	// OpenGL Attribute Sets for SDL
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 
 #ifdef _SAD_WINDOWS
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 #elif _SAD_MAC
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
 #endif
 }
 
@@ -43,7 +47,7 @@ void sad::Window::CreateGLContext()
 	m_GLContext = SDL_GL_CreateContext(m_Window);
 	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
 
-	int vsync = SDL_GL_SetSwapInterval(1); // Enable VSync
+	int vsync = SDL_GL_SetSwapInterval(std::stoi(ConfigManager::GetValue("graphics", "vsync"))); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
 
 	int glad = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);

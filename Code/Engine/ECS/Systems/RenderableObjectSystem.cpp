@@ -4,14 +4,15 @@
 
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
-
-#include "Registry.h"
+#include <Engine/ECS/Registry.h>
+#include <Engine/ECS/Components/RenderableObjectComponent.h>
+#include <Engine/ECS/Components/RenderableResourceComponent.h>
 
 void sad::ecs::RenderableObjectSystem::Update()
 { 
-	EntityWorld* world = Registry::GetEntityWorld();
+	EntityWorld& world = Registry::GetEntityWorld();
 
-	auto view = world->view<RenderableResourceComponent>();
+	auto view = world.view<RenderableResourceComponent>();
 	for (auto [entity, res] : view.each())
 	{
 		// Skip updating the resource if it isn't dirty
@@ -27,7 +28,7 @@ void sad::ecs::RenderableObjectSystem::Update()
 		// Passing by value could work... but this copies the object - thus killing and recreating some GL buffers in weird ways
 		std::shared_ptr<RenderableObject> renderable = std::make_shared<RenderableObject>(res.m_RenderableResource);
 		SAD_ASSERT(renderable, "Failed to create RenderableObject from RenderableResource");
-		world->emplace<RenderableObjectComponent>(entity, renderable);
+		world.emplace<RenderableObjectComponent>(entity, renderable);
 
 		// Mark the RenderableObject as clean 
 		res.m_IsResourceDirty = false;

@@ -4,7 +4,7 @@
 
 #include "ECS/Registry.h"
 
-sad::RenderableResource::RenderableResource(Geometry* geometry)
+sad::RenderableResource::RenderableResource(const Geometry& geometry)
 	: m_Geometry(geometry)
 { }
 

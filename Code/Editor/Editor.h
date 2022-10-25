@@ -15,7 +15,7 @@ namespace cap
 	public:
 		explicit Editor();
 
-		void Start(SDL_Window* sdlWindow, SDL_GLContext glContext);
+		void Start();
 		void CatchSDLEvents(const SDL_Event& event);
 		void Clear();
 
@@ -27,8 +27,6 @@ namespace cap
 		void Teardown();
 
 	private:
-		sad::Window* m_MainWindow = nullptr;
-
 		bool m_ShowGameWindow;
 		bool m_ShowWelcomeWindow;
 

@@ -85,9 +85,18 @@ void sad::PlayerController::Update()
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
 		}
 
+		// Handles mouse button presses
 		if (InputManager::GetInstance().GetMouseButtonPressed(SDL_BUTTON_LEFT)) 
 		{
 			core::Log(ELogType::Info, "Left mouse down!");
+			
+			std::string mousePosition = "Mouse Pos: (";
+			mousePosition += std::to_string(InputManager::GetInstance().GetMousePosition().x);
+			mousePosition += ", ";
+			mousePosition += std::to_string(InputManager::GetInstance().GetMousePosition().y);
+			mousePosition += ")";
+
+			core::Log(ELogType::Info, mousePosition.c_str());
 		}
 
 		if (InputManager::GetInstance().GetMouseButtonReleased(SDL_BUTTON_LEFT)) 

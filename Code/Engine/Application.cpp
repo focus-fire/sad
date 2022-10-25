@@ -109,6 +109,9 @@ void sad::Application::Start()
 				InputManager::GetInstance().OnControllerConnected(event.cdevice);
 			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
 				InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
+			if (event.type == SDL_MOUSEMOTION) {
+				InputManager::GetInstance().SetMousePosition(event.motion.x, event.motion.y);
+			}
 		}
 
 		// First 'pass' sets up the framebuffer

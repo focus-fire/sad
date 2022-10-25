@@ -26,6 +26,7 @@ namespace sad
         std::map<SDL_Scancode, bool> KeyboardStates;
 
         std::map<int, bool> MouseButtonStates;
+        SDL_Point MousePosition;
 
         /**
          * @brief Saves the down state of a key.
@@ -83,6 +84,15 @@ namespace sad
                 return iter->second;
             }
             return false;
+        }
+
+        void SetMousePosition(int x, int y) {
+            MousePosition.x = x;
+            MousePosition.y = y;
+        }
+
+        SDL_Point GetMousePosition() {
+            return MousePosition;
         }
 
         // Controller Events

@@ -47,6 +47,16 @@ sad::Application::~Application()
 	delete m_Editor;
 }
 
+// Sample Event Functions - Can Delete
+void EditorLog()
+{
+	core::Log(ELogType::Info, "Editor Update");
+}
+void EditorLog2()
+{
+	core::Log(ELogType::Info, "Editor Update #2");
+}
+
 void sad::Application::Start()
 {
 	SDL_Window* sdlWindow = s_MainWindow->GetSDLWindow();
@@ -70,6 +80,10 @@ void sad::Application::Start()
 	GL_CALL(glEnable(GL_BLEND));
 	GL_CALL(glEnable(GL_CULL_FACE));
 	GL_CALL(glEnable(GL_DEPTH_TEST));
+
+	// Initialize Log Update ("EDITOR_UPDATE": name group, EditorLog: function to run, true: repeatedly run in event handler loop without the need for a signal)
+	core::InitializeListener("EDITOR_UPDATE", EditorLog, true);
+	core::InitializeListener("EDITOR_UPDATE", EditorLog2, true);
 
 	// Create view matrices
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
@@ -131,12 +145,12 @@ void sad::Application::Start()
 		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count();
 		lastTime = currentTime;
 
-		rotAngle += 0.001f * elapsedTime;
-		if (rotAngle >= 360.0f)
+		rotAngle += 0.01f * elapsedTime;
+		if (rotAngle >= 50.0f)
 		{
 			rotAngle = 0.0f;
 
-			// Call Event Functions with name group "UI"
+			// Sample Event Signal For "UI" Group - Can Delete
 			core::SignalEvent("UI");
 		}
 
@@ -172,7 +186,7 @@ void sad::Application::Start()
 		/* Window */
 		s_MainWindow->Render();
 
-		/* Events */
+		/* Events Update Loop */
 		core::UpdateEvents();
 	}
 

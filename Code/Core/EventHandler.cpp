@@ -1,10 +1,5 @@
 /*
 
-Jake comments:
-if we're using multi-threading on the engine side events are essential
-ie: We launch the editor and run the data importer on level.json, after each Entity is hit the ResourceManager then loads in the thrown resource on a separate thread
-but to communicate that we'd have to throw an event
-
 Used:
 https://linuxhint.com/callback-function-in-cpp/
 https://www.youtube.com/watch?v=IiKyRcLnrP0&ab_channel=DylanFalconer
@@ -18,58 +13,54 @@ https://isetta.io/blogs/week-9/#event-messaging-system
 
 #include "sadpch.h"
 
-struct eventListener {
-	const char* m_Name;
-	void (* m_Event)();
-	int m_Amount;
-	bool m_Persist;
+struct EventListener {
+	std::vector<void (*)()> eventFunction;
+	bool inUpdateLoop;
 };
 
-std::list<eventListener> Listeners;
+std::unordered_map<const char*, EventListener> Listeners;
 
-const char* currentEvent;
-
-void core::InitializeListener(const char* m_Name, void(*m_Event)(), int m_Amount, bool m_Persist)
+void core::InitializeListener(const char* name, void(*eventFunction)(), bool inUpdateLoop)
 {
-	eventListener eventFunction;
-	eventFunction = { m_Name, *m_Event, m_Amount, m_Persist };
-
-	Listeners.push_back(eventFunction);
-}
-
-bool FindListener(eventListener value)
-{
-	return value.m_Name == currentEvent;
-}
-
-void core::RemoveListener(const char* m_Name)
-{
-	currentEvent = m_Name;
-	Listeners.remove_if(FindListener);
-}
-
-void core::SignalEvent(const char* m_Name)
-{
-	currentEvent = m_Name;
-	for (eventListener& eventFunction : Listeners)
+	// If a listener with the same name already exists, push the callback to it's eventFunction list
+	if (Listeners.count(name)>0)
 	{
-		eventFunction.m_Event();
+		Listeners[name].eventFunction.push_back({ *eventFunction });
+	}
+	// Otherwise, create a new listener
+	else
+	{
+		EventListener eventListener;
+		eventListener = { { *eventFunction }, inUpdateLoop };
+		Listeners[name] = eventListener;
+	}
+}
+
+void core::RemoveListener(const char* name)
+{
+	Listeners.erase(name);
+}
+
+void core::SignalEvent(const char* name)
+{
+	// Loop through callbacks within the listener
+	for (auto &eventFunction : Listeners[name].eventFunction)
+	{
+		eventFunction();
 	}
 }
 
 void core::UpdateEvents()
 {
-	for (eventListener& eventFunction : Listeners)
+	// Loop through all listeners with inUpdateLoop true
+	for (auto &eventListener : Listeners)
 	{
-		if (eventFunction.m_Persist)
+		if (eventListener.second.inUpdateLoop)
 		{
-			eventFunction.m_Event();
-			eventFunction.m_Amount--;
-
-			if (eventFunction.m_Amount == 0)
+			// Loop through callbacks within the listener
+			for (auto &eventFunction : eventListener.second.eventFunction)
 			{
-				core::RemoveListener(eventFunction.m_Name);
-				break;
+				eventFunction();
 			}
 		}
 	}

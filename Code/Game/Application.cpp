@@ -1,17 +1,19 @@
+#include "sadpch.h"
+
 #include "Application.h"
 
-sad::Game::Application::Application()
+pog::Application::Application()
 	: sad::Application()
 {
 	// Game can be initialized here
 }
 
-sad::Game::Application::~Application()
+pog::Application::~Application()
 {
 	// Game is destroyed here
 }
 
-void sad::Game::Application::End()
+void pog::Application::Teardown()
 {
 	// Game is shut down here
 }

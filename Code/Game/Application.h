@@ -2,17 +2,14 @@
 
 #include <Engine/Application.h>
 
-namespace sad
+namespace pog
 {
-    namespace Game 
-    {
-        class Application final : public sad::Application
-        {
-        public:
-            Application();
-            ~Application() override;
+	class Application final : public sad::Application
+	{
+	public:
+		Application();
+		~Application() override;
 
-            void End() override;
-        };
-    }
+		void Teardown() override;
+	};
 }

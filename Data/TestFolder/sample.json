@@ -1,0 +1,51 @@
+{
+	"name": "level.json",
+	"entities": [
+		{
+			"name": "Cube 1",
+			"model": "./Models/Cube.fbx",
+			"components": [
+				{
+					"transform": {
+						"position": {
+							"x": 10,
+							"y": 12,
+							"z": 12
+						},
+						"rotation": {
+							"x": 2,
+							"y": 90,
+							"z": 180
+						},
+						"scale": {
+							"x": 1,
+							"y": 1,
+							"z": 1
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Cube 2",
+			"model": "./Models/Cube.fbx",
+			"transform": {
+				"position": {
+					"x": 10,
+					"y": 12,
+					"z": 12
+				},
+				"rotation": {
+					"x": 12,
+					"y": 14,
+					"z": 5
+				},
+				"scale": {
+					"x": 1,
+					"y": 1,
+					"z": 1
+				}
+			}
+		}
+	]
+}

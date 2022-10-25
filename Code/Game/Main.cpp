@@ -7,6 +7,8 @@
 #include <Game/Application.h>
 #include <Engine/Application.h>
 
+#include <Engine/JsonManager.h>
+
 int main(int argc, char* argv[])
 {
     core::InitializeLogging();

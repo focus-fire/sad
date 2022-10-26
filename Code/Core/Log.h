@@ -2,6 +2,9 @@
 
 #include <spdlog/spdlog.h>
 
+/**
+ * @brief Specifies the type of log and/or assert being created
+*/
 enum class ELogType
 {
 	Assert,
@@ -37,6 +40,12 @@ namespace core
 			core::Log(type, message);
 		}
 	}
+
+	/**
+	 * @brief Appends a sink pointer to the logging system
+	 * @param sink Valid pointer to a created spdlog sink
+	*/
+	void AddLoggingSink(spdlog::sink_ptr sink);
 #else
 	inline void InitializeLogging() { }
 	inline void KillLogging() { }
@@ -45,5 +54,7 @@ namespace core
 
 	template<typename... TArgs>
 	inline void Log(const ELogType type, const char* message, TArgs... args) { }
+
+	void AddLoggingSink(spdlog::sink_ptr sink) { }
 #endif
 }

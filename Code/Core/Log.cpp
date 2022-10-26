@@ -20,6 +20,12 @@ namespace
 	// ie: Changing the debug level to 'trace' will view trace logs
 	const spdlog::level::level_enum c_DebugLoggerLevel = spdlog::level::debug;
 	const spdlog::level::level_enum c_AssertLoggerLevel = spdlog::level::err;
+
+	// Logs follow the format: [MM-DD-YY HH:MM:SS.mm] [level] message
+	std::string c_DebugLogPattern = "[%m-%d-%C %X.%e] %^[%l] %v%$";
+
+	// Asserts follow the format: [MM-DD-YY HH:MM:SS.mm] [logger] message
+	std::string c_AssertLogPattern = "[%m-%d-%C %X.%e] %^[%n] %v%$";
 }
 
 void core::InitializeLogging()
@@ -27,12 +33,6 @@ void core::InitializeLogging()
 	if (!s_IsInitialized)
 	{
 		s_IsInitialized = true;
-
-		// Logs follow the format: [MM-DD-YY HH:MM:SS.mm] [level] message
-		std::string debugLogPattern = "[%m-%d-%C %X.%e] %^[%l] %v%$";
-
-		// Asserts follow the format: [MM-DD-YY HH:MM:SS.mm] [logger] message
-		std::string assertLogPattern = "[%m-%d-%C %X.%e] %^[%n] %v%$";
 
 		// Standard logger outputs all logs (except trace) to console and file
 		std::shared_ptr<spdlog::sinks::stdout_color_sink_mt> debugConsoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
@@ -62,11 +62,13 @@ void core::InitializeLogging()
 		// Set sinks, log levels, and pattern defaults for both loggers
 		s_DebugLogger = std::make_shared<spdlog::logger>("debug", debugSinks.begin(), debugSinks.end());
 		s_DebugLogger->set_level(c_DebugLoggerLevel);
-		s_DebugLogger->set_pattern(debugLogPattern);
+		s_DebugLogger->set_pattern(c_DebugLogPattern);
 
 		s_AssertLogger = std::make_shared<spdlog::logger>("assert", assertSinks.begin(), assertSinks.end());
 		s_AssertLogger->set_level(c_AssertLoggerLevel);
-		s_AssertLogger->set_pattern(assertLogPattern);
+		s_AssertLogger->set_pattern(c_AssertLogPattern);
+
+		spdlog::set_default_logger(s_DebugLogger);
 	}
 }
 
@@ -104,6 +106,15 @@ void core::Log(const ELogType type, const char* message)
 		s_DebugLogger->trace(message);
 		break;
 	}
+}
+
+void core::AddLoggingSink(spdlog::sink_ptr sink)
+{
+	sink->set_pattern(c_DebugLogPattern);
+	s_DebugLogger->sinks().push_back(sink);
+
+	sink->set_pattern(c_AssertLogPattern);
+	s_AssertLogger->sinks().push_back(sink);
 }
 
 #endif

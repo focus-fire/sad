@@ -13,10 +13,69 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
-/**
- * @brief Set the controller when a new controller is connected;
- * @param e 
-*/
+// Keyboard Events
+
+void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
+{
+    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+    {
+        keyboardState[event.key.keysym.scancode] = (event.type == SDL_KEYDOWN);
+        keyboardUpdateFrames[event.key.keysym.scancode] = UpdateCounter;
+    }
+}
+
+bool sad::InputManager::GetKey(SDL_Scancode key) 
+{
+    return SDL_GetKeyboardState(nullptr)[key];
+}
+
+bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
+{
+    return keyboardState[key] && (keyboardUpdateFrames[key] == UpdateCounter);
+}
+
+bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
+{
+    return !keyboardState[key] && (keyboardUpdateFrames[key] == UpdateCounter);
+}
+
+// Mouse Events
+
+void sad::InputManager::CatchMouseEvents(SDL_Event& event)
+{
+    if (event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        mouseState[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
+        mouseUpdateFrames[event.button.button] = UpdateCounter;
+    }
+}
+
+bool sad::InputManager::GetMouseButton(int button)
+{
+    return (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button));
+}
+
+bool sad::InputManager::GetMouseButtonPressed(int button)
+{
+    return mouseState[button] && (mouseUpdateFrames[button] == UpdateCounter);
+}
+
+bool sad::InputManager::GetMouseButtonReleased(int button)
+{
+    return !mouseState[button] && (mouseUpdateFrames[button] == UpdateCounter);
+}
+
+void sad::InputManager::SetMousePosition(int x, int y) {
+    MousePosition.x = x;
+    MousePosition.y = y;
+}
+
+SDL_Point sad::InputManager::GetMousePosition() {
+    return MousePosition;
+}
+
+// Controller Events
+
 void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
 {
     if (SDL_IsGameController(e.which))
@@ -41,10 +100,6 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
     }
 }
 
-/**
- * @brief Unsets the controller when controller disconnected;
- * @param e
-*/
 void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
 {
     core::Log(ELogType::Info, "Controller Disconnected");
@@ -52,11 +107,15 @@ void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
     controller = nullptr;
 }
 
-/**
- * @brief Returns true if a specified controller button is held.
- * @param button
- * @return
-*/
+void sad::InputManager::CatchControllerEvents(SDL_Event& event)
+{
+    if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP)
+    {
+        buttonState[event.cbutton.button] = (event.type == SDL_CONTROLLERBUTTONDOWN);
+        buttonUpdateFrames[event.cbutton.button] = UpdateCounter;
+    }
+}
+
 bool sad::InputManager::GetButton(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
@@ -65,45 +124,22 @@ bool sad::InputManager::GetButton(SDL_GameControllerButton button)
     return SDL_GameControllerGetButton(controller, button);
 }
 
-/**
- * @brief Returns true if a specified controller button is pressed in the current frame.
- * @param button
- * @return
-*/
 bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
         return false;
 
-    if (!GetControllerButtonState(button) && SDL_GameControllerGetButton(controller, button)) {
-        UpdateControllerButtonState(button, true);
-        return true;
-    }
-    return false;
+    return buttonState[button] && (buttonUpdateFrames[button] == UpdateCounter);
 }
 
-/**
- * @brief Returns true if a specified controller button is released in the current frame.
- * @param button
- * @return
-*/
 bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
 {
     if (controller == nullptr)
         return false;
 
-    if (GetControllerButtonState(button) && !SDL_GameControllerGetButton(controller, button)) {
-        UpdateControllerButtonState(button, false);
-        return true;
-    }
-    return false;
+    return !buttonState[button] && (buttonUpdateFrames[button] == UpdateCounter);
 }
 
-/**
- * @brief Returns the value rounded to 1.0 of a given axis
- * @param axis 
- * @return 
-*/
 float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 {
     if (controller == nullptr)
@@ -114,73 +150,3 @@ float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 
     return roundedAxis;
 }
-
-/**
- * @brief Returns true if the key coresponding to the scancode is down.
- * @param key 
- * @return 
-*/
-bool sad::InputManager::GetKey(SDL_Scancode key) 
-{
-    UpdateKeyboardState(key, CurrentKeyboardStates[key]);
-    return GetKeyboardState(key);
-}
-
-/**
- * @brief Returns true if key coresponding to the scancode is pressed in the current frame.
- * @param key 
- * @return 
-*/
-bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
-{
-    if (!GetKeyboardState(key) && CurrentKeyboardStates[key]) {
-        UpdateKeyboardState(key, true);
-        return true;
-    }
-    return false;
-}
-
-/**
- * @brief Returns true if key coresponding to the scancode is released in the current frame.
- * @param key
- * @return
-*/
-bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
-{
-    if (GetKeyboardState(key) && !CurrentKeyboardStates[key]) {
-        UpdateKeyboardState(key, false);
-        return true;
-    }
-    return false;
-}
-
-bool sad::InputManager::GetMouseButton(int button)
-{
-    if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-bool sad::InputManager::GetMouseButtonPressed(int button)
-{
-    if (!GetMouseButtonState(button) && SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
-        UpdateMouseButtonState(button, true);
-        return true;
-    }
-    return false;
-}
-
-bool sad::InputManager::GetMouseButtonReleased(int button)
-{
-    if (GetMouseButtonState(button) && !SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button)) {
-        UpdateMouseButtonState(button, false);
-        return true;
-    }
-    return false;
-}
-
-
-
-

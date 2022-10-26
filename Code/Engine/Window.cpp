@@ -44,6 +44,9 @@ void sad::Window::CreateGLContext()
 {
 	m_GLContext = SDL_GL_CreateContext(m_Window);
 	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
+	
+	// Mandatory to set this flag in order to enable GL_CALL
+	IsGLAlive = true;
 
 	int vsync = SDL_GL_SetSwapInterval(1); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
@@ -64,4 +67,7 @@ void sad::Window::Teardown()
 {
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
+
+	// Mandatory to kill this flag in order to disable GL_CALL
+	IsGLAlive = false;
 }

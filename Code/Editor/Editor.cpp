@@ -6,10 +6,12 @@
 #include <backends/imgui_impl_opengl3.h>
 
 #include <Engine/Application.h>
+#include <Game/Time.h>
 
 cap::Editor::Editor()
 	: m_ShowGameWindow(true)
 	, m_ShowWelcomeWindow(true)
+	, m_IsEditorInPlayMode(false)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -51,8 +53,10 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImGui::End();
 }
 
-void cap::Editor::Render()
+void cap::Editor::Render(unsigned int frameBufferTextureId)
 {
+	RenderGameWindow(frameBufferTextureId);
+
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin("Welcome", &m_ShowWelcomeWindow);  
@@ -64,6 +68,18 @@ void cap::Editor::Render()
 
 		ImGui::End();
 	}
+
+	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
+	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+
+	ImGui::Begin("Action Panel");
+	if (ImGui::Button(currentMode))
+	{
+		// TODO: Use an event to signal when toggle occurs to the rest of the engine
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::Log(ELogType::Trace, "Engine was toggled into {} mode", m_IsEditorInPlayMode ? "GAME" : "EDITOR");
+	}
+	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

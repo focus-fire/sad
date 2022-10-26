@@ -20,7 +20,8 @@ project "Editor"
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/imgui",
         "%{prj.location}/../Vendor/glm",
-        "%{prj.location}/../Vendor/glad/include", 
+        "%{prj.location}/../Vendor/glad/include",
+        "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}",
     }
 
@@ -32,12 +33,12 @@ project "Editor"
 
     includedirs { includes }
 
-    links { 
+    links {
         "imgui",
     }
 
 	filter "system:windows"
-		defines { 
+		defines {
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }

@@ -7,9 +7,10 @@ namespace pog
 	class Application final : public sad::Application
 	{
 	public:
-		Application();
+		explicit Application();
 		~Application() override;
 
+		void Update(float dt) override;
 		void Teardown() override;
 	};
 }

@@ -20,7 +20,7 @@ project "Core"
     -- Only link/include library headers as needed here...
     includedirs {
         "%{prj.location}/../Vendor/spdlog/include",
-        "%{prj.location}/../Vendor/glad/include", 
+        "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}",
     }
 
@@ -29,7 +29,7 @@ project "Core"
     }
 
 	filter "system:windows"
-		defines { 
+		defines {
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }

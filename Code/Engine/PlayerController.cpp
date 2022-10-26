@@ -87,7 +87,7 @@ void sad::PlayerController::Update()
 
 
 		// Test mouse position
-		if (input.GetMouseButtonPressed(SDL_BUTTON_LEFT)) 
+		if (input.GetMouseButtonPressed(SDL_BUTTON_MIDDLE)) 
 		{
 			std::string mousePosition = "Mouse Pos: (";
 			mousePosition += std::to_string(input.GetMousePosition().x);

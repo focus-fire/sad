@@ -65,20 +65,11 @@ bool sad::InputManager::GetMouseButtonReleased(int button)
     return !mouseState[button] && (mouseUpdateFrames[button] == UpdateCounter);
 }
 
-void sad::InputManager::SetMousePosition(int x, int y) {
-    MousePosition.x = x;
-    MousePosition.y = y;
-}
-
-SDL_Point sad::InputManager::GetMousePosition() {
-    return MousePosition;
-}
-
 // Controller Events
 
-void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
+void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& event)
 {
-    if (SDL_IsGameController(e.which))
+    if (SDL_IsGameController(event.which))
     {
         if (ControllerIsActive)
         {
@@ -87,7 +78,7 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
         }
 
         ControllerIsActive = true;
-        controller = SDL_GameControllerOpen(e.which);
+        controller = SDL_GameControllerOpen(event.which);
 
         core::Log(ELogType::Trace, "Initializing Control Settings");
         ControllerDeadZone = std::stof(sad::ConfigManager::GetValue("controls", "deadzone"));
@@ -100,7 +91,7 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
     }
 }
 
-void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
+void sad::InputManager::OnControllerDisconnected()
 {
     core::Log(ELogType::Info, "Controller Disconnected");
     ControllerIsActive = false;

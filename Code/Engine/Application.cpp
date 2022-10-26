@@ -117,7 +117,7 @@ void sad::Application::Start()
 				input.OnControllerConnected(event.cdevice);
 
 			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
-				input.OnControllerDisconnected(event.cdevice);
+				input.OnControllerDisconnected();
 
 			if (event.type == SDL_MOUSEMOTION) 
 				input.SetMousePosition(event.motion.x, event.motion.y);

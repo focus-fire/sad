@@ -81,10 +81,14 @@ void core::KillLogging()
 		s_AssertLogger->flush();
 		s_DebugLogger->flush();
 	}
+
+	spdlog::shutdown();
 }
 
 void core::Log(const ELogType type, const char* message)
 {
+	SAD_ASSERT(message && message[0], "Congratulations! You managed to log an empty string.");
+
 	switch (type)
 	{
 	case ELogType::Assert:
@@ -110,11 +114,35 @@ void core::Log(const ELogType type, const char* message)
 
 void core::AddLoggingSink(spdlog::sink_ptr sink)
 {
+	// Any sinks added after the logs are initialized will adopt the debug log pattern
 	sink->set_pattern(c_DebugLogPattern);
-	s_DebugLogger->sinks().push_back(sink);
 
-	sink->set_pattern(c_AssertLogPattern);
+	s_DebugLogger->sinks().push_back(sink);
+	core::Log(ELogType::Trace, "Successfully added debug logging sink");
+
 	s_AssertLogger->sinks().push_back(sink);
+	core::Log(ELogType::Trace, "Successfully added assert logging sink");
+}
+
+void core::RemoveLoggingSink(spdlog::sink_ptr sink)
+{
+	std::vector<spdlog::sink_ptr>& debugSinks = s_DebugLogger->sinks();
+	std::vector<spdlog::sink_ptr>& assertSinks = s_AssertLogger->sinks();
+
+	auto debugIt = std::find(debugSinks.begin(), debugSinks.end(), sink);
+	auto assertIt = std::find(assertSinks.begin(), assertSinks.end(), sink);
+
+	if (debugIt != debugSinks.end())
+	{
+		debugSinks.erase(debugIt);
+		core::Log(ELogType::Trace, "Successfully removed debug logging sink");
+	}
+
+	if (assertIt != assertSinks.end())
+	{
+		assertSinks.erase(assertIt);
+		core::Log(ELogType::Trace, "Successfully removed assert logging sink");
+	}
 }
 
 #endif

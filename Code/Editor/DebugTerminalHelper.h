@@ -38,6 +38,11 @@ namespace cap
 		static void Echo(argument_type& arg);
 
 		/**
+		 * @brief Prints to the terminal through the debug logging sinks 
+		*/
+		static void Debug(argument_type& arg);
+
+		/**
 		 * @brief Closes the currently focused terminal
 		*/
 		static void Close(argument_type& arg);

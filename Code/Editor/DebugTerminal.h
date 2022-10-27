@@ -11,6 +11,7 @@ namespace cap
 	{
 	public:
 		explicit DebugTerminal(DebugTerminalCommandItems commands = DebugTerminalCommandItems());
+		~DebugTerminal();
 
 		void Start();
 		void Render();
@@ -18,6 +19,9 @@ namespace cap
 	private: 
 		ImTerm::terminal<DebugTerminalHelper> m_Terminal;
 		DebugTerminalCommandItems m_TerminalCommands;
+
+		spdlog::sink_ptr m_TerminalSinkPtr;
+
 		bool m_IsVisible;
 	};
 }

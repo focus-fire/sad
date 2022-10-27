@@ -17,26 +17,29 @@ sad::InputManager& sad::InputManager::GetInstance()
 
 void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 {
-    if (event.type == SDL_KEYDOWN || event.type == SDL_KEYUP)
+    if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && !event.key.repeat)
     {
         m_keyboardState[event.key.keysym.scancode] = (event.type == SDL_KEYDOWN);
         m_keyboardUpdateFrames[event.key.keysym.scancode] = UpdateCounter;
     }
 }
 
-bool sad::InputManager::GetKey(SDL_Scancode key) 
+bool sad::InputManager::GetKey(KeyCode key)
 {
-    return SDL_GetKeyboardState(nullptr)[key];
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return SDL_GetKeyboardState(nullptr)[keyScancode];
 }
 
-bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
+bool sad::InputManager::GetKeyPressed(KeyCode key)
 {
-    return m_keyboardState[key] && (m_keyboardUpdateFrames[key] == UpdateCounter);
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return m_keyboardState[keyScancode] && (m_keyboardUpdateFrames[keyScancode] == UpdateCounter);
 }
 
-bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
+bool sad::InputManager::GetKeyReleased(KeyCode key)
 {
-    return !m_keyboardState[key] && (m_keyboardUpdateFrames[key] == UpdateCounter);
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return !m_keyboardState[keyScancode] && (m_keyboardUpdateFrames[keyScancode] == UpdateCounter);
 }
 
 // Mouse Events
@@ -107,28 +110,33 @@ void sad::InputManager::CatchControllerEvents(SDL_Event& event)
     }
 }
 
-bool sad::InputManager::GetButton(SDL_GameControllerButton button)
+bool sad::InputManager::GetButton(ControllerButton button)
 {
     if (m_controller == nullptr)
         return false;
 
-    return SDL_GameControllerGetButton(m_controller, button);
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
+
+    return SDL_GameControllerGetButton(m_controller, ctrlButton);
 }
 
-bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
+bool sad::InputManager::GetButtonPressed(ControllerButton button)
 {
     if (m_controller == nullptr)
         return false;
 
-    return m_buttonState[button] && (m_buttonUpdateFrames[button] == UpdateCounter);
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
+
+    return m_buttonState[ctrlButton] && (m_buttonUpdateFrames[ctrlButton] == UpdateCounter);
 }
 
-bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
+bool sad::InputManager::GetButtonReleased(ControllerButton button)
 {
     if (m_controller == nullptr)
         return false;
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
 
-    return !m_buttonState[button] && (m_buttonUpdateFrames[button] == UpdateCounter);
+    return !m_buttonState[ctrlButton] && (m_buttonUpdateFrames[ctrlButton] == UpdateCounter);
 }
 
 float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
@@ -140,4 +148,42 @@ float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
     roundedAxis = static_cast<float>(std::ceil(roundedAxis * 10.0) / 10.0);
 
     return roundedAxis;
+}
+
+float sad::InputManager::GetLeftAxis(const std::string& orientation)
+{
+    SDL_GameControllerAxis axis;
+
+    if (orientation == "Horizontal")
+    {
+        axis = SDL_CONTROLLER_AXIS_LEFTX;
+        return GetAxis(axis);
+    }
+
+    if (orientation == "Vertical")
+    {
+        axis = SDL_CONTROLLER_AXIS_LEFTY;
+        return GetAxis(axis);
+    }
+
+    return 0.f;
+}
+
+float sad::InputManager::GetRightAxis(const std::string& orientation)
+{
+    SDL_GameControllerAxis axis;
+
+    if (orientation == "Horizontal")
+    {
+        axis = SDL_CONTROLLER_AXIS_RIGHTX;
+        return GetAxis(axis);
+    }
+
+    if (orientation == "Vertical")
+    {
+        axis = SDL_CONTROLLER_AXIS_RIGHTY;
+        return GetAxis(axis);
+    }
+
+    return 0.f;
 }

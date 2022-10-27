@@ -15,11 +15,13 @@ namespace sad
         void IncrementUpdateCounter()
         {
             UpdateCounter++;
+            if (UpdateCounter > 10) 
+            {
+                UpdateCounter = 0;
+            }
         }
 
         // Keyboard Events
-        std::unordered_map<SDL_Scancode, bool> keyboardState;
-        std::unordered_map<SDL_Scancode, int>  keyboardUpdateFrames;
 
         /**
          * @brief Catches keyboard events and updates their states
@@ -48,11 +50,7 @@ namespace sad
         */
         bool GetKeyReleased(SDL_Scancode key);
 
-
         // Mouse Events
-        SDL_Point MousePosition;
-        bool mouseState[6];
-        int  mouseUpdateFrames[6];
 
         /**
          * @brief Catches mouse button events and updates their states
@@ -82,18 +80,14 @@ namespace sad
         bool GetMouseButtonReleased(int button); 
 
         void SetMousePosition(int x, int y) {
-            MousePosition.x = x;
-            MousePosition.y = y;
+            m_mousePosition.x = x;
+            m_mousePosition.y = y;
         }
-        SDL_Point GetMousePosition(){ return MousePosition; };
 
+        SDL_Point GetMousePosition(){ return m_mousePosition; };
 
         // Controller Events
-        SDL_GameController* controller = nullptr;
-        std::unordered_map<int, bool> buttonState;
-        std::unordered_map<int, int>  buttonUpdateFrames;
         float ControllerDeadZone;
-        bool  ControllerIsActive;
 
         /**
          * @brief Handles new controller device
@@ -143,5 +137,18 @@ namespace sad
     private:
         InputManager() {}
         static sad::InputManager s_InputManager;
+
+        std::unordered_map<SDL_Scancode, bool> m_keyboardState;
+        std::unordered_map<SDL_Scancode, int>  m_keyboardUpdateFrames;
+
+        std::unordered_map<int, bool> m_buttonState;
+        std::unordered_map<int, int>  m_buttonUpdateFrames;
+
+        SDL_Point m_mousePosition;
+        bool m_mouseState[6];
+        int  m_mouseUpdateFrames[6];
+
+        SDL_GameController* m_controller = nullptr;
+        bool  m_controllerIsActive;
     };
 }

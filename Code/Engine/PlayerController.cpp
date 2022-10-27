@@ -17,10 +17,8 @@ sad::PlayerController::~PlayerController() {}
 
 void sad::PlayerController::Update()
 {
-	
 	InputManager& input = InputManager::GetInstance();
 
-	// Movespeed, to later get on config instead.
 	float movespeed = 0.025f;
 	
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();

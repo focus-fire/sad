@@ -24,11 +24,11 @@ CALL :build "%~dp0"
 GOTO :eof
 
 :clean
-CALL python %~f1\Scripts\bet.py --clean
+CALL python3 %~f1\Scripts\bet.py --clean
 GOTO :eof
 
 :build
-CALL python %~f1\Scripts\bet.py --build
+CALL python3 %~f1\Scripts\bet.py --build
 GOTO :eof
 
 :make
@@ -36,7 +36,7 @@ CALL msbuild sad.sln -property:Configuration=Debug
 GOTO :eof
 
 :tests
-CALL python %~f1\Scripts\bet.py --tests
+CALL python3 %~f1\Scripts\bet.py --tests
 GOTO :eof
 
 :execute

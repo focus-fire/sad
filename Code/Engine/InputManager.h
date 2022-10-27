@@ -136,11 +136,11 @@ namespace sad
         bool GetMouseButtonReleased(int button); 
 
         void SetMousePosition(int x, int y) {
-            m_mousePosition.x = x;
-            m_mousePosition.y = y;
+            m_MousePosition.x = x;
+            m_MousePosition.y = y;
         }
 
-        SDL_Point GetMousePosition(){ return m_mousePosition; };
+        SDL_Point GetMousePosition(){ return m_MousePosition; };
 
         // Controller Events
         float ControllerDeadZone;
@@ -208,17 +208,17 @@ namespace sad
         InputManager() {}
         static sad::InputManager s_InputManager;
 
-        std::unordered_map<SDL_Scancode, bool> m_keyboardState;
-        std::unordered_map<SDL_Scancode, Uint64>  m_keyboardUpdateFrames;
+        std::unordered_map<SDL_Scancode, bool> m_KeyboardState;
+        std::unordered_map<SDL_Scancode, Uint64>  m_KeyboardUpdateFrames;
 
-        std::unordered_map<int, bool> m_buttonState;
-        std::unordered_map<int, int>  m_buttonUpdateFrames;
+        std::unordered_map<int, bool> m_ButtonState;
+        std::unordered_map<int, int>  m_ButtonUpdateFrames;
 
-        SDL_Point m_mousePosition;
-        bool m_mouseState[6];
-        int  m_mouseUpdateFrames[6];
+        SDL_Point m_MousePosition;
+        bool m_MouseState[6];
+        int  m_MouseUpdateFrames[6];
 
-        SDL_GameController* m_controller = nullptr;
-        bool  m_controllerIsActive;
+        SDL_GameController* m_Controller = nullptr;
+        bool  m_ControllerIsActive;
     };
 }

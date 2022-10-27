@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['texture_49',['Texture',['../classsad_1_1rad_1_1Texture.html#ae6165c3eff96738af5b21ee4365a6fa3',1,'sad::rad::Texture::Texture(const std::string &amp;filePath)'],['../classsad_1_1rad_1_1Texture.html#a782a794a663458d6d54af979073eb613',1,'sad::rad::Texture::Texture(int width, int height)']]],
-  ['translate_50',['Translate',['../classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764',1,'sad::Transform']]]
+  ['scale_82',['Scale',['../classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1',1,'sad::Transform']]]
 ];

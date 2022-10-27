@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['rotate_47',['Rotate',['../classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1',1,'sad::Transform::Rotate(glm::quat rotation)'],['../classsad_1_1Transform.html#a43a7f6157033322a57a9c90f9b1ffda4',1,'sad::Transform::Rotate(glm::vec3 rotation)'],['../classsad_1_1Transform.html#acfc8f173e72d481f7dd98ff143a69bb8',1,'sad::Transform::Rotate(glm::vec3 axis, float angle)']]]
+  ['oncontrollerconnected_79',['OnControllerConnected',['../classsad_1_1InputManager.html#ab4bfd78a02dc4bdcfff1b0b6678cbe0f',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_80',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ae38a4c847972b8174d93ef1c3232ca26',1,'sad::InputManager']]]
 ];

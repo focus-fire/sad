@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['window_44',['Window',['../classsad_1_1Window.html',1,'sad']]],
-  ['windowproperties_45',['WindowProperties',['../structsad_1_1WindowProperties.html',1,'sad']]]
+  ['shader_60',['Shader',['../classsad_1_1rad_1_1Shader.html',1,'sad::rad']]]
 ];

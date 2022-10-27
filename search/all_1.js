@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['editor_1',['Editor',['../classcap_1_1Editor.html',1,'cap']]],
-  ['entity_2',['Entity',['../classsad_1_1ecs_1_1Entity.html',1,'sad::ecs']]]
+  ['configmanager_1',['ConfigManager',['../classsad_1_1ConfigManager.html',1,'sad']]],
+  ['configsection_2',['ConfigSection',['../structsad_1_1ConfigSection.html',1,'sad']]]
 ];

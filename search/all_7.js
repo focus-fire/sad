@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['texture_16',['Texture',['../classsad_1_1rad_1_1Texture.html',1,'sad::rad::Texture'],['../classsad_1_1rad_1_1Texture.html#ae6165c3eff96738af5b21ee4365a6fa3',1,'sad::rad::Texture::Texture(const std::string &amp;filePath)'],['../classsad_1_1rad_1_1Texture.html#a782a794a663458d6d54af979073eb613',1,'sad::rad::Texture::Texture(int width, int height)']]],
-  ['transform_17',['Transform',['../classsad_1_1Transform.html',1,'sad']]],
-  ['translate_18',['Translate',['../classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764',1,'sad::Transform']]]
+  ['oncontrollerconnected_21',['OnControllerConnected',['../classsad_1_1InputManager.html#ab4bfd78a02dc4bdcfff1b0b6678cbe0f',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_22',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ae38a4c847972b8174d93ef1c3232ca26',1,'sad::InputManager']]]
 ];

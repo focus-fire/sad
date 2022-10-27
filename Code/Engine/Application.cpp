@@ -98,8 +98,6 @@ void sad::Application::Start()
 
 	while (!isClosed) 
 	{	
-		input.IncrementUpdateCounter();
-
 		while (SDL_PollEvent(&event)) 
 		{
 			m_Editor->CatchSDLEvents(event);

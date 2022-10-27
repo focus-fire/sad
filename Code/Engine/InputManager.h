@@ -77,13 +77,6 @@ namespace sad
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
 
-        int UpdateCounter = 0;
-        void IncrementUpdateCounter()
-        {
-            UpdateCounter++;
-            // use timestamp instead
-        }
-
         // Keyboard Events
 
         /**
@@ -216,7 +209,7 @@ namespace sad
         static sad::InputManager s_InputManager;
 
         std::unordered_map<SDL_Scancode, bool> m_keyboardState;
-        std::unordered_map<SDL_Scancode, int>  m_keyboardUpdateFrames;
+        std::unordered_map<SDL_Scancode, Uint64>  m_keyboardUpdateFrames;
 
         std::unordered_map<int, bool> m_buttonState;
         std::unordered_map<int, int>  m_buttonUpdateFrames;

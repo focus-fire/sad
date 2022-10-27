@@ -95,6 +95,9 @@ void sad::Application::Start()
 	bool isClosed = false;
 	SDL_Event event;
 
+  // Sample Event Signal For "UI" Group - Can Delete
+	core::SignalEvent("UI");
+  
 	while (!isClosed) 
 	{	
 		while (SDL_PollEvent(&event)) 
@@ -142,6 +145,9 @@ void sad::Application::Start()
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update();
 		PlayerController::Update();
+
+		/* Update Events Loop */
+		core::UpdateEvents();
 
 		/* Draw */
 		auto view = world.view<const sad::ecs::RenderableObjectComponent, const sad::ecs::TransformComponent>();

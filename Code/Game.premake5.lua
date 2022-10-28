@@ -41,9 +41,11 @@ project "Game"
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
+		table.insert(linkers, "SDL2_mixer") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework")
+		table.insert(linkers, "SDL2_mixer.framework")
     end
 
     includedirs { includes }

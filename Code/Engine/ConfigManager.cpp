@@ -2,8 +2,6 @@
 
 #include "ConfigManager.h"
 
-#include <fstream>
-
 std::list<sad::ConfigSection> sad::ConfigManager::sections;
 bool sad::ConfigManager::m_IsFileRead = false;
 
@@ -103,8 +101,8 @@ sad::ConfigManager& sad::ConfigManager::GetInstance()
 {
     if(!m_IsFileRead)
     {
-        std::string configPath = std::filesystem::current_path().string();
-        configPath += "\\config.ini";
+        std::string configPath = core::FileUtils::GetCodeDirectory();
+        configPath += core::FileUtils::ConvertOSPathString("/config.ini");
         Parse(configPath);
         m_IsFileRead = true;
     }

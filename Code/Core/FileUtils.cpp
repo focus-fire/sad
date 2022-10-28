@@ -2,9 +2,6 @@
 
 #include "FileUtils.h"
 #include <stdlib.h>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
 
 /**
  * @brief 
@@ -12,7 +9,7 @@
  * @param path 
  * @return 
 */
-std::string core::FileUtils::ReadFile(std::string path)
+std::string core::FileUtils::ReadFile(const std::string& path)
 {
 	std::string line;
 	std::ifstream myfile(path);
@@ -36,7 +33,7 @@ std::string core::FileUtils::ReadFile(std::string path)
  * @param path 
  * @param content 
 */
-void core::FileUtils::CreateNewFile(std::string path, std::string content)
+bool core::FileUtils::CreateNewFile(const std::string& path, const std::string& content)
 {
 	std::ofstream myfile(path);
 	if (myfile.is_open())
@@ -44,8 +41,10 @@ void core::FileUtils::CreateNewFile(std::string path, std::string content)
 		core::Log(ELogType::Trace, "File Opened {}", path);
 		myfile << content << std::endl;
 		myfile.close();
+		return true;
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	return false;
 }
 
 /**
@@ -54,7 +53,7 @@ void core::FileUtils::CreateNewFile(std::string path, std::string content)
  * @param path 
  * @param content 
 */
-void core::FileUtils::OverWriteExistingFile(std::string path, std::string content)
+bool core::FileUtils::OverWriteExistingFile(const std::string& path, const std::string& content)
 {
 	std::fstream myfile;
 	myfile.open(path, std::ios_base::out | std::ios_base::in); // will not create a file 
@@ -63,8 +62,10 @@ void core::FileUtils::OverWriteExistingFile(std::string path, std::string conten
 		core::Log(ELogType::Trace, "File Opened {}", path);
 		myfile << content << std::endl;
 		myfile.close();
+		return true;
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	return false;
 }
 
 /**
@@ -73,15 +74,17 @@ void core::FileUtils::OverWriteExistingFile(std::string path, std::string conten
  * @param path 
  * @param content 
 */
-void core::FileUtils::AppendToExistingFile(std::string path, std::string content)
+bool core::FileUtils::AppendToExistingFile(const std::string& path, const std::string& content)
 {
 	std::ofstream outfile;
 	outfile.open(path, std::ios_base::app); // append instead of overwrite
 	if (outfile.is_open())
 	{
 		outfile << content << std::endl;
+		return true;
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	return false;
 }
 
 /**
@@ -114,6 +117,15 @@ std::string core::FileUtils::GetDataDirectory()
 	return dataDirectory;
 }
 
+
+std::string core::FileUtils::GetCodeDirectory()
+{
+	std::string codeDirectory = GetProjectDirectory();
+	codeDirectory += ConvertOSPathString("/Code");
+
+	return codeDirectory;
+}
+
 /**
  * @brief 
  * return the correct path based on operating system
@@ -121,7 +133,7 @@ std::string core::FileUtils::GetDataDirectory()
  * Only pass '/' for pathing slashes
  * @return 
 */
-std::string core::FileUtils::ConvertOSPathString(std::string path)
+std::string core::FileUtils::ConvertOSPathString(const std::string& path)
 {
 	std::string convertedPath = path;
 #ifdef _SAD_WINDOWS

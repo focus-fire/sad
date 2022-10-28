@@ -22,18 +22,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// Create the index buffer for indices
 	m_IndexBuffer = new sad::rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
-	// Platform specific path resolution
-	// TODO: Create method to generate paths for each platform
 	std::string dataDirectory = core::FileUtils::GetDataDirectory();
-/*
-#ifdef _SAD_WINDOWS
-	shaderFile = dataDirectory + "\\Shaders\\Default.glsl";
-	textureFile = dataDirectory + "\\Textures\\Default.png";
-#else
-	shaderFile = dataDirectory + "/Shaders/Default.glsl";
-	textureFile = dataDirectory + "/Textures/Default.png";
-#endif
-*/
 	std::string shaderFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Shaders/Default.glsl");
 	std::string textureFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Textures/Default.png");
 

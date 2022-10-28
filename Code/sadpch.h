@@ -17,3 +17,4 @@
 #include "Core/Log.h"
 #include "Core/FileUtils.h"
 #include "Core/StringUtils.h"
+#include "Core/EventHandler.h"

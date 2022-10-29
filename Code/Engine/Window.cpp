@@ -4,12 +4,14 @@
 
 #include "Window.h"
 
+#include "ConfigManager.h"
+
 sad::Window::Window(const WindowProperties& properties)
 	: m_Properties(properties)
 {
 	core::Log(ELogType::Info, "Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
-    int result = SDL_Init(SDL_INIT_VIDEO);
+  int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
 
 	// OpenGL Attribute Sets for SDL
@@ -45,10 +47,11 @@ void sad::Window::CreateGLContext()
 	m_GLContext = SDL_GL_CreateContext(m_Window);
 	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
 	
-	// Mandatory to set this flag in order to enable GL_CALL
-	IsGLAlive = true;
+	// Mandatory to setup and trigger event in order to enable GL_CALL
+	core::InitializeListener("OnGLStateChanged", OnGLStateChanged);
+	core::SignalEvent("OnGLStateChanged");
 
-	int vsync = SDL_GL_SetSwapInterval(1); // Enable VSync
+	int vsync = SDL_GL_SetSwapInterval(std::stoi(ConfigManager::GetValue("graphics", "vsync"))); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
 
 	int glad = gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
@@ -68,6 +71,6 @@ void sad::Window::Teardown()
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
 
-	// Mandatory to kill this flag in order to disable GL_CALL
-	IsGLAlive = false;
+	// Mandatory to trigger event in order to disable GL_CALL
+	core::SignalEvent("OnGLStateChanged");
 }

@@ -1,6 +1,7 @@
 #include "sadpch.h"
 
 #include "Application.h"
+#include "InputManager.h"
 
 #include <SDL2/SDL.h>
 #include <imgui.h>
@@ -18,6 +19,7 @@
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
+#include "ECS/Components/PlayerControllerComponent.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
@@ -27,6 +29,7 @@
 
 #include "Transform.h"
 #include "RenderableObject.h"
+#include "PlayerController.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -64,11 +67,12 @@ void sad::Application::Start()
 	m_CubeResource = new RenderableResource(cubeGeometry);
 
 	// Add resource and transform components to the entities
-	m_FirstCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_FirstCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
+	m_FirstCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
+	m_FirstCubeEntity.AddComponent<ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
+	m_FirstCubeEntity.AddEmptyComponent<ecs::PlayerControllerComponent>({});
 
-	m_SecondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_SecondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
+	m_SecondCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
+	m_SecondCubeEntity.AddComponent<ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
 
 	// Create view matrices 
 	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
@@ -85,6 +89,9 @@ void sad::Application::Start()
 
 	bool isClosed = false;
 
+	// Sample Event Signal For "UI" Group - Can Delete
+	core::SignalEvent("UI");
+  
 	while (!isClosed) 
 	{
 		PollEvents(&isClosed);
@@ -108,6 +115,10 @@ void sad::Application::PollEvents(bool* isClosed)
 			*isClosed = true;
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
 			*isClosed = true;
+		if (event.type == SDL_CONTROLLERDEVICEADDED)
+			InputManager::GetInstance().OnControllerConnected(event.cdevice);
+		if (event.type == SDL_CONTROLLERDEVICEREMOVED)
+			InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
 	}
 }
 
@@ -125,6 +136,8 @@ void sad::Application::Update(float dt)
 	m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
 
 	/* Update Game Logic */
+
+	// TODO: Prevent updates in game if in Editor mode 
 	auto currentTime = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;
@@ -135,28 +148,29 @@ void sad::Application::Update(float dt)
 
 	// Manipulate first entity transform
 	m_FirstCubeEntity.Transform.Rotate(glm::vec3(10.0f * dt));
-	m_FirstCubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(m_CubeTranslate) * dt / 100.0f, 0.0f));
-	m_FirstCubeEntity.Transform.SetScale(glm::vec3(0.75f));
+	m_FirstCubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(m_CubeTranslate) * dt, 0.0f));
 
 	// Manipulate second entity transform
 	m_SecondCubeEntity.Transform.Rotate(glm::vec3(10.0f * dt));
-	m_SecondCubeEntity.Transform.Translate(glm::vec3(glm::sin(m_CubeTranslate) * dt / 100.0f, 0.0f, 0.0f));
-	m_SecondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
+	m_SecondCubeEntity.Transform.Translate(glm::vec3(glm::sin(-m_CubeTranslate * 2) * dt, 0.0f, 0.0f));
 
 	/* Update ECS Systems */
-	sad::ecs::RenderableObjectSystem::Update();
+	core::UpdateEvents();
+	ecs::RenderableObjectSystem::Update();
+	PlayerController::Update();
 
 	/* Draw */
-	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
+	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	auto view = world.view<const sad::ecs::RenderableObjectComponent, const sad::ecs::TransformComponent>();
+	// TODO: Move render queries into a RenderingSystem
+	auto view = world.view<const ecs::RenderableObjectComponent, const ecs::TransformComponent>();
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
-		sad::ecs::RenderableObjectComponent renderable = renderableObjectComponent;
+		ecs::RenderableObjectComponent renderable = renderableObjectComponent;
 
-		sad::rad::VertexArray* va = renderable.m_RenderableObject->GetVertexArray();
-		sad::rad::IndexBuffer* ib = renderable.m_RenderableObject->GetIndexBuffer();
-		sad::rad::Shader* shader = renderable.m_RenderableObject->GetShader();
+		rad::VertexArray* va = renderable.m_RenderableObject->GetVertexArray();
+		rad::IndexBuffer* ib = renderable.m_RenderableObject->GetIndexBuffer();
+		rad::Shader* shader = renderable.m_RenderableObject->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera 
 		glm::mat4 mvpMatrix = m_VpMatrix * transformComponent.m_Transform->GetTransformMatrix();

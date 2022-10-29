@@ -4,9 +4,19 @@
 
 #include <glad/glad.h>
 
+namespace
+{
+	bool IsGLAlive = false;
+}
+
+void OnGLStateChanged()
+{
+	IsGLAlive = !IsGLAlive;
+	core::Log(ELogType::Trace, "OnGLStateChanged turned GL context {}", IsGLAlive ? "on" : "off");
+}
+
 void GLClearErrorLog()
 {
-	// TODO: Replace with GL context event
 	if (!IsGLAlive)
 		return;
 
@@ -15,7 +25,6 @@ void GLClearErrorLog()
 
 bool GLWriteErrorLog(const char* function, const char* file, int line)
 {
-	// TODO: Replace with GL context event
 	if (!IsGLAlive)
 		return true;
 

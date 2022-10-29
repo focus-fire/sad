@@ -26,7 +26,7 @@
  *		   However, entt will kill any existing components when it dies and in turn will kill GL elements that make GL calls
  *		   This shouldn't cause memory leak - but it'll make endless loops of GL errors that we don't care about (entt is freeing its memory and GL already did)
  */
-static bool IsGLAlive = false;
+void OnGLStateChanged();
 
 /**
  * @brief Clears the GL error buffer 

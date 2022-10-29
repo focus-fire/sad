@@ -32,6 +32,7 @@ namespace cap
 	private:
 		DebugTerminal* m_DebugTerminal;
 
+		bool m_ShowWelcomeWindow;
 		bool m_ShowGameWindow;
 		float m_GameWindowWidth;
 		float m_GameWindowHeight;

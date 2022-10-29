@@ -8,8 +8,22 @@
 
 #include <Engine/Application.h>
 
+const char* UI_BODY_TEXT = "Welcome to the sadEngine!";
+const char* UI_TITLE_TEXT = "Welcome Title";
+
+// Sample Event Functions - Can Delete
+void UIChangeBodyText()
+{
+	UI_BODY_TEXT = "Event System up and running";
+}
+void UIChangeTitleText()
+{
+	UI_TITLE_TEXT = "Welcome!!!";
+}
+
 cap::Editor::Editor()
 	: m_DebugTerminal(new cap::DebugTerminal())
+	, m_ShowWelcomeWindow(true)
 	, m_ShowGameWindow(true)
 {
 	IMGUI_CHECKVERSION();
@@ -31,6 +45,10 @@ void cap::Editor::Start()
 	ImGui_ImplOpenGL3_Init("#version 150");
 
 	m_DebugTerminal->Start();
+
+	// Sample Event Listener Creation - Can Delete
+	core::InitializeListener("UI", UIChangeBodyText);
+	core::InitializeListener("UI", UIChangeTitleText);
 }
 
 void cap::Editor::CatchSDLEvents(const SDL_Event& event)
@@ -62,6 +80,18 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
+
+	if (m_ShowWelcomeWindow)
+	{
+		ImGui::Begin(UI_TITLE_TEXT, &m_ShowWelcomeWindow);
+		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
+		ImGui::Text(UI_BODY_TEXT);
+		
+		if (ImGui::Button("Close"))
+			m_ShowWelcomeWindow = false;
+
+		ImGui::End();
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

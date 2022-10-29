@@ -26,6 +26,7 @@
 #include "Renderer/FrameBuffer.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Sample/Cube.h"
+#include "Renderer/RenderBuddy.h"
 
 #include "Transform.h"
 #include "RenderableResource.h"
@@ -79,14 +80,7 @@ void sad::Application::Start()
 	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
 
-	// Create view matrices 
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-	glm::mat4 vpMatrix = projectionMatrix * viewMatrix;
+	glm::mat4 vpMatrix = GetViewProjectionMatrix();
 
 	// Translation Logic (-pi to pi for demo)
 	float translate = -1.0f * glm::pi<float>();
@@ -149,6 +143,9 @@ void sad::Application::Start()
 		/* Update Events Loop */
 		core::UpdateEvents();
 
+		// Testing debug rendering
+		rad::RenderBuddy::DrawLine(glm::vec3(-1.0f, 1.0f, 2.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
 		/* Draw */
 		auto view = world.view<const sad::ecs::RenderableObjectComponent, const sad::ecs::TransformComponent>();
 		for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
@@ -161,11 +158,13 @@ void sad::Application::Start()
 
 			// TODO: Retrieve the view projection matrix from the Camera 
 			glm::mat4 mvpMatrix = vpMatrix * transformComponent.m_Transform->GetTransformMatrix();
+
+			shader->Bind();
 			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+			shader->Unbind();
 
 			m_Renderer->Draw(va, ib, shader);
 		}
-		
 
 		// Unbind framebuffer for next pass
 		m_Renderer->UnbindFrameBuffer();
@@ -185,4 +184,17 @@ void sad::Application::Teardown()
 { 
 	m_Editor->Teardown();
 	s_MainWindow->Teardown();
+}
+
+glm::mat4 sad::Application::GetViewProjectionMatrix()
+{
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+
+	glm::mat4 viewMatrix = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
+		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	);
+
+	return projectionMatrix * viewMatrix;
 }

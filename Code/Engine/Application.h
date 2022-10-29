@@ -2,6 +2,8 @@
 
 #include <Editor/Editor.h>
 
+#include <glm/glm.hpp>
+
 #include "Window.h"
 #include "Renderer/Renderer.h"
 
@@ -20,6 +22,9 @@ namespace sad
 
 	public:
 		static Window* s_MainWindow;
+		
+		// TODO: Abstract view projection matrix into camera
+		static glm::mat4 GetViewProjectionMatrix();
 
 	private:
 		sad::rad::Renderer* m_Renderer = nullptr;

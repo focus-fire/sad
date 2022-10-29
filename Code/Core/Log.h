@@ -82,7 +82,7 @@ namespace core
 	template<typename... TArgs>
 	inline void Log(const ELogType type, const char* message, TArgs... args) { }
 
-	void AddLoggingSink(spdlog::sink_ptr sink) { }
-	void RemoveLoggingSink(spdlog::sink_ptr sink) { }
+	inline void AddLoggingSink(spdlog::sink_ptr sink) { }
+	inline void RemoveLoggingSink(spdlog::sink_ptr sink) { }
 #endif
 }

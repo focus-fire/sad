@@ -11,6 +11,8 @@ project "EngineTests"
 
     includedirs {
         "%{prj.location}/../Vendor/Catch2/single_include/",
+        "%{prj.location}/../Vendor/glm",
+        "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}/../Code/",
     }
 

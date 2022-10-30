@@ -20,6 +20,7 @@
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/PlayerControllerComponent.h"
+#include "ECS/Components/EditorControllerComponent.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
@@ -74,7 +75,7 @@ void sad::Application::Start()
 	// Add resource and transform components to the entities
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
-	cubeEntity.AddEmptyComponent<sad::ecs::PlayerControllerComponent>({});
+	cubeEntity.AddEmptyComponent<sad::ecs::EditorControllerComponent>({});
 
 	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });

@@ -12,9 +12,7 @@
 #include "InputManager.h"
 #include "Transform.h"
 
-static sad::ControlMode currentMode = sad::ControlMode::PlayerMode;
 sad::PlayerController::PlayerController() {}
-
 sad::PlayerController::~PlayerController() {}
 
 void sad::PlayerController::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
@@ -58,12 +56,12 @@ void sad::PlayerController::PlayerControls(InputManager& input, const ecs::Trans
 	// Handles left/right rotation using LEFT and RIGHT arrow keys.
 	if (input.GetKey(sad::KeyCode::LeftArrow) || input.GetButton(sad::ControllerButton::L1))
 	{
-		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f, 0.0f));
+		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
 	}
 
 	if (input.GetKey(sad::KeyCode::RightArrow) || input.GetButton(sad::ControllerButton::R1))
 	{
-		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
+		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f * 0.25f, 0.0f));
 	}
 }
 
@@ -97,27 +95,21 @@ void sad::PlayerController::Update()
 		core::Log(ELogType::Info, mousePosition.c_str());
 	}
 
-	float movespeed = 0.025f;
+	float movespeed = 0.005f;
 
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-
-	auto view = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
-	if (currentMode == ControlMode::EditorMode)
-	{
-		auto view = world.view<const sad::ecs::EditorControllerComponent, const sad::ecs::TransformComponent>();
-	}
+	auto playerView = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
+	auto editorView = world.view<const sad::ecs::EditorControllerComponent, const sad::ecs::TransformComponent>();
 	
-	for (auto [controllerComponent, transformComponent] : view.each())
+	for (auto [controllerComponent, transformComponent] : playerView.each())
 	{
 		PlayerControls(input, transformComponent, movespeed);
+	}
 
-		if (currentMode == sad::ControlMode::EditorMode)
-		{
-			EditorControls(input, transformComponent, movespeed);
-		}
-
-		
-
+	for (auto [controllerComponent, transformComponent] : editorView.each())
+	{
+		PlayerControls(input, transformComponent, movespeed);
+		EditorControls(input, transformComponent, movespeed);
 	}
 	
 }

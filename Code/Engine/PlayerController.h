@@ -6,12 +6,6 @@
 
 namespace sad
 {
-	enum class ControlMode
-	{
-		EditorMode,
-		PlayerMode
-	};
-
 	class PlayerController
 	{
 	public:
@@ -19,7 +13,6 @@ namespace sad
 		~PlayerController();
 
 		static void Update();
-		static void ChangeModes(ControlMode mode);
 
 	private:
 		static void PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed);

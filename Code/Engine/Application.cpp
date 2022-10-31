@@ -94,6 +94,7 @@ void sad::Application::Start()
 
 	bool isClosed = false;
 	SDL_Event event;
+	InputManager& input = InputManager::GetInstance();
 
   // Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
@@ -103,15 +104,25 @@ void sad::Application::Start()
 		while (SDL_PollEvent(&event)) 
 		{
 			m_Editor->CatchSDLEvents(event);
+			input.CatchMouseEvents(event);
+			input.CatchKeyboardEvents(event);
+			input.CatchControllerEvents(event);
 
 			if (event.type == SDL_QUIT) 
 				isClosed = true;
+
 			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
 				isClosed = true;
+
 			if (event.type == SDL_CONTROLLERDEVICEADDED)
-				InputManager::GetInstance().OnControllerConnected(event.cdevice);
+				input.OnControllerConnected(event.cdevice);
+
 			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
-				InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
+				input.OnControllerDisconnected();
+
+			if (event.type == SDL_MOUSEMOTION) 
+				input.SetMousePosition(event.motion.x, event.motion.y);
+			
 		}
 
 		// First 'pass' sets up the framebuffer

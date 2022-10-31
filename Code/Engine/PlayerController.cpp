@@ -17,10 +17,8 @@ sad::PlayerController::~PlayerController() {}
 
 void sad::PlayerController::Update()
 {
-	
-	if (InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX) != 0.0f);
+	InputManager& input = InputManager::GetInstance();
 
-	// Movespeed, to later get on config instead.
 	float movespeed = 0.025f;
 	
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
@@ -30,60 +28,73 @@ void sad::PlayerController::Update()
 		bool usingController = false; // bool that disables movement keys when joystick being used to prevent double speed
 
 		// Handles forward/back movement using W and S + controller left joystick.
-		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTY)) > InputManager::GetInstance().ControllerDeadZone)
+		if (abs(input.GetLeftAxis("Vertical")) > input.ControllerDeadZone)
 		{
 			usingController = true;
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTY) * movespeed));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -input.GetLeftAxis("Vertical") * movespeed));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W) && !usingController)
+		if (input.GetKey(sad::KeyCode::W) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_S) && !usingController)
+		if (input.GetKey(sad::KeyCode::S) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
 		}
 
 		// Handles left/right movement using A and D + controller left joystick.
-		if (abs(InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX)) > InputManager::GetInstance().ControllerDeadZone)
+		if (abs(input.GetLeftAxis("Horizontal")) > input.ControllerDeadZone)
 		{
 			usingController = true;
-			transformComponent.m_Transform->Translate(glm::vec3(-InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX) * movespeed, 0.0f, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(-input.GetLeftAxis("Horizontal") * movespeed, 0.0f, 0.0f));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_A) && !usingController)
+		if (input.GetKey(sad::KeyCode::A) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_D) && !usingController)
+		if (input.GetKey(sad::KeyCode::D) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
 		}
 
 		// Handles up/down flight using SPACE and LSHIFT.
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_SPACE) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_A))
+		if (input.GetKey(sad::KeyCode::Space) || input.GetButton(sad::ControllerButton::South))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LSHIFT) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_B))
+		if (input.GetKey(sad::KeyCode::LShift) || input.GetButton(sad::ControllerButton::East))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
 		}
 
 		// Handles left/right rotation using LEFT and RIGHT arrow keys.
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LEFT) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
+		if (input.GetKey(sad::KeyCode::LeftArrow) || input.GetButton(sad::ControllerButton::L1))
 		{
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 
-		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_RIGHT) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
+		if (input.GetKey(sad::KeyCode::RightArrow) || input.GetButton(sad::ControllerButton::R1))
 		{
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f, 0.0f));
 		}
+
+		// Test mouse position
+		if (input.GetMouseButtonPressed(SDL_BUTTON_MIDDLE)) 
+		{
+			std::string mousePosition = "Mouse Pos: (";
+			mousePosition += std::to_string(input.GetMousePosition().x);
+			mousePosition += ", ";
+			mousePosition += std::to_string(input.GetMousePosition().y);
+			mousePosition += ")";
+
+			core::Log(ELogType::Info, mousePosition.c_str());
+		}
+
 	}
 	
 }

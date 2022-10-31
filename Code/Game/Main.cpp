@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     core::InitializeLogging();
     core::Log(ELogType::Info, "this engine is sad.");
 
-    AudioManager* audioManager = new AudioManager("C:\\Users\\keith\\Documents\\GitHub\\sad\\Code\\Arabic_Nokia.wav", 100);
+    AudioManager* audioManager = new AudioManager("Arabic_Nokia.wav", 60);
     audioManager->play();
 
     pog::Application* app = new pog::Application();

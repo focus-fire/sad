@@ -3,15 +3,23 @@
 
 AudioManager::AudioManager(const std::string &path, int volume)
     : chunk(Mix_LoadWAV(path.c_str()), Mix_FreeChunk) {
-
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
-        if (!chunk.get()) {
-            // LOG("Couldn't load audio sample: ", path);
+    core::Log(ELogType::Debug, "Path Test {}", path.c_str());
+    if( Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+        {
             core::Log(ELogType::Debug, "Couldn't load audio sample: {}", Mix_GetError());
         }
+    else {
+        core::Log(ELogType::Debug, "Audio sample loaded!");
     }
-
-    Mix_AllocateChannels(32);
+    Mix_Chunk *test = Mix_LoadWAV("Arabic_Nokia.wav");
+    if (test == NULL) {
+        core::Log(ELogType::Debug, "Couldn't load audio sample: {}", Mix_GetError());
+    }
+    else {
+        if (Mix_PlayChannel(-1, test, 0) == -1) {
+            core::Log(ELogType::Debug, "It Work?: {}", Mix_GetError());
+        }
+    }
    
     Mix_VolumeChunk(chunk.get(), volume);
 }

@@ -4,8 +4,8 @@
 
 //int main() 
 //{
-//	AudioManager* audioManager = new AudioManager("Arabic_Nokia.mp3", 10);
+//	AudioManager* audioManager = new AudioManager("Arabic_Nokia.wav", 100);
 //
-//	audioManager->play();
+//	audioManager->play(3);
 //
 //}

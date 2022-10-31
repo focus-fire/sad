@@ -16,3 +16,6 @@
 [submodule "Vendor/entt"]
 	path = Vendor/entt
 	url = https://github.com/skypjack/entt.git
+[submodule "Vendor/ImTerm"]
+	path = Vendor/ImTerm
+	url = https://github.com/Organic-Code/ImTerm

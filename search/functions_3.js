@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['scale_84',['Scale',['../classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1',1,'sad::Transform']]]
+  ['lefttrim_97',['LeftTrim',['../classcore_1_1StringUtils.html#adfea453acb71ce10fbffc6042c596bc8',1,'core::StringUtils']]]
 ];

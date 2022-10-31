@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['oncontrollerconnected_81',['OnControllerConnected',['../classsad_1_1InputManager.html#ab4bfd78a02dc4bdcfff1b0b6678cbe0f',1,'sad::InputManager']]],
-  ['oncontrollerdisconnected_82',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ae38a4c847972b8174d93ef1c3232ca26',1,'sad::InputManager']]]
+  ['convertospathstring_83',['ConvertOSPathString',['../classcore_1_1FileUtils.html#a19e9251424c0869b3848c24f3ddc3038',1,'core::FileUtils']]],
+  ['createnewfile_84',['CreateNewFile',['../classcore_1_1FileUtils.html#a8e9d78a0ff7e4900dc52268474b80f84',1,'core::FileUtils']]]
 ];

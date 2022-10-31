@@ -78,100 +78,162 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>sad</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1InputManager.html">InputManager</a> {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1InputManager.html">sad::InputManager</a>&amp; GetInstance();</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="classsad_1_1InputManager.html">InputManager</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1InputManager.html">InputManager</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">float</span> ControllerDeadZone;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">enum class</span> ControllerButton</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        South = SDL_CONTROLLER_BUTTON_A,</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        North = SDL_CONTROLLER_BUTTON_Y,</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        East = SDL_CONTROLLER_BUTTON_B,</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        West = SDL_CONTROLLER_BUTTON_X,</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="comment">// Keyboard Events</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a8bd9c6caa6d6b6ae3c2030eb3914d60f">GetKey</a>(SDL_Scancode key); <span class="comment">// Returns true if key is held</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a93912f135f3f3f368df853ddc834e69a">GetKeyPressed</a>(SDL_Scancode key); <span class="comment">// Returns true if key is pressed</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#af95ea44d362a94c128a103e21b86654d">GetKeyReleased</a>(SDL_Scancode key); <span class="comment">// Returns true if key is released</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        DPadUp = SDL_CONTROLLER_BUTTON_DPAD_UP,</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        DPadDown = SDL_CONTROLLER_BUTTON_DPAD_DOWN,</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        DPadLeft = SDL_CONTROLLER_BUTTON_DPAD_LEFT,</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        DPadRight = SDL_CONTROLLER_BUTTON_DPAD_RIGHT,</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">bool</span> GetMouseButton(SDL_MouseButtonEvent button); <span class="comment">// Returns true if mouse button is held</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">bool</span> GetMouseButtonPressed(SDL_MouseButtonEvent button); <span class="comment">// Returns true if mouse button is pressed</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">bool</span> GetMouseButtonReleased(SDL_MouseButtonEvent button); <span class="comment">// Returns true if mouse button is released</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">const</span> Uint8* CurrentKeyboardStates = SDL_GetKeyboardState(<span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        std::map&lt;SDL_Scancode, bool&gt; KeyboardStates;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html#a7524ca689e4a30b9e660d06ce33f9fe1">   33</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#a7524ca689e4a30b9e660d06ce33f9fe1">UpdateKeyboardState</a>(SDL_Scancode key, <span class="keywordtype">bool</span> pressed)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::map&lt;SDL_Scancode, bool&gt;::iterator iter = KeyboardStates.find(key);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keywordflow">if</span> (iter != KeyboardStates.end())</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            {</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                iter-&gt;second = pressed;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            }</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            KeyboardStates.insert({ key, pressed });</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html#ad2c24028e3cea95568a983531b91a6d9">   49</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#ad2c24028e3cea95568a983531b91a6d9">GetKeyboardState</a>(SDL_Scancode key)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            std::map&lt;SDL_Scancode, bool&gt;::iterator iter = KeyboardStates.find(key);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordflow">if</span> (iter != KeyboardStates.end())</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;                <span class="keywordflow">return</span> iter-&gt;second;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        Start = SDL_CONTROLLER_BUTTON_START,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        L1 = SDL_CONTROLLER_BUTTON_LEFTSHOULDER,</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        R1 = SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        LeftStick = SDL_CONTROLLER_BUTTON_LEFTSTICK,</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        RightStick = SDL_CONTROLLER_BUTTON_RIGHTSTICK</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    };</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">enum class</span> KeyCode</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        A = SDL_SCANCODE_A,</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        B = SDL_SCANCODE_B,</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        C = SDL_SCANCODE_C,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        D = SDL_SCANCODE_D,</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        E = SDL_SCANCODE_E,</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        F = SDL_SCANCODE_F,</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        G = SDL_SCANCODE_G,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        H = SDL_SCANCODE_H,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        I = SDL_SCANCODE_I,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        J = SDL_SCANCODE_J,</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        K = SDL_SCANCODE_K,</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        L = SDL_SCANCODE_L,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        M = SDL_SCANCODE_M,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        N = SDL_SCANCODE_N,</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        O = SDL_SCANCODE_O,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        P = SDL_SCANCODE_P,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        Q = SDL_SCANCODE_Q,</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        R = SDL_SCANCODE_R,</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        S = SDL_SCANCODE_S,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        T = SDL_SCANCODE_T,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        U = SDL_SCANCODE_U,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        V = SDL_SCANCODE_V,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        W = SDL_SCANCODE_W,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        X = SDL_SCANCODE_X,</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        Y = SDL_SCANCODE_Y,</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        Z = SDL_SCANCODE_Z,</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="comment">// Controller Events</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">bool</span> ControllerIsActive = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#ab4bfd78a02dc4bdcfff1b0b6678cbe0f">OnControllerConnected</a>(SDL_ControllerDeviceEvent&amp; e);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#ae38a4c847972b8174d93ef1c3232ca26">OnControllerDisconnected</a>(SDL_ControllerDeviceEvent&amp; e);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#ae2793233eb4d66e329744278fec91ed5">GetButton</a>(SDL_GameControllerButton button); <span class="comment">// Returns true if button is held</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a0f776686c342fad04287d86e95bce05e">GetButtonPressed</a>(SDL_GameControllerButton button); <span class="comment">// Returns true if button is pressed</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#aac429ee44a0d9d438fd41fe4b4b5fcd8">GetButtonReleased</a>(SDL_GameControllerButton button); <span class="comment">// Returns true if button is released</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classsad_1_1InputManager.html#af9110be7c01b09ec03262eac2073a813">GetAxis</a>(SDL_GameControllerAxis axis); <span class="comment">// Returns the value rounded to 1.0f of a given axis</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        SDL_GameController* controller = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        std::map&lt;SDL_GameControllerButton, bool&gt; ButtonStates;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html#a96eebc189cc3c744f55eb21084c1efea">   77</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#a96eebc189cc3c744f55eb21084c1efea">UpdateControllerButtonState</a>(SDL_GameControllerButton button, <span class="keywordtype">bool</span> pressed)</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            std::map&lt;SDL_GameControllerButton, bool&gt;::iterator iter = ButtonStates.find(button);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">if</span> (iter != ButtonStates.end())</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            {</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                iter-&gt;second = pressed;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            }</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            ButtonStates.insert({ button, pressed });</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        Space = SDL_SCANCODE_SPACE,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        Escape = SDL_SCANCODE_ESCAPE,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        LShift = SDL_SCANCODE_LSHIFT,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        RShift = SDL_SCANCODE_RSHIFT,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        LCtrl = SDL_SCANCODE_LCTRL,</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        RCtrl = SDL_SCANCODE_RCTRL,</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        RightArrow = SDL_SCANCODE_RIGHT,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        LeftArrow = SDL_SCANCODE_LEFT,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        DownArrow = SDL_SCANCODE_DOWN,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        UpArrow = SDL_SCANCODE_UP</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    };</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html">   74</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1InputManager.html">InputManager</a> {</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1InputManager.html">sad::InputManager</a>&amp; GetInstance();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classsad_1_1InputManager.html">InputManager</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1InputManager.html">InputManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="comment">// Keyboard Events</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#a068cf8b93d62eb34207c3c48c0e21871">CatchKeyboardEvents</a>(SDL_Event&amp; event);</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classsad_1_1InputManager.html#a01e76b1d2251a8936404db5925375f9e">   93</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a01e76b1d2251a8936404db5925375f9e">GetControllerButtonState</a>(SDL_GameControllerButton button)</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            std::map&lt;SDL_GameControllerButton, bool&gt;::iterator iter = ButtonStates.find(button);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;            <span class="keywordflow">if</span> (iter != ButtonStates.end())</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;                <span class="keywordflow">return</span> iter-&gt;second;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <a class="code" href="classsad_1_1InputManager.html">InputManager</a>() {}</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1InputManager.html">sad::InputManager</a> s_InputManager;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    };</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a9441a8ace7eb281f865f4540b5fb010e">GetKey</a>(KeyCode key);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a54eaadbedce0cef53a53fce43372677e">GetKeyPressed</a>(KeyCode key);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a4fdfe7e8e51c838beef9cfde3416ab12">GetKeyReleased</a>(KeyCode key);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="comment">// Mouse Events</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#abd008b80d36a930ff4b7fc9a50ed97d1">CatchMouseEvents</a>(SDL_Event&amp; event);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a86222abd17018c261411cc6954c82f65">GetMouseButton</a>(<span class="keywordtype">int</span> button);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a70bafebc7622ae1ebae69197ce084139">GetMouseButtonPressed</a>(<span class="keywordtype">int</span> button);</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#ad7c0ff68985bac215474e6a695951c03">GetMouseButtonReleased</a>(<span class="keywordtype">int</span> button); </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordtype">void</span> SetMousePosition(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y) {</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            m_MousePosition.x = x;</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            m_MousePosition.y = y;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        }</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        SDL_Point GetMousePosition(){ <span class="keywordflow">return</span> m_MousePosition; };</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="comment">// Controller Events</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        <span class="keywordtype">float</span> ControllerDeadZone;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203">OnControllerConnected</a>(SDL_ControllerDeviceEvent&amp; event);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        </div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7">OnControllerDisconnected</a>();</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1InputManager.html#a0188b9a1fc0c00e6139d8c207fc20625">CatchControllerEvents</a>(SDL_Event&amp; event);</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a2debc653b4dd08c8a65ab87bd48149c4">GetButton</a>(ControllerButton button);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a19f0bd3321afa67323a675e424e95bec">GetButtonPressed</a>(ControllerButton button);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1InputManager.html#a830564ea179575cb66e07f95babb9c8a">GetButtonReleased</a>(ControllerButton button);</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classsad_1_1InputManager.html#af9110be7c01b09ec03262eac2073a813">GetAxis</a>(SDL_GameControllerAxis axis);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classsad_1_1InputManager.html#a8ef91b3da5eb59c7d335178152394f63">GetLeftAxis</a>(<span class="keyword">const</span> std::string&amp; orientation);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        <span class="keywordtype">float</span> <a class="code" href="classsad_1_1InputManager.html#a0c4e6bf7c1df0376f8a169c9aa045613">GetRightAxis</a>(<span class="keyword">const</span> std::string&amp; orientation);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <a class="code" href="classsad_1_1InputManager.html">InputManager</a>() {}</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1InputManager.html">sad::InputManager</a> s_InputManager;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;        std::unordered_map&lt;SDL_Scancode, bool&gt; m_KeyboardState;</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;        std::unordered_map&lt;SDL_Scancode, Uint64&gt;  m_KeyboardUpdateFrames;</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        std::unordered_map&lt;int, bool&gt; m_ButtonState;</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;        std::unordered_map&lt;int, int&gt;  m_ButtonUpdateFrames;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160; </div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        SDL_Point m_MousePosition;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keywordtype">bool</span> m_MouseState[6];</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;        <span class="keywordtype">int</span>  m_MouseUpdateFrames[6];</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160; </div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        SDL_GameController* m_Controller = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        <span class="keywordtype">bool</span>  m_ControllerIsActive;</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    };</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1InputManager_html_ae2793233eb4d66e329744278fec91ed5"><div class="ttname"><a href="classsad_1_1InputManager.html#ae2793233eb4d66e329744278fec91ed5">sad::InputManager::GetButton</a></div><div class="ttdeci">bool GetButton(SDL_GameControllerButton button)</div><div class="ttdoc">Returns true if a specified controller button is held.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:60</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a8bd9c6caa6d6b6ae3c2030eb3914d60f"><div class="ttname"><a href="classsad_1_1InputManager.html#a8bd9c6caa6d6b6ae3c2030eb3914d60f">sad::InputManager::GetKey</a></div><div class="ttdeci">bool GetKey(SDL_Scancode key)</div><div class="ttdoc">Returns true if the key coresponding to the scancode is down.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:123</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a7524ca689e4a30b9e660d06ce33f9fe1"><div class="ttname"><a href="classsad_1_1InputManager.html#a7524ca689e4a30b9e660d06ce33f9fe1">sad::InputManager::UpdateKeyboardState</a></div><div class="ttdeci">void UpdateKeyboardState(SDL_Scancode key, bool pressed)</div><div class="ttdoc">Saves the down state of a key.</div><div class="ttdef"><b>Definition:</b> InputManager.h:33</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_ab4bfd78a02dc4bdcfff1b0b6678cbe0f"><div class="ttname"><a href="classsad_1_1InputManager.html#ab4bfd78a02dc4bdcfff1b0b6678cbe0f">sad::InputManager::OnControllerConnected</a></div><div class="ttdeci">void OnControllerConnected(SDL_ControllerDeviceEvent &amp;e)</div><div class="ttdoc">Set the controller when a new controller is connected;.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:20</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a01e76b1d2251a8936404db5925375f9e"><div class="ttname"><a href="classsad_1_1InputManager.html#a01e76b1d2251a8936404db5925375f9e">sad::InputManager::GetControllerButtonState</a></div><div class="ttdeci">bool GetControllerButtonState(SDL_GameControllerButton button)</div><div class="ttdoc">Returns true if a controller button is down in the previous frame.</div><div class="ttdef"><b>Definition:</b> InputManager.h:93</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_ae38a4c847972b8174d93ef1c3232ca26"><div class="ttname"><a href="classsad_1_1InputManager.html#ae38a4c847972b8174d93ef1c3232ca26">sad::InputManager::OnControllerDisconnected</a></div><div class="ttdeci">void OnControllerDisconnected(SDL_ControllerDeviceEvent &amp;e)</div><div class="ttdoc">Unsets the controller when controller disconnected;.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:48</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a93912f135f3f3f368df853ddc834e69a"><div class="ttname"><a href="classsad_1_1InputManager.html#a93912f135f3f3f368df853ddc834e69a">sad::InputManager::GetKeyPressed</a></div><div class="ttdeci">bool GetKeyPressed(SDL_Scancode key)</div><div class="ttdoc">Returns true if key coresponding to the scancode is pressed in the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:134</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_af95ea44d362a94c128a103e21b86654d"><div class="ttname"><a href="classsad_1_1InputManager.html#af95ea44d362a94c128a103e21b86654d">sad::InputManager::GetKeyReleased</a></div><div class="ttdeci">bool GetKeyReleased(SDL_Scancode key)</div><div class="ttdoc">Returns true if key coresponding to the scancode is released in the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:148</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_ad2c24028e3cea95568a983531b91a6d9"><div class="ttname"><a href="classsad_1_1InputManager.html#ad2c24028e3cea95568a983531b91a6d9">sad::InputManager::GetKeyboardState</a></div><div class="ttdeci">bool GetKeyboardState(SDL_Scancode key)</div><div class="ttdoc">Returns true if a key is down in the previous frame.</div><div class="ttdef"><b>Definition:</b> InputManager.h:49</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html"><div class="ttname"><a href="classsad_1_1InputManager.html">sad::InputManager</a></div><div class="ttdef"><b>Definition:</b> InputManager.h:9</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_aac429ee44a0d9d438fd41fe4b4b5fcd8"><div class="ttname"><a href="classsad_1_1InputManager.html#aac429ee44a0d9d438fd41fe4b4b5fcd8">sad::InputManager::GetButtonReleased</a></div><div class="ttdeci">bool GetButtonReleased(SDL_GameControllerButton button)</div><div class="ttdoc">Returns true if a specified controller button is released in the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:90</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a96eebc189cc3c744f55eb21084c1efea"><div class="ttname"><a href="classsad_1_1InputManager.html#a96eebc189cc3c744f55eb21084c1efea">sad::InputManager::UpdateControllerButtonState</a></div><div class="ttdeci">void UpdateControllerButtonState(SDL_GameControllerButton button, bool pressed)</div><div class="ttdoc">Saves the down state of a controller button.</div><div class="ttdef"><b>Definition:</b> InputManager.h:77</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_a0f776686c342fad04287d86e95bce05e"><div class="ttname"><a href="classsad_1_1InputManager.html#a0f776686c342fad04287d86e95bce05e">sad::InputManager::GetButtonPressed</a></div><div class="ttdeci">bool GetButtonPressed(SDL_GameControllerButton button)</div><div class="ttdoc">Returns true if a specified controller button is pressed in the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:73</div></div>
-<div class="ttc" id="aclasssad_1_1InputManager_html_af9110be7c01b09ec03262eac2073a813"><div class="ttname"><a href="classsad_1_1InputManager.html#af9110be7c01b09ec03262eac2073a813">sad::InputManager::GetAxis</a></div><div class="ttdeci">float GetAxis(SDL_GameControllerAxis axis)</div><div class="ttdoc">Returns the value rounded to 1.0 of a given axis.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:107</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a2debc653b4dd08c8a65ab87bd48149c4"><div class="ttname"><a href="classsad_1_1InputManager.html#a2debc653b4dd08c8a65ab87bd48149c4">sad::InputManager::GetButton</a></div><div class="ttdeci">bool GetButton(ControllerButton button)</div><div class="ttdoc">Returns true if a controller button is held.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:113</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a8ef91b3da5eb59c7d335178152394f63"><div class="ttname"><a href="classsad_1_1InputManager.html#a8ef91b3da5eb59c7d335178152394f63">sad::InputManager::GetLeftAxis</a></div><div class="ttdeci">float GetLeftAxis(const std::string &amp;orientation)</div><div class="ttdoc">Gets axis of left joystick.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:153</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a9441a8ace7eb281f865f4540b5fb010e"><div class="ttname"><a href="classsad_1_1InputManager.html#a9441a8ace7eb281f865f4540b5fb010e">sad::InputManager::GetKey</a></div><div class="ttdeci">bool GetKey(KeyCode key)</div><div class="ttdoc">Returns true if a keyboard key is held.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:27</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a0188b9a1fc0c00e6139d8c207fc20625"><div class="ttname"><a href="classsad_1_1InputManager.html#a0188b9a1fc0c00e6139d8c207fc20625">sad::InputManager::CatchControllerEvents</a></div><div class="ttdeci">void CatchControllerEvents(SDL_Event &amp;event)</div><div class="ttdoc">Catches controller button events and updates their states param event.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:104</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_ad7c0ff68985bac215474e6a695951c03"><div class="ttname"><a href="classsad_1_1InputManager.html#ad7c0ff68985bac215474e6a695951c03">sad::InputManager::GetMouseButtonReleased</a></div><div class="ttdeci">bool GetMouseButtonReleased(int button)</div><div class="ttdoc">Returns true if a mouse button is released during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:66</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_abd008b80d36a930ff4b7fc9a50ed97d1"><div class="ttname"><a href="classsad_1_1InputManager.html#abd008b80d36a930ff4b7fc9a50ed97d1">sad::InputManager::CatchMouseEvents</a></div><div class="ttdeci">void CatchMouseEvents(SDL_Event &amp;event)</div><div class="ttdoc">Catches mouse button events and updates their states.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:47</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a0c4e6bf7c1df0376f8a169c9aa045613"><div class="ttname"><a href="classsad_1_1InputManager.html#a0c4e6bf7c1df0376f8a169c9aa045613">sad::InputManager::GetRightAxis</a></div><div class="ttdeci">float GetRightAxis(const std::string &amp;orientation)</div><div class="ttdoc">Gets axis of right joystick.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:172</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a70bafebc7622ae1ebae69197ce084139"><div class="ttname"><a href="classsad_1_1InputManager.html#a70bafebc7622ae1ebae69197ce084139">sad::InputManager::GetMouseButtonPressed</a></div><div class="ttdeci">bool GetMouseButtonPressed(int button)</div><div class="ttdoc">Returns true if a mouse button is pressed during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:61</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html"><div class="ttname"><a href="classsad_1_1InputManager.html">sad::InputManager</a></div><div class="ttdef"><b>Definition:</b> InputManager.h:74</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a19f0bd3321afa67323a675e424e95bec"><div class="ttname"><a href="classsad_1_1InputManager.html#a19f0bd3321afa67323a675e424e95bec">sad::InputManager::GetButtonPressed</a></div><div class="ttdeci">bool GetButtonPressed(ControllerButton button)</div><div class="ttdoc">Returns true if a controller button is pressed during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:123</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a068cf8b93d62eb34207c3c48c0e21871"><div class="ttname"><a href="classsad_1_1InputManager.html#a068cf8b93d62eb34207c3c48c0e21871">sad::InputManager::CatchKeyboardEvents</a></div><div class="ttdeci">void CatchKeyboardEvents(SDL_Event &amp;event)</div><div class="ttdoc">Catches keyboard events and updates their states.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:18</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a4fdfe7e8e51c838beef9cfde3416ab12"><div class="ttname"><a href="classsad_1_1InputManager.html#a4fdfe7e8e51c838beef9cfde3416ab12">sad::InputManager::GetKeyReleased</a></div><div class="ttdeci">bool GetKeyReleased(KeyCode key)</div><div class="ttdoc">Returns true if a keyboard key is released during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:39</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_af9110be7c01b09ec03262eac2073a813"><div class="ttname"><a href="classsad_1_1InputManager.html#af9110be7c01b09ec03262eac2073a813">sad::InputManager::GetAxis</a></div><div class="ttdeci">float GetAxis(SDL_GameControllerAxis axis)</div><div class="ttdoc">Returns axis rounded to 1.0 of a given controller axis.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:142</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a3fb1ad8a43e895fc7eba528eedcef203"><div class="ttname"><a href="classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203">sad::InputManager::OnControllerConnected</a></div><div class="ttdeci">void OnControllerConnected(SDL_ControllerDeviceEvent &amp;event)</div><div class="ttdoc">Handles new controller device.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:73</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a86222abd17018c261411cc6954c82f65"><div class="ttname"><a href="classsad_1_1InputManager.html#a86222abd17018c261411cc6954c82f65">sad::InputManager::GetMouseButton</a></div><div class="ttdeci">bool GetMouseButton(int button)</div><div class="ttdoc">Returns true if a mouse button is held.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:56</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a54eaadbedce0cef53a53fce43372677e"><div class="ttname"><a href="classsad_1_1InputManager.html#a54eaadbedce0cef53a53fce43372677e">sad::InputManager::GetKeyPressed</a></div><div class="ttdeci">bool GetKeyPressed(KeyCode key)</div><div class="ttdoc">Returns true if a keyboard key is pressed during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:33</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_a830564ea179575cb66e07f95babb9c8a"><div class="ttname"><a href="classsad_1_1InputManager.html#a830564ea179575cb66e07f95babb9c8a">sad::InputManager::GetButtonReleased</a></div><div class="ttdeci">bool GetButtonReleased(ControllerButton button)</div><div class="ttdoc">Returns true if a controller button is released during the current frame.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:133</div></div>
+<div class="ttc" id="aclasssad_1_1InputManager_html_ad3ae300adfdc154a2ab449c1e69c98c7"><div class="ttname"><a href="classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7">sad::InputManager::OnControllerDisconnected</a></div><div class="ttdeci">void OnControllerDisconnected()</div><div class="ttdoc">Handles controller disconnection.</div><div class="ttdef"><b>Definition:</b> InputManager.cpp:97</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

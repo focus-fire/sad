@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lefttrim_97',['LeftTrim',['../classcore_1_1StringUtils.html#adfea453acb71ce10fbffc6042c596bc8',1,'core::StringUtils']]]
+  ['lefttrim_107',['LeftTrim',['../classcore_1_1StringUtils.html#adfea453acb71ce10fbffc6042c596bc8',1,'core::StringUtils']]]
 ];

@@ -22,8 +22,11 @@ namespace sad::rad
 		void UnbindFrameBuffer() { return m_FrameBuffer->Unbind(); }
 		unsigned int GetFrameBufferTexture() { return m_FrameBufferTexture->GetTextureId(); }
 
-		void Clear(float r, float g, float b, float a) const;
-		void Draw(VertexArray* va, IndexBuffer* ib, Shader* shader) const;
+		void Clear() const;
+		void ClearColor(const glm::vec4& color) const;
+
+		void DrawIndexed(VertexArray* vertexArray, IndexBuffer* ib) const;
+		void DrawLines(const VertexArray& vertexArray, unsigned int vertexCount) const;
 
 	private:
 		FrameBuffer* m_FrameBuffer;

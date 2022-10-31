@@ -27,7 +27,6 @@ namespace sad
 		static glm::mat4 GetViewProjectionMatrix();
 
 	private:
-		sad::rad::Renderer* m_Renderer = nullptr;
 		cap::Editor* m_Editor = nullptr;
 	};
 }

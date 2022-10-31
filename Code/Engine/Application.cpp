@@ -1,36 +1,27 @@
 #include "sadpch.h"
 
 #include "Application.h"
-#include "InputManager.h"
 
 #include <SDL2/SDL.h>
 #include <imgui.h>
 #include <glad/glad.h>
 #include <entt/entt.hpp>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <glm/gtc/constants.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/matrix_inverse.hpp>
 
+#include "Renderer/Sample/Cube.h"
+#include "Renderer/RenderBuddy.h"
 #include "ECS/Registry.h"
 #include "ECS/Entity.h"
+#include "ECS/Systems/RenderingSystem.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/PlayerControllerComponent.h"
-
-#include "Renderer/VertexArray.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/FrameBuffer.h"
-#include "Renderer/Shader.h"
-#include "Renderer/Sample/Cube.h"
-#include "Renderer/RenderBuddy.h"
-
 #include "Transform.h"
 #include "RenderableResource.h"
 #include "RenderableObject.h"
+#include "InputManager.h"
 #include "PlayerController.h"
 
 sad::Window* sad::Application::s_MainWindow;
@@ -41,15 +32,13 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
-	// Renderer and Editor have to be initialized after the main window
-	m_Renderer = new sad::rad::Renderer;
+	// Editor has to be initialized after the main window
 	m_Editor = new cap::Editor;
 }
 
 sad::Application::~Application()
 {
 	delete s_MainWindow;
-	delete m_Renderer;
 	delete m_Editor;
 }
 
@@ -59,7 +48,7 @@ void sad::Application::Start()
 	m_Editor->Start();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
-	m_Renderer->Start();
+	rad::RenderBuddy::Start();
 
 	// Create sample resource for a cube
 	RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
@@ -79,8 +68,6 @@ void sad::Application::Start()
 
 	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
 	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
-
-	glm::mat4 vpMatrix = GetViewProjectionMatrix();
 
 	// Translation Logic (-pi to pi for demo)
 	float translate = -1.0f * glm::pi<float>();
@@ -110,14 +97,14 @@ void sad::Application::Start()
 
 		// First 'pass' sets up the framebuffer
 		// This clear color is the background for the game
-		m_Renderer->Clear(0.55f, 0.65f, 0.50f, 1.0f);
+		rad::RenderBuddy::ClearColor(glm::vec4(0.55f, 0.65f, 0.50f, 1.0f));
 		m_Editor->Clear();
 
 		// Capture the current render in the framebuffer 
-		m_Renderer->BindFrameBuffer();
+		rad::RenderBuddy::BindFrameBuffer();
 
 		// Second 'pass' to recolor outside the framebuffer
-		m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
+		rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
 
 		/* Update */
 
@@ -144,33 +131,16 @@ void sad::Application::Start()
 		core::UpdateEvents();
 
 		// Testing debug rendering
-		rad::RenderBuddy::DrawLine(glm::vec3(-1.0f, 1.0f, 2.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		rad::RenderBuddy::DrawDebugLine(glm::vec3(-1.0f, 1.0f, 2.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		/* Draw */
-		auto view = world.view<const sad::ecs::RenderableObjectComponent, const sad::ecs::TransformComponent>();
-		for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
-		{
-			sad::ecs::RenderableObjectComponent renderable = renderableObjectComponent;
-
-			sad::rad::VertexArray* va = renderable.m_RenderableObject->GetVertexArray();
-			sad::rad::IndexBuffer* ib = renderable.m_RenderableObject->GetIndexBuffer();
-			sad::rad::Shader* shader = renderable.m_RenderableObject->GetShader();
-
-			// TODO: Retrieve the view projection matrix from the Camera 
-			glm::mat4 mvpMatrix = vpMatrix * transformComponent.m_Transform->GetTransformMatrix();
-
-			shader->Bind();
-			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-			shader->Unbind();
-
-			m_Renderer->Draw(va, ib, shader);
-		}
+		sad::ecs::RenderingSystem::Draw();
 
 		// Unbind framebuffer for next pass
-		m_Renderer->UnbindFrameBuffer();
+		rad::RenderBuddy::UnbindFrameBuffer();
 
 		/* Editor */
-		m_Editor->RenderGameWindow(m_Renderer->GetFrameBufferTexture());
+		m_Editor->RenderGameWindow(rad::RenderBuddy::GetFrameBufferTexture());
 		m_Editor->Render();
 
 		/* Window */

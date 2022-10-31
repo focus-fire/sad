@@ -38,17 +38,28 @@ void sad::rad::Renderer::Start()
 	m_FrameBuffer->Unbind();
 }
 
-void sad::rad::Renderer::Clear(float r, float g, float b, float a) const
+void sad::rad::Renderer::Clear() const
 {
 	GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	GL_CALL(glClearColor(r * a, g * a, b * a, a));
 }
 
-void sad::rad::Renderer::Draw(VertexArray* vertexArray, IndexBuffer* indexBuffer, Shader* shader) const
+void sad::rad::Renderer::ClearColor(const glm::vec4& color) const
 {
-	shader->Bind();
+	Clear();
+	GL_CALL(glClearColor(color.r * color.a, color.g * color.a, color.b * color.a, color.a));
+}
+
+void sad::rad::Renderer::DrawIndexed(VertexArray* vertexArray, IndexBuffer* indexBuffer) const
+{
 	vertexArray->Bind();
 	indexBuffer->Bind();
 
 	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void sad::rad::Renderer::DrawLines(const VertexArray& vertexArray, unsigned int vertexCount) const
+{
+	vertexArray.Bind();
+
+	GL_CALL(glDrawArrays(GL_LINES, 0, vertexCount));
 }

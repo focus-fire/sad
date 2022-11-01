@@ -28,7 +28,7 @@ namespace sad::rad
 
 		static void DrawIndexed(VertexArray* vertexArray, IndexBuffer* indexBuffer) { s_Renderer.DrawIndexed(vertexArray, indexBuffer); }
 
-		static void DrawLines(const VertexArray& vertexArray, unsigned int vertexCount) { s_Renderer.DrawLines(vertexArray, vertexCount); }
+		static void DrawLines(VertexArray* vertexArray, unsigned int vertexCount) { s_Renderer.DrawLines(vertexArray, vertexCount); }
 
 		/**
 		 * @brief Renders a flat debug line

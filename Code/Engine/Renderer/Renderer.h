@@ -26,7 +26,7 @@ namespace sad::rad
 		void ClearColor(const glm::vec4& color) const;
 
 		void DrawIndexed(VertexArray* vertexArray, IndexBuffer* ib) const;
-		void DrawLines(const VertexArray& vertexArray, unsigned int vertexCount) const;
+		void DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const;
 
 	private:
 		FrameBuffer* m_FrameBuffer;

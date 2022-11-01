@@ -73,6 +73,9 @@ void sad::Application::Start()
 	float translate = -1.0f * glm::pi<float>();
 	std::chrono::time_point<std::chrono::steady_clock> lastTime = std::chrono::steady_clock::now();
 
+	// Testing debug rendering
+	rad::RenderBuddy::DrawDebugLine(glm::vec3(-1.0f, 1.0f, 2.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+
 	bool isClosed = false;
 	SDL_Event event;
 
@@ -129,9 +132,6 @@ void sad::Application::Start()
 
 		/* Update Events Loop */
 		core::UpdateEvents();
-
-		// Testing debug rendering
-		rad::RenderBuddy::DrawDebugLine(glm::vec3(-1.0f, 1.0f, 2.0f), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		/* Draw */
 		sad::ecs::RenderingSystem::Draw();

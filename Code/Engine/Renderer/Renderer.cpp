@@ -57,9 +57,9 @@ void sad::rad::Renderer::DrawIndexed(VertexArray* vertexArray, IndexBuffer* inde
 	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-void sad::rad::Renderer::DrawLines(const VertexArray& vertexArray, unsigned int vertexCount) const
+void sad::rad::Renderer::DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const
 {
-	vertexArray.Bind();
+	vertexArray->Bind();
 
 	GL_CALL(glDrawArrays(GL_LINES, 0, vertexCount));
 }

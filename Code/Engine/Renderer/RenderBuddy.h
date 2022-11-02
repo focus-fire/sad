@@ -34,13 +34,17 @@ namespace sad::rad
 		 * @brief Renders a flat debug line
 		 * @param from Position where the line starts rendering
 		 * @param to Position where the line finishes rendering
-		 * @param color Solid color to render the line
+		 * @param color Solid RGB color to render the line
 		*/
 		static void DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color);
 
-		static void DrawDebugBox();
-
-		static void DrawDebugSphere();
+		/**
+		 * @brief Renders a solid debug bounding box 
+		 * @param min The minimum extent of the box/bound
+		 * @param max The maximum extent of the box/bound
+		 * @param color  Solid RGB color to render the box
+		*/
+		static void DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec3 color);
 
 	private:
 		static Renderer s_Renderer;

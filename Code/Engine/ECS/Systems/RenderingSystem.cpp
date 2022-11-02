@@ -38,9 +38,10 @@ void sad::ecs::RenderingSystem::Draw()
 	{
 		Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
 
-		lineRenderer->m_Shader->Bind();
-		lineRenderer->m_Shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(sad::Application::GetViewProjectionMatrix()));
+		rad::Shader* shader = lineRenderer->GetShader();
 
-		rad::RenderBuddy::DrawLines(lineRenderer->m_VertexArray, lineRenderer->m_VertexCount);
+		shader->Bind();
+		shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(sad::Application::GetViewProjectionMatrix()));
+		rad::RenderBuddy::DrawLines(lineRenderer->GetVertexArray(), lineRenderer->GetVertexCount());
 	}
 }

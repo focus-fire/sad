@@ -14,3 +14,4 @@
 #include "Core/Log.h"
 #include "Core/Memory.h"
 #include "Core/EventHandler.h"
+#include "Core/MathUtils.h"

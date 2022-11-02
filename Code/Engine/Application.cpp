@@ -2,10 +2,6 @@
 
 #include "Application.h"
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 #include <SDL2/SDL.h>
 #include <imgui.h>
 #include <glad/glad.h>
@@ -50,19 +46,6 @@ void sad::Application::Start()
 {
 	// Launch editor 
 	m_Editor->Start();
-
-	// test assimp
-	Assimp::Importer importer;
-	std::string modelFilePath = core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Assets/Character.fbx");
-	const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
-	{
-		core::Log(ELogType::Error, "Congrats! Assimp worked, an error was reported: {}", importer.GetErrorString());
-	}
-	else
-	{
-		core::Log(ELogType::Debug, "Congrats! Assimp still worked, an error was not reported and {} was loaded", modelFilePath);
-	}
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();

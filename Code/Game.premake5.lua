@@ -47,8 +47,8 @@ project "Game"
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-        table.insert(linkers, "SDL2.framework")
-		-- TODO: Add mac framework for assimp
+        table.insert(linkers, "SDL2.framework") -- .framework
+        table.insert(linkers, "assimp.framework") -- .framework
     end
 
     includedirs { includes }
@@ -68,7 +68,7 @@ project "Game"
     filter {}
 
     filter "system:windows"
-	defines {
+        defines {
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }
@@ -78,13 +78,24 @@ project "Game"
 			-- Copy the assimp .dll to the application directory
 			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }
+        postbuildcommands {
+            -- Rename executable to sadEngine
+            "{MOVE} %{wks.location}/Build/Bin/Game/Game %{wks.location}/Build/Bin/Game/sad",
+        }
     filter "system:macosx"
         defines {
 			"_MAC"
 		}
-        postbuildcommands {
+        -- Copy required mac frameworks to local framework directory before linking begins
+        prebuildcommands {
             -- Copy the SDL framework to the local framework directory
-            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks"
-            -- TODO: Copy the assimp framework to the local framework directory
+            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks",
+
+            -- Copy the assimp framework to the local framework directory
+            "{COPY} %{wks.location}/Vendor/assimp/lib/mac/assimp.framework ~/Library/Frameworks",
+        }
+        postbuildcommands {
+            -- Rename executable to sadEngine
+            "{MOVE} %{wks.location}/Build/Bin/Game/Game.app %{wks.location}/Build/Bin/Game/sad",
         }
     filter {}

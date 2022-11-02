@@ -45,8 +45,8 @@ project "Engine"
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-        table.insert(linkers, "SDL2.framework")
-		-- TODO: Add mac framework for assimp
+        table.insert(linkers, "SDL2.framework") -- .framework
+        table.insert(linkers, "assimp.framework") -- .framework
     end
 
     includedirs { includes }

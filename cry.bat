@@ -40,5 +40,5 @@ CALL python3 %~f1\Scripts\bet.py --tests
 GOTO :eof
 
 :execute
-CALL %~f1\Build\Bin\Game\Game
+CALL %~f1\Build\Bin\Game\sad
 GOTO :eof

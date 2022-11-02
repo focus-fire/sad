@@ -19,4 +19,4 @@ make
 # python3 ./Scripts/bet.py --tests
 
 # Optional: Run the project 
-./Build/Bin/Game/Game
+./Build/Bin/Game/sad

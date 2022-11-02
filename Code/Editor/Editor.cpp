@@ -85,7 +85,7 @@ void cap::Editor::Render()
 	{
 		ImGui::Begin(UI_TITLE_TEXT, &m_ShowWelcomeWindow);
 		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
-		ImGui::Text(UI_BODY_TEXT);
+		ImGui::Text("%s", UI_BODY_TEXT);
 		
 		if (ImGui::Button("Close"))
 			m_ShowWelcomeWindow = false;

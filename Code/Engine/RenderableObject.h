@@ -9,6 +9,10 @@
 
 namespace sad
 {
+	/**
+	 * @brief Container for geometric data used by OpenGL to render an object.
+	 *		  Each RenderableObject must be created with a corresponding RenderableResource.
+	*/
 	class RenderableObject
 	{
 	public:

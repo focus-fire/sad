@@ -124,14 +124,14 @@ void sad::Application::Start()
 
 
 		/* Update ECS Systems */
-		sad::ecs::RenderableObjectSystem::Update();
+		sad::ecs::RenderableObjectSystem::Update(world);
 		PlayerController::Update();
 
 		/* Update Events Loop */
 		core::UpdateEvents();
 
 		/* Draw */
-		sad::ecs::RenderingSystem::Draw();
+		sad::ecs::RenderingSystem::Draw(world);
 
 		// Unbind framebuffer for next pass
 		rad::RenderBuddy::UnbindFrameBuffer();

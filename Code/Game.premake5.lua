@@ -27,7 +27,8 @@ project "Game"
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
 		"%{prj.location}/../Vendor/imgui",
-		"%{prj.location}/../Vendor/ImTerm/include/",
+		"%{prj.location}/../Vendor/ImTerm/include",
+		"%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}",
     }
 
@@ -43,9 +44,11 @@ project "Game"
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
+		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework")
+		-- TODO: Add mac framework for assimp
     end
 
     includedirs { includes }
@@ -53,9 +56,15 @@ project "Game"
     links { linkers }
 
     filter "system:windows"
-        libdirs { "%{prj.location}/../Vendor/SDL/lib/win" }
+        libdirs {
+			"%{prj.location}/../Vendor/SDL/lib/win",
+			"%{prj.location}/../Vendor/assimp/lib/win",
+		}
     filter "system:macosx"
-        frameworkdirs { "%{prj.location}/../Vendor/SDL/lib/mac" }
+        frameworkdirs {
+			"%{prj.location}/../Vendor/SDL/lib/mac",
+			"%{prj.location}/../Vendor/assimp/lib/mac",
+		}
     filter {}
 
     filter "system:windows"
@@ -64,13 +73,18 @@ project "Game"
             "_CRT_SECURE_NO_WARNINGS",
         }
         postbuildcommands {
-            -- Copy the SDL .dll to the application directory where it can be found at runtime
+            -- Copy the SDL .dll to the application directory
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)",
+			-- Copy the assimp .dll to the application directory
+			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }
     filter "system:macosx"
-        defines { "_MAC" }
+        defines {
+			"_MAC"
+		}
         postbuildcommands {
-            -- Copy the SDL framework to the local framework directory where it can be found at runtime
+            -- Copy the SDL framework to the local framework directory
             "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks"
+            -- TODO: Copy the assimp framework to the local framework directory
         }
     filter {}

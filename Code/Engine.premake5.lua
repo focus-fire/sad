@@ -27,6 +27,7 @@ project "Engine"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/stb_image",
         "%{prj.location}/../Vendor/imgui",
+		"%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}",
     }
 

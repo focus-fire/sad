@@ -4,6 +4,7 @@
 
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <imterm/terminal.hpp>
 
 #include <Engine/Application.h>
 
@@ -21,8 +22,9 @@ void UIChangeTitleText()
 }
 
 cap::Editor::Editor()
-	: m_ShowGameWindow(true)
+	: m_DebugTerminal(new cap::DebugTerminal())
 	, m_ShowWelcomeWindow(true)
+	, m_ShowGameWindow(true)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -32,10 +34,17 @@ cap::Editor::Editor()
 	m_GameWindowHeight = static_cast<float>(sad::Application::s_MainWindow->GetHeight()) / 1.25f;
 }
 
+cap::Editor::~Editor()
+{
+	delete m_DebugTerminal;
+}
+
 void cap::Editor::Start()
 {
 	ImGui_ImplSDL2_InitForOpenGL(sad::Application::s_MainWindow->GetSDLWindow(), sad::Application::s_MainWindow->GetGLContext());
 	ImGui_ImplOpenGL3_Init("#version 150");
+
+	m_DebugTerminal->Start();
 
 	// Sample Event Listener Creation - Can Delete
 	core::InitializeListener("UI", UIChangeBodyText);
@@ -70,6 +79,8 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 
 void cap::Editor::Render()
 {
+	m_DebugTerminal->Render();
+
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin(UI_TITLE_TEXT, &m_ShowWelcomeWindow);
@@ -81,21 +92,6 @@ void cap::Editor::Render()
 
 		ImGui::End();
 	}
-
-	ImGui::Begin("Keyboard Controls");
-	ImGui::SetWindowSize(ImVec2(300.0f, 100.0f));
-	ImGui::SetWindowPos(ImVec2(260.0f, 790.0f), ImGuiCond_Once);
-	ImGui::Text("Move:   WASD");
-	ImGui::Text("Fly:    space/shift");
-	ImGui::Text("Rotate: left/right arrows");
-	ImGui::End();
-
-	ImGui::Begin("Controller Controls");
-	ImGui::SetWindowSize(ImVec2(300.0f, 100.0f));
-	ImGui::SetWindowPos(ImVec2(460.0f, 790.0f), ImGuiCond_Once);
-	ImGui::Text("Move:   Left joystick");
-	ImGui::Text("Fly:    South/East Buttons");
-	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

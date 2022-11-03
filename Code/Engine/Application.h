@@ -24,7 +24,12 @@ namespace sad
 		/**
 		 * @brief Entrypoint for the engine application that initializes systems
 		*/
-		void Start();
+		void EngineStart();
+
+		/**
+		 * @brief Starting point for applications aside from the engine
+		*/
+		virtual void Start() = 0;
 
 		/**
 		 * @brief Lifecycle method that polls for window events and submits events to required systems

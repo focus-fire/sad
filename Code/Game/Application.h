@@ -10,6 +10,8 @@ namespace pog
 		explicit Application();
 		~Application() override;
 
+		void Start() override;
+
 		void Update(float dt) override;
 		void Teardown() override;
 	};

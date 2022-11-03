@@ -54,7 +54,7 @@ sad::Application::~Application()
 	delete m_CubeResource;
 }
 
-void sad::Application::Start()
+void sad::Application::EngineStart()
 {
 	// Launch editor 
 	m_Editor->Start();
@@ -92,12 +92,20 @@ void sad::Application::Start()
 	// Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
   
+	// Game Start
+	this->Start();
+
 	while (!isClosed) 
 	{
 		PollEvents(&isClosed);
 		
 		float dt = pog::Time::GetDeltaTime();
-		Update(dt);
+
+		// Game Update
+		this->Update(dt);
+
+		// Engine Update
+		sad::Application::Update(dt);
 	}
 
 	Teardown();

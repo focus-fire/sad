@@ -13,11 +13,14 @@ pog::Application::~Application()
 	// Game is destroyed here
 }
 
+void pog::Application::Start()
+{
+	// Game logic is initialized here
+}
+
 void pog::Application::Update(float dt)
 {
-	sad::Application::Update(dt);
-
-	// Game specific update logic goes here
+	// Game is updated here
 }
 
 void pog::Application::Teardown()

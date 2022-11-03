@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: sad::Application Class Reference</title>
+<title>sad: sad::LineRenderer Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,53 +62,36 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>sad</b></li><li class="navelem"><a class="el" href="classsad_1_1Application.html">Application</a></li>  </ul>
+<li class="navelem"><b>sad</b></li><li class="navelem"><a class="el" href="classsad_1_1LineRenderer.html">LineRenderer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
-<a href="classsad_1_1Application-members.html">List of all members</a>  </div>
+<a href="classsad_1_1LineRenderer-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sad::Application Class Reference</div>  </div>
+<div class="title">sad::LineRenderer Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for sad::Application:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classsad_1_1Application.png" usemap="#sad::Application_map" alt=""/>
-  <map id="sad::Application_map" name="sad::Application_map">
-<area href="classpog_1_1Application.html" alt="pog::Application" shape="rect" coords="0,56,102,80"/>
-  </map>
-</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3299f2731f23e2c78efca348525a21b3"><td class="memItemLeft" align="right" valign="top"><a id="a3299f2731f23e2c78efca348525a21b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
-<tr class="separator:a3299f2731f23e2c78efca348525a21b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cbe61aab56a05959c6d9e25d449df72"><td class="memItemLeft" align="right" valign="top"><a id="a6cbe61aab56a05959c6d9e25d449df72"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Teardown</b> ()</td></tr>
-<tr class="separator:a6cbe61aab56a05959c6d9e25d449df72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a776f85664bccbfc212a65ea221be261e"><td class="memItemLeft" align="right" valign="top"><a id="a776f85664bccbfc212a65ea221be261e"></a>
-static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>GetViewProjectionMatrix</b> ()</td></tr>
-<tr class="separator:a776f85664bccbfc212a65ea221be261e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
-Static Public Attributes</h2></td></tr>
-<tr class="memitem:a670039daca33ed71e33eab69b9c9ce7c"><td class="memItemLeft" align="right" valign="top"><a id="a670039daca33ed71e33eab69b9c9ce7c"></a>
-static <a class="el" href="classsad_1_1Window.html">Window</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>s_MainWindow</b></td></tr>
-<tr class="separator:a670039daca33ed71e33eab69b9c9ce7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45a2fc0e6879a1198ec04de47a71380c"><td class="memItemLeft" align="right" valign="top"><a id="a45a2fc0e6879a1198ec04de47a71380c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>LineRenderer</b> (glm::vec3 from, glm::vec3 to, glm::vec3 color)</td></tr>
+<tr class="separator:a45a2fc0e6879a1198ec04de47a71380c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45ef72e11f3c6237ca4104e2c9684b7c"><td class="memItemLeft" align="right" valign="top"><a id="a45ef72e11f3c6237ca4104e2c9684b7c"></a>
+<a class="el" href="classsad_1_1rad_1_1VertexArray.html">rad::VertexArray</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetVertexArray</b> () const</td></tr>
+<tr class="separator:a45ef72e11f3c6237ca4104e2c9684b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6d3d50c59415546be1bfacf07d5c72f"><td class="memItemLeft" align="right" valign="top"><a id="ab6d3d50c59415546be1bfacf07d5c72f"></a>
+<a class="el" href="classsad_1_1rad_1_1Shader.html">rad::Shader</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetShader</b> () const</td></tr>
+<tr class="separator:ab6d3d50c59415546be1bfacf07d5c72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae816a5557bca451b1e4f9d1535608dd9"><td class="memItemLeft" align="right" valign="top"><a id="ae816a5557bca451b1e4f9d1535608dd9"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>GetVertexCount</b> () const</td></tr>
+<tr class="separator:ae816a5557bca451b1e4f9d1535608dd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Code/Engine/<a class="el" href="Engine_2Application_8h_source.html">Application.h</a></li>
-<li>Code/Engine/Application.cpp</li>
+<li>Code/Engine/<a class="el" href="LineRenderer_8h_source.html">LineRenderer.h</a></li>
+<li>Code/Engine/LineRenderer.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

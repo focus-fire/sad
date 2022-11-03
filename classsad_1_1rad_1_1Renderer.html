@@ -79,22 +79,103 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a399e01898ea575981664b05694f83f51"><td class="memItemLeft" align="right" valign="top"><a id="a399e01898ea575981664b05694f83f51"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
 <tr class="separator:a399e01898ea575981664b05694f83f51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2733bbeea123ab6cce6ce75c36926b85"><td class="memItemLeft" align="right" valign="top"><a id="a2733bbeea123ab6cce6ce75c36926b85"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>BindFrameBuffer</b> ()</td></tr>
-<tr class="separator:a2733bbeea123ab6cce6ce75c36926b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61c5a1c5ef4c510c1fb205a481876963"><td class="memItemLeft" align="right" valign="top"><a id="a61c5a1c5ef4c510c1fb205a481876963"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>UnbindFrameBuffer</b> ()</td></tr>
-<tr class="separator:a61c5a1c5ef4c510c1fb205a481876963"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1561f2728ff56d5f303d46321ad6896"><td class="memItemLeft" align="right" valign="top"><a id="ab1561f2728ff56d5f303d46321ad6896"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFrameBufferTexture</b> ()</td></tr>
-<tr class="separator:ab1561f2728ff56d5f303d46321ad6896"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae204a4a11c9895a4d4c901a45be667a"><td class="memItemLeft" align="right" valign="top"><a id="aae204a4a11c9895a4d4c901a45be667a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> (float r, float g, float b, float a) const</td></tr>
-<tr class="separator:aae204a4a11c9895a4d4c901a45be667a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62280d683fef33c0901d048791bd5602"><td class="memItemLeft" align="right" valign="top"><a id="a62280d683fef33c0901d048791bd5602"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Draw</b> (<a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *va, <a class="el" href="classsad_1_1rad_1_1IndexBuffer.html">IndexBuffer</a> *ib, <a class="el" href="classsad_1_1rad_1_1Shader.html">Shader</a> *shader) const</td></tr>
-<tr class="separator:a62280d683fef33c0901d048791bd5602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea94eebc4f6b8b5208b95eddb64bd970"><td class="memItemLeft" align="right" valign="top"><a id="aea94eebc4f6b8b5208b95eddb64bd970"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>BindFrameBuffer</b> () const</td></tr>
+<tr class="separator:aea94eebc4f6b8b5208b95eddb64bd970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a10276ce33b07c94462a1e76074d1f"><td class="memItemLeft" align="right" valign="top"><a id="ad8a10276ce33b07c94462a1e76074d1f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnbindFrameBuffer</b> () const</td></tr>
+<tr class="separator:ad8a10276ce33b07c94462a1e76074d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae364376213329c4fe15075a11931f99"><td class="memItemLeft" align="right" valign="top"><a id="aae364376213329c4fe15075a11931f99"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFrameBufferTexture</b> () const</td></tr>
+<tr class="separator:aae364376213329c4fe15075a11931f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4111e8ab45ee3573fbdb076b30680ca9"><td class="memItemLeft" align="right" valign="top"><a id="a4111e8ab45ee3573fbdb076b30680ca9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> () const</td></tr>
+<tr class="separator:a4111e8ab45ee3573fbdb076b30680ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a77d4c5b1b2feb5e2edf05e822b939c"><td class="memItemLeft" align="right" valign="top"><a id="a9a77d4c5b1b2feb5e2edf05e822b939c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearColor</b> (const glm::vec4 &amp;color) const</td></tr>
+<tr class="separator:a9a77d4c5b1b2feb5e2edf05e822b939c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fc59fc7637a8809204a5049581d2b49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1rad_1_1Renderer.html#a2fc59fc7637a8809204a5049581d2b49">DrawIndexed</a> (<a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *vertexArray, <a class="el" href="classsad_1_1rad_1_1IndexBuffer.html">IndexBuffer</a> *ib) const</td></tr>
+<tr class="memdesc:a2fc59fc7637a8809204a5049581d2b49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws geometry bound by an index buffer.  <a href="classsad_1_1rad_1_1Renderer.html#a2fc59fc7637a8809204a5049581d2b49">More...</a><br /></td></tr>
+<tr class="separator:a2fc59fc7637a8809204a5049581d2b49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367">DrawLines</a> (<a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *vertexArray, unsigned int vertexCount) const</td></tr>
+<tr class="memdesc:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws lines bound to the passed index array.  <a href="classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367">More...</a><br /></td></tr>
+<tr class="separator:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2fc59fc7637a8809204a5049581d2b49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fc59fc7637a8809204a5049581d2b49">&#9670;&nbsp;</a></span>DrawIndexed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sad::rad::Renderer::DrawIndexed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *&#160;</td>
+          <td class="paramname"><em>vertexArray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classsad_1_1rad_1_1IndexBuffer.html">IndexBuffer</a> *&#160;</td>
+          <td class="paramname"><em>ib</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws geometry bound by an index buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexArray</td><td>VAO wrapper for the geometry in GL </td></tr>
+    <tr><td class="paramname">indexBuffer</td><td>IBO wrapper for the geometry in GL </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae9e896e05ba8298d1596ee3a2bb5d367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9e896e05ba8298d1596ee3a2bb5d367">&#9670;&nbsp;</a></span>DrawLines()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sad::rad::Renderer::DrawLines </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *&#160;</td>
+          <td class="paramname"><em>vertexArray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>vertexCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws lines bound to the passed index array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexArray</td><td>VAO wrapper for the line geometry in GL </td></tr>
+    <tr><td class="paramname">vertexCount</td><td>Number of vertices required for the bound geometry to render </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Code/Engine/Renderer/<a class="el" href="Renderer_8h_source.html">Renderer.h</a></li>
 <li>Code/Engine/Renderer/Renderer.cpp</li>

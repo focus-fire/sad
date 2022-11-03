@@ -78,10 +78,6 @@ project "Game"
 			-- Copy the assimp .dll to the application directory
 			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }
-        postbuildcommands {
-            -- Rename executable to sadEngine
-            "{MOVE} %{wks.location}/Build/Bin/Game/Game %{wks.location}/Build/Bin/Game/sad",
-        }
     filter "system:macosx"
         defines {
 			"_MAC"
@@ -93,9 +89,5 @@ project "Game"
 
             -- Copy the assimp framework to the local framework directory
             "{COPY} %{wks.location}/Vendor/assimp/lib/mac/assimp.framework ~/Library/Frameworks",
-        }
-        postbuildcommands {
-            -- Rename executable to sadEngine
-            "{MOVE} %{wks.location}/Build/Bin/Game/Game.app %{wks.location}/Build/Bin/Game/sad",
         }
     filter {}

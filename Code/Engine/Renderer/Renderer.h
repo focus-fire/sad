@@ -18,12 +18,26 @@ namespace sad::rad
 
 		void Start();
 
-		void BindFrameBuffer() { return m_FrameBuffer->Bind(); }
-		void UnbindFrameBuffer() { return m_FrameBuffer->Unbind(); }
-		unsigned int GetFrameBufferTexture() { return m_FrameBufferTexture->GetTextureId(); }
+		void BindFrameBuffer() const { return m_FrameBuffer->Bind(); }
+		void UnbindFrameBuffer() const { return m_FrameBuffer->Unbind(); }
+		unsigned int GetFrameBufferTexture() const { return m_FrameBufferTexture->GetTextureId(); }
 
-		void Clear(float r, float g, float b, float a) const;
-		void Draw(VertexArray* va, IndexBuffer* ib, Shader* shader) const;
+		void Clear() const;
+		void ClearColor(const glm::vec4& color) const;
+
+		/**
+		 * @brief Draws geometry bound by an index buffer
+		 * @param vertexArray VAO wrapper for the geometry in GL
+		 * @param indexBuffer IBO wrapper for the geometry in GL
+		*/
+		void DrawIndexed(VertexArray* vertexArray, IndexBuffer* ib) const;
+
+		/**
+		 * @brief Draws lines bound to the passed index array
+		 * @param vertexArray VAO wrapper for the line geometry in GL
+		 * @param vertexCount Number of vertices required for the bound geometry to render
+		*/
+		void DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const;
 
 	private:
 		FrameBuffer* m_FrameBuffer;

@@ -145,6 +145,10 @@ namespace sad
         // Controller Events
         float ControllerDeadZone;
 
+        /**
+         * @brief Determines if controller inputs are currently being used
+         * @return 
+        */
         bool IsControllerActive()
         {
             return m_ControllerBeingUsed;

@@ -10,20 +10,20 @@
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/ControllerComponent.h>
 
-void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
 	if (input.IsControllerActive())
 	{
 		// Handles vertical left joystick input for forward/back movement
 		if (abs(input.GetLeftAxis("Vertical")) > input.ControllerDeadZone)
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -input.GetLeftAxis("Vertical") * movespeed));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -input.GetLeftAxis("Vertical") * moveSpeedMultiplier));
 		}
 
 		// Handles horizontal left joystick input for left/right movement
 		if (abs(input.GetLeftAxis("Horizontal")) > input.ControllerDeadZone)
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(-input.GetLeftAxis("Horizontal") * movespeed, 0.0f, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(-input.GetLeftAxis("Horizontal") * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		// Handles rotation with left/right shoulder buttons
@@ -42,23 +42,23 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 		// Handles forward/backward movement using W and S
 		if (input.GetKey(sad::KeyCode::W))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
 		}
 
 		if (input.GetKey(sad::KeyCode::S))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
 		}
 
 		// Handles left/right movement using A and D
 		if (input.GetKey(sad::KeyCode::A))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::D))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		// Handles left/right rotation using LEFT and RIGHT arrow keys.
@@ -75,19 +75,19 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 
 }
 
-void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
 	if (input.IsControllerActive())
 	{
 		// Handles up/down flight using south and east buttons
 		if (input.GetButton(sad::ControllerButton::South))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * moveSpeedMultiplier, 0.0f));
 		}
 
 		if (input.GetButton(sad::ControllerButton::East))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * moveSpeedMultiplier, 0.0f));
 		}
 	}
 	else
@@ -95,12 +95,12 @@ void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const
 		// Handles up/down flight using space and left shift.
 		if (input.GetKey(sad::KeyCode::Space) || input.GetButton(sad::ControllerButton::South))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * moveSpeedMultiplier, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::LShift) || input.GetButton(sad::ControllerButton::East))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * moveSpeedMultiplier, 0.0f));
 		}
 	}
 	

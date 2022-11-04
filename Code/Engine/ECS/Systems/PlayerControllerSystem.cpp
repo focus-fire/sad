@@ -12,7 +12,7 @@
 
 void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
-	if (input.HasControllerConnected())
+	if (input.IsControllerActive())
 	{
 		// Handles vertical left joystick input for forward/back movement
 		if (abs(input.GetLeftAxis("Vertical")) > input.ControllerDeadZone)
@@ -77,7 +77,7 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 
 void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
-	if (input.HasControllerConnected())
+	if (input.IsControllerActive())
 	{
 		// Handles up/down flight using south and east buttons
 		if (input.GetButton(sad::ControllerButton::South))

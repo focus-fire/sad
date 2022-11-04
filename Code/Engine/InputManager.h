@@ -145,9 +145,9 @@ namespace sad
         // Controller Events
         float ControllerDeadZone;
 
-        bool HasControllerConnected()
+        bool IsControllerActive()
         {
-            return (m_Controller != nullptr);
+            return m_ControllerBeingUsed;
         }
 
         /**
@@ -224,6 +224,7 @@ namespace sad
         int  m_MouseUpdateFrames[6];
 
         SDL_GameController* m_Controller = nullptr;
-        bool  m_ControllerIsActive;
+        bool m_ControllerIsActive;
+        bool m_ControllerBeingUsed;
     };
 }

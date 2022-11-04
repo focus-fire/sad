@@ -124,8 +124,8 @@ void sad::ecs::PlayerControllerSystem::Update(EntityWorld& world)
 
 	float moveSpeedMultiplier = 0.005f;
 
-	auto playerView = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
-	auto editorView = world.view<const sad::ecs::EditorControllerComponent, const sad::ecs::TransformComponent>();
+	auto playerView = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>(entt::exclude<EditorControllerComponent>);
+	auto editorView = world.view<const sad::ecs::EditorControllerComponent, const sad::ecs::TransformComponent>(entt::exclude<PlayerControllerComponent>);
 	
 	for (auto [controllerComponent, transformComponent] : playerView.each())
 	{

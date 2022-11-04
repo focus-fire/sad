@@ -145,6 +145,11 @@ namespace sad
         // Controller Events
         float ControllerDeadZone;
 
+        bool HasControllerConnected()
+        {
+            return (m_Controller != nullptr);
+        }
+
         /**
          * @brief Handles new controller device
          * @param event

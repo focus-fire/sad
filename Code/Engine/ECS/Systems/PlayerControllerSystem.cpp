@@ -16,66 +16,98 @@ sad::PlayerControllerSystem::~PlayerControllerSystem() {}
 
 void sad::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
-	bool usingController = false; // bool that disables movement keys when joystick being used to prevent double speed
-
-	// Handles forward/back movement using W and S + controller left joystick.
-	if (abs(input.GetLeftAxis("Vertical")) > input.ControllerDeadZone)
+	if (input.HasControllerConnected())
 	{
-		usingController = true;
-		transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -input.GetLeftAxis("Vertical") * movespeed));
+		// Handles vertical left joystick input for forward/back movement
+		if (abs(input.GetLeftAxis("Vertical")) > input.ControllerDeadZone)
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -input.GetLeftAxis("Vertical") * movespeed));
+		}
+
+		// Handles horizontal left joystick input for left/right movement
+		if (abs(input.GetLeftAxis("Horizontal")) > input.ControllerDeadZone)
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(-input.GetLeftAxis("Horizontal") * movespeed, 0.0f, 0.0f));
+		}
+
+		// Handles rotation with left/right shoulder buttons
+		if (input.GetButton(sad::ControllerButton::L1))
+		{
+			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
+		}
+
+		if (input.GetButton(sad::ControllerButton::R1))
+		{
+			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f * 0.25f, 0.0f));
+		}
+	}
+	else
+	{
+		// Handles forward/backward movement using W and S
+		if (input.GetKey(sad::KeyCode::W))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
+		}
+
+		if (input.GetKey(sad::KeyCode::S))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
+		}
+
+		// Handles left/right movement using A and D
+		if (input.GetKey(sad::KeyCode::A))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
+		}
+
+		if (input.GetKey(sad::KeyCode::D))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
+		}
+
+		// Handles left/right rotation using LEFT and RIGHT arrow keys.
+		if (input.GetKey(sad::KeyCode::LeftArrow))
+		{
+			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
+		}
+
+		if (input.GetKey(sad::KeyCode::RightArrow))
+		{
+			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f * 0.25f, 0.0f));
+		}
 	}
 
-	if (input.GetKey(sad::KeyCode::W) && !usingController)
-	{
-		transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
-	}
-
-	if (input.GetKey(sad::KeyCode::S) && !usingController)
-	{
-		transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
-	}
-
-	// Handles left/right movement using A and D + controller left joystick.
-	if (abs(input.GetLeftAxis("Horizontal")) > input.ControllerDeadZone)
-	{
-		usingController = true;
-		transformComponent.m_Transform->Translate(glm::vec3(-input.GetLeftAxis("Horizontal") * movespeed, 0.0f, 0.0f));
-	}
-
-	if (input.GetKey(sad::KeyCode::A) && !usingController)
-	{
-		transformComponent.m_Transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
-	}
-
-	if (input.GetKey(sad::KeyCode::D) && !usingController)
-	{
-		transformComponent.m_Transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
-	}
-
-	// Handles left/right rotation using LEFT and RIGHT arrow keys.
-	if (input.GetKey(sad::KeyCode::LeftArrow) || input.GetButton(sad::ControllerButton::L1))
-	{
-		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
-	}
-
-	if (input.GetKey(sad::KeyCode::RightArrow) || input.GetButton(sad::ControllerButton::R1))
-	{
-		transformComponent.m_Transform->Rotate(glm::vec3(0.0f, -1.0f * 0.25f, 0.0f));
-	}
 }
 
 void sad::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
-	// Handles up/down flight using SPACE and LSHIFT.
-	if (input.GetKey(sad::KeyCode::Space) || input.GetButton(sad::ControllerButton::South))
+	if (input.HasControllerConnected())
 	{
-		transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
-	}
+		// Handles up/down flight using south and east buttons
+		if (input.GetButton(sad::ControllerButton::South))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+		}
 
-	if (input.GetKey(sad::KeyCode::LShift) || input.GetButton(sad::ControllerButton::East))
-	{
-		transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+		if (input.GetButton(sad::ControllerButton::East))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+		}
 	}
+	else
+	{
+		// Handles up/down flight using space and left shift.
+		if (input.GetKey(sad::KeyCode::Space) || input.GetButton(sad::ControllerButton::South))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+		}
+
+		if (input.GetKey(sad::KeyCode::LShift) || input.GetButton(sad::ControllerButton::East))
+		{
+			transformComponent.m_Transform->Translate(glm::vec3(0.0f, -1.0f * movespeed, 0.0f));
+		}
+	}
+	
 }
 
 void sad::PlayerControllerSystem::Update()

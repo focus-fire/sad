@@ -4,15 +4,12 @@
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/InputManager.h>
 
-namespace sad
+namespace sad::ecs
 {
 	class PlayerControllerSystem
 	{
 	public:
-		PlayerControllerSystem();
-		~PlayerControllerSystem();
-
-		static void Update();
+		static void Update(EntityWorld& world);
 
 	private:
 		static void PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed);

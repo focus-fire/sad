@@ -8,13 +8,9 @@
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Systems/PlayerControllerSystem.h>
 #include <Engine/ECS/Components/TransformComponent.h>
-#include <Engine/ECS/Components/PlayerControllerComponent.h>
-#include <Engine/ECS/Components/EditorControllerComponent.h>
+#include <Engine/ECS/Components/ControllerComponent.h>
 
-sad::PlayerControllerSystem::PlayerControllerSystem() {}
-sad::PlayerControllerSystem::~PlayerControllerSystem() {}
-
-void sad::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
 	if (input.HasControllerConnected())
 	{
@@ -79,7 +75,7 @@ void sad::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs:
 
 }
 
-void sad::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
 	if (input.HasControllerConnected())
 	{
@@ -110,7 +106,7 @@ void sad::PlayerControllerSystem::EditorControls(InputManager& input, const ecs:
 	
 }
 
-void sad::PlayerControllerSystem::Update()
+void sad::ecs::PlayerControllerSystem::Update(EntityWorld& world)
 {
 	InputManager& input = InputManager::GetInstance();
 
@@ -126,21 +122,20 @@ void sad::PlayerControllerSystem::Update()
 		core::Log(ELogType::Info, mousePosition.c_str());
 	}
 
-	float movespeed = 0.005f;
+	float moveSpeedMultiplier = 0.005f;
 
-	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
 	auto playerView = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
 	auto editorView = world.view<const sad::ecs::EditorControllerComponent, const sad::ecs::TransformComponent>();
 	
 	for (auto [controllerComponent, transformComponent] : playerView.each())
 	{
-		PlayerControls(input, transformComponent, movespeed);
+		PlayerControls(input, transformComponent, moveSpeedMultiplier);
 	}
 
 	for (auto [controllerComponent, transformComponent] : editorView.each())
 	{
-		PlayerControls(input, transformComponent, movespeed);
-		EditorControls(input, transformComponent, movespeed);
+		PlayerControls(input, transformComponent, moveSpeedMultiplier);
+		EditorControls(input, transformComponent, moveSpeedMultiplier);
 	}
 	
 }

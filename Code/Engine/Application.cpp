@@ -18,8 +18,7 @@
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/PlayerControllerComponent.h"
-#include "ECS/Components/EditorControllerComponent.h"
+#include "ECS/Components/ControllerComponent.h"
 
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
@@ -141,7 +140,7 @@ void sad::Application::Start()
 
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update(world);
-		PlayerControllerSystem::Update();
+		sad::ecs::PlayerControllerSystem::Update(world);
 
 		/* Update Events Loop */
 		core::UpdateEvents();

@@ -1,8 +1,11 @@
 # Remove glad as a vendored path
-Vendor/glad/* linguist-vendored
+Vendor/glad/** linguist-vendored
 
 # Remove stb_image as a vendored path
-Vendor/stb_image/* linguist-vendored
+Vendor/stb_image/** linguist-vendored
 
 # Remove SDL as a vendored path
-Vendor/SDL/* linguist-vendored
+Vendor/SDL/** linguist-vendored
+
+# Remove assimp as a vendored path
+Vendor/assimp/** linguist-vendored

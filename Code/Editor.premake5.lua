@@ -22,6 +22,7 @@ project "Editor"
 		"%{prj.location}/../Vendor/ImTerm/include/",
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/glad/include",
+        "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}",
     }
 
@@ -43,5 +44,7 @@ project "Editor"
             "_CRT_SECURE_NO_WARNINGS",
         }
     filter "system:macosx"
-        defines { "_MAC" }
+        defines {
+	        "_MAC"
+		}
     filter {}

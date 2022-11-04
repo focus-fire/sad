@@ -14,6 +14,7 @@
 #include "ECS/Entity.h"
 #include "ECS/Systems/RenderingSystem.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
+#include "ECS/Systems/PlayerControllerSystem.h"
 #include "ECS/Components/RenderableResourceComponent.h"
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
@@ -30,7 +31,6 @@
 #include "RenderableResource.h"
 #include "RenderableObject.h"
 #include "InputManager.h"
-#include "PlayerController.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -66,8 +66,6 @@ void sad::Application::Start()
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
 	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
 	sad::ecs::Entity secondCubeEntity = sad::ecs::Entity();
-
-	PlayerController controller = PlayerController();
 
 	// Add resource and transform components to the entities
 	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
@@ -141,10 +139,9 @@ void sad::Application::Start()
 		secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
 		secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
 
-
 		/* Update ECS Systems */
 		sad::ecs::RenderableObjectSystem::Update(world);
-		PlayerController::Update();
+		PlayerControllerSystem::Update();
 
 		/* Update Events Loop */
 		core::UpdateEvents();

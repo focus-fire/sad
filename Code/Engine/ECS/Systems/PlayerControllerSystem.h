@@ -1,16 +1,16 @@
 #pragma once
 
-#include "ECS/Registry.h"
-#include "ECS/Components/TransformComponent.h"
-#include "Engine/InputManager.h"
+#include <Engine/ECS/Registry.h>
+#include <Engine/ECS/Components/TransformComponent.h>
+#include <Engine/InputManager.h>
 
 namespace sad
 {
-	class PlayerController
+	class PlayerControllerSystem
 	{
 	public:
-		PlayerController();
-		~PlayerController();
+		PlayerControllerSystem();
+		~PlayerControllerSystem();
 
 		static void Update();
 

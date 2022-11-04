@@ -1,21 +1,20 @@
 #include "sadpch.h"
 
-#include "PlayerController.h"
-
 #include <SDL2/SDL.h>
 
-#include "ECS/Registry.h"
-#include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/PlayerControllerComponent.h"
-#include "ECS/Components/EditorControllerComponent.h"
+#include <Engine/InputManager.h>
+#include <Engine/Transform.h>
 
-#include "InputManager.h"
-#include "Transform.h"
+#include <Engine/ECS/Registry.h>
+#include <Engine/ECS/Systems/PlayerControllerSystem.h>
+#include <Engine/ECS/Components/TransformComponent.h>
+#include <Engine/ECS/Components/PlayerControllerComponent.h>
+#include <Engine/ECS/Components/EditorControllerComponent.h>
 
-sad::PlayerController::PlayerController() {}
-sad::PlayerController::~PlayerController() {}
+sad::PlayerControllerSystem::PlayerControllerSystem() {}
+sad::PlayerControllerSystem::~PlayerControllerSystem() {}
 
-void sad::PlayerController::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
 	bool usingController = false; // bool that disables movement keys when joystick being used to prevent double speed
 
@@ -65,7 +64,7 @@ void sad::PlayerController::PlayerControls(InputManager& input, const ecs::Trans
 	}
 }
 
-void sad::PlayerController::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
+void sad::PlayerControllerSystem::EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed)
 {
 	// Handles up/down flight using SPACE and LSHIFT.
 	if (input.GetKey(sad::KeyCode::Space) || input.GetButton(sad::ControllerButton::South))
@@ -79,7 +78,7 @@ void sad::PlayerController::EditorControls(InputManager& input, const ecs::Trans
 	}
 }
 
-void sad::PlayerController::Update()
+void sad::PlayerControllerSystem::Update()
 {
 	InputManager& input = InputManager::GetInstance();
 

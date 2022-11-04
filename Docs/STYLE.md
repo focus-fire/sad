@@ -20,33 +20,52 @@ If you need to **push and get a review** fast, follow these six steps and honest
 5. Member (private) variables should **always** be prefixed with `m_` to indicate ownership.
 6. Avoid unnecessary **dead code**. Long blocks of commented, unused, or old code is not pog.
 
+### Commenting
+Comment where you deem necessary! No need to comment absolutely everything, but if an operation/method is long or ambiguous feel free to comment for clarity.
+
+In lieu of Doxygen support, set the *Generated Doxygen Comments Style* option in Visual Studio to `Doxygen (/**)`.
+
+Similar to line comments, use the Doxygen comments where you deem necessary (ie: A basic 'getter' for a private variable may not need an entire `@brief`).
+
 ### Files and Extensions
 Each source file should have an associated header file. Prefer `.h` and `.cpp` for file extensions.
+
+If the source or header is an **ECS** component or system, files should be suffixed with `Component` and `System` respectively.
+
+```
+/* Transform.h */
+struct Transform				// Not Pog
+{ }
+
+/* TransformComponent.h */
+struct TransformComponent		// Pog
+{ }
+```
 
 Prefer using `#pragma once` as a header guard over `#ifndef GUARD`.
 
 ### Dead Code
-**Early note:** If code is dead, let it stay dead. 
+**Early note:** If code is dead, let it stay dead.
 
 This is obviously 110% discretionary - sometimes leaving a few lines commented works. Obviously if it's something that is getting reverted or is required by the next feature in line, leave it.
 
-However, entire implementations or previous ways of doing things should be removed and not commented (we have git for a reason). 
+However, entire implementations or previous ways of doing things should be removed and not commented (we have git for a reason).
 
 ### Bracket Style
 Avoid Egyptian braces wherever possible! Placing brackets on a new line in almost all cases adds some space and makes C/C++ code happier to read.
 
 ```
-int Foo() 
+int Foo()
 {
-    // Pog 
+    // Pog
 }
 
 int Foo() {
     // Not pog
 }
 ```
- 
-If statements can be condensed to one-line the coinciding logic isn't also condensed. 
+
+If statements can be condensed to one-line if the coinciding logic isn't also condensed.
 
 ```
 if (foo)
@@ -103,14 +122,14 @@ class manager               // Not Pog, what does a 'manager' do?
 {
     public:                 // Ultra Not Pog
         void debug();       // Mega Ultra Not Pog
-}; 
+};
 ```
 
 ### Namespaces
-Prefer lowerCamelCase for namespace names. Try to keep namespace names as short and descriptive as possible. 
+Prefer lowerCamelCase for namespace names. Try to keep namespace names as short and descriptive as possible.
 
 ```
-namespace sad 
+namespace sad
 {
     // Pog
 }
@@ -118,6 +137,34 @@ namespace sad
 namespace sadEngineEditor
 {
     // Not Pog
+}
+```
+
+Also prefer using complete namespaces in source (.cpp) and header files.
+
+```
+namespace sad
+{
+	void SomeMethod()    // Not Pog
+	{ }
+}
+
+void sad::SomeMethod()   // Pog
+{ }
+```
+
+```
+namespace sad::rad
+{
+	// Pog
+}
+
+namespace sad
+{
+	namespace rad
+	{
+		// Not Pog
+	}
 }
 ```
 

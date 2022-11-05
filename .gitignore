@@ -450,7 +450,7 @@ FodyWeavers.xsd
 # MacOS
 *.DS_Store**
 
-# Premake 
+# Premake
 Build/**/*
 .cache
 *.make
@@ -461,9 +461,11 @@ Build/**/*
 # Let imgui create its own inline config
 imgui.ini
 
-# Include .lib and .dll files for SDL
+# Include .lib and .dll files for SDL and assimp
 !Vendor/SDL/**/*.dll
 !Vendor/SDL/**/*.lib
+!Vendor/assimp/**/*.dll
+!Vendor/assimp/**/*.lib
 
 # Builds
 Debug

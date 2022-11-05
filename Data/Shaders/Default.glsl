@@ -1,8 +1,8 @@
 #shader vertex
 #version 410 core
 
-layout(location = 0) in vec4 position;
-layout(location = 1) in vec2 texCoord;
+layout(location = 0) in vec4 in_Position;
+layout(location = 1) in vec2 in_TexCoord;
 
 out vec4 v_Color;
 out vec2 v_TexCoord;
@@ -12,11 +12,11 @@ uniform mat4 u_MvpMatrix;
 
 void main()
 {
-    v_TexCoord = texCoord;
+    v_TexCoord = in_TexCoord;
 
     v_Color = u_Color;
     
-    gl_Position = u_MvpMatrix * position;
+    gl_Position = u_MvpMatrix * in_Position;
 }
 
 #shader fragment

@@ -8,6 +8,7 @@
 #include <glad/glad.h>
 
 sad::rad::Shader::Shader(const std::string& combinedShaderPath)
+    : m_FileName(combinedShaderPath)
 {
     const Source source = ParseCombinedShader(combinedShaderPath);
 

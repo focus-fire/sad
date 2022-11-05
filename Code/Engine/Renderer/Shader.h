@@ -27,6 +27,7 @@ namespace sad::rad
 		};
 	
 		unsigned int m_RendererId;
+		std::string m_FileName;
 		std::unordered_map<std::string, int> m_UniformLocations;
 
 	public:

@@ -10,13 +10,13 @@ core::Guid core::Guid::CreateGuid()
 	UUID uuid;
 
 	RPC_STATUS status = UuidCreate(&uuid);
-	// may return RPC_S_UUID_LOCAL_ONLY
-	SAD_ASSERT(status == RPC_S_OK, "Failed to create GUID");
+	SAD_ASSERT(status == RPC_S_OK, "Failed to create Windows GUID");
 
 	guid = Guid(uuid);
 #else
 	uuid_t uuid;
 	uuid_generate_random(uuid);
+	SAD_ASSERT(uuid, "Failed to create Unix GUID");
 
 	guid = Guid(uuid);
 #endif
@@ -41,10 +41,11 @@ core::Guid::Guid(UUID uuid)
 }
 #else
 core::Guid::Guid(uuid_t uuid)
-	: m_Guid(uuid)
 { 
+	uuid_copy(m_Guid, uuid);
+
 	char str[37];
-	uuid_unparse(uuid, str);
+	uuid_unparse_lower(uuid, str);
 	SAD_ASSERT(str, "Failed to convert GUID to string");
 
 	m_StringGuid = std::string(str);
@@ -63,8 +64,8 @@ int core::Guid::CompareGuid(const Guid& a, const Guid& b)
 	RPC_STATUS status;
 	result = UuidCompare(&aGuid.m_Guid, &bGuid.m_Guid, &status);
 	SAD_ASSERT(status == RPC_S_OK, "Failed to compare GUIDs");
-#else
-	result = uuid_compare(aGuid.m_Guid, bGuid.m_Guid);
+#else 
+	result = uuid_compare(a.m_Guid, b.m_Guid);
 #endif
 
 	return result;

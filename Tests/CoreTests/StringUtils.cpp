@@ -4,6 +4,23 @@
 
 #pragma optimize("", off)
 
+TEST_CASE("Equals properly evaluates string equality")
+{
+	std::string a = "Equals properly evaluates string equality";
+
+	SECTION("strings are equal")
+	{
+		std::string b = "Equals properly evaluates string equality";
+		REQUIRE(core::StringUtils::Equals(a, b));
+	}
+
+	SECTION("strings are not equal")
+	{
+		std::string b = "Equals does not evaluate string equality";
+		REQUIRE_FALSE(core::StringUtils::Equals(a, b));
+	}
+}
+
 TEST_CASE("Strings are trimmed properly")
 {
 	std::string sample = "  The quick brown fox jumps over the lazy dog  ";

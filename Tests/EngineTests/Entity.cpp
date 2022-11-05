@@ -1,5 +1,4 @@
 #include <catch2/catch.hpp>
-#include <iostream>
 
 #include <Engine/ECS/Entity.h>
 #include <Engine/ECS/Registry.h>
@@ -52,37 +51,5 @@ TEST_CASE("Entities can add components")
 			addedTag = true;
 
 		REQUIRE(addedTag);
-	}
-}
-
-TEST_CASE("Entities can remove components")
-{
-	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-	struct TestComponent { int Data = 0; };
-	struct TagComponent { };
-
-	sad::ecs::Entity entity = sad::ecs::Entity();
-	entity.AddComponent<TestComponent>({ 5 });
-	entity.AddEmptyComponent<TagComponent>({ });
-
-	SECTION("entity can remove populated and empty components")
-	{
-		entity.RemoveComponent<TestComponent>();
-
-		int entityCount = 0;
-
-		auto testView = world.view<const TestComponent>();
-		for (auto entity : testView)
-			entityCount++;
-
-		REQUIRE(entityCount == 0);
-
-		entity.RemoveComponent<TagComponent>();
-
-		auto tagView = world.view<const TagComponent>();
-		for (auto entity : tagView)
-			entityCount++;
-
-		REQUIRE(entityCount == 0);
 	}
 }

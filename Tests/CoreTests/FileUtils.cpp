@@ -1,7 +1,7 @@
 #include <catch2/catch.hpp>
 
-#include <iostream>
 #include <Core/FileUtils.h>
+#include <Core/StringUtils.h>
 
 #pragma optimize("", off)
 
@@ -34,12 +34,12 @@ TEST_CASE("Platform specific project directories are created properly")
 
 #ifdef _SAD_WINDOWS
 	// testPath should have Windows-style back slashes in the returned path
-	REQUIRE_FALSE(osPath.compare(testPath) == 0);
-	REQUIRE(osPath.compare("sad\\TestPath\\Testing") == 0);
+	REQUIRE_FALSE(core::StringUtils::Equals(osPath, testPath);
+	REQUIRE(core::StringUtils::Equals(osPath, "sad\\TestPath\\Testing");
 #else
 	// testPath should still contain Unix-style forward slashes in the returned path
-	REQUIRE_FALSE(osPath.compare("sad\\TestPath\\Testing") == 0);
-	REQUIRE(osPath.compare(testPath) == 0);
+	REQUIRE_FALSE(core::StringUtils::Equals(osPath, "sad\\TestPath\\Testing"));
+	REQUIRE(core::StringUtils::Equals(osPath, testPath));
 #endif
 }
 
@@ -50,7 +50,7 @@ TEST_CASE("Files can be created, read, and removed successfully")
 	
 	// Validate read contents of the created file
 	std::string testFileContents = core::FileUtils::ReadFile(testPath);
-	REQUIRE(testFileContents.compare(c_FileContents) == 0);
+	REQUIRE(core::StringUtils::Equals(testFileContents, c_FileContents));
 
 	REQUIRE(core::FileUtils::RemoveFile(testPath));
 }
@@ -70,8 +70,8 @@ TEST_CASE("Files can be mutated successfully")
 		std::string testFileContents = core::FileUtils::ReadFile(testPath);
 
 		// New file contents shouldn't match the original
-		REQUIRE_FALSE(testFileContents.compare(c_FileContents) == 0);
-		REQUIRE(testFileContents.compare(expectedString) == 0);
+		REQUIRE_FALSE(core::StringUtils::Equals(testFileContents, c_FileContents));
+		REQUIRE(core::StringUtils::Equals(testFileContents, expectedString));
 	}
 
 	SECTION("overwriting pre-existing file")
@@ -85,8 +85,8 @@ TEST_CASE("Files can be mutated successfully")
 		std::string testFileContents = core::FileUtils::ReadFile(testPath);
 
 		// New file contents shouldn't match the original
-		REQUIRE_FALSE(testFileContents.compare(c_FileContents) == 0);
-		REQUIRE(testFileContents.compare(overwrittenString) == 0);
+		REQUIRE_FALSE(core::StringUtils::Equals(testFileContents, c_FileContents));
+		REQUIRE(core::StringUtils::Equals(testFileContents, overwrittenString));
 	}
 
 	REQUIRE(core::FileUtils::RemoveFile(testPath));

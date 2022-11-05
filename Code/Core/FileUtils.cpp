@@ -14,7 +14,6 @@ std::string core::FileUtils::ReadFile(const std::string& path)
 		std::stringstream buffer;
 		while (getline(fileStream, line))
 		{
-			std::cout << "BRO" << line << std::endl;
 			buffer << line;
 		}
 		fileStream.close();

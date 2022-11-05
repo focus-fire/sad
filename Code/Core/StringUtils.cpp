@@ -2,6 +2,11 @@
 
 #include "StringUtils.h"
 
+bool core::StringUtils::Equals(const std::string& a, const std::string& b)
+{
+    return a.compare(b) == 0; 
+}
+
 std::string core::StringUtils::Trim(const std::string& str)
 {
     std::string trimmedString = str;

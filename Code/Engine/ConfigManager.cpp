@@ -9,7 +9,7 @@ sad::ConfigSection* sad::ConfigManager::MGetSection(const std::string& sectionNa
 {
     std::list<ConfigSection>::iterator found = std::find_if(m_ConfigSections.begin(), m_ConfigSections.end(),
         [sectionName](const ConfigSection& sect) { 
-            return sect.name.compare(sectionName) == 0; 
+            return core::StringUtils::Equals(sect.name, sectionName); 
         });
 
     return found != m_ConfigSections.end() ? &*found : NULL;

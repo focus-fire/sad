@@ -1,9 +1,9 @@
 #include <catch2/catch.hpp>
 
-#include <string>
-
 #include <Engine/Transform.h>
+
 #include <Core/Memory.h>
+#include <Core/StringUtils.h>
 
 #pragma optimize("", off)
 
@@ -15,7 +15,7 @@ TEST_CASE("Pointer reference type creates a non-null shared pointer")
 		core::Pointer<std::string> smartString = core::CreatePointer<std::string>(testString);
 
 		REQUIRE(smartString);
-		REQUIRE(smartString.get()->compare(testString) == 0);
+		REQUIRE(core::StringUtils::Equals(*smartString.get(), testString));
 		REQUIRE_FALSE(smartString.get()->empty());
 	}
 

@@ -10,6 +10,12 @@ namespace core
 	{
 	public:
 		/**
+		 * @brief Compares two strings for equality
+		 * @return True if strings are the same, false if they are different
+		*/
+		static bool Equals(const std::string& a, const std::string& b);
+
+		/**
 		 * @brief Trims leading and trailing white-spaces
 		 * @param s String to trim leading and trailing white-spaces from
 		*/

@@ -40,6 +40,13 @@ namespace core
 		*/
 		inline bool IsNull() const { return m_StringGuid.empty(); }
 
+		/**
+		 * @brief Compares current Guid against another specified Guid for equality using private comparator function
+		 * @param other Another native Guid object to compare against
+		 * @return bool True if the Guids match, false if they do not
+		*/
+		inline bool Equals(const Guid& other) const { return CompareGuid(*this, other) == 0; }
+
 		bool operator==(const Guid& other) const
 		{
 			return CompareGuid(*this, other) == 0;
@@ -87,10 +94,10 @@ namespace core
 		static int CompareGuid(const Guid& a, const Guid& b);
 
 #ifdef _SAD_WINDOWS
-		Guid(UUID);
+		Guid(UUID uuid);
 		UUID m_Guid;
 #else
-		Guid(uuid_t);
+		Guid(uuid_t uuid);
 		uuid_t m_Guid;
 #endif
 	};

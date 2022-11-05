@@ -8,6 +8,8 @@
 #include <entt/entt.hpp>
 #include <glm/glm.hpp>
 
+#include "ResourceManager.h"
+
 #include "Renderer/Sample/Cube.h"
 #include "Renderer/RenderBuddy.h"
 #include "ECS/Registry.h"
@@ -76,6 +78,9 @@ void sad::Application::Start()
 	bool isClosed = false;
 	SDL_Event event;
 	InputManager& input = InputManager::GetInstance();
+
+	// TODO: Remove test resource code
+	ResourceManager::Start();
 
   // Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");

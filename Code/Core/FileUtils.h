@@ -13,9 +13,10 @@ namespace core
 		/**
 		 * @brief Reads the contents of a file into a string
 		 * @param path Path for the file to be read
+		 * @param addLineBreaks Indicates whether a line break should be appended to the end of each line
 		 * @return String contents of the file
 		*/
-		static std::string ReadFile(const std::string& path);
+		static std::string ReadFile(const std::string& path, bool addLineBreaks = false);
 
 		/**
 		 * @brief Writes to a file provided a particular path and string contents 
@@ -39,6 +40,13 @@ namespace core
 		 * @return True if removing the file succeeded, false if removing the file failed
 		*/
 		static bool RemoveFile(const std::string& path);
+		
+		/**
+		 * @brief Evaluates if a pass exists on the filesystem
+		 * @param path Path to evaluate the existence of
+		 * @return True if the path exists, false if it does not
+		*/
+		static bool PathExists(const std::string& path);
 
 		/**
 		 * @brief Retrieves a platform-specific absolute path for the root folder of the project ('sad')
@@ -62,5 +70,17 @@ namespace core
 		 * @example ConvertOSPathString("sad/Data/Test") converts to "sad\Data\Test" on Windows and remains "sad/Data/Test" on Mac/Unix platforms
 		*/
 		static std::string ConvertOSPathString(const std::string& path);
+
+		/**
+		 * @brief Retrieves a platform-specific absolute path inside the data directory of the engine ('sad/Data/PATH')
+		 * @param path Path for the file and/or directory path being retrieved
+		*/
+		static std::string GetPathInsideDataDirectory(const std::string& path);
+
+		/**
+		 * @brief Retrieves a platform-specific absolute path inside the code directory of the engine ('sad/Code/PATH')
+		 * @param path Path for the file and/or directory path being retrieved 
+		*/
+		static std::string GetPathInsideCodeDirectory(const std::string& path);
 	};
 }

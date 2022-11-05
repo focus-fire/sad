@@ -1,5 +1,7 @@
 #pragma once
+
 #include <string>
+#include <vector>
 
 namespace core
 {
@@ -27,11 +29,18 @@ namespace core
 		*/
 		static std::string LeftTrim(const std::string& str);
 
-
 		/**
 		 * @brief Trim trailing white-spaces
 		 * @param s String to trim trailing white-spaces from
 		*/
 		static std::string RightTrim(const std::string& str);
+
+		/**
+		 * @brief Splits a string by a provided delimiter
+		 * @param delimiter Character used as the basis for splitting the string 
+		 * @param str String to split
+		 * @return Vector containing each string split during the operation
+		*/
+		static std::vector<std::string> Split(const char delimiter, const std::string& str);
 	};
 }

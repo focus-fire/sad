@@ -104,8 +104,7 @@ sad::ConfigManager& sad::ConfigManager::GetInstance()
 {
     if(!m_IsFileRead)
     {
-        std::string configPath = core::FileUtils::GetCodeDirectory();
-        configPath += core::FileUtils::ConvertOSPathString("/config.ini");
+        std::string configPath = core::FileUtils::GetPathInsideCodeDirectory("config.ini");
 
         Parse(configPath);
         m_IsFileRead = true;

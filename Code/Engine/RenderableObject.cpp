@@ -22,9 +22,9 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// Create the index buffer for indices
 	m_IndexBuffer = new sad::rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
-	std::string dataDirectory = core::FileUtils::GetDataDirectory();
-	std::string shaderFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Shaders/Default.glsl");
-	std::string textureFile = dataDirectory + core::FileUtils::ConvertOSPathString("/Textures/Default.png");
+	// TODO: Use Shader/Texture resources
+	std::string shaderFile = core::FileUtils::GetPathInsideDataDirectory("Shaders/Default.glsl");
+	std::string textureFile = core::FileUtils::GetPathInsideDataDirectory("Textures/Default.png");
 
 	// All RenderableObjects start with this 'Material' by default
 	m_Shader = new sad::rad::Shader(shaderFile);

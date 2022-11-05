@@ -42,3 +42,27 @@ std::string core::StringUtils::RightTrim(const std::string& str)
 
     return tempString;
 }
+
+std::vector<std::string> core::StringUtils::Split(const char delimiter, const std::string& str)
+{
+    std::vector<std::string> result;
+    std::string element;
+
+    size_t nextPosition = 0;
+    size_t lastPosition = 0;
+
+    // Iterate through the string and locate the delimiter
+    while ((nextPosition = str.find(delimiter, lastPosition)) != std::string::npos)
+    {
+        element = str.substr(lastPosition, nextPosition - lastPosition);
+        result.push_back(element);
+
+        // Increment position to check next applicable substring
+        lastPosition = nextPosition + 1;
+    }
+
+    // Catch whatever remains after the final delimiter when the loop breaks
+    result.push_back(str.substr(lastPosition));
+
+    return result;
+}

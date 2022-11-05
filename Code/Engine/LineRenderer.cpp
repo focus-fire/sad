@@ -22,7 +22,7 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	points[11] = color.b;
 
 
-	std::string shaderPath = core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Shaders/Line.glsl");
+	std::string shaderPath = core::FileUtils::GetPathInsideDataDirectory("Shaders/Line.glsl");
 	m_Shader = new rad::Shader(shaderPath);
 
 	m_VertexArray = new rad::VertexArray();

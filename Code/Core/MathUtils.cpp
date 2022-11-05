@@ -2,6 +2,9 @@
 
 #include "MathUtils.h"
 
+std::random_device core::MathUtils::m_RandomDevice;
+std::mt19937 core::MathUtils::m_RandomGenerator = std::mt19937(core::MathUtils::m_RandomDevice());
+
 double core::MathUtils::RoundTo(double value, double precision /* = 1.0f */)
 {
 	return std::round(value / precision) * precision;
@@ -24,3 +27,11 @@ float core::MathUtils::Clamp(float x, float min, float max)
 	return x;
 }
 
+int core::MathUtils::RandomBetween(int min, int max)
+{
+	if (min == max)
+		return min;
+
+	std::uniform_int_distribution<int> distribution = std::uniform_int_distribution<int>(min, max);
+	return distribution(m_RandomGenerator);
+}

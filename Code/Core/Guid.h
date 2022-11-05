@@ -42,32 +42,32 @@ namespace core
 
 		bool operator==(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == 0 ? true : false;
+			return CompareGuid(*this, other) == 0;
 		}
 
 		bool operator!=(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == 0 ? false : true;
+			return CompareGuid(*this, other) != 0;
 		}
 
 		bool operator<(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == -1 ? true : false;
+			return CompareGuid(*this, other) == -1;
 		}
 
 		bool operator<=(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == 1 ? false : true;
+			return CompareGuid(*this, other) != 1;
 		}
 
 		bool operator>(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == 1 ? true : false;
+			return CompareGuid(*this, other) == 1;
 		}
 
 		bool operator>=(const Guid& other) const
 		{
-			return CompareGuid(*this, other) == -1 ? false : true;
+			return CompareGuid(*this, other) != -1;
 		}
 
 	private:

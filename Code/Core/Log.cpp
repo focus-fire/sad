@@ -87,6 +87,10 @@ void core::KillLogging()
 
 void core::Log(const ELogType type, const char* message)
 {
+	// Prevent log from executing if no logging sinks have been created
+	if (!s_DebugLogger || !s_AssertLogger)
+		return;
+
 	SAD_ASSERT(message && message[0], "Congratulations! You managed to log an empty string.");
 
 	switch (type)

@@ -2,34 +2,38 @@
 
 #include "StringUtils.h"
 
-/**
- * @brief trim leading white-spaces
- * @param s
- * @return
-*/
-std::string core::StringUtils::LeftTrim(const std::string& s)
+std::string core::StringUtils::Trim(const std::string& str)
 {
-    std::string tempString = s;
-    size_t startpos = tempString.find_first_not_of(" \t\r\n\v\f");
-    if (std::string::npos != startpos)
+    std::string trimmedString = str;
+
+    trimmedString = LeftTrim(trimmedString);
+    trimmedString = RightTrim(trimmedString);
+
+    return trimmedString;
+}
+
+std::string core::StringUtils::LeftTrim(const std::string& str)
+{
+    std::string tempString = str;
+    size_t startPos = tempString.find_first_not_of(" \t\r\n\v\f");
+
+    if (std::string::npos != startPos)
     {
-        tempString = tempString.substr(startpos);
+        tempString = tempString.substr(startPos);
     }
+
     return tempString;
 }
 
-/**
- * @brief trim trailing white-spaces
- * @param s
- * @return
-*/
-std::string core::StringUtils::RightTrim(const std::string& s)
+std::string core::StringUtils::RightTrim(const std::string& str)
 {
-    std::string tempString = s;
-    size_t endpos = tempString.find_last_not_of(" \t\r\n\v\f");
-    if (std::string::npos != endpos)
+    std::string tempString = str;
+    size_t endPos = tempString.find_last_not_of(" \t\r\n\v\f");
+
+    if (std::string::npos != endPos)
     {
-        tempString = tempString.substr(0, endpos + 1);
+        tempString = tempString.substr(0, endPos + 1);
     }
+
     return tempString;
 }

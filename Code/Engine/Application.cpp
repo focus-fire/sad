@@ -30,8 +30,10 @@
 #include "Transform.h"
 #include "RenderableObject.h"
 #include "PlayerController.h"
+#include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
+sad::EngineStateManager* sad::Application::s_EngineStateManager;
 
 sad::Application::Application()
 { 
@@ -39,9 +41,13 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
+	// Default engine mode to editor
+	s_EngineStateManager = new sad::EngineStateManager(sad::EngineMode::Editor);
+
 	// Renderer and Editor have to be initialized after the main window
 	m_Renderer = new sad::rad::Renderer;
 	m_Editor = new cap::Editor;
+
 }
 
 sad::Application::~Application()
@@ -51,7 +57,7 @@ sad::Application::~Application()
 	delete m_Editor;
 
 	// Remove when resource is abstracted
-	delete m_CubeResource;
+	//delete m_CubeResource;
 }
 
 void sad::Application::EngineStart()
@@ -62,30 +68,30 @@ void sad::Application::EngineStart()
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	m_Renderer->Start();
 
-	// Create sample resource for a cube
-	RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
-	m_CubeResource = new RenderableResource(cubeGeometry);
+	//// Create sample resource for a cube
+	//RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
+	//m_CubeResource = new RenderableResource(cubeGeometry);
 
-	// Add resource and transform components to the entities
-	m_FirstCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_FirstCubeEntity.AddComponent<ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
-	m_FirstCubeEntity.AddEmptyComponent<ecs::PlayerControllerComponent>({});
+	//// Add resource and transform components to the entities
+	//m_FirstCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
+	//m_FirstCubeEntity.AddComponent<ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
+	//m_FirstCubeEntity.AddEmptyComponent<ecs::PlayerControllerComponent>({});
 
-	m_SecondCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_SecondCubeEntity.AddComponent<ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
+	//m_SecondCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
+	//m_SecondCubeEntity.AddComponent<ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
 
-	// Create view matrices 
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-	m_VpMatrix = projectionMatrix * viewMatrix;
+	//// Create view matrices 
+	//glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+	//glm::mat4 viewMatrix = glm::lookAt(
+	//	glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
+	//	glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+	//	glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	//);
+	//m_VpMatrix = projectionMatrix * viewMatrix;
 
-	// Translation Logic (-pi to pi for demo)
-	m_CubeTranslate = -1.0f * glm::pi<float>();
-	m_LastTime = std::chrono::steady_clock::now();
+	//// Translation Logic (-pi to pi for demo)
+	//m_CubeTranslate = -1.0f * glm::pi<float>();
+	//m_LastTime = std::chrono::steady_clock::now();
 
 	bool isClosed = false;
 
@@ -101,8 +107,11 @@ void sad::Application::EngineStart()
 		
 		float dt = pog::Time::GetDeltaTime();
 
-		// Game Update
-		this->Update(dt);
+		if (s_EngineStateManager->GetEngineMode() == EngineMode::Game)
+		{
+			// Game Update
+			this->Update(dt);
+		}
 
 		// Engine Update
 		sad::Application::Update(dt);
@@ -143,24 +152,16 @@ void sad::Application::Update(float dt)
 	// Second 'pass' to recolor outside the framebuffer
 	m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
 
-	/* Update Game Logic */
-
-	// TODO: Prevent updates in game if in Editor mode 
-	auto currentTime = std::chrono::steady_clock::now();
-	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
-	m_LastTime = currentTime;
-
-	m_CubeTranslate += 1.0f * dt;
-	if (m_CubeTranslate >= glm::pi<float>())
-		m_CubeTranslate = -1.0f * glm::pi<float>();
-
-	// Manipulate first entity transform
-	m_FirstCubeEntity.Transform.Rotate(glm::vec3(10.0f * dt));
-	m_FirstCubeEntity.Transform.Translate(glm::vec3(0.0f, glm::sin(m_CubeTranslate) * dt, 0.0f));
-
-	// Manipulate second entity transform
-	m_SecondCubeEntity.Transform.Rotate(glm::vec3(10.0f * dt));
-	m_SecondCubeEntity.Transform.Translate(glm::vec3(glm::sin(-m_CubeTranslate * 2) * dt, 0.0f, 0.0f));
+	/* Game Logic Moved to game application */
+	
+	// Create view matrices 
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+	glm::mat4 viewMatrix = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
+		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	);
+	m_VpMatrix = projectionMatrix * viewMatrix;
 
 	/* Update ECS Systems */
 	core::UpdateEvents();
@@ -202,3 +203,6 @@ void sad::Application::Teardown()
 	m_Editor->Teardown();
 	s_MainWindow->Teardown();
 }
+
+
+

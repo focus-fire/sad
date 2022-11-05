@@ -7,6 +7,8 @@
 
 #include "Window.h"
 #include "RenderableResource.h"
+#include "EngineStateManager.h"
+
 
 struct SDL_Window;
 
@@ -48,19 +50,20 @@ namespace sad
 
 	public:
 		static Window* s_MainWindow;
+		static EngineStateManager* s_EngineStateManager;
 
 	private:
 		sad::rad::Renderer* m_Renderer = nullptr;
 		cap::Editor* m_Editor = nullptr;
 
-		// Temporary Variables for Test Level
-		RenderableResource* m_CubeResource;
-		sad::ecs::Entity m_FirstCubeEntity;
-		sad::ecs::Entity m_SecondCubeEntity;
+		//// Temporary Variables for Test Level
+		//RenderableResource* m_CubeResource;
+		//sad::ecs::Entity m_FirstCubeEntity;
+		//sad::ecs::Entity m_SecondCubeEntity;
 
 		glm::mat4 m_VpMatrix;
 
-		float m_CubeTranslate;
-		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
+		//float m_CubeTranslate;
+		//std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
 	};
 }

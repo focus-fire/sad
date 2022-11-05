@@ -44,6 +44,7 @@ namespace sad
 		SDL_Window* GetSDLWindow() const { return m_Window; }
 		SDL_GLContext GetGLContext() const { return m_GLContext; };
 
+
 		unsigned int GetWidth() const { return m_Properties.Width; }
 		unsigned int GetHeight() const { return m_Properties.Height; }
 		float GetAspectRatio() const { return static_cast<float>(m_Properties.Width) / static_cast<float>(m_Properties.Height); }

@@ -20,8 +20,11 @@ void UIChangeTitleText()
 {
 	UI_TITLE_TEXT = "Welcome!!!";
 }
+void ToggleEngineMode() {
+	sad::Application::s_EngineStateManager->ToggleEngineMode();
+}
 
-cap::Editor::Editor()
+cap::Editor::Editor()		
 	: m_ShowGameWindow(true)
 	, m_ShowWelcomeWindow(true)
 	, m_IsEditorInPlayMode(false)
@@ -42,6 +45,7 @@ void cap::Editor::Start()
 	// Sample Event Listener Creation - Can Delete
 	core::InitializeListener("UI", UIChangeBodyText);
 	core::InitializeListener("UI", UIChangeTitleText);
+	core::InitializeListener("ToggleEngineMode", ToggleEngineMode);
 }
 
 void cap::Editor::CatchSDLEvents(const SDL_Event& event)
@@ -92,9 +96,12 @@ void cap::Editor::Render(unsigned int frameBufferTextureId)
 	ImGui::Begin("Action Panel");
 	if (ImGui::Button(currentMode))
 	{
-		// TODO: Use an event to signal when toggle occurs to the rest of the engine
-		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
-		core::Log(ELogType::Trace, "Engine was toggled into {} mode", m_IsEditorInPlayMode ? "GAME" : "EDITOR");
+		core::Log(ELogType::Info, "Engine was toggled");
+				
+		// TODO: Use an event to signal when toggle occurs to the rest of the 
+		core::SignalEvent("ToggleEngineMode");
+
+		//core::Log(ELogType::Trace, "Engine was toggled into {} mode", sad::Application::s_EngineStateManager->GetEngineMode());
 	}
 	ImGui::End();
 

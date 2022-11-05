@@ -32,6 +32,7 @@ namespace cap
 		void Teardown();
 
 	private:
+
 		bool m_ShowGameWindow;
 		bool m_ShowWelcomeWindow;
 

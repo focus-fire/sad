@@ -10,14 +10,18 @@
 
 #include "InputManager.h"
 #include "Transform.h"
+#include "AudioManager.h"
 
-sad::PlayerController::PlayerController() {}
+sad::PlayerController::PlayerController() 
+{
+	AudioManager::GetInstance().loadAudioFile("footstep", "xd.wav", 10, WAV);
+	AudioManager::GetInstance().loadAudioFile("jump", "jump.wav", 10, WAV);
+}
 
 sad::PlayerController::~PlayerController() {}
 
 void sad::PlayerController::Update()
 {
-	
 	if (InputManager::GetInstance().GetAxis(SDL_CONTROLLER_AXIS_LEFTX) != 0.0f);
 
 	// Movespeed, to later get on config instead.
@@ -39,11 +43,13 @@ void sad::PlayerController::Update()
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_W) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * movespeed));
+			AudioManager::GetInstance().playSFX("footstep");
 		}
 
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_S) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * movespeed));
+			AudioManager::GetInstance().playSFX("footstep");
 		}
 
 		// Handles left/right movement using A and D + controller left joystick.
@@ -56,17 +62,20 @@ void sad::PlayerController::Update()
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_A) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(1.0f * movespeed, 0.0f, 0.0f));
+			AudioManager::GetInstance().playSFX("footstep");
 		}
 
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_D) && !usingController)
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * movespeed, 0.0f, 0.0f));
+			AudioManager::GetInstance().playSFX("footstep");
 		}
 
 		// Handles up/down flight using SPACE and LSHIFT.
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_SPACE) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_A))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 1.0f * movespeed, 0.0f));
+			AudioManager::GetInstance().playSFX("jump");
 		}
 
 		if (InputManager::GetInstance().GetKey(SDL_SCANCODE_LSHIFT) || InputManager::GetInstance().GetButton(SDL_CONTROLLER_BUTTON_B))

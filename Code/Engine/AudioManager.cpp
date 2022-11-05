@@ -1,22 +1,33 @@
 #include "sadpch.h"
 #include "AudioManager.h"
 
-AudioManager::AudioManager(const std::string &path, int volume, AudioType type)
+std::list<sad::AudioFile> sad::AudioManager::m_AudioFiles;
+
+void sad::AudioManager::loadAudioFile(const std::string& filename, const std::string& path, int volume, AudioType type)
 {
-    core::Log(ELogType::Debug, "Audio Path: {}", path.c_str());
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0)
+    AudioFile audioFile;
+    audioFile.filename = filename;
+    audioFile.path = path.c_str();
+    audioFile.type = type;
+    audioFile.volume = volume;
+
+    core::Log(ELogType::Debug, "Audio Path: {}", path.c_str()); // Debug Path
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0) // Check if audio file can be opened
     {
         core::Log(ELogType::Debug, "Couldn't open audio sample: {}", Mix_GetError());
     }
     else
     {
-        if (type == MP3) 
+        if (type == MP3)
         {
-            m_Music = Mix_LoadMUS(path.c_str());
-            if (m_Music != NULL)
+            audioFile.mixMusic = Mix_LoadMUS(path.c_str());
+            if (audioFile.mixMusic != NULL)
             {
                 core::Log(ELogType::Debug, "Audio sample loaded!");
                 Mix_VolumeMusic(volume);
+
+                m_AudioFiles.push_back(audioFile);
             }
             else
             {
@@ -26,11 +37,13 @@ AudioManager::AudioManager(const std::string &path, int volume, AudioType type)
 
         if (type == WAV)
         {
-            m_Sound = Mix_LoadWAV(path.c_str());
-            if (m_Sound != NULL)
+            audioFile.mixChunk = Mix_LoadWAV(path.c_str());
+            if (audioFile.mixChunk != NULL)
             {
                 core::Log(ELogType::Debug, "Audio sample loaded!");
-                Mix_VolumeChunk(m_Sound, volume);
+                Mix_VolumeChunk(audioFile.mixChunk, volume);
+                
+                m_AudioFiles.push_back(audioFile);
             }
             else
             {
@@ -42,26 +55,49 @@ AudioManager::AudioManager(const std::string &path, int volume, AudioType type)
 
 // -1 here means we let SDL_mixer pick the first channel that is free
 // If no channel is free it'll return an err code.
-void AudioManager::play() 
+void sad::AudioManager::playSFX(std::string filename)
 {
-    if (m_Music != NULL) Mix_PlayMusic(m_Music, 0);
-    if (m_Sound != NULL) Mix_PlayChannel(-1, m_Sound, 0);
+    for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it) 
+    {
+        if (it->filename.compare(filename) == 0)
+        {
+            if (Mix_Playing(-1) == 0)
+            {
+                Mix_PlayChannel(-1, it->mixChunk, 0);
+            }
+            break;
+        }
+    }
 }
 
-void AudioManager::play(int times) 
+// times = 0 for infinite loop
+void sad::AudioManager::playMusic(std::string filename, int times) 
 {
-    if (m_Music != NULL) Mix_PlayMusic(m_Music, times - 1);
-    if (m_Sound != NULL) Mix_PlayChannel(-1, m_Sound, times - 1);
+    for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
+    {
+        if (it->filename.compare(filename) == 0)
+        {
+            Mix_PlayMusic(it->mixMusic, times - 1);
+            break;
+        }
+    }
 }
 
-void AudioManager::playLoop()
+void sad::AudioManager::set_volume(std::string filename, int volume)
 {
-    if (m_Music != NULL) Mix_PlayMusic(m_Music, -1);
-    if (m_Sound != NULL) Mix_PlayChannel(-1, m_Sound, -1);
+    for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
+    {
+        if (it->filename.compare(filename) == 0)
+        {
+            if (it->type == WAV) Mix_VolumeChunk(it->mixChunk, volume);
+            if (it->type == MP3) Mix_VolumeMusic(volume);
+            break;
+        }
+    }
 }
 
-void AudioManager::set_volume(int volume) 
+sad::AudioManager& sad::AudioManager::GetInstance()
 {
-    if (m_Music != NULL) Mix_VolumeMusic(volume);
-    if (m_Sound != NULL) Mix_VolumeChunk(m_Sound, volume);
+    static AudioManager instance;
+    return instance;
 }

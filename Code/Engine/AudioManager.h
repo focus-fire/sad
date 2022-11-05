@@ -2,18 +2,43 @@
 
 #include <string>
 #include <memory>
+#include <list>
+
 #include <SDL2/SDL_mixer.h>
 
-class AudioManager {
-public:
+namespace sad 
+{
     enum AudioType { MP3, WAV };
-    AudioManager(const std::string &path, int volume, AudioType type);
-    void play();
-    void playLoop();
-    void play(int times);
-    void set_volume(int volume);
 
-private:
-    Mix_Music *m_Music = NULL;
-    Mix_Chunk *m_Sound = NULL;
-};
+    struct AudioFile
+    {
+        std::string filename;
+        std::string path;
+        AudioType type;
+        Mix_Chunk* mixChunk;
+        Mix_Music* mixMusic;
+        int volume;
+    };
+
+    class AudioManager 
+    {
+    public:
+        AudioManager(const AudioManager&) = delete;
+
+        static void loadAudioFile(const std::string& filename, const std::string& path, int volume, AudioType type);
+
+        static void playSFX(std::string filename);
+
+        static void playMusic(std::string filename, int times);
+
+        static void set_volume(std::string filename, int volume);
+
+        static AudioManager& GetInstance();
+
+    private:
+        AudioManager() {}
+
+        static std::list<AudioFile> m_AudioFiles;
+
+    };
+}

@@ -31,7 +31,7 @@ namespace sad
 		{
 			return Json[key];
 		};
-		void static ImportLevel();
+		bool static ImportLevel();
 		void static ExportLevel();
 	};
 }

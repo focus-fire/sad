@@ -34,8 +34,8 @@ TEST_CASE("Platform specific project directories are created properly")
 
 #ifdef _SAD_WINDOWS
 	// testPath should have Windows-style back slashes in the returned path
-	REQUIRE_FALSE(core::StringUtils::Equals(osPath, testPath);
-	REQUIRE(core::StringUtils::Equals(osPath, "sad\\TestPath\\Testing");
+	REQUIRE_FALSE(core::StringUtils::Equals(osPath, testPath));
+	REQUIRE(core::StringUtils::Equals(osPath, "sad\\TestPath\\Testing"));
 #else
 	// testPath should still contain Unix-style forward slashes in the returned path
 	REQUIRE_FALSE(core::StringUtils::Equals(osPath, "sad\\TestPath\\Testing"));

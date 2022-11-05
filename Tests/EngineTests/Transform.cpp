@@ -109,7 +109,6 @@ TEST_CASE("Transform translations should apply properly")
 		transform.Translate(offset);
 
 		glm::vec3 newPos = transform.GetPosition();
-
 		REQUIRE_FALSE(newPos == glm::vec3(0.0f));
 		REQUIRE(newPos == offset);
 	}
@@ -123,7 +122,6 @@ TEST_CASE("Transform translations should apply properly")
 		transform.Translate(offset2);
 
 		glm::vec3 newPos = transform.GetPosition();
-
 		REQUIRE_FALSE(newPos == glm::vec3(0.0f));
 		REQUIRE(newPos == (offset1 + offset2));
 	}
@@ -140,7 +138,6 @@ TEST_CASE("Transform rotations should apply properly")
 		transform.Rotate(rot);
 
 		glm::quat newRot = transform.GetRotation();
-
 		REQUIRE_FALSE(newRot == glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
 		REQUIRE(newRot == glm::quat(glm::radians(rot)));
 	}
@@ -152,7 +149,6 @@ TEST_CASE("Transform rotations should apply properly")
 		transform.Rotate(rot);
 
 		glm::quat newRot = transform.GetRotation();
-
 		REQUIRE_FALSE(newRot == glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
 		REQUIRE(newRot == rot);
 	}
@@ -165,7 +161,6 @@ TEST_CASE("Transform rotations should apply properly")
 		transform.Rotate(axis, angle);
 		
 		glm::quat newRot = transform.GetRotation();
-
 		REQUIRE_FALSE(newRot == glm::quat(1.0f, 0.0f, 0.0f, 0.0f));
 		REQUIRE(newRot == glm::rotate(glm::quat(1.0f, 0.0f, 0.0f, 0.0f), glm::radians(angle), axis));
 	}
@@ -182,7 +177,6 @@ TEST_CASE("Transform scaling should apply properly")
 		transform.Scale(scl);
 
 		glm::vec3 newScl = transform.GetScale();
-
 		REQUIRE_FALSE(newScl == glm::vec3(1.0f));
 		REQUIRE(newScl == scl);
 	}
@@ -196,7 +190,6 @@ TEST_CASE("Transform scaling should apply properly")
 		transform.Scale(scl2);
 
 		glm::vec3 newScl = transform.GetScale();
-
 		REQUIRE_FALSE(newScl == scl1);
 		REQUIRE_FALSE(newScl == scl2);
 		REQUIRE(newScl == glm::vec3(1.0f));

@@ -36,12 +36,10 @@ TEST_CASE("Events can be initialized successfully")
 
 		core::InitializeListener("TestFirstListener", [&]() { firstListenerTriggered = true; });
 		core::SignalEvent("TestFirstListener");
-
 		REQUIRE(firstListenerTriggered);
 
 		core::InitializeListener("TestSecondListener", [&]() { secondListenerTriggered = true; });
 		core::SignalEvent("TestSecondListener");
-
 		REQUIRE(secondListenerTriggered);
 	}
 }

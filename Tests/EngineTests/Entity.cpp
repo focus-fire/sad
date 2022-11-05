@@ -15,7 +15,6 @@ TEST_CASE("Entity handles are contstructed and behave properly")
 		const entt::entity handle = entity.GetHandle();
 
 		bool isValidHandle = handle != entt::null;
-
 		REQUIRE(isValidHandle);
 	}
 
@@ -39,7 +38,6 @@ TEST_CASE("Entities can add components")
 		entity.AddComponent<TestComponent>({ 5 });
 
 		const TestComponent& testComponent = entity.GetComponent<TestComponent>();
-
 		REQUIRE(testComponent.Data == 5);
 	}
 

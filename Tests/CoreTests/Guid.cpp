@@ -14,7 +14,6 @@ TEST_CASE("Guids can be constructed properly")
 TEST_CASE("Guids have a valid ToString()")
 {
 	const core::Guid guid = core::Guid::CreateGuid();
-
 	const std::string stringGuid = guid.ToString();
 
 	REQUIRE_FALSE(guid.IsNull());
@@ -27,11 +26,9 @@ TEST_CASE("Guids can be properly compared")
 	{
 		const core::Guid firstGuid = core::Guid::CreateGuid();
 		const core::Guid secondGuid = core::Guid::CreateGuid();
-
 		REQUIRE_FALSE(firstGuid == secondGuid);
 
 		const core::Guid firstGuidCopy = firstGuid;
-
 		REQUIRE(firstGuid == firstGuidCopy);
 	}
 
@@ -39,11 +36,9 @@ TEST_CASE("Guids can be properly compared")
 	{
 		core::Guid firstGuid = core::Guid::CreateGuid();
 		core::Guid secondGuid = core::Guid::CreateGuid();
-
 		REQUIRE_FALSE(firstGuid == secondGuid);
 
 		core::Guid firstGuidCopy = firstGuid;
-
 		REQUIRE(firstGuid == firstGuidCopy);
 	}
 }

@@ -2,6 +2,8 @@
 
 #include "LineRenderer.h"
 
+#include <Engine/ResourceManager.h>
+
 sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	: m_VertexCount(2)
 {
@@ -22,8 +24,8 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	points[11] = color.b;
 
 
-	std::string shaderPath = core::FileUtils::GetPathInsideDataDirectory("Shaders/Line.glsl");
-	m_Shader = new rad::Shader(shaderPath);
+	std::string shaderName = "Line.glsl";
+	m_Shader = ResourceManager::GetResource<rad::Shader>(shaderName);
 
 	m_VertexArray = new rad::VertexArray();
 	m_VertexArray->Bind();
@@ -43,5 +45,4 @@ sad::LineRenderer::~LineRenderer()
 	delete m_VertexArray;
 	delete m_VertexBuffer;
 	delete m_VertexAttributeContainer;
-	delete m_Shader;
 }

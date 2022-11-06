@@ -8,10 +8,23 @@ namespace sad
 	class IResource
 	{
 	public:
-		explicit IResource(std::string name, std::string filePath, core::Guid guid = core::Guid::CreateGuid())
-				: m_Guid(guid)
-				, m_Name(std::move(name))
-				, m_FilePath(std::move(filePath))
+		struct ResourceData
+		{
+			core::Guid Guid;
+			std::string Name;
+			std::string FilePath;
+
+			ResourceData(const std::string& name, const std::string& filePath, core::Guid guid = core::Guid::CreateGuid())
+				: Guid(guid)
+				, Name(name)
+				, FilePath(filePath)
+			{ }
+		};
+
+		explicit IResource(const ResourceData& data)
+				: m_Guid(data.Guid)
+				, m_Name(data.Name)
+				, m_FilePath(data.FilePath)
 		{
 			core::Log(ELogType::Trace, "Created resource for {} with GUID {}", m_Name, m_Guid.ToString());
 		}

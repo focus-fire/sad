@@ -5,7 +5,8 @@
 #include <stb_image.h>
 #include <glad/glad.h>
 
-sad::rad::Texture::Texture(const std::string& filePath)
+sad::rad::Texture::Texture(const IResource::ResourceData& resourceData, const std::string& filePath)
+	: IResource(resourceData)
 {
 	// Flip texture upside-down as OpenGL expects pixels to start at bottom-left	
 	stbi_set_flip_vertically_on_load(1);
@@ -34,7 +35,8 @@ sad::rad::Texture::Texture(const std::string& filePath)
 }
 
 sad::rad::Texture::Texture(int width, int height)
-	: m_Width(width)
+	: IResource({ "FrameBuffer.fake", "FrameBuffer.fake" })
+	, m_Width(width)
 	, m_Height(height)
 {
 	GL_CALL(glGenTextures(1, &m_RendererId));

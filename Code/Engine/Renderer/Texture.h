@@ -2,16 +2,18 @@
 
 #include <string>
 
+#include <Engine/IResource.h>
+
 namespace sad::rad
 {
-	class Texture 
+	class Texture final : public IResource 
 	{
 	public:
 		/**
 		 * @brief Allocates texture memory and sets default texture parameters for an image 
 		 * @param filePath Path to the target texture resource
 		*/
-		explicit Texture(const std::string& filePath);
+		explicit Texture(const IResource::ResourceData& resourceData, const std::string& filePath);
 
 		/**
 		 * @brief Allocates memory for an empty texture without an image 

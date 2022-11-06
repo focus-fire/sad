@@ -7,23 +7,11 @@
 
 #include <glad/glad.h>
 
-sad::rad::Shader::Shader(const std::string& combinedShaderPath)
-    : m_FileName(combinedShaderPath)
+sad::rad::Shader::Shader(const IResource::ResourceData& resourceData, const std::string& combinedShaderPath)
+    : IResource(resourceData)
+    , m_FileName(combinedShaderPath)
 {
     const Source source = ParseCombinedShader(combinedShaderPath);
-
-    m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
-    SAD_ASSERT(m_RendererId, "Shader was properly created in the renderer")
-    core::Log(ELogType::Trace, "Shader program object created for shader with ID #{}", m_RendererId);
-
-    GL_CALL(glUseProgram(m_RendererId));
-}
-
-sad::rad::Shader::Shader(const std::string& vertexFilePath, const std::string& fragmentFilePath)
-{
-    const std::string vertexSource = ParseSingleShader(vertexFilePath);
-    const std::string fragmentSource = ParseSingleShader(fragmentFilePath);
-    const Source source = Source(vertexSource, fragmentSource);
 
     m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
     SAD_ASSERT(m_RendererId, "Shader was properly created in the renderer")
@@ -77,34 +65,6 @@ void sad::rad::Shader::SetUniformMatrix3fv(const std::string& name, const float*
 void sad::rad::Shader::SetUniformMatrix4fv(const std::string& name, const float* matrix)
 {
     GL_CALL(glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, matrix));
-}
-
-std::string sad::rad::Shader::ParseSingleShader(const std::string& filePath)
-{
-    std::ifstream stream(filePath);
-    std::string line;
-    std::stringstream ss;
-
-    while (getline(stream, line))
-    {
-        if (line.find("#shader") != std::string::npos)
-        {
-            if (line.find("vertex") != std::string::npos)
-            {
-                continue;
-            }
-            else if (line.find("fragment") != std::string::npos)
-            {
-                continue;
-            }
-        }
-        else
-        {
-            ss << line << "\n";
-        }
-    }
-
-    return ss.str();
 }
 
 sad::rad::Shader::Source sad::rad::Shader::ParseCombinedShader(const std::string& filePath)

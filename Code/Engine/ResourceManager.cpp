@@ -4,6 +4,10 @@
 
 #include <Core/FileUtils.h>
 
+#include "ResourceFactory.h"
+#include "RenderableResource.h"
+#include "Renderer/Shader.h"
+
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
 	static ResourceManager instance;
@@ -18,8 +22,8 @@ void sad::ResourceManager::Import()
 void sad::ResourceManager::MImport()
 {
 	// Empty the resource cache if a reimport is called 
-	if (!m_CachedResources.empty())
-		m_CachedResources.clear();
+	if (!m_CachedResourcesFromFile.empty())
+		m_CachedResourcesFromFile.clear();
 
 	// If file doesn't exist, write the header to it
 	if (!core::FileUtils::PathExists(c_ResourceFilePath))
@@ -32,12 +36,12 @@ void sad::ResourceManager::MImport()
 	// Resources that exist in the file but don't exist in the filesystem will be ignored
 	ImportResources();
 	
-	// Recurse through the './Data' directory to search new resources
+	// Recurse through the './Data' directory to search for new resources
 	// Resources that were cached during the import step are skipped
 	FindResourcesInDataDirectory();
 
 	// Export resources back to Resources.sad.meta once import is complete
-	// Only resources that have been cached during either steps 1 or 2 will be exported
+	// Only resources that have been cached during steps 1 or 2 will be exported
 	ExportUncachedResources();
 }
 
@@ -45,7 +49,7 @@ void sad::ResourceManager::ImportResources()
 {
 	// Retrieve file contents and parse entries to generate map
 	// Preserve line breaks to properly delimit string as csv
-	std::string resourceFileContents = core::FileUtils::ReadFile(c_ResourceFilePath, true);
+	const std::string resourceFileContents = core::FileUtils::ReadFile(c_ResourceFilePath, true);
 	SAD_ASSERT(!resourceFileContents.empty(), "Retrieved resource file should at least have a header before being parsed");
 
 	core::Log(ELogType::Trace, "Importing cached resources from Resources.sad.meta");
@@ -63,23 +67,27 @@ void sad::ResourceManager::ImportResources()
 		if (line == c_ResourceFileHeader)
 			continue;
 
-		// Split the CSV by value
-		std::vector<std::string> values = core::StringUtils::Split(',', line);
+		// Split the CSV into it's rows
+		std::vector<std::string> rows = core::StringUtils::Split(',', line);
 		
 		// Extract resource information and reconstruct absolute path to determine if resource still exists on the filesystem
-		std::string fileName = std::move(values[1]);
-		std::string relativePath = std::move(values[2]);
-		std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(std::move(relativePath));
+		std::string fileName = std::move(rows[1]);
+		std::string relativePath = std::move(rows[2]);
+		const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(std::move(relativePath));
 
 		if (core::FileUtils::PathExists(absolutePath))
 		{
 			core::Log(ELogType::Trace, "Inserting file from Resources.sad.meta {}", fileName);
+			core::Guid guid = core::Guid::RecreateGuid(rows[0]);
 
-			core::Guid guid = core::Guid::RecreateGuid(values[0]);
-			core::Pointer<IResource> resource = core::CreatePointer<IResource>(fileName, relativePath, guid);
+			// Create generic data for this resource 
+			IResource::ResourceData data = { fileName, relativePath, guid };
+			EResourceType type = CheckResourceType(fileName);
 
-			m_ResourceLookup.emplace(guid, resource);
-			m_CachedResources.emplace(std::move(fileName));
+			// Submit resource to data factory, if the resource was valid it should be cached
+			SendDataToFactory(type, data);
+			if (type != EResourceType::None)
+				m_CachedResourcesFromFile.emplace(std::move(fileName));
 		}
 		else
 		{
@@ -90,14 +98,13 @@ void sad::ResourceManager::ImportResources()
 
 void sad::ResourceManager::FindResourcesInDataDirectory()
 {
-	// Recursively search the data directory
-	std::string dataDirectory = core::FileUtils::GetDataDirectory();
+	const std::string dataDirectory = core::FileUtils::GetDataDirectory();
 	std::filesystem::recursive_directory_iterator it = std::filesystem::recursive_directory_iterator(dataDirectory);
 	std::filesystem::recursive_directory_iterator end;
 
 	for (it; it != end; ++it)
 	{
-		std::filesystem::path absolutePath = it->path();
+		const std::filesystem::path absolutePath = it->path();
 
 		// Skip the main resources file
 		if (absolutePath == c_ResourceFilePath)
@@ -109,14 +116,16 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 			std::string fileName = it->path().filename().string();
 
 			// Cache unrecognized files if they have a VALID TYPE
-			if (!m_CachedResources.contains(fileName))
+			if (!m_CachedResourcesFromFile.contains(fileName))
 			{
 				core::Log(ELogType::Debug, "Resource not found in cache with name {} - creating a resource for it now", fileName);
 
-				std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
-				core::Pointer<IResource> resource = core::CreatePointer<IResource>(fileName, relativePath);
+				const std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
 
-				m_ResourceLookup.emplace(resource->GetResourceId(), resource);
+				// Create standard resource data
+				IResource::ResourceData data = { fileName, relativePath };
+				EResourceType type = CheckResourceType(fileName);
+				SendDataToFactory(type, data);
 			}
 		}
 	}
@@ -129,10 +138,10 @@ void sad::ResourceManager::ExportUncachedResources()
 
 	for (auto& it : m_ResourceLookup)
 	{
-		std::string resourceFileName = it.second->GetResourceName();
+		const std::string resourceFileName = it.second->GetResourceName();
 
 		// Item wasn't cached previously, save it to the resource map
-		if (!m_CachedResources.contains(resourceFileName))
+		if (!m_CachedResourcesFromFile.contains(resourceFileName))
 		{
 			core::Log(ELogType::Debug, "Writing uncached file {} to Resources.sad.meta", resourceFileName);
 			core::FileUtils::AppendFile(c_ResourceFilePath, it.second->Serialize());
@@ -152,4 +161,44 @@ void sad::ResourceManager::ExportAllResources()
 	{
 		core::FileUtils::AppendFile(c_ResourceFilePath, it.second->Serialize());
 	}
+}
+
+void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, const IResource::ResourceData& resourceData)
+{
+	switch (resourceType)
+	{
+	case EResourceType::Model:
+		ResourceFactory::CreateResource<RenderableResource>(resourceData);
+		break;
+	case EResourceType::Texture:
+		ResourceFactory::CreateResource<rad::Texture>(resourceData);
+		break;
+	case EResourceType::Shader:
+		ResourceFactory::CreateResource<rad::Shader>(resourceData);
+		break;
+	case EResourceType::None:
+		core::Log(ELogType::Warn, 
+			"{} is being processed as a resource but it does not have a valid type, it will be ignored.", 
+			resourceData.Name);
+		break;
+	}
+}
+
+sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(const std::string& fileName)
+{
+	const std::filesystem::path filePath = std::filesystem::path(fileName);
+	const std::string ext = filePath.extension().string();
+
+	using String = core::StringUtils;
+
+	if (String::Equals(ext, ".fbx"))
+		return EResourceType::Model;
+	
+	if (String::Equals(ext, ".png") || String::Equals(ext, ".jpg"))
+		return EResourceType::Texture;
+
+	if (String::Equals(ext, ".glsl") || String::Equals(ext, ".shader"))
+		return EResourceType::Shader;
+
+	return EResourceType::None;
 }

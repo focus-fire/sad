@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 
+#include <Core/Memory.h>
+
 #include "Renderer/VertexArray.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/VertexAttribute.h"

@@ -1,8 +1,10 @@
 #include "sadpch.h"
 
+#include "RenderableObject.h"
+
 #include <filesystem>
 
-#include "RenderableObject.h"
+#include <Engine/ResourceManager.h>
 
 sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	: m_RenderableResource(resource)
@@ -22,16 +24,14 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// Create the index buffer for indices
 	m_IndexBuffer = new sad::rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
-	// TODO: Use Shader/Texture resources
-	std::string shaderFile = core::FileUtils::GetPathInsideDataDirectory("Shaders/Default.glsl");
-	std::string textureFile = core::FileUtils::GetPathInsideDataDirectory("Textures/Default.png");
-
 	// All RenderableObjects start with this 'Material' by default
-	m_Shader = new sad::rad::Shader(shaderFile);
+	std::string shaderFile = "Default.glsl";
+	m_Shader = ResourceManager::GetResource<rad::Shader>(shaderFile);
 	m_Shader->Bind();
 	m_Shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
-	m_Texture = new sad::rad::Texture(textureFile);
+	std::string textureFile = "Default.png";
+	m_Texture = ResourceManager::GetResource<rad::Texture>(textureFile);
 	m_Texture->Bind(1);
 	m_Shader->SetUniform1i("u_Texture", 1);
 }
@@ -42,6 +42,4 @@ sad::RenderableObject::~RenderableObject()
 	delete m_VertexBuffer;
 	delete m_VertexAttributes;
 	delete m_IndexBuffer;
-	delete m_Shader;
-	delete m_Texture;
 }

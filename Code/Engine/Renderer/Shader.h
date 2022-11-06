@@ -3,9 +3,11 @@
 #include <string>
 #include <unordered_map>
 
+#include <Engine/IResource.h>
+
 namespace sad::rad
 {
-	class Shader
+	class Shader final : public IResource
 	{
 	private:
 		struct Source
@@ -31,8 +33,7 @@ namespace sad::rad
 		std::unordered_map<std::string, int> m_UniformLocations;
 
 	public:
-		explicit Shader(const std::string& combinedShaderPath);
-		explicit Shader(const std::string& vertexFilePath, const std::string& fragmentFilePath);
+		explicit Shader(const IResource::ResourceData& resourceData, const std::string& combinedShaderPath);
 
 		void Bind() const;
 		void Unbind() const;
@@ -49,13 +50,6 @@ namespace sad::rad
 		 * @return Integer representing the uniform's position
 		*/
 		int GetUniformLocation(const std::string& name);
-
-		/**
-		 * @brief Parses a single shader with either a fragment or a vertex component denoted by a '#shader TYPE' header 
-		 * @param filePath String path to the target shader file
-		 * @return String containing the parsed source for the shader
-		*/
-		std::string ParseSingleShader(const std::string& filePath);
 
 		/**
 		 * @brief Parses a shader file with both fragment and vertex components indicated with appropriate '#shader TYPE' headers 

@@ -80,7 +80,7 @@ void sad::Application::Start()
 	InputManager& input = InputManager::GetInstance();
 
 	// TODO: Remove test resource code
-	ResourceManager::Start();
+	ResourceManager::Import();
 
   // Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");

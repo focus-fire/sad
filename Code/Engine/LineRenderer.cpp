@@ -23,9 +23,7 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	points[10] = color.g;
 	points[11] = color.b;
 
-
-	std::string shaderName = "Line.glsl";
-	m_Shader = ResourceManager::GetResource<rad::Shader>(shaderName);
+	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Line.glsl");
 
 	m_VertexArray = new rad::VertexArray();
 	m_VertexArray->Bind();

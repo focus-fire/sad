@@ -25,9 +25,7 @@ namespace sad
 				: m_Guid(data.Guid)
 				, m_Name(data.Name)
 				, m_FilePath(data.FilePath)
-		{
-			core::Log(ELogType::Trace, "Created resource for {} with GUID {}", m_Name, m_Guid.ToString());
-		}
+		{ }
 
 		virtual ~IResource() { }
 

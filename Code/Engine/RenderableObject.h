@@ -5,8 +5,8 @@
 #include "RenderableResource.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
-#include "Renderer/Texture.h"
-#include "Renderer/Shader.h"
+#include "Renderer/TextureResource.h"
+#include "Renderer/ShaderResource.h"
 
 namespace sad
 {
@@ -25,8 +25,8 @@ namespace sad
 		rad::VertexArray* GetVertexArray() { return m_VertexArray; }
 		rad::VertexBuffer* GetVertexBuffer() { return m_VertexBuffer; }
 		rad::IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
-		rad::Texture* GetTexture() { return m_Texture; }
-		rad::Shader* GetShader() { return m_Shader; }
+		rad::TextureResource* GetTexture() { return m_Texture; }
+		rad::ShaderResource* GetShader() { return m_Shader; }
 
 	private:
 		RenderableResource* m_RenderableResource;
@@ -35,7 +35,7 @@ namespace sad
 		rad::VertexBuffer* m_VertexBuffer;
 		rad::VertexAttributeContainer* m_VertexAttributes;
 		rad::IndexBuffer* m_IndexBuffer;
-		rad::Texture* m_Texture;
-		rad::Shader* m_Shader;
+		rad::TextureResource* m_Texture;
+		rad::ShaderResource* m_Shader;
 	};
 }

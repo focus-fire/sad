@@ -27,6 +27,7 @@ namespace sad
 		{
 			None,
 			Model,
+			Audio,
 			Texture,
 			Shader
 		};
@@ -98,21 +99,42 @@ namespace sad
 		void SendDataToFactory(const EResourceType& resourceType, const IResource::ResourceData& resourceData);
 
 	public:
+		/**
+		 * @brief Type trait ensuring that passed template parameters inherit from IResource
+		 * @tparam T typename that inherits from IResource
+		*/
 		template<typename T>
 		using ResourceType = std::enable_if<std::is_base_of<IResource, T>::value>;
 
+		/**
+		 * @brief Adds a smart pointer for a resource into the ResourceManager
+		 * @tparam T Class type inheriting from IResource
+		 * @param resource Reference to the smart pointer containing the resource being inserted 
+		*/
 		template<class T, typename = ResourceType<T>>
 		static void AddResource(const core::Pointer<T>& resource)
 		{
 			GetInstance().MAddResource<T>(resource);
 		}
 
+		/**
+		 * @brief Retrieve a resource from the ResourceManager by a valid GUID 
+		 * @tparam T Class type inheriting from IResource
+		 * @param guid Refernce to a GUID object containing a valid GUID
+		 * @return Pointer to the reference being retrieved, nullptr if the resource isn't found
+		*/
 		template<class T, typename = ResourceType<T>>
 		static T* GetResource(const core::Guid& guid)
 		{
 			return GetInstance().MGetResource<T>(guid);
 		}
 
+		/**
+		 * @brief Retrieve a resource from the ResourceManager by a valid name
+		 * @tparam T Class type inheriting from IResource
+		 * @param name Reference to a string containing a valid resource name 
+		 * @return Pointer to the reference being retrieved, nullptr if the resource isn't found
+		*/
 		template<class T, typename = ResourceType<T>>
 		static T* GetResource(const std::string& name)
 		{
@@ -124,7 +146,6 @@ namespace sad
 		void MAddResource(const core::Pointer<T>& resource)
 		{
 			SAD_ASSERT(resource, "Attempting to instert a null resource!")
-			core::Log(ELogType::Trace, "Successfully added resource {}", resource->GetResourceName());
 			m_ResourceLookup.emplace(resource->GetResourceId(), resource);
 		}
 
@@ -132,6 +153,8 @@ namespace sad
 		T* MGetResource(const core::Guid& guid)
 		{
 			SAD_ASSERT(!guid.IsNull(), "Attempting to retrieve a resource with a null GUID!");
+			core::Log(ELogType::Trace, "[ResourceManager] Attempting to retrieve resource with GUID {}", guid);
+
 			std::unordered_map<core::Guid, core::Pointer<IResource>>::const_iterator it = m_ResourceLookup.find(guid);
 			return it == m_ResourceLookup.end() ? nullptr : dynamic_cast<T*>(it->second);
 		}
@@ -140,7 +163,7 @@ namespace sad
 		T* MGetResource(const std::string& name)
 		{
 			SAD_ASSERT(!name.empty(), "Attempting to retrieve a resource with an empty string!");
-			core::Log(ELogType::Debug, "Attempting to retrieve resource with name {}", name);
+			core::Log(ELogType::Trace, "[ResourceManager] Attempting to retrieve resource with name {}", name);
 
 			for (auto& it : m_ResourceLookup)
 			{

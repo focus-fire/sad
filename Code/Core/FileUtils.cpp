@@ -27,7 +27,7 @@ std::string core::FileUtils::ReadFile(const std::string& path, bool addLineEndin
 
 		return bufferString;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open file: {}", path);
 
 	return "";
 }
@@ -38,14 +38,14 @@ bool core::FileUtils::WriteFile(const std::string& path, const std::string& cont
 
 	if (fileStream.is_open())
 	{
-		core::Log(ELogType::Trace, "File Opened {}", path);
+		core::Log(ELogType::Trace, "[FileUtils] {} opened for writing", path);
 
 		fileStream << content << std::endl;
 		fileStream.close();
 
 		return true;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open {}", path);
 
 	return false;
 }
@@ -60,7 +60,7 @@ bool core::FileUtils::AppendFile(const std::string& path, const std::string& con
 		outFileStream << content << std::endl;
 		return true;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open {}", path);
 
 	return false;
 }

@@ -6,7 +6,7 @@
 
 #include "ResourceFactory.h"
 #include "RenderableResource.h"
-#include "Renderer/Shader.h"
+#include "Renderer/ShaderResource.h"
 
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
@@ -23,12 +23,15 @@ void sad::ResourceManager::MImport()
 {
 	// Empty the resource cache if a reimport is called 
 	if (!m_CachedResourcesFromFile.empty())
+	{
+		core::Log(ELogType::Info, "[ResourceManager] Reimporting resources from Resources.sad.meta into the ResourceManager");
 		m_CachedResourcesFromFile.clear();
+	}
 
 	// If file doesn't exist, write the header to it
 	if (!core::FileUtils::PathExists(c_ResourceFilePath))
 	{
-		core::Log(ELogType::Debug, "Failed to find Resources.sad.meta, creating a new one");
+		core::Log(ELogType::Info, "[ResourceManager] Couldn't find a Resources.sad.meta file in the Data folder when importing resources, creating a new one");
 		core::FileUtils::WriteFile(c_ResourceFilePath, c_ResourceFileHeader);
 	}
 
@@ -52,7 +55,7 @@ void sad::ResourceManager::ImportResources()
 	const std::string resourceFileContents = core::FileUtils::ReadFile(c_ResourceFilePath, true);
 	SAD_ASSERT(!resourceFileContents.empty(), "Retrieved resource file should at least have a header before being parsed");
 
-	core::Log(ELogType::Trace, "Importing cached resources from Resources.sad.meta");
+	core::Log(ELogType::Trace, "[ResourceManager] Importing cached resources from Resources.sad.meta");
 
 	// Avoid parsing CSV if contents only contain the header 
 	if (core::StringUtils::Equals(resourceFileContents, c_ResourceFileHeader))
@@ -77,21 +80,24 @@ void sad::ResourceManager::ImportResources()
 
 		if (core::FileUtils::PathExists(absolutePath))
 		{
-			core::Log(ELogType::Trace, "Inserting file from Resources.sad.meta {}", fileName);
+			core::Log(ELogType::Trace, "[ResourceManager] Inserting file from Resources.sad.meta {}", fileName);
 			core::Guid guid = core::Guid::RecreateGuid(rows[0]);
 
 			// Create generic data for this resource 
 			IResource::ResourceData data = { fileName, relativePath, guid };
 			EResourceType type = CheckResourceType(fileName);
 
-			// Submit resource to data factory, if the resource was valid it should be cached
-			SendDataToFactory(type, data);
+			// Submit resource to data factory if it has a valid type
+			// Resources retrieved from the Resources.sad.meta file should be cached
 			if (type != EResourceType::None)
+			{
+				SendDataToFactory(type, data);
 				m_CachedResourcesFromFile.emplace(std::move(fileName));
+			}
 		}
 		else
 		{
-			core::Log(ELogType::Trace, "Could not find {} referenced in Resources.sad.meta, ignoring it", fileName);
+			core::Log(ELogType::Warn, "[ResourceManager] Couldn't find {} referenced in Resources.sad.meta, ignoring it", fileName);
 		}
 	}
 }
@@ -118,14 +124,17 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 			// Cache unrecognized files if they have a VALID TYPE
 			if (!m_CachedResourcesFromFile.contains(fileName))
 			{
-				core::Log(ELogType::Debug, "Resource not found in cache with name {} - creating a resource for it now", fileName);
+				core::Log(ELogType::Trace, "[ResourceManager] Resource not found in cache with name {} - creating a resource for it now", fileName);
 
 				const std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
 
 				// Create standard resource data
 				IResource::ResourceData data = { fileName, relativePath };
 				EResourceType type = CheckResourceType(fileName);
-				SendDataToFactory(type, data);
+
+				// Send data to factory if the resource has a valid type
+				if (type != EResourceType::None)
+					SendDataToFactory(type, data);
 			}
 		}
 	}
@@ -133,6 +142,7 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 
 void sad::ResourceManager::ExportUncachedResources()
 {
+	SAD_ASSERT(!m_ResourceLookup.empty(), "Attempting to export resources when none exist");
 	if (m_ResourceLookup.empty())
 		return;
 
@@ -143,7 +153,7 @@ void sad::ResourceManager::ExportUncachedResources()
 		// Item wasn't cached previously, save it to the resource map
 		if (!m_CachedResourcesFromFile.contains(resourceFileName))
 		{
-			core::Log(ELogType::Debug, "Writing uncached file {} to Resources.sad.meta", resourceFileName);
+			core::Log(ELogType::Trace, "[ResourceManager] Writing uncached file {} to Resources.sad.meta", resourceFileName);
 			core::FileUtils::AppendFile(c_ResourceFilePath, it.second->Serialize());
 		}
 	}
@@ -151,11 +161,12 @@ void sad::ResourceManager::ExportUncachedResources()
 
 void sad::ResourceManager::ExportAllResources()
 {
+	SAD_ASSERT(!m_ResourceLookup.empty(), "Attempting to export resources when none exist");
 	if (m_ResourceLookup.empty())
 		return;
 
 	core::FileUtils::RemoveFile(c_ResourceFilePath);
-	core::Log(ELogType::Trace, "Performing a full export of all resources to Resources.sad.meta");
+	core::Log(ELogType::Trace, "[ResourceManager] Performing a full export of all resources to Resources.sad.meta");
 
 	for (auto& it : m_ResourceLookup)
 	{
@@ -165,27 +176,29 @@ void sad::ResourceManager::ExportAllResources()
 
 void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, const IResource::ResourceData& resourceData)
 {
+	SAD_ASSERT(resourceType != EResourceType::None, "Resources with unidentified types should not be submitted to the factory for insertion");
+
 	switch (resourceType)
 	{
 	case EResourceType::Model:
 		ResourceFactory::CreateResource<RenderableResource>(resourceData);
 		break;
+	case EResourceType::Audio:
+		ResourceFactory::CreateResource<AudioResource>(resourceData);
+		break;
 	case EResourceType::Texture:
-		ResourceFactory::CreateResource<rad::Texture>(resourceData);
+		ResourceFactory::CreateResource<rad::TextureResource>(resourceData);
 		break;
 	case EResourceType::Shader:
-		ResourceFactory::CreateResource<rad::Shader>(resourceData);
-		break;
-	case EResourceType::None:
-		core::Log(ELogType::Warn, 
-			"{} is being processed as a resource but it does not have a valid type, it will be ignored.", 
-			resourceData.Name);
+		ResourceFactory::CreateResource<rad::ShaderResource>(resourceData);
 		break;
 	}
 }
 
 sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(const std::string& fileName)
 {
+	SAD_ASSERT(!fileName.empty(), "Empty string is being evaluated as a type of resource");
+
 	const std::filesystem::path filePath = std::filesystem::path(fileName);
 	const std::string ext = filePath.extension().string();
 
@@ -199,6 +212,11 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 
 	if (String::Equals(ext, ".glsl") || String::Equals(ext, ".shader"))
 		return EResourceType::Shader;
+
+	if (String::Equals(ext, ".mp3") || String::Equals(ext, ".wav"))
+		return EResourceType::Audio;
+
+	core::Log(ELogType::Warn, "[ResourceManager] {} is being processed as a resource but {} is not a valid type yet, it will be ignored.", fileName, ext);
 
 	return EResourceType::None;
 }

@@ -122,10 +122,10 @@ void core::AddLoggingSink(spdlog::sink_ptr sink)
 	sink->set_pattern(c_DebugLogPattern);
 
 	s_DebugLogger->sinks().push_back(sink);
-	core::Log(ELogType::Trace, "Successfully added debug logging sink");
+	core::Log(ELogType::Trace, "[Log] Successfully added debug logging sink");
 
 	s_AssertLogger->sinks().push_back(sink);
-	core::Log(ELogType::Trace, "Successfully added assert logging sink");
+	core::Log(ELogType::Trace, "[Log] Successfully added assert logging sink");
 }
 
 void core::RemoveLoggingSink(spdlog::sink_ptr sink)
@@ -139,13 +139,13 @@ void core::RemoveLoggingSink(spdlog::sink_ptr sink)
 	if (debugIt != debugSinks.end())
 	{
 		debugSinks.erase(debugIt);
-		core::Log(ELogType::Trace, "Successfully removed debug logging sink");
+		core::Log(ELogType::Trace, "[Log] Successfully removed debug logging sink");
 	}
 
 	if (assertIt != assertSinks.end())
 	{
 		assertSinks.erase(assertIt);
-		core::Log(ELogType::Trace, "Successfully removed assert logging sink");
+		core::Log(ELogType::Trace, "[Log] Successfully removed assert logging sink");
 	}
 }
 

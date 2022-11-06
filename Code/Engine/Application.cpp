@@ -92,7 +92,9 @@ void sad::Application::Start()
 			m_Editor->CatchSDLEvents(event);
 			input.CatchMouseEvents(event);
 			input.CatchKeyboardEvents(event);
-			input.CatchControllerEvents(event);
+
+			if (input.IsControllerConnected())
+				input.CatchControllerEvents(event);
 
 			if (event.type == SDL_QUIT) 
 				isClosed = true;

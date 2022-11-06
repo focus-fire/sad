@@ -49,6 +49,7 @@ void sad::InputManager::CatchMouseEvents(SDL_Event& event)
 {
     if (event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEBUTTONDOWN)
     {
+        m_ControllerBeingUsed = false;
         m_MouseState[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
         m_MouseUpdateFrames[event.button.button] = SDL_GetTicks64();
     }
@@ -104,6 +105,12 @@ void sad::InputManager::OnControllerDisconnected()
 
 void sad::InputManager::CatchControllerEvents(SDL_Event& event)
 {
+    if (GetLeftAxis("Horizontal") > ControllerDeadZone || GetLeftAxis("Vertical") > ControllerDeadZone
+        || GetRightAxis("Horizontal") > ControllerDeadZone || GetRightAxis("Vertical") > ControllerDeadZone)
+    {
+        m_ControllerBeingUsed = true;
+    }
+
     if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP)
     {
         m_ControllerBeingUsed = true;

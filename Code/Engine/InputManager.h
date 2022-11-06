@@ -155,6 +155,15 @@ namespace sad
         }
 
         /**
+         * @brief Returns true if a controller is plugged in
+         * @return 
+        */
+        bool IsControllerConnected()
+        {
+            return m_Controller != nullptr;
+        }
+
+        /**
          * @brief Handles new controller device
          * @param event
         */

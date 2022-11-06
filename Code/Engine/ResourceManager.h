@@ -64,9 +64,10 @@ namespace sad
 
 		/**
 		 * @brief Imports resources from the Resources.sad.meta file and stores them into m_CachedResources
+		 * @return True if initial import was 'clean' and no orphaned resources were detected, false if an orphaned resource was detected
 		 * @note Paths for all resources are checked on the local filesystem, if a resource that is previously cached is not found - it will be ignored.  
 		*/
-		void ImportResources();
+		bool ImportResources();
 
 		/**
 		 * @brief Recurses through all files in the './Data' directory of the project in search of un-cached resources.

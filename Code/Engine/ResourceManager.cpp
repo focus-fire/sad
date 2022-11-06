@@ -37,19 +37,31 @@ void sad::ResourceManager::MImport()
 
 	// Import resources to the ResourceManager's resource cache
 	// Resources that exist in the file but don't exist in the filesystem will be ignored
-	ImportResources();
+	// These resources will be marked as 'orphans' and will require a full export in order to remove them
+	bool isCleanImport = ImportResources();
 	
 	// Recurse through the './Data' directory to search for new resources
 	// Resources that were cached during the import step are skipped
 	FindResourcesInDataDirectory();
 
-	// Export resources back to Resources.sad.meta once import is complete
-	// Only resources that have been cached during steps 1 or 2 will be exported
-	ExportUncachedResources();
+	// Export resources, method is determined on the basis of a clean or unclean initial import
+	if (isCleanImport)
+	{
+		// Only resources that have been cached during steps 1 or 2 will be exported
+		ExportUncachedResources();
+	}
+	else
+	{
+		// An orphaned file was detected during the import, therefore perform a full export
+		// This overwrites the previous Resources.sad.meta file with new data
+		ExportAllResources();
+	}
 }
 
-void sad::ResourceManager::ImportResources()
+bool sad::ResourceManager::ImportResources()
 {
+	bool isCleanImport = true;
+
 	// Retrieve file contents and parse entries to generate map
 	// Preserve line breaks to properly delimit string as csv
 	const std::string resourceFileContents = core::FileUtils::ReadFile(c_ResourceFilePath, true);
@@ -59,7 +71,7 @@ void sad::ResourceManager::ImportResources()
 
 	// Avoid parsing CSV if contents only contain the header 
 	if (core::StringUtils::Equals(resourceFileContents, c_ResourceFileHeader))
-		return;
+		return true;
 
 	// Split the CSV by line
 	std::vector<std::string> lines = core::StringUtils::Split('\n', resourceFileContents);
@@ -80,7 +92,6 @@ void sad::ResourceManager::ImportResources()
 
 		if (core::FileUtils::PathExists(absolutePath))
 		{
-			core::Log(ELogType::Trace, "[ResourceManager] Inserting file from Resources.sad.meta {}", fileName);
 			core::Guid guid = core::Guid::RecreateGuid(rows[0]);
 
 			// Create generic data for this resource 
@@ -97,9 +108,13 @@ void sad::ResourceManager::ImportResources()
 		}
 		else
 		{
-			core::Log(ELogType::Warn, "[ResourceManager] Couldn't find {} referenced in Resources.sad.meta, ignoring it", fileName);
+			// File previously referenced in file wasn't detected, this is considered an 'unclean' import 
+			core::Log(ELogType::Warn, "[ResourceManager] Detected orphaned resource - {} was referenced in Resources.sad.meta but doesn't exist on the filesystem", fileName);
+			isCleanImport = false;
 		}
 	}
+
+	return isCleanImport;
 }
 
 void sad::ResourceManager::FindResourcesInDataDirectory()
@@ -166,7 +181,7 @@ void sad::ResourceManager::ExportAllResources()
 		return;
 
 	core::FileUtils::RemoveFile(c_ResourceFilePath);
-	core::Log(ELogType::Trace, "[ResourceManager] Performing a full export of all resources to Resources.sad.meta");
+	core::Log(ELogType::Info, "[ResourceManager] Performing a full export of all resources to Resources.sad.meta");
 
 	for (auto& it : m_ResourceLookup)
 	{

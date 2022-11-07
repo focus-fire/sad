@@ -5,12 +5,6 @@
 #include "RenderableResourceComponent.h"
 #include "TransformComponent.h"
 
-/*
-#define COMPONENT_TYPES \
-sad::ecs::LineRendererComponent,\
-sad::ecs::RenderableObjectComponent, \
-*/
-
 #define COMPONENT_TYPES \
 sad::ecs::TransformComponent, \
 sad::ecs::RenderableResourceComponent, \

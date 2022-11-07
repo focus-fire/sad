@@ -34,8 +34,7 @@
 sad::Window* sad::Application::s_MainWindow;
 
 sad::Application::Application()
-{ 
-	sad::JsonManager::ImportLevel();
+{
 	s_MainWindow = new sad::Window;
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
@@ -59,6 +58,7 @@ void sad::Application::EngineStart()
 
 	// Import Resources
 	ResourceManager::Import();
+	sad::JsonManager::ImportLevel();
 
 	// Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");

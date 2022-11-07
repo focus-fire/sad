@@ -26,22 +26,22 @@ namespace sad::ecs
 
 	
 	//TODO:Temporary Filler for serialization, fill in when 3d modelling is done
-	inline void to_json(nlohmann::json& j, const sad::ecs::RenderableResourceComponent& p)
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::RenderableResourceComponent& renderableResource)
 	{
-		j =
+		JSON =
 		{
-			{ "GUID", p.m_RenderableResource->GetResourceId().ToString() },
-			{ "Name", p.m_RenderableResource->GetResourceName() },
+			{ "GUID", renderableResource.m_RenderableResource->GetResourceId().ToString() },
+			{ "Name", renderableResource.m_RenderableResource->GetResourceName() },
 		};
 	}
 
-	inline void from_json(const nlohmann::json& j, sad::ecs::RenderableResourceComponent& p)
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::RenderableResourceComponent& renderableResource)
 	{
 		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
 
 		// TODO: Remove IReource requirement... 
 		IResource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test"};
-		p.m_RenderableResource = core::CreatePointer<RenderableResource>(cubeData, std::move(CubeGeometry));
-		p.m_IsResourceDirty = true;
+		renderableResource.m_RenderableResource = core::CreatePointer<RenderableResource>(cubeData, std::move(CubeGeometry));
+		renderableResource.m_IsResourceDirty = true;
 	}
 }

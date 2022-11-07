@@ -1,24 +1,16 @@
-#include "sadpch.h"
+#include <sadpch.h>
+
+#include "NJSONInputArchive.h"
+#include "NJSONOutputArchive.h"
+#include "Engine/ECS/Registry.h"
+#include "Engine/ECS/Components/ComponentTypes.h"
+
+#include <iomanip>
+#include <nlohmann/json.hpp>
 
 #include "JsonManager.h"
 
 using json = nlohmann::json;
-//Constructor
-sad::JsonManager::JsonManager(){}
-
-/**
- * @brief 
- * return the entire json data
- * @sample
- * std::string jsonPath = core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/TestFolder/sample.json");
- * @param path 
- * @return 
-*/
-json sad::JsonManager::GetJson(std::string path)
-{
-	std::string fileContent = core::FileUtils::ReadFile(path);
-	return json::parse(fileContent);
-}
 
 /**
  * @brief 
@@ -28,16 +20,15 @@ json sad::JsonManager::GetJson(std::string path)
 */
 bool sad::JsonManager::ImportLevel(int saveFile)
 {
-	//if the savefile location is out of range
-	if (0 > saveFile && saveFile < 100)
-		return false;
-
 	std::stringstream ss;
 	ss << std::setw(2) << std::setfill('0') << saveFile;
 	std::string level_path = core::FileUtils::GetPathInsideDataDirectory("/Save/SaveFile" + ss.str() + ".json");
 
 	if (!core::FileUtils::PathExists(level_path))
+	{
+		core::Log(ELogType::Error, "Save file doesn't exist");
 		return false;
+	}
 
 	std::string json_output = core::FileUtils::ReadFile(level_path);
 
@@ -53,11 +44,19 @@ bool sad::JsonManager::ImportLevel(int saveFile)
  * Saves entities of the level into a json save file
  * saveFile default value is 1
 */
-void sad::JsonManager::ExportLevel(int saveFile)
+bool sad::JsonManager::ExportLevel(int saveFile)
 {
 	//prevent default save file from changing
 	if (saveFile == 0)
-		return;
+	{
+		core::Log(ELogType::Error, "SaveFile00.json is the default save file, don't change this");
+		return false;
+	}
+	else if (0 > saveFile && saveFile < 100)
+	{
+		core::Log(ELogType::Error, "The inputed save file id is out of range");
+		return false;
+	}
 
 	std::stringstream ss;
 	ss << std::setw(2) << std::setfill('0') << saveFile;
@@ -71,4 +70,6 @@ void sad::JsonManager::ExportLevel(int saveFile)
 	std::string json_output = json_archive.AsString();
 	core::Log(ELogType::Info, "Export ran");
 	core::FileUtils::WriteFile(level_path, json_output);
+
+	return true;
 }

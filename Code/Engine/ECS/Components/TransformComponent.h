@@ -16,13 +16,13 @@ namespace sad::ecs
 		core::Pointer<Transform> m_Transform;
 	};
 
-	inline void to_json(nlohmann::json& j, const sad::ecs::TransformComponent& p)
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::TransformComponent& transformComponent)
 	{
-		glm::vec3 pos = p.m_Transform->GetPosition();
-		glm::quat rot = p.m_Transform->GetRotation();
-		glm::vec3 scl = p.m_Transform->GetScale();
+		glm::vec3 pos = transformComponent.m_Transform->GetPosition();
+		glm::quat rot = transformComponent.m_Transform->GetRotation();
+		glm::vec3 scl = transformComponent.m_Transform->GetScale();
 
-		j =
+		JSON =
 		{
 			{
 				"position",
@@ -52,20 +52,20 @@ namespace sad::ecs
 		};
 	}
 
-	inline void from_json(const nlohmann::json& j, sad::ecs::TransformComponent& p)
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::TransformComponent& transformComponent)
 	{
 		glm::vec3 pos = glm::vec3();
 		glm::quat rot = glm::quat();
 		glm::vec3 scl = glm::vec3();
 
 		
-		pos = glm::vec3(j["position"]["x"], j["position"]["y"], j["position"]["z"]);
-		rot = glm::quat(j["rotation"]["w"], j["rotation"]["x"], j["rotation"]["y"], j["rotation"]["z"]);
-		scl = glm::vec3(j["scale"]["x"], j["scale"]["y"], j["scale"]["z"]);
+		pos = glm::vec3(JSON["position"]["x"], JSON["position"]["y"], JSON["position"]["z"]);
+		rot = glm::quat(JSON["rotation"]["w"], JSON["rotation"]["x"], JSON["rotation"]["y"], JSON["rotation"]["z"]);
+		scl = glm::vec3(JSON["scale"]["x"], JSON["scale"]["y"], JSON["scale"]["z"]);
 
-		p.m_Transform = core::CreatePointer<Transform>();
-		p.m_Transform->SetPosition(pos);
-		p.m_Transform->SetRotation(rot);
-		p.m_Transform->SetScale(scl);
+		transformComponent.m_Transform = core::CreatePointer<Transform>();
+		transformComponent.m_Transform->SetPosition(pos);
+		transformComponent.m_Transform->SetRotation(rot);
+		transformComponent.m_Transform->SetScale(scl);
 	}
 }

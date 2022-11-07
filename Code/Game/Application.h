@@ -18,11 +18,6 @@ namespace pog
 	
 	private:
 		// Temporary Variables for Test Level
-		//sad::RenderableResource* m_CubeResource;
-		//sad::RenderableResource::Geometry m_CubeGeometry;
-		//sad::ecs::Entity m_FirstCubeEntity;
-		//sad::ecs::Entity m_SecondCubeEntity;
-		//float m_CubeTranslate;
-		//std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
+		// Go to Docs folder and use ApplicationFileDefault.md to put back the test case
 	};
 }

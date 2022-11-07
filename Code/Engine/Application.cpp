@@ -79,7 +79,7 @@ void sad::Application::Start()
 
   // Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
-  
+
 	while (!isClosed) 
 	{	
 		while (SDL_PollEvent(&event)) 

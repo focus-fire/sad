@@ -1,114 +1,82 @@
 #include "sadpch.h"
 
 #include "FileUtils.h"
+
 #include <stdlib.h>
 
-/**
- * @brief 
- * Returns the file contents as a string
- * @param path 
- * @return 
-*/
 std::string core::FileUtils::ReadFile(const std::string& path)
 {
 	std::string line;
-	std::ifstream myfile(path);
-	if (myfile.is_open())
+	std::ifstream fileStream = std::ifstream(path);
+
+	if (fileStream.is_open())
 	{
 		std::stringstream buffer;
-		while (getline(myfile, line))
+		while (getline(fileStream, line))
 		{
 			buffer << line;
 		}
-		myfile.close();
+		fileStream.close();
 		return buffer.str();
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+
 	return "";
 }
 
-/**
- * @brief 
- * Creates a new file with given contents
- * @param path 
- * @param content 
-*/
-bool core::FileUtils::CreateNewFile(const std::string& path, const std::string& content)
+bool core::FileUtils::WriteFile(const std::string& path, const std::string& content)
 {
-	std::ofstream myfile(path);
-	if (myfile.is_open())
+	std::ofstream fileStream = std::ofstream(path);
+
+	if (fileStream.is_open())
 	{
 		core::Log(ELogType::Trace, "File Opened {}", path);
-		myfile << content << std::endl;
-		myfile.close();
+		fileStream << content << std::endl;
+		fileStream.close();
 		return true;
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+
 	return false;
 }
 
-/**
- * @brief 
- * Rewrites the entire file of its contents
- * @param path 
- * @param content 
-*/
-bool core::FileUtils::OverWriteExistingFile(const std::string& path, const std::string& content)
+bool core::FileUtils::AppendFile(const std::string& path, const std::string& content)
 {
-	std::fstream myfile;
-	myfile.open(path, std::ios_base::out | std::ios_base::in); // will not create a file 
-	if (myfile.is_open())
+	std::ofstream outFileStream;
+	outFileStream.open(path, std::ios_base::app); // append instead of overwrite
+
+	if (outFileStream.is_open())
 	{
-		core::Log(ELogType::Trace, "File Opened {}", path);
-		myfile << content << std::endl;
-		myfile.close();
+		outFileStream << content << std::endl;
 		return true;
 	}
 	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+
 	return false;
 }
 
-/**
- * @brief 
- * Append content to existing file
- * @param path 
- * @param content 
-*/
-bool core::FileUtils::AppendToExistingFile(const std::string& path, const std::string& content)
+bool core::FileUtils::RemoveFile(const std::string& path)
 {
-	std::ofstream outfile;
-	outfile.open(path, std::ios_base::app); // append instead of overwrite
-	if (outfile.is_open())
-	{
-		outfile << content << std::endl;
-		return true;
-	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
-	return false;
+	return std::remove(path.c_str()) == 0;
 }
 
-/**
- * @brief 
- * Gets sad directory path
- * @return 
-*/
 std::string core::FileUtils::GetProjectDirectory()
 {
 	std::string projectDirectory = std::filesystem::current_path().string();
 
 #ifdef _SAD_WINDOWS
-	std::size_t codeDirectory = projectDirectory.find_last_of("/\\");
-	projectDirectory = projectDirectory.substr(0, codeDirectory);
+	// While running the project on Windows, the current_path() becomes rooted from the 'Code' folder
+	// However on other platforms and while running tests, 'sad' remains the return value for current_path
+	if (projectDirectory.find("Code") != std::string::npos)
+	{
+		std::size_t codeDirectory = projectDirectory.find_last_of("/\\");
+		projectDirectory = projectDirectory.substr(0, codeDirectory);
+	}
 #endif
 
 	return projectDirectory;
 }
 
-/**
- * @brief 
- * Gets data directory path
- * @return 
-*/
 std::string core::FileUtils::GetDataDirectory()
 {
 	std::string dataDirectory = GetProjectDirectory();
@@ -116,7 +84,6 @@ std::string core::FileUtils::GetDataDirectory()
 
 	return dataDirectory;
 }
-
 
 std::string core::FileUtils::GetCodeDirectory()
 {
@@ -126,16 +93,10 @@ std::string core::FileUtils::GetCodeDirectory()
 	return codeDirectory;
 }
 
-/**
- * @brief 
- * return the correct path based on operating system
- * @param path 
- * Only pass '/' for pathing slashes
- * @return 
-*/
 std::string core::FileUtils::ConvertOSPathString(const std::string& path)
 {
 	std::string convertedPath = path;
+
 #ifdef _SAD_WINDOWS
 	replace(convertedPath.begin(), convertedPath.end(), '/', '\\');
 #endif

@@ -2,45 +2,48 @@
 
 #include "ConfigManager.h"
 
-std::list<sad::ConfigSection> sad::ConfigManager::sections;
+std::list<sad::ConfigSection> sad::ConfigManager::m_ConfigSections;
 bool sad::ConfigManager::m_IsFileRead = false;
 
-sad::ConfigSection* sad::ConfigManager::MGetSection(const std::string& sectionname)
+sad::ConfigSection* sad::ConfigManager::MGetSection(const std::string& sectionName)
 {
-    std::list<ConfigSection>::iterator found = std::find_if(sections.begin(), sections.end(),
-        [sectionname](const ConfigSection& sect) { 
-            return sect.name.compare(sectionname) == 0; 
+    std::list<ConfigSection>::iterator found = std::find_if(m_ConfigSections.begin(), m_ConfigSections.end(),
+        [sectionName](const ConfigSection& sect) { 
+            return core::StringUtils::Equals(sect.name, sectionName); 
         });
-    return found != sections.end() ? &*found : NULL;
+
+    return found != m_ConfigSections.end() ? &*found : NULL;
 }
 
 std::list<sad::ConfigSection>& sad::ConfigManager::MGetSections()
 {
-    return sections;
+    return m_ConfigSections;
 }
 
-std::string sad::ConfigManager::MGetValue(const std::string& sectionname, const std::string&keyname)
+std::string sad::ConfigManager::MGetValue(const std::string& sectionName, const std::string& keyName)
 {
-    ConfigSection* sect = MGetSection(sectionname);
+    ConfigSection* sect = MGetSection(sectionName);
+
     if (sect != NULL) 
     {
-        std::unordered_map<std::string, std::string>::const_iterator it = sect->keyvalues.find(keyname);
-        if (it != sect->keyvalues.end())
+        std::unordered_map<std::string, std::string>::const_iterator it = sect->keyValues.find(keyName);
+        if (it != sect->keyValues.end())
             return it->second;
     }
+
     return "";
 }
 
-void sad::ConfigManager::Parse(const std::string& filename)
+void sad::ConfigManager::Parse(const std::string& fileName)
 {
-    ConfigSection currentsection;
-    std::ifstream fstrm;
-    fstrm.open(filename);
+    ConfigSection currentSection;
+    std::ifstream fileStream;
+    fileStream.open(fileName);
 
-    if (!fstrm)
-        throw std::invalid_argument(filename + " could not be opened");
+    if (!fileStream)
+        throw std::invalid_argument(fileName + " could not be opened");
 
-    for (std::string line; std::getline(fstrm, line);)
+    for (std::string line; std::getline(fileStream, line);)
     {
         // if a comment
         if (!line.empty() && (line[0] == ';' || line[0] == '#')) 
@@ -54,13 +57,13 @@ void sad::ConfigManager::Parse(const std::string& filename)
             if (end != std::string::npos)
             {
                 // this is a new section so if we have a current section populated, add it to list
-                if (!currentsection.name.empty()) 
+                if (!currentSection.name.empty()) 
                 {
-                    sections.push_back(currentsection);  // copy
-                    currentsection.name.clear();  // clear section for re-use
-                    currentsection.keyvalues.clear();
+                    m_ConfigSections.push_back(currentSection);  // copy
+                    currentSection.name.clear();  // clear section for re-use
+                    currentSection.keyValues.clear();
                 }
-                currentsection.name = line.substr(1, end - 1);
+                currentSection.name = line.substr(1, end - 1);
             }
             else 
             {
@@ -75,25 +78,25 @@ void sad::ConfigManager::Parse(const std::string& filename)
             {
                 std::string name = line.substr(0, end);
                 std::string value = line.substr(end + 1);
-                core::StringUtils::LeftTrim(core::StringUtils::RightTrim(name));
-                core::StringUtils::LeftTrim(core::StringUtils::RightTrim(value));
 
-                currentsection.keyvalues[name] = value;
+                std::string sanitizedName = core::StringUtils::Trim(name);
+                std::string sanitizedValue = core::StringUtils::Trim(value);
+                currentSection.keyValues[sanitizedName] = sanitizedValue;
             }
             else 
             {
                 // no key value delimitter
             }
         }
-    } // for
+    } 
 
     // if we are out of loop we add last section
     // this is a new section so if we have a current section populated, add it to list
-    if (!currentsection.name.empty()) 
+    if (!currentSection.name.empty()) 
     {
-        sections.push_back(currentsection);  // copy
-        currentsection.name = "";
-        currentsection.keyvalues.clear();
+        m_ConfigSections.push_back(currentSection);  // copy
+        currentSection.name = "";
+        currentSection.keyValues.clear();
     }
 }
 
@@ -103,9 +106,11 @@ sad::ConfigManager& sad::ConfigManager::GetInstance()
     {
         std::string configPath = core::FileUtils::GetCodeDirectory();
         configPath += core::FileUtils::ConvertOSPathString("/config.ini");
+
         Parse(configPath);
         m_IsFileRead = true;
     }
+
     static ConfigManager instance;
     return instance;
 }

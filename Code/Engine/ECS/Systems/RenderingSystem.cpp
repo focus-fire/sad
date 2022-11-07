@@ -23,7 +23,7 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 	auto view = world.view<const RenderableObjectComponent, const TransformComponent>();
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
-		Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
+		core::Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
 		sad::rad::VertexArray* vertexArray = renderable->GetVertexArray();
 		sad::rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		sad::rad::Shader* shader = renderable->GetShader();
@@ -42,7 +42,7 @@ void sad::ecs::RenderingSystem::RenderLines(EntityWorld& world)
 	auto view = world.view<const LineRendererComponent>();
 	for (auto [entity, lineRendererComponent] : view.each())
 	{
-		Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
+		core::Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
 
 		rad::Shader* shader = lineRenderer->GetShader();
 

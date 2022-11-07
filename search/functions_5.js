@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hashcombine_198',['HashCombine',['../namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317',1,'core']]]
+  ['isnull_160',['IsNull',['../classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46',1,'core::Guid']]]
 ];

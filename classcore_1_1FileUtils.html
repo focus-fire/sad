@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacecore.html">core</a></li><li class="navelem"><a class="el" href="classcore_1_1FileUtils.html">FileUtils</a></li>  </ul>
+<li class="navelem"><b>core</b></li><li class="navelem"><a class="el" href="classcore_1_1FileUtils.html">FileUtils</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -81,9 +81,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae1e127e1d57162005170a2cec7973e83"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#ae1e127e1d57162005170a2cec7973e83">ReadFile</a> (const std::string &amp;path, bool addLineBreaks=false)</td></tr>
-<tr class="memdesc:ae1e127e1d57162005170a2cec7973e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the contents of a file into a string.  <a href="classcore_1_1FileUtils.html#ae1e127e1d57162005170a2cec7973e83">More...</a><br /></td></tr>
-<tr class="separator:ae1e127e1d57162005170a2cec7973e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6685a3b507d3201cae57cc060da242c"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#ad6685a3b507d3201cae57cc060da242c">ReadFile</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:ad6685a3b507d3201cae57cc060da242c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the contents of a file into a string.  <a href="classcore_1_1FileUtils.html#ad6685a3b507d3201cae57cc060da242c">More...</a><br /></td></tr>
+<tr class="separator:ad6685a3b507d3201cae57cc060da242c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2906305c3e15c05100fd37f4c6f98d9"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#ad2906305c3e15c05100fd37f4c6f98d9">WriteFile</a> (const std::string &amp;path, const std::string &amp;content)</td></tr>
 <tr class="memdesc:ad2906305c3e15c05100fd37f4c6f98d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes to a file provided a particular path and string contents.  <a href="classcore_1_1FileUtils.html#ad2906305c3e15c05100fd37f4c6f98d9">More...</a><br /></td></tr>
 <tr class="separator:ad2906305c3e15c05100fd37f4c6f98d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -93,9 +93,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a125f862e48b39084362bf4c5a847761d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#a125f862e48b39084362bf4c5a847761d">RemoveFile</a> (const std::string &amp;path)</td></tr>
 <tr class="memdesc:a125f862e48b39084362bf4c5a847761d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a file at the provided path.  <a href="classcore_1_1FileUtils.html#a125f862e48b39084362bf4c5a847761d">More...</a><br /></td></tr>
 <tr class="separator:a125f862e48b39084362bf4c5a847761d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33df5e56c7b53972607a05a7f22e79c4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#a33df5e56c7b53972607a05a7f22e79c4">PathExists</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:a33df5e56c7b53972607a05a7f22e79c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates if a pass exists on the filesystem.  <a href="classcore_1_1FileUtils.html#a33df5e56c7b53972607a05a7f22e79c4">More...</a><br /></td></tr>
-<tr class="separator:a33df5e56c7b53972607a05a7f22e79c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a771db6f641edf93eca5c35bb8b121b4b"><td class="memItemLeft" align="right" valign="top"><a id="a771db6f641edf93eca5c35bb8b121b4b"></a>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#a771db6f641edf93eca5c35bb8b121b4b">GetProjectDirectory</a> ()</td></tr>
 <tr class="memdesc:a771db6f641edf93eca5c35bb8b121b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a platform-specific absolute path for the root folder of the project ('sad') <br /></td></tr>
@@ -111,12 +108,6 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <tr class="memitem:a19e9251424c0869b3848c24f3ddc3038"><td class="memItemLeft" align="right" valign="top"><a id="a19e9251424c0869b3848c24f3ddc3038"></a>
 static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ConvertOSPathString</b> (const std::string &amp;path)</td></tr>
 <tr class="separator:a19e9251424c0869b3848c24f3ddc3038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad41e13f5d8a19329cd94dc7e59c93e2e"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">GetPathInsideDataDirectory</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:ad41e13f5d8a19329cd94dc7e59c93e2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a platform-specific absolute path inside the data directory of the engine ('sad/Data/PATH')  <a href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">More...</a><br /></td></tr>
-<tr class="separator:ad41e13f5d8a19329cd94dc7e59c93e2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4cfe7c76aef70e0c12ebd9206c31b1"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1FileUtils.html#acd4cfe7c76aef70e0c12ebd9206c31b1">GetPathInsideCodeDirectory</a> (const std::string &amp;path)</td></tr>
-<tr class="memdesc:acd4cfe7c76aef70e0c12ebd9206c31b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a platform-specific absolute path inside the code directory of the engine ('sad/Code/PATH')  <a href="classcore_1_1FileUtils.html#acd4cfe7c76aef70e0c12ebd9206c31b1">More...</a><br /></td></tr>
-<tr class="separator:acd4cfe7c76aef70e0c12ebd9206c31b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Utilities and helpers for dealing with files and file streams. </p>
@@ -167,111 +158,8 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>Convert
 
 </div>
 </div>
-<a id="acd4cfe7c76aef70e0c12ebd9206c31b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd4cfe7c76aef70e0c12ebd9206c31b1">&#9670;&nbsp;</a></span>GetPathInsideCodeDirectory()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string core::FileUtils::GetPathInsideCodeDirectory </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieves a platform-specific absolute path inside the code directory of the engine ('sad/Code/PATH') </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path for the file and/or directory path being retrieved </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ad41e13f5d8a19329cd94dc7e59c93e2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad41e13f5d8a19329cd94dc7e59c93e2e">&#9670;&nbsp;</a></span>GetPathInsideDataDirectory()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string core::FileUtils::GetPathInsideDataDirectory </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Retrieves a platform-specific absolute path inside the data directory of the engine ('sad/Data/PATH') </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path for the file and/or directory path being retrieved </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a33df5e56c7b53972607a05a7f22e79c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33df5e56c7b53972607a05a7f22e79c4">&#9670;&nbsp;</a></span>PathExists()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool core::FileUtils::PathExists </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Evaluates if a pass exists on the filesystem. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>Path to evaluate the existence of </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the path exists, false if it does not </dd></dl>
-
-</div>
-</div>
-<a id="ae1e127e1d57162005170a2cec7973e83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1e127e1d57162005170a2cec7973e83">&#9670;&nbsp;</a></span>ReadFile()</h2>
+<a id="ad6685a3b507d3201cae57cc060da242c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6685a3b507d3201cae57cc060da242c">&#9670;&nbsp;</a></span>ReadFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,18 +171,8 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>Convert
           <td class="memname">std::string core::FileUtils::ReadFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>path</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>addLineBreaks</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -308,7 +186,6 @@ static std::string&#160;</td><td class="memItemRight" valign="bottom"><b>Convert
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path for the file to be read </td></tr>
-    <tr><td class="paramname">addLineBreaks</td><td>Indicates whether a line break should be appended to the end of each line </td></tr>
   </table>
   </dd>
 </dl>

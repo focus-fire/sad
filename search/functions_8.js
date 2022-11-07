@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['nocompletion_203',['NoCompletion',['../classcap_1_1DebugTerminalHelper.html#a74fdd11cb1710840f43adc3b5fe800ca',1,'cap::DebugTerminalHelper']]]
+  ['oncontrollerconnected_163',['OnControllerConnected',['../classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_164',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7',1,'sad::InputManager']]]
 ];

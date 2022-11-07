@@ -27,7 +27,7 @@ void sad::rad::Renderer::Start()
 	m_FrameBuffer->Bind();
 
 	// Create empty texture and bind it to the framebuffer
-	m_FrameBufferTexture = new sad::rad::Texture(mainWindow->GetWidth(), mainWindow->GetHeight());
+	m_FrameBufferTexture = new sad::rad::TextureResource(mainWindow->GetWidth(), mainWindow->GetHeight());
 	m_FrameBufferTexture->Bind(0);		// FrameBuffer texture slot should always be 0
 	m_FrameBufferTexture->AttachToFramebuffer();
 

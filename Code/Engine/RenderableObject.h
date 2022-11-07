@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Renderer/VertexArray.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/Texture.h"
-#include "Renderer/Shader.h"
+#include <Engine/ResourceManager.h>
 
 #include "RenderableResource.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/TextureResource.h"
+#include "Renderer/ShaderResource.h"
 
 namespace sad
 {
@@ -21,20 +22,20 @@ namespace sad
 
 		RenderableResource* GetRenderableResource() { return m_RenderableResource; }
 
-		sad::rad::VertexArray* GetVertexArray() { return m_VertexArray; }
-		sad::rad::VertexBuffer* GetVertexBuffer() { return m_VertexBuffer; }
-		sad::rad::IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
-		sad::rad::Texture* GetTexture() { return m_Texture; }
-		sad::rad::Shader* GetShader() { return m_Shader; }
+		rad::VertexArray* GetVertexArray() { return m_VertexArray; }
+		rad::VertexBuffer* GetVertexBuffer() { return m_VertexBuffer; }
+		rad::IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
+		rad::TextureResource* GetTexture() { return m_Texture; }
+		rad::ShaderResource* GetShader() { return m_Shader; }
 
 	private:
 		RenderableResource* m_RenderableResource;
 
-		sad::rad::VertexArray* m_VertexArray;
-		sad::rad::VertexBuffer* m_VertexBuffer;
-		sad::rad::VertexAttributeContainer* m_VertexAttributes;
-		sad::rad::IndexBuffer* m_IndexBuffer;
-		sad::rad::Texture* m_Texture;
-		sad::rad::Shader* m_Shader;
+		rad::VertexArray* m_VertexArray;
+		rad::VertexBuffer* m_VertexBuffer;
+		rad::VertexAttributeContainer* m_VertexAttributes;
+		rad::IndexBuffer* m_IndexBuffer;
+		rad::TextureResource* m_Texture;
+		rad::ShaderResource* m_Shader;
 	};
 }

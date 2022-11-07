@@ -16,6 +16,8 @@
 #include "Core/Assert.h"
 #include "Core/Log.h"
 #include "Core/Memory.h"
+#include "Core/Guid.h"
+#include "Core/Hash.h"
 #include "Core/EventHandler.h"
 #include "Core/MathUtils.h"
 #include "Core/FileUtils.h"

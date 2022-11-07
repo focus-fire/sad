@@ -23,10 +23,10 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 	auto view = world.view<const RenderableObjectComponent, const TransformComponent>();
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
-		Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
-		sad::rad::VertexArray* vertexArray = renderable->GetVertexArray();
-		sad::rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
-		sad::rad::Shader* shader = renderable->GetShader();
+		core::Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
+		rad::VertexArray* vertexArray = renderable->GetVertexArray();
+		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
+		rad::ShaderResource* shader = renderable->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera 
 		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
@@ -42,9 +42,8 @@ void sad::ecs::RenderingSystem::RenderLines(EntityWorld& world)
 	auto view = world.view<const LineRendererComponent>();
 	for (auto [entity, lineRendererComponent] : view.each())
 	{
-		Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
-
-		rad::Shader* shader = lineRenderer->GetShader();
+		core::Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
+		rad::ShaderResource* shader = lineRenderer->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera
 		glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();

@@ -8,6 +8,8 @@
 #include <entt/entt.hpp>
 #include <glm/glm.hpp>
 
+#include "ResourceManager.h"
+
 #include "Renderer/Sample/Cube.h"
 #include "Renderer/RenderBuddy.h"
 #include "ECS/Registry.h"
@@ -18,6 +20,7 @@
 #include "ECS/Components/RenderableObjectComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/PlayerControllerComponent.h"
+#include "IResource.h"
 #include "Transform.h"
 #include "RenderableResource.h"
 #include "RenderableObject.h"
@@ -51,8 +54,9 @@ void sad::Application::Start()
 	rad::RenderBuddy::Start();
 
 	// Create sample resource for a cube
-	RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
-	RenderableResource cubeResource = RenderableResource(cubeGeometry);
+	RenderableResource::Geometry cubeGeometry = RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+	// TODO: Solve IResource constructor dilemma
+	RenderableResource cubeResource = RenderableResource({ "TestCube.fake", "TestCube.fake" }, cubeGeometry);
 
 	// Get entity world and create entity
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
@@ -77,9 +81,12 @@ void sad::Application::Start()
 	SDL_Event event;
 	InputManager& input = InputManager::GetInstance();
 
+	// TODO: Remove test resource code
+	ResourceManager::Import();
+
   // Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
-  
+
 	while (!isClosed) 
 	{	
 		while (SDL_PollEvent(&event)) 

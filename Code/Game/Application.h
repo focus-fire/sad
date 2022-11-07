@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Application.h>
-#include "./Engine/RenderableResource.h"
+#include <Engine/RenderableResource.h>
 
 namespace pog
 {
@@ -19,6 +19,8 @@ namespace pog
 	private:
 		// Temporary Variables for Test Level
 		sad::RenderableResource* m_CubeResource;
+		sad::RenderableResource::Geometry m_CubeGeometry;
+
 		sad::ecs::Entity m_FirstCubeEntity;
 		sad::ecs::Entity m_SecondCubeEntity;
 

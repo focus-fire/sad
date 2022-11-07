@@ -15,10 +15,7 @@
 
 #include "ECS/Registry.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
-#include "ECS/Components/RenderableResourceComponent.h"
-#include "ECS/Components/RenderableObjectComponent.h"
-#include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/PlayerControllerComponent.h"
+#include "ECS/Systems/RenderingSystem.h"
 
 #include "Renderer/RenderBuddy.h"
 #include "Renderer/VertexArray.h"
@@ -34,7 +31,6 @@
 #include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
-sad::EngineStateManager* sad::Application::s_EngineStateManager;
 
 sad::Application::Application()
 { 
@@ -42,12 +38,8 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
-	// Default engine mode to editor
-	s_EngineStateManager = new sad::EngineStateManager(sad::EngineMode::Editor);
-
 	// Renderer and Editor have to be initialized after the main window
 	m_Editor = new cap::Editor;
-
 }
 
 sad::Application::~Application()
@@ -64,11 +56,11 @@ void sad::Application::EngineStart()
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
 
+	// Import Resources
+	ResourceManager::Import();
+
 	// Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
-
-	// TODO: Remove test resource code
-	ResourceManager::Import();
   
 	// Game Start
 	this->Start();
@@ -80,7 +72,7 @@ void sad::Application::EngineStart()
 		
 		float dt = pog::Time::GetDeltaTime();
 
-		if (s_EngineStateManager->GetEngineMode() == EngineMode::Game)
+		if (m_EngineStateManager.GetEngineMode() == EEngineMode::Game)
 		{
 			// Game Update
 			this->Update(dt);
@@ -106,10 +98,10 @@ void sad::Application::PollEvents(bool* isClosed)
 		input.CatchControllerEvents(event);
 
 		if (event.type == SDL_QUIT) 
-			isClosed = true;
+			*isClosed = true;
 
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
-			isClosed = true;
+			*isClosed = true;
 
 		if (event.type == SDL_CONTROLLERDEVICEADDED)
 			input.OnControllerConnected(event.cdevice);
@@ -135,30 +127,27 @@ void sad::Application::Update(float dt)
 	// Second 'pass' to recolor outside the framebuffer
 	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
 
-	/* Update ECS Systems */
-	core::UpdateEvents();
-	ecs::RenderableObjectSystem::Update();
-	PlayerController::Update();
-
-	/* Draw */
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	/* Update ECS Systems */
-	sad::ecs::RenderableObjectSystem::Update(world);
+	// Update ECS systems
+	ecs::RenderableObjectSystem::Update(world);
 	PlayerController::Update();
 
-	/* Update Events Loop */
+	// Update events subscribed to the update loop
 	core::UpdateEvents();
 
-	/* Draw */
-	sad::ecs::RenderingSystem::Draw(world);
+	// Drawing 
+	ecs::RenderingSystem::Draw(world);
 
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();
 
-	/* Editor */
+	// Render Editor
 	m_Editor->RenderGameWindow(rad::RenderBuddy::GetFrameBufferTexture());
 	m_Editor->Render();
+
+	// Render Window
+	s_MainWindow->Render();
 }
 
 void sad::Application::Teardown()

@@ -8,6 +8,8 @@
 
 #include <Engine/Application.h>
 
+#include <Game/Time.h>
+
 const char* UI_BODY_TEXT = "Welcome to the sadEngine!";
 const char* UI_TITLE_TEXT = "Welcome Title";
 
@@ -20,14 +22,12 @@ void UIChangeTitleText()
 {
 	UI_TITLE_TEXT = "Welcome!!!";
 }
-void ToggleEngineMode() {
-	sad::Application::s_EngineStateManager->ToggleEngineMode();
-}
 
 cap::Editor::Editor()
 	: m_DebugTerminal(new cap::DebugTerminal())
 	, m_ShowWelcomeWindow(true)
 	, m_ShowGameWindow(true)
+	, m_IsEditorInPlayMode(false)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -102,12 +102,8 @@ void cap::Editor::Render()
 	ImGui::Begin("Action Panel");
 	if (ImGui::Button(currentMode))
 	{
-		core::Log(ELogType::Info, "Engine was toggled");
-				
-		// TODO: Use an event to signal when toggle occurs to the rest of the 
-		core::SignalEvent("ToggleEngineMode");
-
-		//core::Log(ELogType::Trace, "Engine was toggled into {} mode", sad::Application::s_EngineStateManager->GetEngineMode());
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
 	}
 	ImGui::End();
 

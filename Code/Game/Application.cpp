@@ -2,26 +2,28 @@
 
 #include "Application.h"
 
-#include "./Engine/ECS/Registry.h"
-#include "./Engine/ECS/Systems/RenderableObjectSystem.h"
-#include "./Engine/ECS/Components/RenderableResourceComponent.h"
-#include "./Engine/ECS/Components/RenderableObjectComponent.h"
-#include "./Engine/ECS/Components/TransformComponent.h"
-#include "./Engine/ECS/Components/PlayerControllerComponent.h"
+#include <Engine/ECS/Registry.h>
+#include <Engine/ECS/Systems/RenderableObjectSystem.h>
+#include <Engine/ECS/Components/RenderableResourceComponent.h>
+#include <Engine/ECS/Components/RenderableObjectComponent.h>
+#include <Engine/ECS/Components/TransformComponent.h>
+#include <Engine/ECS/Components/PlayerControllerComponent.h>
 
-#include "./Engine/Renderer/VertexArray.h"
-#include "./Engine/Renderer/IndexBuffer.h"
-#include "./Engine/Renderer/FrameBuffer.h"
-#include "./Engine/Renderer/Shader.h"
-#include "./Engine/Renderer/Sample/Cube.h"
+#include <Engine/Renderer/Sample/Cube.h>
+#include <Engine/Renderer/VertexArray.h>
+#include <Engine/Renderer/IndexBuffer.h>
+#include <Engine/Renderer/FrameBuffer.h>
+#include <Engine/Renderer/ShaderResource.h>
 
-#include "./Engine/RenderableObject.h"
-
+#include <Engine/RenderableResource.h>
+#include <Engine/RenderableObject.h>
 
 pog::Application::Application()
 	: sad::Application()
+	, m_CubeGeometry(sad::RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount))
 {
-	// Game can be initialized here
+	// TODO: Solve IResource constructor dilemma
+	m_CubeResource = new sad::RenderableResource({ "TestCube.fake", "TestCube.fake" }, m_CubeGeometry);
 }
 
 pog::Application::~Application()
@@ -32,13 +34,6 @@ pog::Application::~Application()
 
 void pog::Application::Start()
 {
-	// Game logic is initialized here
-
-	// Create sample resource for a cube
-	RenderableResource::Geometry cubeGeometry = RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
-	// TODO: Solve IResource constructor dilemma
-	RenderableResource cubeResource = RenderableResource({ "TestCube.fake", "TestCube.fake" }, cubeGeometry);
-
 	// Add resource and transform components to the entities
 	m_FirstCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
 	m_FirstCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
@@ -54,9 +49,6 @@ void pog::Application::Start()
 
 void pog::Application::Update(float dt)
 {
-	// Game is updated here
-	core::Log(ELogType::Info, "game is running");
-
 	auto currentTime = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;

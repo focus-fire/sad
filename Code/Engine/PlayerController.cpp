@@ -7,6 +7,7 @@
 #include "ECS/Registry.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/PlayerControllerComponent.h"
+#include "ECS/Components/GameCameraComponent.h"
 
 #include "InputManager.h"
 #include "Transform.h"
@@ -22,8 +23,8 @@ void sad::PlayerController::Update()
 	float movespeed = 0.025f;
 	
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-	auto view = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>();
-	for (auto [controllerComponent, transformComponent] : view.each())
+	auto view = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent, const sad::ecs::GameCameraComponent>();
+	for (auto [controllerComponent, transformComponent, gameCameraComponent] : view.each())
 	{
 		bool usingController = false; // bool that disables movement keys when joystick being used to prevent double speed
 

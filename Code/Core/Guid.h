@@ -109,7 +109,7 @@ namespace core
 		explicit Guid(GUID guid);
 		GUID m_Guid;
 #else
-		explcit Guid(uuid_t uuid);
+		explicit Guid(uuid_t uuid);
 		uuid_t m_Guid;
 #endif
 	};

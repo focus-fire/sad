@@ -120,10 +120,9 @@ bool sad::ResourceManager::ImportResources()
 void sad::ResourceManager::FindResourcesInDataDirectory()
 {
 	const std::string dataDirectory = core::FileUtils::GetDataDirectory();
-	std::filesystem::recursive_directory_iterator it = std::filesystem::recursive_directory_iterator(dataDirectory);
-	std::filesystem::recursive_directory_iterator end;
 
-	for (it; it != end; ++it)
+	std::filesystem::recursive_directory_iterator end;
+	for (auto it = std::filesystem::recursive_directory_iterator(dataDirectory); it != end; ++it)
 	{
 		const std::filesystem::path absolutePath = it->path();
 
@@ -206,6 +205,9 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 		break;
 	case EResourceType::Shader:
 		ResourceFactory::CreateResource<rad::ShaderResource>(resourceData);
+		break;
+	case EResourceType::None:
+		core::Log(ELogType::Warn, "[ResourceManager] Attempting to submit {} for creation but it has an unrecognized type, ignoring it", resourceData.Name);
 		break;
 	}
 }

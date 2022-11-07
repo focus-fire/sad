@@ -58,6 +58,7 @@ namespace core
 	template<class T>
 	inline size_t HashCombine(std::size_t& seed, const T& item)
 	{
-		return std::rotl(static_cast<size_t>(seed), std::numeric_limits<size_t>::digits / 3) ^ Distribute(std::hash<T>{}(item));
+		const uint32_t n = std::hash<T>{}(item);
+		return std::rotl(static_cast<size_t>(seed), std::numeric_limits<size_t>::digits / 3) ^ Distribute(n);
 	}
 }

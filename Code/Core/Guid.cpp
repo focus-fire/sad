@@ -28,10 +28,10 @@ core::Guid core::Guid::RecreateGuid(const std::string& stringGuid)
 {
 	core::Guid guid;
 
+#ifdef _SAD_WINDOWS
 	// Completely hacky - really wish this could be avoided at the moment
 	auto uStringGuid = reinterpret_cast<unsigned char*>(const_cast<char*>(stringGuid.c_str()));
 
-#ifdef _SAD_WINDOWS
 	GUID wGuid;
 
 	RPC_STATUS status = UuidFromStringA(uStringGuid, &wGuid);
@@ -39,8 +39,8 @@ core::Guid core::Guid::RecreateGuid(const std::string& stringGuid)
 
 	guid = Guid(wGuid);
 #else
-	uuit_t uuid;
-	int result = uuid_parse(uStringGuid, uuid);
+	uuid_t uuid;
+	int result = uuid_parse(stringGuid.c_str(), uuid);
 	SAD_ASSERT(result == 0, "Failed to recreate Unix GUID");
 
 	guid = Guid(uuid);

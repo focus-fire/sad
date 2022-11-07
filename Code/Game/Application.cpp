@@ -7,7 +7,7 @@
 #include <Engine/ECS/Components/RenderableResourceComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
-#include <Engine/ECS/Components/PlayerControllerComponent.h>
+#include <Engine/ECS/Components/ControllerComponent.h>
 
 #include <Engine/Renderer/Sample/Cube.h>
 #include <Engine/Renderer/VertexArray.h>

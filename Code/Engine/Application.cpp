@@ -1,7 +1,6 @@
 #include "sadpch.h"
 
 #include "Application.h"
-#include "InputManager.h"
 
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
@@ -16,6 +15,7 @@
 #include "ECS/Registry.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/RenderingSystem.h"
+#include "ECS/Systems/PlayerControllerSystem.h"
 
 #include "Renderer/RenderBuddy.h"
 #include "Renderer/VertexArray.h"
@@ -24,10 +24,9 @@
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
-#include "Window.h"
+#include "InputManager.h"
 #include "Transform.h"
 #include "RenderableObject.h"
-#include "PlayerController.h"
 #include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
@@ -38,7 +37,6 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
-	// Renderer and Editor have to be initialized after the main window
 	m_Editor = new cap::Editor;
 }
 
@@ -95,7 +93,9 @@ void sad::Application::PollEvents(bool* isClosed)
 		m_Editor->CatchSDLEvents(event);
 		input.CatchMouseEvents(event);
 		input.CatchKeyboardEvents(event);
-		input.CatchControllerEvents(event);
+    
+    if (input.IsControllerConnected())
+		  input.CatchControllerEvents(event);
 
 		if (event.type == SDL_QUIT) 
 			*isClosed = true;
@@ -131,7 +131,7 @@ void sad::Application::Update(float dt)
 
 	// Update ECS systems
 	ecs::RenderableObjectSystem::Update(world);
-	PlayerController::Update();
+	ecs::PlayerControllerSystem::Update(world);
 
 	// Update events subscribed to the update loop
 	core::UpdateEvents();

@@ -23,13 +23,13 @@ std::string core::FileUtils::ReadFile(const std::string& path)
 		myfile.close();
 		return buffer.str();
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Info, "Unable to open file: {}", path);
 	return "";
 }
 
 /**
  * @brief 
- * Creates a new file with given contents
+ * Creates a new file or overwrites one with given contents
  * @param path 
  * @param content 
 */
@@ -38,33 +38,12 @@ bool core::FileUtils::CreateNewFile(const std::string& path, const std::string& 
 	std::ofstream myfile(path);
 	if (myfile.is_open())
 	{
-		core::Log(ELogType::Trace, "File Opened {}", path);
-		myfile << content << std::endl;
+		core::Log(ELogType::Info, "File Opened {}", path);
+		myfile << content;
 		myfile.close();
 		return true;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
-	return false;
-}
-
-/**
- * @brief 
- * Rewrites the entire file of its contents
- * @param path 
- * @param content 
-*/
-bool core::FileUtils::OverWriteExistingFile(const std::string& path, const std::string& content)
-{
-	std::fstream myfile;
-	myfile.open(path, std::ios_base::out | std::ios_base::in); // will not create a file 
-	if (myfile.is_open())
-	{
-		core::Log(ELogType::Trace, "File Opened {}", path);
-		myfile << content << std::endl;
-		myfile.close();
-		return true;
-	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Info, "Unable to open file: {}", path);
 	return false;
 }
 
@@ -82,8 +61,9 @@ bool core::FileUtils::AppendToExistingFile(const std::string& path, const std::s
 	{
 		outfile << content << std::endl;
 		return true;
+		outfile.close();
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Error, "Unable to open file: {}", path);
 	return false;
 }
 

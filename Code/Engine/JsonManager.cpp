@@ -1,7 +1,6 @@
 #include "sadpch.h"
 
 #include "JsonManager.h"
-#include <vector>
 
 using json = nlohmann::json;
 //Constructor
@@ -25,19 +24,21 @@ json sad::JsonManager::GetJson(std::string path)
  * @brief 
  * Adds entities of the last saved level
 */
-bool sad::JsonManager::ImportLevel()
+bool sad::JsonManager::ImportLevel(int saveFile)
 {
-	std::string level_path = core::FileUtils::ReadFile(core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Save/SaveFile01.json"));
+	std::stringstream ss;
+	ss << std::setw(2) << std::setfill('0') << saveFile;
+	std::string level_path = core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Save/SaveFile" + ss.str() + ".json");
 	std::string json_output = core::FileUtils::ReadFile(level_path);
 	if (json_output == "")
 	{
-		std::cout << "File doesn't exist" << std::endl;
+		core::Log(ELogType::Error, "The save file doesn't exist");
 		return false;
 	}
 	std::cout << json_output << std::endl;
-	//NJSONInputArchive json_in(json_output);
-	//entt::basic_snapshot_loader loader(sad::ecs::Registry::GetEntityWorld());
-	//loader.entities(json_in).component<Tower, Walker, Transform>(json_in);
+	NJSONInputArchive json_in(json_output);
+	entt::basic_snapshot_loader loader(sad::ecs::Registry::GetEntityWorld());
+	//loader.entities(json_in).component<COMPONENT_TYPES>(json_in);
 	return true;
 }
 
@@ -45,17 +46,17 @@ bool sad::JsonManager::ImportLevel()
  * @brief 
  * Saves entities of the level into a json save file
 */
-void sad::JsonManager::ExportLevel()
+void sad::JsonManager::ExportLevel(int saveFile)
 {
-	std::string level_path = core::FileUtils::ReadFile(core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Save/SaveFile01.json"));
-	//NJSONOutputArchive json_archive;
-	//entt::basic_snapshot snapshot(sad::ecs::Registry::GetEntityWorld());
-	//snapshot.entities(json_archive).component<Tower, Walker, Transform>(json_archive);
-	//json_archive.Close();
+	std::stringstream ss;
+	ss << std::setw(2) << std::setfill('0') << saveFile;
+	std::string level_path = core::FileUtils::GetDataDirectory() + core::FileUtils::ConvertOSPathString("/Save/SaveFile" + ss.str() + ".json");
+	NJSONOutputArchive json_archive;
+	entt::basic_snapshot snapshot(sad::ecs::Registry::GetEntityWorld());
+	snapshot.entities(json_archive).component<sad::ecs::TransformComponent>(json_archive);
+	json_archive.Close();
 
-	std::string json_output = "Sample string";//json_archive.AsString();
-	if (!core::FileUtils::OverWriteExistingFile(level_path, json_output))
-	{
-		core::FileUtils::CreateNewFile(level_path, json_output);
-	}
+	std::string json_output = json_archive.AsString();
+	core::Log(ELogType::Info, "Export ran");
+	core::FileUtils::CreateNewFile(level_path, json_output);
 }

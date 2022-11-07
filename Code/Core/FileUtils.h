@@ -8,7 +8,6 @@ namespace core
 	public:
 		static std::string ReadFile(const std::string& path);
 		static bool CreateNewFile(const std::string& path, const std::string& content);
-		static bool OverWriteExistingFile(const std::string& path, const std::string& content);
 		static bool AppendToExistingFile(const std::string& path, const std::string& content);
 		static std::string GetProjectDirectory();
 		static std::string GetDataDirectory();

@@ -4,6 +4,9 @@
 #include <nlohmann/json.hpp>
 #include "NJSONArchives.h"
 #include "Engine/ECS/Registry.h"
+#include <iomanip>
+#include <sstream>
+#include "Engine/ECS/Components/ComponentTypes.h"
 
 using json = nlohmann::json;
 namespace sad
@@ -31,7 +34,7 @@ namespace sad
 		{
 			return Json[key];
 		};
-		bool static ImportLevel();
-		void static ExportLevel();
+		bool static ImportLevel(int saveFile = 1);
+		void static ExportLevel(int saveFile = 1);
 	};
 }

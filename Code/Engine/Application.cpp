@@ -3,33 +3,31 @@
 #include "Application.h"
 
 #include <SDL2/SDL.h>
-#include <imgui.h>
 #include <glad/glad.h>
-#include <entt/entt.hpp>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/constants.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 
-#include "Renderer/Sample/Cube.h"
-#include "Renderer/RenderBuddy.h"
+#include <Game/Time.h>
+
 #include "ECS/Registry.h"
-#include "ECS/Entity.h"
-#include "ECS/Systems/RenderingSystem.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
-#include "ECS/Systems/PlayerControllerSystem.h"
-#include "ECS/Components/RenderableResourceComponent.h"
-#include "ECS/Components/RenderableObjectComponent.h"
-#include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/ControllerComponent.h"
+#include "ECS/Systems/RenderingSystem.h"
 
+#include "Renderer/RenderBuddy.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/FrameBuffer.h"
-#include "Renderer/Shader.h"
+#include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
-#include "Transform.h"
-#include "RenderableResource.h"
-#include "RenderableObject.h"
 #include "InputManager.h"
+#include "Transform.h"
+#include "RenderableObject.h"
+#include "PlayerController.h"
+#include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
 
@@ -39,7 +37,6 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
-	// Editor has to be initialized after the main window
 	m_Editor = new cap::Editor;
 }
 
@@ -49,7 +46,7 @@ sad::Application::~Application()
 	delete m_Editor;
 }
 
-void sad::Application::Start()
+void sad::Application::EngineStart()
 {
 	// Launch editor 
 	m_Editor->Start();
@@ -57,111 +54,100 @@ void sad::Application::Start()
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
 
-	// Create sample resource for a cube
-	RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
-	RenderableResource cubeResource = RenderableResource(cubeGeometry);
+	// Import Resources
+	ResourceManager::Import();
 
-	// Get entity world and create entity
-	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-	sad::ecs::Entity cubeEntity = sad::ecs::Entity();
-	sad::ecs::Entity secondCubeEntity = sad::ecs::Entity();
-
-	// Add resource and transform components to the entities
-	cubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
-	cubeEntity.AddComponent<sad::ecs::TransformComponent>({ &cubeEntity.Transform });
-	cubeEntity.AddEmptyComponent<sad::ecs::EditorControllerComponent>({});
-
-	secondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ &cubeResource });
-	secondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &secondCubeEntity.Transform });
-
-	// Translation Logic (-pi to pi for demo)
-	float translate = -1.0f * glm::pi<float>();
-	std::chrono::time_point<std::chrono::steady_clock> lastTime = std::chrono::steady_clock::now();
-
-	bool isClosed = false;
-	SDL_Event event;
-	InputManager& input = InputManager::GetInstance();
-
-  // Sample Event Signal For "UI" Group - Can Delete
+	// Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
   
+	// Game Start
+	this->Start();
+
+	bool isClosed = false;
 	while (!isClosed) 
-	{	
-		while (SDL_PollEvent(&event)) 
+	{
+		PollEvents(&isClosed);
+		
+		float dt = pog::Time::GetDeltaTime();
+
+		if (m_EngineStateManager.GetEngineMode() == EEngineMode::Game)
 		{
-			m_Editor->CatchSDLEvents(event);
-			input.CatchMouseEvents(event);
-			input.CatchKeyboardEvents(event);
-
-			if (input.IsControllerConnected())
-				input.CatchControllerEvents(event);
-
-			if (event.type == SDL_QUIT) 
-				isClosed = true;
-
-			if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
-				isClosed = true;
-
-			if (event.type == SDL_CONTROLLERDEVICEADDED)
-				input.OnControllerConnected(event.cdevice);
-
-			if (event.type == SDL_CONTROLLERDEVICEREMOVED)
-				input.OnControllerDisconnected();
-
-			if (event.type == SDL_MOUSEMOTION) 
-				input.SetMousePosition(event.motion.x, event.motion.y);
-			
+			// Game Update
+			this->Update(dt);
 		}
 
-		// First 'pass' sets up the framebuffer
-		// This clear color is the background for the game
-		rad::RenderBuddy::ClearColor(glm::vec4(0.55f, 0.65f, 0.50f, 1.0f));
-		m_Editor->Clear();
-
-		// Capture the current render in the framebuffer 
-		rad::RenderBuddy::BindFrameBuffer();
-
-		// Second 'pass' to recolor outside the framebuffer
-		rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
-
-		/* Update */
-
-		/* Update Game Logic */
-		auto currentTime = std::chrono::steady_clock::now();
-		auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count();
-		lastTime = currentTime;
-
-		translate += 0.001f * elapsedTime;
-		if (translate >= glm::pi<float>())
-			translate = -1.0f * glm::pi<float>();
-
-		//// Manipulate second entity transform
-		secondCubeEntity.Transform.Rotate(glm::vec3(1.0f * elapsedTime / 50.0f));
-		secondCubeEntity.Transform.Translate(glm::vec3(glm::sin(translate) / 100.0f, 0.0f, 0.0f));
-		secondCubeEntity.Transform.SetScale(glm::vec3(1.0f));
-
-		/* Update ECS Systems */
-		sad::ecs::RenderableObjectSystem::Update(world);
-		sad::ecs::PlayerControllerSystem::Update(world);
-
-		/* Update Events Loop */
-		core::UpdateEvents();
-
-		/* Draw */
-		sad::ecs::RenderingSystem::Draw(world);
-
-		// Unbind framebuffer for next pass
-		rad::RenderBuddy::UnbindFrameBuffer();
-
-		/* Editor */
-		m_Editor->RenderGameWindow(rad::RenderBuddy::GetFrameBufferTexture());
-		m_Editor->Render();
-
-		/* Window */
-		s_MainWindow->Render();
+		// Engine Update
+		sad::Application::Update(dt);
 	}
 
 	Teardown();
+}
+
+void sad::Application::PollEvents(bool* isClosed)
+{
+	InputManager& input = InputManager::GetInstance();
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event)) 
+	{
+		m_Editor->CatchSDLEvents(event);
+		input.CatchMouseEvents(event);
+		input.CatchKeyboardEvents(event);
+    
+    if (input.IsControllerConnected())
+		  input.CatchControllerEvents(event);
+
+		if (event.type == SDL_QUIT) 
+			*isClosed = true;
+
+		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
+			*isClosed = true;
+
+		if (event.type == SDL_CONTROLLERDEVICEADDED)
+			input.OnControllerConnected(event.cdevice);
+
+		if (event.type == SDL_CONTROLLERDEVICEREMOVED)
+			input.OnControllerDisconnected();
+
+		if (event.type == SDL_MOUSEMOTION) 
+			input.SetMousePosition(event.motion.x, event.motion.y);
+	}
+}
+
+void sad::Application::Update(float dt)
+{
+	// First 'pass' sets up the framebuffer
+	// This clear color is the background for the game
+	rad::RenderBuddy::ClearColor(glm::vec4(0.55f, 0.65f, 0.50f, 1.0f));
+	m_Editor->Clear();
+
+	// Capture the current render in the framebuffer 
+	rad::RenderBuddy::BindFrameBuffer();
+
+	// Second 'pass' to recolor outside the framebuffer
+	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
+
+	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
+
+	// Update ECS systems
+	ecs::RenderableObjectSystem::Update(world);
+	ecs::PlayerControllerSystem::Update(world);
+
+	// Update events subscribed to the update loop
+	core::UpdateEvents();
+
+	// Drawing 
+	ecs::RenderingSystem::Draw(world);
+
+	// Unbind framebuffer for next pass
+	rad::RenderBuddy::UnbindFrameBuffer();
+
+	// Render Editor
+	m_Editor->RenderGameWindow(rad::RenderBuddy::GetFrameBufferTexture());
+	m_Editor->Render();
+
+	// Render Window
+	s_MainWindow->Render();
 }
 
 void sad::Application::Teardown()

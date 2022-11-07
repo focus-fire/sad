@@ -13,7 +13,7 @@
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Components/LineRendererComponent.h>
 
-#include "Shader.h"
+#include "ShaderResource.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 
@@ -21,7 +21,7 @@ sad::rad::Renderer sad::rad::RenderBuddy::s_Renderer = sad::rad::Renderer();
 
 void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 {
-	Pointer<LineRenderer> lineRenderer = CreatePointer<LineRenderer>(from, to, color);
+	core::Pointer<LineRenderer> lineRenderer = core::CreatePointer<LineRenderer>(from, to, color);
 	ecs::Entity lineEntity = ecs::Entity();
 	lineEntity.AddComponent<ecs::LineRendererComponent>({ lineRenderer });
 }

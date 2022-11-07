@@ -11,9 +11,10 @@ project "CoreTests"
 
     includedirs {
         "%{prj.location}/../Vendor/Catch2/single_include/",
-        "%{prj.location}/../Code",
+        "%{prj.location}/../Code/",
         -- Core Includes
         "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/glm",
     }
 
 
@@ -25,4 +26,5 @@ project "CoreTests"
 
     links {
         "Core",
+		"Engine"
     }

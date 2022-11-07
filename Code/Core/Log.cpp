@@ -18,7 +18,7 @@ namespace
 
 	// Change these logging levels for different levels of information
 	// ie: Changing the debug level to 'trace' will view trace logs
-	const spdlog::level::level_enum c_DebugLoggerLevel = spdlog::level::debug;
+	const spdlog::level::level_enum c_DebugLoggerLevel = spdlog::level::trace;
 	const spdlog::level::level_enum c_AssertLoggerLevel = spdlog::level::err;
 
 	// Logs follow the format: [MM-DD-YY HH:MM:SS.mm] [level] message
@@ -87,6 +87,10 @@ void core::KillLogging()
 
 void core::Log(const ELogType type, const char* message)
 {
+	// Prevent log from executing if no logging sinks have been created
+	if (!s_DebugLogger || !s_AssertLogger)
+		return;
+
 	SAD_ASSERT(message && message[0], "Congratulations! You managed to log an empty string.");
 
 	switch (type)
@@ -118,10 +122,10 @@ void core::AddLoggingSink(spdlog::sink_ptr sink)
 	sink->set_pattern(c_DebugLogPattern);
 
 	s_DebugLogger->sinks().push_back(sink);
-	core::Log(ELogType::Trace, "Successfully added debug logging sink");
+	core::Log(ELogType::Trace, "[Log] Successfully added debug logging sink");
 
 	s_AssertLogger->sinks().push_back(sink);
-	core::Log(ELogType::Trace, "Successfully added assert logging sink");
+	core::Log(ELogType::Trace, "[Log] Successfully added assert logging sink");
 }
 
 void core::RemoveLoggingSink(spdlog::sink_ptr sink)
@@ -135,13 +139,13 @@ void core::RemoveLoggingSink(spdlog::sink_ptr sink)
 	if (debugIt != debugSinks.end())
 	{
 		debugSinks.erase(debugIt);
-		core::Log(ELogType::Trace, "Successfully removed debug logging sink");
+		core::Log(ELogType::Trace, "[Log] Successfully removed debug logging sink");
 	}
 
 	if (assertIt != assertSinks.end())
 	{
 		assertSinks.erase(assertIt);
-		core::Log(ELogType::Trace, "Successfully removed assert logging sink");
+		core::Log(ELogType::Trace, "[Log] Successfully removed assert logging sink");
 	}
 }
 

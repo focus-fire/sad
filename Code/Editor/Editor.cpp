@@ -8,6 +8,8 @@
 
 #include <Engine/Application.h>
 
+#include <Game/Time.h>
+
 const char* UI_BODY_TEXT = "Welcome to the sadEngine!";
 const char* UI_TITLE_TEXT = "Welcome Title";
 
@@ -25,6 +27,7 @@ cap::Editor::Editor()
 	: m_DebugTerminal(new cap::DebugTerminal())
 	, m_ShowWelcomeWindow(true)
 	, m_ShowGameWindow(true)
+	, m_IsEditorInPlayMode(false)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -92,6 +95,17 @@ void cap::Editor::Render()
 
 		ImGui::End();
 	}
+
+	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
+	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+
+	ImGui::Begin("Action Panel");
+	if (ImGui::Button(currentMode))
+	{
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
+	}
+	ImGui::End();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

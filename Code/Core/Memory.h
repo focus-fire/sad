@@ -2,7 +2,7 @@
 
 #include <memory>
 
-namespace sad
+namespace core 
 {
 	template<typename T>
 	using Pointer = std::shared_ptr<T>;

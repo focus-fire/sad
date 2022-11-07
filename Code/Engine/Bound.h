@@ -4,6 +4,7 @@
 #include <glm/gtc/quaternion.hpp>
 
 #include "ECS/Components/TransformComponent.h"
+#include "Transform.h"
 
 namespace sad 
 {
@@ -15,13 +16,11 @@ namespace sad
 		* to get position to create bounds.
 		*/
 		Bound(glm::vec3 position, glm::vec3 scale);
-		Bound(const sad::ecs::TransformComponent transform);
+		Bound(const sad::ecs::TransformComponent transformComponent);
 		~Bound();
 
 		/*
-		* Value should be auto set to the transform position, however, if
-		* user would like to adjust the bound to have its own unique position / scale
-		* This allows for user to do so.
+		* Value should be auto set to the transform position.
 		*/
 		void SetPosition(glm::vec3 position) { m_Position = position; }
 		void SetScale(glm::vec3 scale) { m_Scale = scale; }

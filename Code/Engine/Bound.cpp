@@ -15,10 +15,10 @@ sad::Bound::Bound(glm::vec3 position, glm::vec3 scale)
 	CalculateBound(m_Position, m_Scale);
 }
 
-sad::Bound::Bound(const sad::ecs::TransformComponent transform)
+sad::Bound::Bound(const sad::ecs::TransformComponent transformComponent)
 {
-	m_Position = transform.m_Transform->GetPosition();
-	m_Scale = transform.m_Transform->GetScale();
+	m_Position = transformComponent.m_Transform->GetPosition();
+	m_Scale = transformComponent.m_Transform->GetScale();
 	CalculateBound(m_Position, m_Scale);
 }
 

@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['texture_76',['Texture',['../classsad_1_1rad_1_1Texture.html',1,'sad::rad::Texture'],['../classsad_1_1rad_1_1Texture.html#ae6165c3eff96738af5b21ee4365a6fa3',1,'sad::rad::Texture::Texture(const std::string &amp;filePath)'],['../classsad_1_1rad_1_1Texture.html#a782a794a663458d6d54af979073eb613',1,'sad::rad::Texture::Texture(int width, int height)']]],
-  ['tostring_77',['ToString',['../classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8',1,'core::Guid']]],
-  ['transform_78',['Transform',['../classsad_1_1Transform.html',1,'sad']]],
-  ['translate_79',['Translate',['../classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764',1,'sad::Transform']]],
-  ['trim_80',['Trim',['../classcore_1_1StringUtils.html#acca5e0216acaac9f9cadf87ae7f85502',1,'core::StringUtils']]]
+  ['scale_100',['Scale',['../classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1',1,'sad::Transform']]],
+  ['setenginemode_101',['SetEngineMode',['../classsad_1_1EngineStateManager.html#ad65658a1a1c9aba7f96f6afcf4cfffe9',1,'sad::EngineStateManager']]],
+  ['shaderresource_102',['ShaderResource',['../classsad_1_1rad_1_1ShaderResource.html',1,'sad::rad']]],
+  ['signalevent_103',['SignalEvent',['../namespacecore.html#a3a328aca7c73d852679a183323ab9d4b',1,'core']]],
+  ['split_104',['Split',['../classcore_1_1StringUtils.html#a901644a55e44f28aef619d2718219d5e',1,'core::StringUtils']]],
+  ['start_105',['Start',['../classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67',1,'sad::Application::Start()'],['../classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056',1,'pog::Application::Start()']]],
+  ['stringutils_106',['StringUtils',['../classcore_1_1StringUtils.html',1,'core']]]
 ];

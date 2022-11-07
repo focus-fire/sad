@@ -72,9 +72,14 @@ $(function() {
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classsad_1_1Application-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sad::Application Class Reference</div>  </div>
+<div class="title">sad::Application Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Base class for all lifecycle specific methods for the Engine/Game projects.  
+ <a href="classsad_1_1Application.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Engine_2Application_8h_source.html">Application.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for sad::Application:</div>
 <div class="dyncontent">
@@ -87,11 +92,25 @@ Inheritance diagram for sad::Application:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3299f2731f23e2c78efca348525a21b3"><td class="memItemLeft" align="right" valign="top"><a id="a3299f2731f23e2c78efca348525a21b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
-<tr class="separator:a3299f2731f23e2c78efca348525a21b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b942d22e5f39cf8b6e8e4041e76ee9f"><td class="memItemLeft" align="right" valign="top"><a id="a8b942d22e5f39cf8b6e8e4041e76ee9f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">EngineStart</a> ()</td></tr>
+<tr class="memdesc:a8b942d22e5f39cf8b6e8e4041e76ee9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrypoint for the engine application that initializes systems. <br /></td></tr>
+<tr class="separator:a8b942d22e5f39cf8b6e8e4041e76ee9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a649ef7196503f7390806784aa6981b67"><td class="memItemLeft" align="right" valign="top"><a id="a649ef7196503f7390806784aa6981b67"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">Start</a> ()=0</td></tr>
+<tr class="memdesc:a649ef7196503f7390806784aa6981b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting point for applications aside from the engine. <br /></td></tr>
+<tr class="separator:a649ef7196503f7390806784aa6981b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cb55301d32025b66855adf84252e1e1"><td class="memItemLeft" align="right" valign="top"><a id="a2cb55301d32025b66855adf84252e1e1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a2cb55301d32025b66855adf84252e1e1">PollEvents</a> (bool *isClosed)</td></tr>
+<tr class="memdesc:a2cb55301d32025b66855adf84252e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifecycle method that polls for window events and submits events to required systems. <br /></td></tr>
+<tr class="separator:a2cb55301d32025b66855adf84252e1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad436b67432b7e80fc7bcc08c50bcd8c3"><td class="memItemLeft" align="right" valign="top"><a id="ad436b67432b7e80fc7bcc08c50bcd8c3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">Update</a> (float dt)</td></tr>
+<tr class="memdesc:ad436b67432b7e80fc7bcc08c50bcd8c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main update loop for the Engine. <br /></td></tr>
+<tr class="separator:ad436b67432b7e80fc7bcc08c50bcd8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6cbe61aab56a05959c6d9e25d449df72"><td class="memItemLeft" align="right" valign="top"><a id="a6cbe61aab56a05959c6d9e25d449df72"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Teardown</b> ()</td></tr>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a6cbe61aab56a05959c6d9e25d449df72">Teardown</a> ()</td></tr>
+<tr class="memdesc:a6cbe61aab56a05959c6d9e25d449df72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destruction method that tears down the services associated with the engine. <br /></td></tr>
 <tr class="separator:a6cbe61aab56a05959c6d9e25d449df72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
@@ -106,7 +125,9 @@ Static Public Attributes</h2></td></tr>
 static <a class="el" href="classsad_1_1Window.html">Window</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>s_MainWindow</b></td></tr>
 <tr class="separator:a670039daca33ed71e33eab69b9c9ce7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Base class for all lifecycle specific methods for the Engine/Game projects. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>Code/Engine/<a class="el" href="Engine_2Application_8h_source.html">Application.h</a></li>
 <li>Code/Engine/Application.cpp</li>
 </ul>

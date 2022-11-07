@@ -79,19 +79,33 @@ Inheritance diagram for pog::Application:</div>
  <div class="center">
   <img src="classpog_1_1Application.png" usemap="#pog::Application_map" alt=""/>
   <map id="pog::Application_map" name="pog::Application_map">
-<area href="classsad_1_1Application.html" alt="sad::Application" shape="rect" coords="0,0,102,24"/>
+<area href="classsad_1_1Application.html" title="Base class for all lifecycle specific methods for the Engine/Game projects." alt="sad::Application" shape="rect" coords="0,0,102,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:af5bf8eb0e65af9075e27014ea8458056"><td class="memItemLeft" align="right" valign="top"><a id="af5bf8eb0e65af9075e27014ea8458056"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056">Start</a> () override</td></tr>
+<tr class="memdesc:af5bf8eb0e65af9075e27014ea8458056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting point for applications aside from the engine. <br /></td></tr>
+<tr class="separator:af5bf8eb0e65af9075e27014ea8458056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a677ba126c938b0f34aa104f8c329d0b6"><td class="memItemLeft" align="right" valign="top"><a id="a677ba126c938b0f34aa104f8c329d0b6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpog_1_1Application.html#a677ba126c938b0f34aa104f8c329d0b6">Update</a> (float dt) override</td></tr>
+<tr class="memdesc:a677ba126c938b0f34aa104f8c329d0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main update loop for the Engine. <br /></td></tr>
+<tr class="separator:a677ba126c938b0f34aa104f8c329d0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1ba72edbdbacb13adb2547c4e6dcb70"><td class="memItemLeft" align="right" valign="top"><a id="ad1ba72edbdbacb13adb2547c4e6dcb70"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Teardown</b> () override</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classpog_1_1Application.html#ad1ba72edbdbacb13adb2547c4e6dcb70">Teardown</a> () override</td></tr>
+<tr class="memdesc:ad1ba72edbdbacb13adb2547c4e6dcb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destruction method that tears down the services associated with the engine. <br /></td></tr>
 <tr class="separator:ad1ba72edbdbacb13adb2547c4e6dcb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classsad_1_1Application"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classsad_1_1Application')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classsad_1_1Application.html">sad::Application</a></td></tr>
-<tr class="memitem:a3299f2731f23e2c78efca348525a21b3 inherit pub_methods_classsad_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a3299f2731f23e2c78efca348525a21b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
-<tr class="separator:a3299f2731f23e2c78efca348525a21b3 inherit pub_methods_classsad_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b942d22e5f39cf8b6e8e4041e76ee9f inherit pub_methods_classsad_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a8b942d22e5f39cf8b6e8e4041e76ee9f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">EngineStart</a> ()</td></tr>
+<tr class="memdesc:a8b942d22e5f39cf8b6e8e4041e76ee9f inherit pub_methods_classsad_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entrypoint for the engine application that initializes systems. <br /></td></tr>
+<tr class="separator:a8b942d22e5f39cf8b6e8e4041e76ee9f inherit pub_methods_classsad_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cb55301d32025b66855adf84252e1e1 inherit pub_methods_classsad_1_1Application"><td class="memItemLeft" align="right" valign="top"><a id="a2cb55301d32025b66855adf84252e1e1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a2cb55301d32025b66855adf84252e1e1">PollEvents</a> (bool *isClosed)</td></tr>
+<tr class="memdesc:a2cb55301d32025b66855adf84252e1e1 inherit pub_methods_classsad_1_1Application"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifecycle method that polls for window events and submits events to required systems. <br /></td></tr>
+<tr class="separator:a2cb55301d32025b66855adf84252e1e1 inherit pub_methods_classsad_1_1Application"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>

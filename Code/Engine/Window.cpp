@@ -11,7 +11,7 @@ sad::Window::Window(const WindowProperties& properties)
 {
 	core::Log(ELogType::Info, "[Window] Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
-  int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
+	int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
 
 	// OpenGL Attribute Sets for SDL
@@ -46,6 +46,10 @@ void sad::Window::CreateGLContext()
 {
 	m_GLContext = SDL_GL_CreateContext(m_Window);
 	SAD_ASSERT(m_GLContext, "Failed to initialize GL context");
+	
+	// Mandatory to setup and trigger event in order to enable GL_CALL
+	core::InitializeListener("OnGLStateChanged", OnGLStateChanged);
+	core::SignalEvent("OnGLStateChanged");
 
 	int vsync = SDL_GL_SetSwapInterval(std::stoi(ConfigManager::GetValue("graphics", "vsync"))); // Enable VSync
 	SAD_ASSERT(vsync >= 0, "Failed to enable VSync");
@@ -54,7 +58,7 @@ void sad::Window::CreateGLContext()
 	SAD_ASSERT(glad, "Failed to initialize GLAD");
 
 	const char* version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	core::Log(ELogType::Info, "[Window] Aha! Welcome to OpenGL v{}", version);
+	core::Log(ELogType::Info, "Aha! Welcome to OpenGL v{}", version);
 }
 
 void sad::Window::Render()
@@ -66,4 +70,7 @@ void sad::Window::Teardown()
 {
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
+
+	// Mandatory to trigger event in order to disable GL_CALL
+	core::SignalEvent("OnGLStateChanged");
 }

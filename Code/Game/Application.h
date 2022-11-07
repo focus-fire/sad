@@ -1,15 +1,30 @@
 #pragma once
 
 #include <Engine/Application.h>
+#include <Engine/RenderableResource.h>
 
 namespace pog
 {
 	class Application final : public sad::Application
 	{
 	public:
-		Application();
+		explicit Application();
 		~Application() override;
 
+		void Start() override;
+
+		void Update(float dt) override;
 		void Teardown() override;
+	
+	private:
+		// Temporary Variables for Test Level
+		sad::RenderableResource* m_CubeResource;
+		sad::RenderableResource::Geometry m_CubeGeometry;
+
+		sad::ecs::Entity m_FirstCubeEntity;
+		sad::ecs::Entity m_SecondCubeEntity;
+
+		float m_CubeTranslate;
+		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
 	};
 }

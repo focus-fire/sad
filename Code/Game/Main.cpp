@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     core::Log(ELogType::Info, "this engine is sad.");
 
     pog::Application* app = new pog::Application();
-    app->Start();
+    app->EngineStart();
     delete app;
 
     core::Log(ELogType::Info, "this engine is dead.");

@@ -146,6 +146,24 @@ namespace sad
         float ControllerDeadZone;
 
         /**
+         * @brief Determines if controller inputs are currently being used
+         * @return 
+        */
+        bool IsControllerActive()
+        {
+            return m_ControllerBeingUsed;
+        }
+
+        /**
+         * @brief Returns true if a controller is plugged in
+         * @return 
+        */
+        bool IsControllerConnected()
+        {
+            return m_Controller != nullptr;
+        }
+
+        /**
          * @brief Handles new controller device
          * @param event
         */
@@ -219,6 +237,7 @@ namespace sad
         int  m_MouseUpdateFrames[6];
 
         SDL_GameController* m_Controller = nullptr;
-        bool  m_ControllerIsActive;
+        bool m_ControllerIsActive;
+        bool m_ControllerBeingUsed;
     };
 }

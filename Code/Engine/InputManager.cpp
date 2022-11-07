@@ -19,6 +19,7 @@ void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 {
     if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && !event.key.repeat)
     {
+        m_ControllerBeingUsed = false;
         m_KeyboardState[event.key.keysym.scancode] = (event.type == SDL_KEYDOWN);
         m_KeyboardUpdateFrames[event.key.keysym.scancode] = SDL_GetTicks64();
     }
@@ -48,6 +49,7 @@ void sad::InputManager::CatchMouseEvents(SDL_Event& event)
 {
     if (event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEBUTTONDOWN)
     {
+        m_ControllerBeingUsed = false;
         m_MouseState[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
         m_MouseUpdateFrames[event.button.button] = SDL_GetTicks64();
     }
@@ -103,8 +105,15 @@ void sad::InputManager::OnControllerDisconnected()
 
 void sad::InputManager::CatchControllerEvents(SDL_Event& event)
 {
+    if (GetLeftAxis("Horizontal") > ControllerDeadZone || GetLeftAxis("Vertical") > ControllerDeadZone
+        || GetRightAxis("Horizontal") > ControllerDeadZone || GetRightAxis("Vertical") > ControllerDeadZone)
+    {
+        m_ControllerBeingUsed = true;
+    }
+
     if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP)
     {
+        m_ControllerBeingUsed = true;
         m_ButtonState[event.cbutton.button] = (event.type == SDL_CONTROLLERBUTTONDOWN);
         m_ButtonUpdateFrames[event.cbutton.button] = SDL_GetTicks64();
     }

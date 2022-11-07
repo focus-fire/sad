@@ -17,8 +17,8 @@ namespace sad
 		* Find entity and use transform data 
 		* to get position to create bounds.
 		*/
-		Bound(glm::vec3 position, glm::vec3 scale);
-		Bound(const sad::ecs::TransformComponent transformComponent);
+		explicit Bound(glm::vec3 position, glm::vec3 scale);
+		explicit Bound(const sad::ecs::TransformComponent transformComponent);
 		~Bound();
 
 		/*

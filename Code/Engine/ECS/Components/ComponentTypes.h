@@ -1,6 +1,6 @@
 #pragma once
 #include "LineRendererComponent.h"
-#include "PlayerControllerComponent.h"
+#include "ControllerComponent.h"
 #include "RenderableObjectComponent.h"
 #include "RenderableResourceComponent.h"
 #include "TransformComponent.h"
@@ -8,11 +8,11 @@
 /*
 #define COMPONENT_TYPES \
 sad::ecs::LineRendererComponent,\
-sad::ecs::PlayerControllerComponent, \
 sad::ecs::RenderableObjectComponent, \
-sad::ecs::RenderableResourceComponent, \
-sad::ecs::TransformComponent
 */
 
 #define COMPONENT_TYPES \
-sad::ecs::TransformComponent
+sad::ecs::TransformComponent, \
+sad::ecs::RenderableResourceComponent, \
+sad::ecs::PlayerControllerComponent, \
+sad::ecs::EditorControllerComponent

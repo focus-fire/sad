@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string>
 #include <nlohmann/json.hpp>
-#include "NJSONArchives.h"
-#include "Engine/ECS/Registry.h"
 #include <iomanip>
 #include <sstream>
+#include "NJSONArchives.h"
+#include "Engine/ECS/Registry.h"
 #include "Engine/ECS/Components/ComponentTypes.h"
 
 using json = nlohmann::json;

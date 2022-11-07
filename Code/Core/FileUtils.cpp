@@ -27,7 +27,6 @@ std::string core::FileUtils::ReadFile(const std::string& path, bool addLineEndin
 
 		return bufferString;
 	}
-	else core::Log(ELogType::Info, "Unable to open file: {}", path);
 	else core::Log(ELogType::Trace, "[FileUtils] Unable to open file: {}", path);
 
 	return "";

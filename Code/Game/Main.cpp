@@ -6,7 +6,6 @@
 
 #include <Game/Application.h>
 #include <Engine/Application.h>
-#include <Engine/JsonManager.h>
 
 int main(int argc, char* argv[])
 {
@@ -14,8 +13,7 @@ int main(int argc, char* argv[])
     core::Log(ELogType::Info, "this engine is sad.");
 
     pog::Application* app = new pog::Application();
-    sad::JsonManager::ExportLevel();
-    app->Start();
+    app->EngineStart();
     delete app;
 
     core::Log(ELogType::Info, "this engine is dead.");

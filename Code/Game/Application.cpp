@@ -35,8 +35,9 @@ void pog::Application::Start()
 	// Game logic is initialized here
 
 	// Create sample resource for a cube
-	sad::RenderableResource::Geometry cubeGeometry{ CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
-	m_CubeResource = new sad::RenderableResource(cubeGeometry);
+	RenderableResource::Geometry cubeGeometry = RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+	// TODO: Solve IResource constructor dilemma
+	RenderableResource cubeResource = RenderableResource({ "TestCube.fake", "TestCube.fake" }, cubeGeometry);
 
 	// Add resource and transform components to the entities
 	m_FirstCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });

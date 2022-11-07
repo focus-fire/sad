@@ -4,7 +4,6 @@
 #include "InputManager.h"
 
 #include <SDL2/SDL.h>
-#include <imgui.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -21,12 +20,14 @@
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Components/PlayerControllerComponent.h"
 
+#include "Renderer/RenderBuddy.h"
 #include "Renderer/VertexArray.h"
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/FrameBuffer.h"
-#include "Renderer/Shader.h"
+#include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
+#include "Window.h"
 #include "Transform.h"
 #include "RenderableObject.h"
 #include "PlayerController.h"
@@ -45,19 +46,14 @@ sad::Application::Application()
 	s_EngineStateManager = new sad::EngineStateManager(sad::EngineMode::Editor);
 
 	// Renderer and Editor have to be initialized after the main window
-	m_Renderer = new sad::rad::Renderer;
 	m_Editor = new cap::Editor;
 
 }
 
 sad::Application::~Application()
 {
-	delete m_Renderer;
 	delete s_MainWindow;
 	delete m_Editor;
-
-	// Remove when resource is abstracted
-	//delete m_CubeResource;
 }
 
 void sad::Application::EngineStart()
@@ -66,41 +62,18 @@ void sad::Application::EngineStart()
 	m_Editor->Start();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
-	m_Renderer->Start();
-
-	//// Create sample resource for a cube
-	//RenderableResource::Geometry cubeGeometry { CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount };
-	//m_CubeResource = new RenderableResource(cubeGeometry);
-
-	//// Add resource and transform components to the entities
-	//m_FirstCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
-	//m_FirstCubeEntity.AddComponent<ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
-	//m_FirstCubeEntity.AddEmptyComponent<ecs::PlayerControllerComponent>({});
-
-	//m_SecondCubeEntity.AddComponent<ecs::RenderableResourceComponent>({ m_CubeResource });
-	//m_SecondCubeEntity.AddComponent<ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
-
-	//// Create view matrices 
-	//glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-	//glm::mat4 viewMatrix = glm::lookAt(
-	//	glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-	//	glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-	//	glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	//);
-	//m_VpMatrix = projectionMatrix * viewMatrix;
-
-	//// Translation Logic (-pi to pi for demo)
-	//m_CubeTranslate = -1.0f * glm::pi<float>();
-	//m_LastTime = std::chrono::steady_clock::now();
-
-	bool isClosed = false;
+	rad::RenderBuddy::Start();
 
 	// Sample Event Signal For "UI" Group - Can Delete
 	core::SignalEvent("UI");
+
+	// TODO: Remove test resource code
+	ResourceManager::Import();
   
 	// Game Start
 	this->Start();
 
+	bool isClosed = false;
 	while (!isClosed) 
 	{
 		PollEvents(&isClosed);
@@ -122,20 +95,30 @@ void sad::Application::EngineStart()
 
 void sad::Application::PollEvents(bool* isClosed)
 {
+	InputManager& input = InputManager::GetInstance();
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) 
 	{
 		m_Editor->CatchSDLEvents(event);
+		input.CatchMouseEvents(event);
+		input.CatchKeyboardEvents(event);
+		input.CatchControllerEvents(event);
 
 		if (event.type == SDL_QUIT) 
-			*isClosed = true;
+			isClosed = true;
+
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
-			*isClosed = true;
+			isClosed = true;
+
 		if (event.type == SDL_CONTROLLERDEVICEADDED)
-			InputManager::GetInstance().OnControllerConnected(event.cdevice);
+			input.OnControllerConnected(event.cdevice);
+
 		if (event.type == SDL_CONTROLLERDEVICEREMOVED)
-			InputManager::GetInstance().OnControllerDisconnected(event.cdevice);
+			input.OnControllerDisconnected();
+
+		if (event.type == SDL_MOUSEMOTION) 
+			input.SetMousePosition(event.motion.x, event.motion.y);
 	}
 }
 
@@ -143,25 +126,14 @@ void sad::Application::Update(float dt)
 {
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
-	m_Renderer->Clear(0.55f, 0.65f, 0.50f, 1.0f);
+	rad::RenderBuddy::ClearColor(glm::vec4(0.55f, 0.65f, 0.50f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 
-	m_Renderer->BindFrameBuffer();
+	rad::RenderBuddy::BindFrameBuffer();
 
 	// Second 'pass' to recolor outside the framebuffer
-	m_Renderer->Clear(0.45f, 0.55f, 0.60f, 1.0f);
-
-	/* Game Logic Moved to game application */
-	
-	// Create view matrices 
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-	m_VpMatrix = projectionMatrix * viewMatrix;
+	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
 
 	/* Update ECS Systems */
 	core::UpdateEvents();
@@ -171,31 +143,22 @@ void sad::Application::Update(float dt)
 	/* Draw */
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	// TODO: Move render queries into a RenderingSystem
-	auto view = world.view<const ecs::RenderableObjectComponent, const ecs::TransformComponent>();
-	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
-	{
-		ecs::RenderableObjectComponent renderable = renderableObjectComponent;
+	/* Update ECS Systems */
+	sad::ecs::RenderableObjectSystem::Update(world);
+	PlayerController::Update();
 
-		rad::VertexArray* va = renderable.m_RenderableObject->GetVertexArray();
-		rad::IndexBuffer* ib = renderable.m_RenderableObject->GetIndexBuffer();
-		rad::Shader* shader = renderable.m_RenderableObject->GetShader();
+	/* Update Events Loop */
+	core::UpdateEvents();
 
-		// TODO: Retrieve the view projection matrix from the Camera 
-		glm::mat4 mvpMatrix = m_VpMatrix * transformComponent.m_Transform->GetTransformMatrix();
-		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-
-		m_Renderer->Draw(va, ib, shader);
-	}
+	/* Draw */
+	sad::ecs::RenderingSystem::Draw(world);
 
 	// Unbind framebuffer for next pass
-	m_Renderer->UnbindFrameBuffer();
+	rad::RenderBuddy::UnbindFrameBuffer();
 
 	/* Editor */
-	m_Editor->Render(m_Renderer->GetFrameBufferTexture());
-
-	/* Window */
-	s_MainWindow->Render();
+	m_Editor->RenderGameWindow(rad::RenderBuddy::GetFrameBufferTexture());
+	m_Editor->Render();
 }
 
 void sad::Application::Teardown()
@@ -204,5 +167,15 @@ void sad::Application::Teardown()
 	s_MainWindow->Teardown();
 }
 
+glm::mat4 sad::Application::GetViewProjectionMatrix()
+{
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 
+	glm::mat4 viewMatrix = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
+		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	);
 
+	return projectionMatrix * viewMatrix;
+}

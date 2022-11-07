@@ -4,9 +4,9 @@
 
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
+#include <imterm/terminal.hpp>
 
 #include <Engine/Application.h>
-#include <Game/Time.h>
 
 const char* UI_BODY_TEXT = "Welcome to the sadEngine!";
 const char* UI_TITLE_TEXT = "Welcome Title";
@@ -24,10 +24,10 @@ void ToggleEngineMode() {
 	sad::Application::s_EngineStateManager->ToggleEngineMode();
 }
 
-cap::Editor::Editor()		
-	: m_ShowGameWindow(true)
+cap::Editor::Editor()
+	: m_DebugTerminal(new cap::DebugTerminal())
 	, m_ShowWelcomeWindow(true)
-	, m_IsEditorInPlayMode(false)
+	, m_ShowGameWindow(true)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -37,15 +37,21 @@ cap::Editor::Editor()
 	m_GameWindowHeight = static_cast<float>(sad::Application::s_MainWindow->GetHeight()) / 1.25f;
 }
 
+cap::Editor::~Editor()
+{
+	delete m_DebugTerminal;
+}
+
 void cap::Editor::Start()
 {
 	ImGui_ImplSDL2_InitForOpenGL(sad::Application::s_MainWindow->GetSDLWindow(), sad::Application::s_MainWindow->GetGLContext());
 	ImGui_ImplOpenGL3_Init("#version 150");
 
+	m_DebugTerminal->Start();
+
 	// Sample Event Listener Creation - Can Delete
 	core::InitializeListener("UI", UIChangeBodyText);
 	core::InitializeListener("UI", UIChangeTitleText);
-	core::InitializeListener("ToggleEngineMode", ToggleEngineMode);
 }
 
 void cap::Editor::CatchSDLEvents(const SDL_Event& event)
@@ -74,15 +80,15 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImGui::End();
 }
 
-void cap::Editor::Render(unsigned int frameBufferTextureId)
+void cap::Editor::Render()
 {
-	RenderGameWindow(frameBufferTextureId);
+	m_DebugTerminal->Render();
 
 	if (m_ShowWelcomeWindow)
 	{
 		ImGui::Begin(UI_TITLE_TEXT, &m_ShowWelcomeWindow);
 		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
-		ImGui::Text(UI_BODY_TEXT);
+		ImGui::Text("%s", UI_BODY_TEXT);
 		
 		if (ImGui::Button("Close"))
 			m_ShowWelcomeWindow = false;

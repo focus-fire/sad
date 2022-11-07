@@ -12,6 +12,8 @@ project "GameTests"
     includedirs {
         "%{prj.location}/../Vendor/Catch2/single_include/",
         "%{prj.location}/../Code/",
+        -- Game Includes
+        "%{prj.location}/../Vendor/spdlog/include",
     }
 
     vpaths {
@@ -21,5 +23,6 @@ project "GameTests"
     }
 
     links {
+		"Core",
         "Game",
     }

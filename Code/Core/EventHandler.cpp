@@ -8,7 +8,7 @@ std::unordered_map<const char*, core::EventListener> Listeners;
  * @param eventFunction void Function
  * @param inUpdateLoop bool Optional parameter which is default false. Setting to true adds this listener to the event update loop which updates every frame 
 */
-void core::InitializeListener(const char* name, void(*eventFunction)(), bool inUpdateLoop)
+void core::InitializeListener(const char* name, std::function<void()> eventFunction, bool inUpdateLoop)
 {
 	// If a listener with the same name already exists, push the callback to it's eventFunction list
 	if (Listeners.count(name)>0)
@@ -18,13 +18,13 @@ void core::InitializeListener(const char* name, void(*eventFunction)(), bool inU
 			core::Log(ELogType::Warn, "Event listener initialization attempted with a different update state than it's parent listener, ignoring initialization");
 			return;
 		}
-		Listeners[name].eventFunction.push_back({ *eventFunction });
+		Listeners[name].eventFunction.push_back({ eventFunction });
 	}
 	// Otherwise, create a new listener
 	else
 	{
 		EventListener eventListener;
-		eventListener = { { *eventFunction }, inUpdateLoop };
+		eventListener = { { eventFunction }, inUpdateLoop };
 		Listeners[name] = eventListener;
 	}
 }

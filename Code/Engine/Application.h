@@ -53,17 +53,11 @@ namespace sad
 		static EngineStateManager* s_EngineStateManager;
 
 	private:
-		sad::rad::Renderer* m_Renderer = nullptr;
 		cap::Editor* m_Editor = nullptr;
 
-		//// Temporary Variables for Test Level
-		//RenderableResource* m_CubeResource;
-		//sad::ecs::Entity m_FirstCubeEntity;
-		//sad::ecs::Entity m_SecondCubeEntity;
+		// TODO: Abstract view projection matrix into camera
+		static glm::mat4 GetViewProjectionMatrix();
 
 		glm::mat4 m_VpMatrix;
-
-		//float m_CubeTranslate;
-		//std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
 	};
 }

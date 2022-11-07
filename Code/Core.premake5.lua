@@ -24,9 +24,15 @@ project "Core"
         "%{prj.location}",
     }
 
-    links {
-        "glad",
-    }
+	local linkers = {
+		"glad"
+	}
+
+	if os.target() == "windows" then
+		table.insert(linkers, "Rpcrt4") -- .lib, required for GUIDs
+	end
+
+    links { linkers }
 
 	filter "system:windows"
 		defines {
@@ -36,3 +42,4 @@ project "Core"
     filter "system:macosx"
         defines { "_MAC" }
     filter {}
+

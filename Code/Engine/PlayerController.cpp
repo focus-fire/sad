@@ -14,7 +14,7 @@
 
 sad::PlayerController::PlayerController() 
 {
-	AudioManager::GetInstance().loadAudioFile("footstep", "xd.wav", 10, WAV);
+	AudioManager::GetInstance().loadAudioFile("footstep", "step.wav", 10, WAV);
 	AudioManager::GetInstance().loadAudioFile("jump", "jump.wav", 10, WAV);
 }
 

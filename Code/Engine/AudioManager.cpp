@@ -59,7 +59,7 @@ void sad::AudioManager::PlaySFX(std::string fileName)
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it) 
     {
-        if (it->filename.compare(fileName) == 0)
+        if (it->fileName.compare(fileName) == 0)
         {
             if (Mix_Playing(-1) == 0)
             {
@@ -75,7 +75,7 @@ void sad::AudioManager::PlayMusic(std::string fileName, int times)
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
     {
-        if (it->filename.compare(fileName) == 0)
+        if (it->fileName.compare(fileName) == 0)
         {
             Mix_PlayMusic(it->mixMusic, times - 1);
             break;
@@ -87,7 +87,7 @@ void sad::AudioManager::SetVolume(std::string fileName, int volume)
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
     {
-        if (it->filename.compare(fileName) == 0)
+        if (it->fileName.compare(fileName) == 0)
         {
             if (it->type == WAV) Mix_VolumeChunk(it->mixChunk, volume);
             if (it->type == MP3) Mix_VolumeMusic(volume);

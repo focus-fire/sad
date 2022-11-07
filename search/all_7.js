@@ -6,5 +6,7 @@ var searchData=
   ['initializelistener_67',['InitializeListener',['../namespacecore.html#a47af541f1d12c93ed3bc218e4a2e55df',1,'core']]],
   ['inputmanager_68',['InputManager',['../classsad_1_1InputManager.html',1,'sad']]],
   ['iresource_69',['IResource',['../classsad_1_1IResource.html',1,'sad']]],
-  ['isnull_70',['IsNull',['../classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46',1,'core::Guid']]]
+  ['iscontrolleractive_70',['IsControllerActive',['../classsad_1_1InputManager.html#a3b1bb503365d6295500fc3bbb03c4138',1,'sad::InputManager']]],
+  ['iscontrollerconnected_71',['IsControllerConnected',['../classsad_1_1InputManager.html#ac3a1b50e050a07dcf2a1ad14c4a79095',1,'sad::InputManager']]],
+  ['isnull_72',['IsNull',['../classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46',1,'core::Guid']]]
 ];

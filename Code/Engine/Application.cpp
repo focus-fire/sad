@@ -15,6 +15,7 @@
 #include "ECS/Registry.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/RenderingSystem.h"
+#include "ECS/Systems/PlayerControllerSystem.h"
 
 #include "Renderer/RenderBuddy.h"
 #include "Renderer/VertexArray.h"
@@ -26,7 +27,6 @@
 #include "InputManager.h"
 #include "Transform.h"
 #include "RenderableObject.h"
-#include "PlayerController.h"
 #include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;

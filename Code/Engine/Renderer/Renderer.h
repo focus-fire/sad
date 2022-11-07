@@ -5,9 +5,9 @@
 #include "VertexArray.h"
 #include "IndexBuffer.h"
 #include "FrameBuffer.h"
-#include "Texture.h"
+#include "TextureResource.h"
 #include "RenderBuffer.h"
-#include "Shader.h"
+#include "ShaderResource.h"
 
 namespace sad::rad
 {
@@ -41,7 +41,7 @@ namespace sad::rad
 
 	private:
 		FrameBuffer* m_FrameBuffer;
-		Texture* m_FrameBufferTexture;
+		TextureResource* m_FrameBufferTexture;
 		RenderBuffer* m_RenderBuffer;
 	};
 }

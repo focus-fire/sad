@@ -9,6 +9,6 @@ namespace sad::ecs
 {
 	struct LineRendererComponent
 	{
-		Pointer<LineRenderer> m_LineRenderer;
+		core::Pointer<LineRenderer> m_LineRenderer;
 	};
 }

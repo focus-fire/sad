@@ -17,7 +17,7 @@ void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
 		if (!res.m_IsResourceDirty)
 			continue;
 		
-		Pointer<RenderableObject> renderable = CreatePointer<RenderableObject>(res.m_RenderableResource);
+		core::Pointer<RenderableObject> renderable = core::CreatePointer<RenderableObject>(res.m_RenderableResource);
 		SAD_ASSERT(renderable, "Failed to create RenderableObject from RenderableResource");
 		world.emplace<RenderableObjectComponent>(entity, renderable);
 

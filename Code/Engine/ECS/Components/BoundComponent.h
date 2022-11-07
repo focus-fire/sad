@@ -12,6 +12,6 @@ namespace sad::ecs
 	*/
 	struct BoundComponent
 	{
-		Bound* m_Bound;
+		core::Pointer<Bound> m_Bound;
 	};
 }

@@ -2,13 +2,7 @@
 
 std::unordered_map<const char*, core::EventListener> Listeners;
 
-/**
- * @brief Initializes an event listener for a function
- * @param name const char* Key name used to signal
- * @param eventFunction void Function
- * @param inUpdateLoop bool Optional parameter which is default false. Setting to true adds this listener to the event update loop which updates every frame 
-*/
-void core::InitializeListener(const char* name, std::function<void()> eventFunction, bool inUpdateLoop)
+void core::InitializeListener(const char* name, std::function<void(void)> eventFunction, bool inUpdateLoop)
 {
 	// If a listener with the same name already exists, push the callback to it's eventFunction list
 	if (Listeners.count(name)>0)
@@ -29,10 +23,6 @@ void core::InitializeListener(const char* name, std::function<void()> eventFunct
 	}
 }
 
-/**
- * @brief Signal all event functions within a listener
- * @param name const char* Key Name
-*/
 void core::SignalEvent(const char* name)
 {
 	// Loop through callbacks within the listener
@@ -42,10 +32,6 @@ void core::SignalEvent(const char* name)
 	}
 }
 
-/**
- * @brief Delete a whole event listener
- * @param name const char* Key Name
-*/
 void core::RemoveListener(const char* name)
 {
 	Listeners.erase(name);

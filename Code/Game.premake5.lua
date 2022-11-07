@@ -1,5 +1,5 @@
 project "Game"
-    kind "ConsoleApp"
+    kind "WindowedApp"
     dependson { "Engine" }
 
 	targetdir "%{wks.location}/Build/Bin/%{prj.name}"
@@ -19,13 +19,16 @@ project "Game"
 
     -- Manually resolve includes and links by target platform
     -- The following logic checks the premake target OS and matches it to the appropriate includes
-    -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior 
+    -- Warning: Using table.insert() and typical lua logic in normal filters may cause unexpected behavior
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
+		"%{prj.location}/../Vendor/imgui",
+		"%{prj.location}/../Vendor/ImTerm/include",
+		"%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}",
     }
 
@@ -41,11 +44,11 @@ project "Game"
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
-		table.insert(linkers, "SDL2_mixer") -- .dll
+		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-        table.insert(linkers, "SDL2.framework")
-		table.insert(linkers, "SDL2_mixer.framework")
+        table.insert(linkers, "SDL2.framework") -- .framework
+        table.insert(linkers, "assimp.framework") -- .framework
     end
 
     includedirs { includes }
@@ -53,24 +56,38 @@ project "Game"
     links { linkers }
 
     filter "system:windows"
-        libdirs { "%{prj.location}/../Vendor/SDL/lib/win" }
+        libdirs {
+			"%{prj.location}/../Vendor/SDL/lib/win",
+			"%{prj.location}/../Vendor/assimp/lib/win",
+		}
     filter "system:macosx"
-        frameworkdirs { "%{prj.location}/../Vendor/SDL/lib/mac" }
+        frameworkdirs {
+			"%{prj.location}/../Vendor/SDL/lib/mac",
+			"%{prj.location}/../Vendor/assimp/lib/mac",
+		}
     filter {}
 
     filter "system:windows"
-	defines { 
+        defines {
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }
         postbuildcommands {
-            -- Copy the SDL .dll to the application directory where it can be found at runtime
-            "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)", 
+            -- Copy the SDL .dll to the application directory
+            "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)",
+			-- Copy the assimp .dll to the application directory
+			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }
     filter "system:macosx"
-        defines { "_MAC" }
-        postbuildcommands {
-            -- Copy the SDL framework to the local framework directory where it can be found at runtime
-            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks"
+        defines {
+			"_MAC"
+		}
+        -- Copy required mac frameworks to local framework directory before linking begins
+        prebuildcommands {
+            -- Copy the SDL framework to the local framework directory
+            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks",
+
+            -- Copy the assimp framework to the local framework directory
+            "{COPY} %{wks.location}/Vendor/assimp/lib/mac/assimp.framework ~/Library/Frameworks",
         }
     filter {}

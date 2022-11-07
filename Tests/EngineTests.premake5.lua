@@ -12,6 +12,10 @@ project "EngineTests"
     includedirs {
         "%{prj.location}/../Vendor/Catch2/single_include/",
         "%{prj.location}/../Code/",
+        -- Engine Includes
+        "%{prj.location}/../Vendor/spdlog/include",
+        "%{prj.location}/../Vendor/glm",
+        "%{prj.location}/../Vendor/entt/single_include",
     }
 
     vpaths {
@@ -21,5 +25,6 @@ project "EngineTests"
     }
 
     links {
+		"Core",
         "Engine",
     }

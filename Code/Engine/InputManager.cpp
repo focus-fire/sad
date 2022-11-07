@@ -13,22 +13,75 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
-/**
- * @brief Set the controller when a new controller is connected;
- * @param e 
-*/
-void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
+// Keyboard Events
+
+void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 {
-    if (SDL_IsGameController(e.which))
+    if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && !event.key.repeat)
     {
-        if (ControllerIsActive)
+        m_KeyboardState[event.key.keysym.scancode] = (event.type == SDL_KEYDOWN);
+        m_KeyboardUpdateFrames[event.key.keysym.scancode] = SDL_GetTicks64();
+    }
+}
+
+bool sad::InputManager::GetKey(KeyCode key)
+{
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return SDL_GetKeyboardState(nullptr)[keyScancode];
+}
+
+bool sad::InputManager::GetKeyPressed(KeyCode key)
+{
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return m_KeyboardState[keyScancode] && (m_KeyboardUpdateFrames[keyScancode] == SDL_GetTicks64());
+}
+
+bool sad::InputManager::GetKeyReleased(KeyCode key)
+{
+    SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
+    return !m_KeyboardState[keyScancode] && (m_KeyboardUpdateFrames[keyScancode] == SDL_GetTicks64());
+}
+
+// Mouse Events
+
+void sad::InputManager::CatchMouseEvents(SDL_Event& event)
+{
+    if (event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEBUTTONDOWN)
+    {
+        m_MouseState[event.button.button] = (event.type == SDL_MOUSEBUTTONDOWN);
+        m_MouseUpdateFrames[event.button.button] = SDL_GetTicks64();
+    }
+}
+
+bool sad::InputManager::GetMouseButton(int button)
+{
+    return (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button));
+}
+
+bool sad::InputManager::GetMouseButtonPressed(int button)
+{
+    return m_MouseState[button] && (m_MouseUpdateFrames[button] == SDL_GetTicks64());
+}
+
+bool sad::InputManager::GetMouseButtonReleased(int button)
+{
+    return !m_MouseState[button] && (m_MouseUpdateFrames[button] == SDL_GetTicks64());
+}
+
+// Controller Events
+
+void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& event)
+{
+    if (SDL_IsGameController(event.which))
+    {
+        if (m_ControllerIsActive)
         {
             core::Log(ELogType::Error, "Tried to connect a controller but there is already one connected");
             return;
         }
 
-        ControllerIsActive = true;
-        controller = SDL_GameControllerOpen(e.which);
+        m_ControllerIsActive = true;
+        m_Controller = SDL_GameControllerOpen(event.which);
 
         core::Log(ELogType::Trace, "Initializing Control Settings");
         ControllerDeadZone = std::stof(sad::ConfigManager::GetValue("controls", "deadzone"));
@@ -41,134 +94,96 @@ void sad::InputManager::OnControllerConnected(SDL_ControllerDeviceEvent& e)
     }
 }
 
-/**
- * @brief Unsets the controller when controller disconnected;
- * @param e
-*/
-void sad::InputManager::OnControllerDisconnected(SDL_ControllerDeviceEvent& e)
+void sad::InputManager::OnControllerDisconnected()
 {
     core::Log(ELogType::Info, "Controller Disconnected");
-    ControllerIsActive = false;
-    controller = nullptr;
+    m_ControllerIsActive = false;
+    m_Controller = nullptr;
 }
 
-/**
- * @brief Returns true if a specified controller button is held.
- * @param button
- * @return
-*/
-bool sad::InputManager::GetButton(SDL_GameControllerButton button)
+void sad::InputManager::CatchControllerEvents(SDL_Event& event)
 {
-    if (controller == nullptr)
-        return false;
-
-    return SDL_GameControllerGetButton(controller, button);
-}
-
-/**
- * @brief Returns true if a specified controller button is pressed in the current frame.
- * @param button
- * @return
-*/
-bool sad::InputManager::GetButtonPressed(SDL_GameControllerButton button)
-{
-    if (controller == nullptr)
-        return false;
-
-    if (!GetControllerButtonState(button) && SDL_GameControllerGetButton(controller, button)) {
-        UpdateControllerButtonState(button, true);
-        return true;
+    if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERBUTTONUP)
+    {
+        m_ButtonState[event.cbutton.button] = (event.type == SDL_CONTROLLERBUTTONDOWN);
+        m_ButtonUpdateFrames[event.cbutton.button] = SDL_GetTicks64();
     }
-    return false;
 }
 
-/**
- * @brief Returns true if a specified controller button is released in the current frame.
- * @param button
- * @return
-*/
-bool sad::InputManager::GetButtonReleased(SDL_GameControllerButton button)
+bool sad::InputManager::GetButton(ControllerButton button)
 {
-    if (controller == nullptr)
+    if (m_Controller == nullptr)
         return false;
 
-    if (GetControllerButtonState(button) && !SDL_GameControllerGetButton(controller, button)) {
-        UpdateControllerButtonState(button, false);
-        return true;
-    }
-    return false;
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
+
+    return SDL_GameControllerGetButton(m_Controller, ctrlButton);
 }
 
-/**
- * @brief Returns the value rounded to 1.0 of a given axis
- * @param axis 
- * @return 
-*/
+bool sad::InputManager::GetButtonPressed(ControllerButton button)
+{
+    if (m_Controller == nullptr)
+        return false;
+
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
+
+    return m_ButtonState[ctrlButton] && (m_ButtonUpdateFrames[ctrlButton] == SDL_GetTicks64());
+}
+
+bool sad::InputManager::GetButtonReleased(ControllerButton button)
+{
+    if (m_Controller == nullptr)
+        return false;
+    SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
+
+    return !m_ButtonState[ctrlButton] && (m_ButtonUpdateFrames[ctrlButton] == SDL_GetTicks64());
+}
+
 float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 {
-    if (controller == nullptr)
+    if (m_Controller == nullptr)
         return 0.f;
 
-    float roundedAxis = SDL_GameControllerGetAxis(controller, axis) / 32767.f;
-    roundedAxis = std::ceil(roundedAxis * 10.0) / 10.0;
+    float roundedAxis = SDL_GameControllerGetAxis(m_Controller, axis) / 32767.f;
+    roundedAxis = static_cast<float>(std::ceil(roundedAxis * 10.0) / 10.0);
 
     return roundedAxis;
 }
 
-/**
- * @brief Returns true if the key coresponding to the scancode is down.
- * @param key 
- * @return 
-*/
-bool sad::InputManager::GetKey(SDL_Scancode key) 
+float sad::InputManager::GetLeftAxis(const std::string& orientation)
 {
-    UpdateKeyboardState(key, CurrentKeyboardStates[key]);
-    return GetKeyboardState(key);
-}
+    SDL_GameControllerAxis axis;
 
-/**
- * @brief Returns true if key coresponding to the scancode is pressed in the current frame.
- * @param key 
- * @return 
-*/
-bool sad::InputManager::GetKeyPressed(SDL_Scancode key)
-{
-    if (!GetKeyboardState(key) && CurrentKeyboardStates[key]) {
-        UpdateKeyboardState(key, true);
-        return true;
+    if (orientation == "Horizontal")
+    {
+        axis = SDL_CONTROLLER_AXIS_LEFTX;
+        return GetAxis(axis);
     }
-    return false;
-}
 
-/**
- * @brief Returns true if key coresponding to the scancode is released in the current frame.
- * @param key
- * @return
-*/
-bool sad::InputManager::GetKeyReleased(SDL_Scancode key)
-{
-    if (GetKeyboardState(key) && !CurrentKeyboardStates[key]) {
-        UpdateKeyboardState(key, false);
-        return true;
+    if (orientation == "Vertical")
+    {
+        axis = SDL_CONTROLLER_AXIS_LEFTY;
+        return GetAxis(axis);
     }
-    return false;
+
+    return 0.f;
 }
 
-bool sad::InputManager::GetMouseButton(SDL_MouseButtonEvent button)
+float sad::InputManager::GetRightAxis(const std::string& orientation)
 {
-    return false;
+    SDL_GameControllerAxis axis;
+
+    if (orientation == "Horizontal")
+    {
+        axis = SDL_CONTROLLER_AXIS_RIGHTX;
+        return GetAxis(axis);
+    }
+
+    if (orientation == "Vertical")
+    {
+        axis = SDL_CONTROLLER_AXIS_RIGHTY;
+        return GetAxis(axis);
+    }
+
+    return 0.f;
 }
-
-bool sad::InputManager::GetMouseButtonPressed(SDL_MouseButtonEvent button)
-{
-    return false;
-}
-
-bool sad::InputManager::GetMouseButtonReleased(SDL_MouseButtonEvent button)
-{
-    return false;
-}
-
-
-
-

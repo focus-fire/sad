@@ -4,6 +4,8 @@
 
 #include <Engine/Window.h>
 
+#include "DebugTerminal.h"
+
 /*
  * "That editor is cap!"
  */
@@ -14,6 +16,7 @@ namespace cap
 	{
 	public:
 		explicit Editor();
+		~Editor();
 
 		void Start();
 		void CatchSDLEvents(const SDL_Event& event);
@@ -27,9 +30,10 @@ namespace cap
 		void Teardown();
 
 	private:
-		bool m_ShowGameWindow;
-		bool m_ShowWelcomeWindow;
+		DebugTerminal* m_DebugTerminal;
 
+		bool m_ShowWelcomeWindow;
+		bool m_ShowGameWindow;
 		float m_GameWindowWidth;
 		float m_GameWindowHeight;
 	};

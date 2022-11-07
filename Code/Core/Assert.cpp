@@ -15,7 +15,7 @@ bool GLWriteErrorLog(const char* function, const char* file, int line)
 
 	while ((error = glGetError()))
 	{
-		core::Log(ELogType::Assert, "OpenGL Error #{} - {} @ {} line {}", error, function, file, line);
+		core::Log(ELogType::Assert, "[GLError] OpenGL Error #{} - {} @ {} line {}", error, function, file, line);
 		return false;
 	}
 

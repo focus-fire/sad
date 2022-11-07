@@ -1,5 +1,7 @@
 #pragma once
 
+#include <random>
+
 /**
  * @brief The number people learn to recite for fun
 */
@@ -57,5 +59,17 @@ namespace core
 		 * @return Number clamped between the minimum and maximum
 		*/
 		static float Clamp(float x, float min, float max);
+
+		/**
+		 * @brief Generates a pseudo-random number between a specified min and max
+		 * @param min Minimum bound for random number
+		 * @param mx Maximum bound for random number 
+		 * @return Generated pseudo-random number
+		*/
+		static int RandomBetween(int min, int max);
+
+	private:
+		static std::random_device m_RandomDevice;
+		static std::mt19937 m_RandomGenerator;
 	};
 }

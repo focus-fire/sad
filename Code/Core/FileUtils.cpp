@@ -4,9 +4,10 @@
 
 #include <stdlib.h>
 
-std::string core::FileUtils::ReadFile(const std::string& path)
+std::string core::FileUtils::ReadFile(const std::string& path, bool addLineEndings)
 {
 	std::string line;
+	std::string lineBreak = addLineEndings ? "\n" : "";
 	std::ifstream fileStream = std::ifstream(path);
 
 	if (fileStream.is_open())
@@ -14,12 +15,19 @@ std::string core::FileUtils::ReadFile(const std::string& path)
 		std::stringstream buffer;
 		while (getline(fileStream, line))
 		{
-			buffer << line;
+			buffer << line << lineBreak;
 		}
+
 		fileStream.close();
-		return buffer.str();
+
+		// Remove line break added at the end of the file 
+		std::string bufferString = buffer.str();
+		std::size_t lastLineBreak = bufferString.find_last_of(lineBreak);
+		bufferString = bufferString.substr(0, lastLineBreak);
+
+		return bufferString;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open file: {}", path);
 
 	return "";
 }
@@ -30,12 +38,14 @@ bool core::FileUtils::WriteFile(const std::string& path, const std::string& cont
 
 	if (fileStream.is_open())
 	{
-		core::Log(ELogType::Trace, "File Opened {}", path);
+		core::Log(ELogType::Trace, "[FileUtils] {} opened for writing", path);
+
 		fileStream << content << std::endl;
 		fileStream.close();
+
 		return true;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open {}", path);
 
 	return false;
 }
@@ -50,7 +60,7 @@ bool core::FileUtils::AppendFile(const std::string& path, const std::string& con
 		outFileStream << content << std::endl;
 		return true;
 	}
-	else core::Log(ELogType::Trace, "Unable to open file: {}", path);
+	else core::Log(ELogType::Trace, "[FileUtils] Unable to open {}", path);
 
 	return false;
 }
@@ -58,6 +68,11 @@ bool core::FileUtils::AppendFile(const std::string& path, const std::string& con
 bool core::FileUtils::RemoveFile(const std::string& path)
 {
 	return std::remove(path.c_str()) == 0;
+}
+
+bool core::FileUtils::PathExists(const std::string& path)
+{
+	return std::filesystem::exists(path);
 }
 
 std::string core::FileUtils::GetProjectDirectory()
@@ -79,18 +94,18 @@ std::string core::FileUtils::GetProjectDirectory()
 
 std::string core::FileUtils::GetDataDirectory()
 {
-	std::string dataDirectory = GetProjectDirectory();
-	dataDirectory += ConvertOSPathString("/Data");
+	std::string projectDirectory = std::move(GetProjectDirectory());
+	std::string dataDirectory = std::move(ConvertOSPathString("/Data/"));
 
-	return dataDirectory;
+	return projectDirectory.append(dataDirectory);
 }
 
 std::string core::FileUtils::GetCodeDirectory()
 {
-	std::string codeDirectory = GetProjectDirectory();
-	codeDirectory += ConvertOSPathString("/Code");
+	std::string projectDirectory = std::move(GetProjectDirectory());
+	std::string codeDirectory = std::move(ConvertOSPathString("/Code/"));
 
-	return codeDirectory;
+	return projectDirectory.append(codeDirectory);
 }
 
 std::string core::FileUtils::ConvertOSPathString(const std::string& path)
@@ -102,4 +117,20 @@ std::string core::FileUtils::ConvertOSPathString(const std::string& path)
 #endif
 	
 	return convertedPath;
+}
+
+std::string core::FileUtils::GetPathInsideDataDirectory(const std::string& path)
+{
+	std::string dataDirectory = std::move(GetDataDirectory());
+	std::string osPath = std::move(ConvertOSPathString(path));
+
+	return dataDirectory.append(osPath);
+}
+
+std::string core::FileUtils::GetPathInsideCodeDirectory(const std::string& path)
+{
+	std::string codeDirectory = std::move(GetCodeDirectory());
+	std::string osPath = std::move(ConvertOSPathString(path));
+
+	return codeDirectory.append(osPath);
 }

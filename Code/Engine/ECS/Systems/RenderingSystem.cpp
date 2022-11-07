@@ -24,9 +24,9 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
 		core::Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
-		sad::rad::VertexArray* vertexArray = renderable->GetVertexArray();
-		sad::rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
-		sad::rad::Shader* shader = renderable->GetShader();
+		rad::VertexArray* vertexArray = renderable->GetVertexArray();
+		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
+		rad::ShaderResource* shader = renderable->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera 
 		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
@@ -43,8 +43,7 @@ void sad::ecs::RenderingSystem::RenderLines(EntityWorld& world)
 	for (auto [entity, lineRendererComponent] : view.each())
 	{
 		core::Pointer<LineRenderer> lineRenderer = lineRendererComponent.m_LineRenderer;
-
-		rad::Shader* shader = lineRenderer->GetShader();
+		rad::ShaderResource* shader = lineRenderer->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera
 		glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();

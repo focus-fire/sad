@@ -9,7 +9,7 @@
 sad::Window::Window(const WindowProperties& properties)
 	: m_Properties(properties)
 {
-	core::Log(ELogType::Info, "Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
+	core::Log(ELogType::Info, "[Window] Creating a window [{} - {}x{}]", m_Properties.Title, m_Properties.Width, m_Properties.Height);
 
   int result = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER);
 	SAD_ASSERT(result >= 0, "Failed to initialize SDL context");
@@ -54,7 +54,7 @@ void sad::Window::CreateGLContext()
 	SAD_ASSERT(glad, "Failed to initialize GLAD");
 
 	const char* version = reinterpret_cast<const char*>(glGetString(GL_VERSION));
-	core::Log(ELogType::Info, "Aha! Welcome to OpenGL v{}", version);
+	core::Log(ELogType::Info, "[Window] Aha! Welcome to OpenGL v{}", version);
 }
 
 void sad::Window::Render()

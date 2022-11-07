@@ -13,7 +13,7 @@
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Components/LineRendererComponent.h>
 
-#include "Shader.h"
+#include "ShaderResource.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 

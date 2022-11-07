@@ -12,7 +12,10 @@ extern "C"
 
 #include <string>
 
+#include <Core/Log.h>
+#include <Core/Hash.h>
 #include <Core/Assert.h>
+#include <Core/MathUtils.h>
 
 namespace core
 {
@@ -23,10 +26,21 @@ namespace core
 	{
 	public:
 		/**
+		 * @brief Default constructor creates an empty GUID
+		*/
+		Guid();
+
+		/**
 		 * @brief Factory method to generate platform-specific GUIDs
-		 * @return Properly constructed platform specific GUID
+		 * @return Properly constructed engine GUID
 		*/
 		static Guid CreateGuid();
+
+		/**
+		 * @brief Factory method to recreate a platform-specific GUID from a string
+		 * @return Properly constructed engine GUID
+		*/
+		static Guid RecreateGuid(const std::string& stringGuid);
 
 		/**
 		 * @brief Retrieves string representation for the GUID 
@@ -78,8 +92,6 @@ namespace core
 		}
 
 	private:
-		Guid();
-
 		std::string m_StringGuid;
 
 		/**
@@ -94,12 +106,27 @@ namespace core
 		static int CompareGuid(const Guid& a, const Guid& b);
 
 #ifdef _SAD_WINDOWS
-		Guid(UUID uuid);
-		UUID m_Guid;
+		explicit Guid(GUID guid);
+		GUID m_Guid;
 #else
-		Guid(uuid_t uuid);
+		explicit Guid(uuid_t uuid);
 		uuid_t m_Guid;
 #endif
 	};
-
 }
+
+/**
+ * @brief Generic template specialization for std::hash to use custom hashing function for injection of Guids into 'unordered' structures
+*/
+template<>
+struct std::hash<core::Guid>
+{
+	std::size_t operator()(core::Guid const& guid) const noexcept
+	{
+		SAD_ASSERT(!guid.IsNull(), "Hashed GUID is null and does not exist, was the GUID created properly?");
+
+		// TODO: Research better method for seeding hashes...
+		size_t seed = 0xadbebcdb * core::MathUtils::RandomBetween(0, 64);
+		return core::HashCombine(seed, guid.ToString());
+	}
+};

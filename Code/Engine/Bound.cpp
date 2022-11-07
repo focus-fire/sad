@@ -36,3 +36,24 @@ void sad::Bound::CalculateBound(glm::vec3 position, glm::vec3 scale) {
 	float zMin = position.z - (scale.z / 2);
 	m_Min = glm::vec3(xMin, yMin, zMin);
 }
+
+bool sad::Bound::Intersects(glm::vec3 otherMax, glm::vec3 otherMin) 
+{
+	return IntersectionMaxMin(otherMax, otherMin);
+}
+
+bool sad::Bound::Intersects(sad::ecs::BoundComponent otherBound) {
+	glm::vec3 otherBMax = otherBound.m_Bound->GetBoundMax();
+	glm::vec3 otherBMin = otherBound.m_Bound->GetBoundMin();
+	return IntersectionMaxMin(otherBMax, otherBMin);
+}
+
+bool sad::Bound::IntersectionMaxMin(glm::vec3 otherMax, glm::vec3 otherMin) {
+	return
+		m_Min.x <= otherMin.x &&
+		m_Max.x >= otherMax.x &&
+		m_Min.y <= otherMin.y &&
+		m_Max.y >= otherMax.y &&
+		m_Min.z <= otherMin.z &&
+		m_Max.z >= otherMax.z;
+}

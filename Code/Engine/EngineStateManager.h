@@ -16,27 +16,15 @@ namespace sad
 	class EngineStateManager
 	{
 	public:
-		/**
-		 * @brief 
-		 * @param mode 
-		*/
 		EngineStateManager(EEngineMode mode = EEngineMode::Editor);
 
 		/**
-		 * @brief 
-		 * @return 
+		 * @brief Retrieves the current engine mode 
 		*/
 		EEngineMode GetEngineMode() { return m_EngineMode; }
 
 		/**
-		 * @brief 
-		 * @param mode 
-		 * @return 
-		*/
-		EEngineMode SetEngineMode(EEngineMode mode) { m_EngineMode = mode; }
-
-		/**
-		 * @brief 
+		 * @brief Toggles the current engine mode between Editor and Game
 		*/
 		void ToggleEngineMode();
 

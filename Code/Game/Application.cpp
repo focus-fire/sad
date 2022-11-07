@@ -49,6 +49,8 @@ void pog::Application::Start()
 
 void pog::Application::Update(float dt)
 {
+	std::lock_guard g = std::lock_guard<std::mutex>(m_GameMutex);
+
 	auto currentTime = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;

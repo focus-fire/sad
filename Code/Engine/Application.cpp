@@ -2,6 +2,8 @@
 
 #include "Application.h"
 
+#include <future>
+
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -11,6 +13,7 @@
 #include <glm/gtc/matrix_inverse.hpp>
 
 #include <Game/Time.h>
+#include <Game/Application.h>
 
 #include "ECS/Registry.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
@@ -26,6 +29,7 @@
 
 #include "InputManager.h"
 #include "Transform.h"
+#include "InputManager.h"
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
 
@@ -48,42 +52,48 @@ sad::Application::~Application()
 
 void sad::Application::EngineStart()
 {
+	// Import Resources
+	ResourceManager::Import();
+
 	// Launch editor 
 	m_Editor->Start();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
-
-	// Import Resources
-	ResourceManager::Import();
-
-	// Sample Event Signal For "UI" Group - Can Delete
-	core::SignalEvent("UI");
   
 	// Game Start
 	this->Start();
 
-	bool isClosed = false;
-	while (!isClosed) 
-	{
-		PollEvents(&isClosed);
-		
-		float dt = pog::Time::GetDeltaTime();
+	bool isWindowClosed = false;
 
-		if (m_EngineStateManager.GetEngineMode() == EEngineMode::Game)
+	std::thread gameThread = std::thread([&]() 
+	{
+		while (!isWindowClosed)
 		{
-			// Game Update
-			this->Update(dt);
+			if (m_EngineStateManager.GetEngineMode() == EEngineMode::Game)
+			{
+				// Game Update
+				float dt = pog::Time::GetDeltaTime();
+				this->Update(dt);
+			}
 		}
+	});
+
+	while (!isWindowClosed) 
+	{
+		PollEvents(isWindowClosed);
 
 		// Engine Update
+		float dt = pog::Time::GetDeltaTime();
 		sad::Application::Update(dt);
 	}
+
+	gameThread.join();
 
 	Teardown();
 }
 
-void sad::Application::PollEvents(bool* isClosed)
+void sad::Application::PollEvents(bool& isWindowClosed)
 {
 	InputManager& input = InputManager::GetInstance();
 	SDL_Event event;
@@ -94,14 +104,14 @@ void sad::Application::PollEvents(bool* isClosed)
 		input.CatchMouseEvents(event);
 		input.CatchKeyboardEvents(event);
     
-    if (input.IsControllerConnected())
-		  input.CatchControllerEvents(event);
+		if (input.IsControllerConnected())
+			input.CatchControllerEvents(event);
 
 		if (event.type == SDL_QUIT) 
-			*isClosed = true;
+			isWindowClosed = true;
 
 		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(s_MainWindow->GetSDLWindow()))
-			*isClosed = true;
+			isWindowClosed = true;
 
 		if (event.type == SDL_CONTROLLERDEVICEADDED)
 			input.OnControllerConnected(event.cdevice);
@@ -129,14 +139,14 @@ void sad::Application::Update(float dt)
 
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	// Update ECS systems
-	ecs::RenderableObjectSystem::Update(world);
-	ecs::PlayerControllerSystem::Update(world);
-
 	// Update events subscribed to the update loop
 	core::UpdateEvents();
 
+	// Update non-gameplay ECS systems
+	ecs::PlayerControllerSystem::Update(world);
+
 	// Drawing 
+	ecs::RenderableObjectSystem::Update(world);
 	ecs::RenderingSystem::Draw(world);
 
 	// Unbind framebuffer for next pass

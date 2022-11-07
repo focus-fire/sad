@@ -15,7 +15,7 @@ namespace pog
 
 		void Update(float dt) override;
 		void Teardown() override;
-	
+
 	private:
 		// Temporary Variables for Test Level
 		sad::RenderableResource* m_CubeResource;
@@ -23,6 +23,8 @@ namespace pog
 
 		sad::ecs::Entity m_FirstCubeEntity;
 		sad::ecs::Entity m_SecondCubeEntity;
+
+		std::mutex m_GameMutex;
 
 		float m_CubeTranslate;
 		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;

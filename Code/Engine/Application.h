@@ -1,5 +1,7 @@
 #pragma once 
 
+#include <thread>
+
 #include <Editor/Editor.h>
 
 #include "ECS/Entity.h"
@@ -8,7 +10,6 @@
 #include "Window.h"
 #include "RenderableResource.h"
 #include "EngineStateManager.h"
-
 
 struct SDL_Window;
 
@@ -36,7 +37,7 @@ namespace sad
 		/**
 		 * @brief Lifecycle method that polls for window events and submits events to required systems
 		*/
-		void PollEvents(bool* isClosed);
+		void PollEvents(bool& isClosed);
 
 		/**
 		 * @brief Main update loop for the Engine

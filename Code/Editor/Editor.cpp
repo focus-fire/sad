@@ -10,22 +10,8 @@
 
 #include <Game/Time.h>
 
-const char* UI_BODY_TEXT = "Welcome to the sadEngine!";
-const char* UI_TITLE_TEXT = "Welcome Title";
-
-// Sample Event Functions - Can Delete
-void UIChangeBodyText()
-{
-	UI_BODY_TEXT = "Event System up and running";
-}
-void UIChangeTitleText()
-{
-	UI_TITLE_TEXT = "Welcome!!!";
-}
-
 cap::Editor::Editor()
 	: m_DebugTerminal(new cap::DebugTerminal())
-	, m_ShowWelcomeWindow(true)
 	, m_ShowGameWindow(true)
 	, m_IsEditorInPlayMode(false)
 {
@@ -48,10 +34,6 @@ void cap::Editor::Start()
 	ImGui_ImplOpenGL3_Init("#version 150");
 
 	m_DebugTerminal->Start();
-
-	// Sample Event Listener Creation - Can Delete
-	core::InitializeListener("UI", UIChangeBodyText);
-	core::InitializeListener("UI", UIChangeTitleText);
 }
 
 void cap::Editor::CatchSDLEvents(const SDL_Event& event)
@@ -73,6 +55,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	// Set the window size once when the window opens
 	ImGui::Begin("level.json - sadEngine", &showGameWindow);
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth, m_GameWindowHeight), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once);
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
 	// Pass frameBuffer texture to be rendered in window
@@ -84,22 +67,11 @@ void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
 
-	if (m_ShowWelcomeWindow)
-	{
-		ImGui::Begin(UI_TITLE_TEXT, &m_ShowWelcomeWindow);
-		ImGui::SetWindowPos(ImVec2(60.0f, 790.0f), ImGuiCond_Once);
-		ImGui::Text("%s", UI_BODY_TEXT);
-		
-		if (ImGui::Button("Close"))
-			m_ShowWelcomeWindow = false;
-
-		ImGui::End();
-	}
-
 	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
 
 	ImGui::Begin("Action Panel");
+	ImGui::SetWindowPos(ImVec2(1350.0f, 35.0f), ImGuiCond_Once);
 	if (ImGui::Button(currentMode))
 	{
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;

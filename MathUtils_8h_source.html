@@ -72,22 +72,42 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">namespace </span>sad</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> c_PI  = 3.1415926535897932385;</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">const</span> <span class="keywordtype">double</span> c_PI  = 3.1415926535897932385;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">double</span> c_PI2 = (c_PI / 2);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">const</span> <span class="keywordtype">double</span> c_2PI = (c_PI * 2);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span> DegToRad(<span class="keywordtype">float</span> deg) { <span class="keywordflow">return</span> deg * c_PI / 180.0f; }</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span> Clamp(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> min, <span class="keywordtype">float</span> max)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">if</span> (x &lt; min) <span class="keywordflow">return</span> min;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">if</span> (x &gt; max) <span class="keywordflow">return</span> max;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> x;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    }</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">const</span> <span class="keywordtype">double</span> c_PI2 = (c_PI / 2);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecore.html">core</a> </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classcore_1_1MathUtils.html">   25</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classcore_1_1MathUtils.html">MathUtils</a></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code" href="classcore_1_1MathUtils.html#a0327458059e4622dbc260e24ac1c3b47">RoundTo</a>(<span class="keywordtype">double</span> value, <span class="keywordtype">double</span> precision = 1.0f);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classcore_1_1MathUtils.html#a6e0f897978d365b78ce0ba68b89c40df">CompareFloatingPoints</a>(<span class="keywordtype">double</span> a, <span class="keywordtype">double</span> b, <span class="keywordtype">double</span> epsilon = 0.001);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classcore_1_1MathUtils.html#a72f334fd972762eb557ccdc1e33517a7">DegToRad</a>(<span class="keywordtype">float</span> deg);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> <a class="code" href="classcore_1_1MathUtils.html#aa2f0c4229e7d3b5f26e4f25040de43aa">Clamp</a>(<span class="keywordtype">float</span> x, <span class="keywordtype">float</span> min, <span class="keywordtype">float</span> max);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">int</span> <a class="code" href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">RandomBetween</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">static</span> std::random_device m_RandomDevice;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">static</span> std::mt19937 m_RandomGenerator;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    };</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclasscore_1_1MathUtils_html_a0327458059e4622dbc260e24ac1c3b47"><div class="ttname"><a href="classcore_1_1MathUtils.html#a0327458059e4622dbc260e24ac1c3b47">core::MathUtils::RoundTo</a></div><div class="ttdeci">static double RoundTo(double value, double precision=1.0f)</div><div class="ttdoc">Rounds a passed float to the nearest value with the indicated precision.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:8</div></div>
+<div class="ttc" id="aclasscore_1_1MathUtils_html_aa2f0c4229e7d3b5f26e4f25040de43aa"><div class="ttname"><a href="classcore_1_1MathUtils.html#aa2f0c4229e7d3b5f26e4f25040de43aa">core::MathUtils::Clamp</a></div><div class="ttdeci">static float Clamp(float x, float min, float max)</div><div class="ttdoc">Clamps an input number between a desired minimum or maximum.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:23</div></div>
+<div class="ttc" id="aclasscore_1_1MathUtils_html"><div class="ttname"><a href="classcore_1_1MathUtils.html">core::MathUtils</a></div><div class="ttdoc">Utilities for performing math operations.</div><div class="ttdef"><b>Definition:</b> MathUtils.h:25</div></div>
+<div class="ttc" id="aclasscore_1_1MathUtils_html_a72f334fd972762eb557ccdc1e33517a7"><div class="ttname"><a href="classcore_1_1MathUtils.html#a72f334fd972762eb557ccdc1e33517a7">core::MathUtils::DegToRad</a></div><div class="ttdeci">static float DegToRad(float deg)</div><div class="ttdoc">Converts from degrees to radians.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:18</div></div>
+<div class="ttc" id="aclasscore_1_1MathUtils_html_a6e0f897978d365b78ce0ba68b89c40df"><div class="ttname"><a href="classcore_1_1MathUtils.html#a6e0f897978d365b78ce0ba68b89c40df">core::MathUtils::CompareFloatingPoints</a></div><div class="ttdeci">static bool CompareFloatingPoints(double a, double b, double epsilon=0.001)</div><div class="ttdoc">Compares floating-point numbers with an epsilon (since floating-point math isn't exact)</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:13</div></div>
+<div class="ttc" id="anamespacecore_html"><div class="ttname"><a href="namespacecore.html">core</a></div><div class="ttdoc">Set of helpers and utilities for instrumenting hashes. The core::HashCombine uses multiple xor shifts...</div><div class="ttdef"><b>Definition:</b> EventHandler.h:5</div></div>
+<div class="ttc" id="aclasscore_1_1MathUtils_html_a0bd5d71ac0f34f5b3ef6239c4407c996"><div class="ttname"><a href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a></div><div class="ttdeci">static int RandomBetween(int min, int max)</div><div class="ttdoc">Generates a pseudo-random number between a specified min and max.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:30</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -1,12 +1,5 @@
 var searchData=
 [
-  ['readfile_51',['ReadFile',['../classcore_1_1FileUtils.html#ad6685a3b507d3201cae57cc060da242c',1,'core::FileUtils']]],
-  ['registry_52',['Registry',['../classsad_1_1ecs_1_1Registry.html',1,'sad::ecs']]],
-  ['renderableobject_53',['RenderableObject',['../classsad_1_1RenderableObject.html',1,'sad']]],
-  ['renderableresource_54',['RenderableResource',['../classsad_1_1RenderableResource.html',1,'sad']]],
-  ['renderbuddy_55',['RenderBuddy',['../classsad_1_1rad_1_1RenderBuddy.html',1,'sad::rad']]],
-  ['renderbuffer_56',['RenderBuffer',['../classsad_1_1rad_1_1RenderBuffer.html',1,'sad::rad']]],
-  ['renderer_57',['Renderer',['../classsad_1_1rad_1_1Renderer.html',1,'sad::rad']]],
-  ['righttrim_58',['RightTrim',['../classcore_1_1StringUtils.html#aec8ce398d4b21a7012ed136e64ba3be5',1,'core::StringUtils']]],
-  ['rotate_59',['Rotate',['../classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1',1,'sad::Transform::Rotate(glm::quat rotation)'],['../classsad_1_1Transform.html#a43a7f6157033322a57a9c90f9b1ffda4',1,'sad::Transform::Rotate(glm::vec3 rotation)'],['../classsad_1_1Transform.html#acfc8f173e72d481f7dd98ff143a69bb8',1,'sad::Transform::Rotate(glm::vec3 axis, float angle)']]]
+  ['oncontrollerconnected_71',['OnControllerConnected',['../classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_72',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7',1,'sad::InputManager']]]
 ];

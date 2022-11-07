@@ -77,9 +77,9 @@ $(function() {
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;VertexArray.h&quot;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;IndexBuffer.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;FrameBuffer.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Texture.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;TextureResource.h&quot;</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;RenderBuffer.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Shader.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;ShaderResource.h&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span>sad::rad</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
@@ -103,19 +103,19 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <a class="code" href="classsad_1_1rad_1_1FrameBuffer.html">FrameBuffer</a>* m_FrameBuffer;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classsad_1_1rad_1_1Texture.html">Texture</a>* m_FrameBufferTexture;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <a class="code" href="classsad_1_1rad_1_1TextureResource.html">TextureResource</a>* m_FrameBufferTexture;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <a class="code" href="classsad_1_1rad_1_1RenderBuffer.html">RenderBuffer</a>* m_RenderBuffer;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    };</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasssad_1_1rad_1_1Renderer_html_ae9e896e05ba8298d1596ee3a2bb5d367"><div class="ttname"><a href="classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367">sad::rad::Renderer::DrawLines</a></div><div class="ttdeci">void DrawLines(VertexArray *vertexArray, unsigned int vertexCount) const</div><div class="ttdoc">Draws lines bound to the passed index array.</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:60</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1TextureResource_html"><div class="ttname"><a href="classsad_1_1rad_1_1TextureResource.html">sad::rad::TextureResource</a></div><div class="ttdef"><b>Definition:</b> TextureResource.h:9</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1Renderer_html_a2fc59fc7637a8809204a5049581d2b49"><div class="ttname"><a href="classsad_1_1rad_1_1Renderer.html#a2fc59fc7637a8809204a5049581d2b49">sad::rad::Renderer::DrawIndexed</a></div><div class="ttdeci">void DrawIndexed(VertexArray *vertexArray, IndexBuffer *ib) const</div><div class="ttdoc">Draws geometry bound by an index buffer.</div><div class="ttdef"><b>Definition:</b> Renderer.cpp:52</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1VertexArray_html"><div class="ttname"><a href="classsad_1_1rad_1_1VertexArray.html">sad::rad::VertexArray</a></div><div class="ttdef"><b>Definition:</b> VertexArray.h:8</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1Renderer_html"><div class="ttname"><a href="classsad_1_1rad_1_1Renderer.html">sad::rad::Renderer</a></div><div class="ttdef"><b>Definition:</b> Renderer.h:14</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1FrameBuffer_html"><div class="ttname"><a href="classsad_1_1rad_1_1FrameBuffer.html">sad::rad::FrameBuffer</a></div><div class="ttdef"><b>Definition:</b> FrameBuffer.h:7</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1IndexBuffer_html"><div class="ttname"><a href="classsad_1_1rad_1_1IndexBuffer.html">sad::rad::IndexBuffer</a></div><div class="ttdef"><b>Definition:</b> IndexBuffer.h:7</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1RenderBuffer_html"><div class="ttname"><a href="classsad_1_1rad_1_1RenderBuffer.html">sad::rad::RenderBuffer</a></div><div class="ttdef"><b>Definition:</b> RenderBuffer.h:7</div></div>
-<div class="ttc" id="aclasssad_1_1rad_1_1Texture_html"><div class="ttname"><a href="classsad_1_1rad_1_1Texture.html">sad::rad::Texture</a></div><div class="ttdef"><b>Definition:</b> Texture.h:7</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

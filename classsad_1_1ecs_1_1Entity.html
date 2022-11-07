@@ -74,6 +74,11 @@ $(function() {
 <div class="title">sad::ecs::Entity Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Wrapper class for an entt::entity, contains utility methods to update the entities components in the EntityWorld.  
+ <a href="classsad_1_1ecs_1_1Entity.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Entity_8h_source.html">Entity.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -81,23 +86,24 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Entity</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;entity)=delete</td></tr>
 <tr class="separator:ab84ea712cbefbc8af8bbf2af459fa192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafcf08b8cf54e9baffadd1e1afb06756"><td class="memItemLeft" align="right" valign="top"><a id="aafcf08b8cf54e9baffadd1e1afb06756"></a>
-const entt::entity&#160;</td><td class="memItemRight" valign="bottom"><b>GetHandle</b> () const</td></tr>
+const entt::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a> () const</td></tr>
+<tr class="memdesc:aafcf08b8cf54e9baffadd1e1afb06756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the entt::entity handle created for the entity. <br /></td></tr>
 <tr class="separator:aafcf08b8cf54e9baffadd1e1afb06756"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed324b7f2b751b527e3bef89b454502d"><td class="memTemplParams" colspan="2"><a id="aed324b7f2b751b527e3bef89b454502d"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aed324b7f2b751b527e3bef89b454502d"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddComponent</b> (T component)</td></tr>
+<tr class="memitem:aed324b7f2b751b527e3bef89b454502d"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aed324b7f2b751b527e3bef89b454502d"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">AddComponent</a> (T component)</td></tr>
+<tr class="memdesc:aed324b7f2b751b527e3bef89b454502d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a component to the current entity.  <a href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">More...</a><br /></td></tr>
 <tr class="separator:aed324b7f2b751b527e3bef89b454502d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplParams" colspan="2"><a id="af17e9c8da23f44584711aa0d84abc470"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>AddEmptyComponent</b> (T component)</td></tr>
+<tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a> (T component)</td></tr>
+<tr class="memdesc:af17e9c8da23f44584711aa0d84abc470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an empty 'tag' component to the current entity.  <a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">More...</a><br /></td></tr>
 <tr class="separator:af17e9c8da23f44584711aa0d84abc470"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8372463dc846fd2d79ac734fddddc0a3"><td class="memTemplParams" colspan="2"><a id="a8372463dc846fd2d79ac734fddddc0a3"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8372463dc846fd2d79ac734fddddc0a3"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>RemoveComponent</b> ()</td></tr>
-<tr class="separator:a8372463dc846fd2d79ac734fddddc0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memTemplParams" colspan="2"><a id="ab445fe3c0805955a20fdc8c8110c66cc"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>GetComponent</b> ()</td></tr>
+<tr class="memitem:a788c83f1fad57d84cf1d824ea97f96df"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a788c83f1fad57d84cf1d824ea97f96df"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">RemoveComponent</a> ()</td></tr>
+<tr class="memdesc:a788c83f1fad57d84cf1d824ea97f96df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a component from the current entity.  <a href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">More...</a><br /></td></tr>
+<tr class="separator:a788c83f1fad57d84cf1d824ea97f96df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a> ()</td></tr>
+<tr class="memdesc:ab445fe3c0805955a20fdc8c8110c66cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a specified component from the entity.  <a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">More...</a><br /></td></tr>
 <tr class="separator:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab47a9a048e88e3e8490a98c0852577ca"><td class="memItemLeft" align="right" valign="top"><a id="ab47a9a048e88e3e8490a98c0852577ca"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;other) const</td></tr>
@@ -112,6 +118,166 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classsad_1_1Transform.html">Transform</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Transform</b></td></tr>
 <tr class="separator:a6d5c51a0c0677d8344d82f6adcbddaff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Wrapper class for an entt::entity, contains utility methods to update the entities components in the EntityWorld. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aed324b7f2b751b527e3bef89b454502d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed324b7f2b751b527e3bef89b454502d">&#9670;&nbsp;</a></span>AddComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T&amp; sad::ecs::Entity::AddComponent </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>component</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds a component to the current entity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct component to add </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">component</td><td>Component to add to the entity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the added component </dd></dl>
+
+</div>
+</div>
+<a id="af17e9c8da23f44584711aa0d84abc470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af17e9c8da23f44584711aa0d84abc470">&#9670;&nbsp;</a></span>AddEmptyComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sad::ecs::Entity::AddEmptyComponent </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>component</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds an empty 'tag' component to the current entity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct for an empty component to add </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">component</td><td>Component to add to the entity </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab445fe3c0805955a20fdc8c8110c66cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab445fe3c0805955a20fdc8c8110c66cc">&#9670;&nbsp;</a></span>GetComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T&amp; sad::ecs::Entity::GetComponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves a specified component from the entity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct component to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the retrieved component </dd></dl>
+
+</div>
+</div>
+<a id="a788c83f1fad57d84cf1d824ea97f96df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a788c83f1fad57d84cf1d824ea97f96df">&#9670;&nbsp;</a></span>RemoveComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sad::ecs::Entity::RemoveComponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes a component from the current entity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct component to remove </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the removed component </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Code/Engine/ECS/<a class="el" href="Entity_8h_source.html">Entity.h</a></li>
 <li>Code/Engine/ECS/Entity.cpp</li>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['scale_142',['Scale',['../classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1',1,'sad::Transform']]]
+  ['oncontrollerconnected_204',['OnControllerConnected',['../classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_205',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7',1,'sad::InputManager']]]
 ];

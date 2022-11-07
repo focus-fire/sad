@@ -1,21 +1,27 @@
 var indexSectionsWithContent =
 {
-  0: "acdefgilnoprstvw",
-  1: "acdefgilprstvw",
-  2: "acdeglnorst"
+  0: "acdefghilmnoprstvwx",
+  1: "acdefghilmprstvw",
+  2: "c",
+  3: "acdeghilnoprstwx",
+  4: "r"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "functions"
+  2: "namespaces",
+  3: "functions",
+  4: "typedefs"
 };
 
 var indexSectionLabels =
 {
   0: "All",
   1: "Classes",
-  2: "Functions"
+  2: "Namespaces",
+  3: "Functions",
+  4: "Typedefs"
 };
 

@@ -12,7 +12,7 @@ namespace sad
 
     struct AudioFile
     {
-        std::string filename;
+        std::string fileName;
         std::string path;
         AudioType type;
         Mix_Chunk* mixChunk;
@@ -25,13 +25,13 @@ namespace sad
     public:
         AudioManager(const AudioManager&) = delete;
 
-        static void loadAudioFile(const std::string& filename, const std::string& path, int volume, AudioType type);
+        static void LoadAudioFile(const std::string& fileName, const std::string& path, int volume, AudioType type);
 
-        static void playSFX(std::string filename);
+        static void PlaySFX(std::string fileName);
 
-        static void playMusic(std::string filename, int times);
+        static void PlayMusic(std::string fileName, int times);
 
-        static void set_volume(std::string filename, int volume);
+        static void SetVolume(std::string fileName, int volume);
 
         static AudioManager& GetInstance();
 

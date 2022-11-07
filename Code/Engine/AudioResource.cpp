@@ -7,5 +7,5 @@ sad::AudioResource::AudioResource(const IResource::ResourceData& resourceData, E
 	, AudioType(audioType)
 	, Volume(0)
 {
-	// TODO: Implement AudioManager::loadAudioFile logic here with SDL_Mixer initialization code...
+	// TODO: Implement AudioManager::LoadAudioFile logic here with SDL_Mixer initialization code...
 }

@@ -3,15 +3,15 @@
 
 std::list<sad::AudioFile> sad::AudioManager::m_AudioFiles;
 
-void sad::AudioManager::loadAudioFile(const std::string& filename, const std::string& path, int volume, AudioType type)
+void sad::AudioManager::LoadAudioFile(const std::string& fileName, const std::string& path, int volume, AudioType type)
 {
     AudioFile audioFile;
-    audioFile.filename = filename;
+    audioFile.fileName = fileName;
     audioFile.path = path.c_str();
     audioFile.type = type;
     audioFile.volume = volume;
 
-    core::Log(ELogType::Debug, "Audio Path: {}", path.c_str()); // Debug Path
+    core::Log(ELogType::Info, "Audio Path: {}", path.c_str()); // Debug Path
 
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512) < 0) // Check if audio file can be opened
     {
@@ -55,11 +55,11 @@ void sad::AudioManager::loadAudioFile(const std::string& filename, const std::st
 
 // -1 here means we let SDL_mixer pick the first channel that is free
 // If no channel is free it'll return an err code.
-void sad::AudioManager::playSFX(std::string filename)
+void sad::AudioManager::PlaySFX(std::string fileName)
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it) 
     {
-        if (it->filename.compare(filename) == 0)
+        if (it->filename.compare(fileName) == 0)
         {
             if (Mix_Playing(-1) == 0)
             {
@@ -71,11 +71,11 @@ void sad::AudioManager::playSFX(std::string filename)
 }
 
 // times = 0 for infinite loop
-void sad::AudioManager::playMusic(std::string filename, int times) 
+void sad::AudioManager::PlayMusic(std::string fileName, int times) 
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
     {
-        if (it->filename.compare(filename) == 0)
+        if (it->filename.compare(fileName) == 0)
         {
             Mix_PlayMusic(it->mixMusic, times - 1);
             break;
@@ -83,11 +83,11 @@ void sad::AudioManager::playMusic(std::string filename, int times)
     }
 }
 
-void sad::AudioManager::set_volume(std::string filename, int volume)
+void sad::AudioManager::SetVolume(std::string fileName, int volume)
 {
     for (std::list<AudioFile>::iterator it = m_AudioFiles.begin(); it != m_AudioFiles.end(); ++it)
     {
-        if (it->filename.compare(filename) == 0)
+        if (it->filename.compare(fileName) == 0)
         {
             if (it->type == WAV) Mix_VolumeChunk(it->mixChunk, volume);
             if (it->type == MP3) Mix_VolumeMusic(volume);

@@ -42,6 +42,8 @@ void pog::Application::Start()
 	m_SecondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
 	m_SecondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
 
+	//m_GameCamera.AddComponent<sad::ecs::GameCameraComponent>({});
+
 	// Translation Logic (-pi to pi for demo)
 	m_CubeTranslate = -1.0f * glm::pi<float>();
 	m_LastTime = std::chrono::steady_clock::now();

@@ -23,6 +23,7 @@ namespace pog
 
 		sad::ecs::Entity m_FirstCubeEntity;
 		sad::ecs::Entity m_SecondCubeEntity;
+		//sad::ecs::Entity m_GameCamera;
 
 		float m_CubeTranslate;
 		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;

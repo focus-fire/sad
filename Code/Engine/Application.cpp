@@ -156,15 +156,15 @@ void sad::Application::Teardown()
 	s_MainWindow->Teardown();
 }
 
-glm::mat4 sad::Application::GetViewProjectionMatrix()
-{
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-
-	return projectionMatrix * viewMatrix;
-}
+//glm::mat4 sad::Application::GetViewProjectionMatrix()
+//{
+//	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+//
+//	glm::mat4 viewMatrix = glm::lookAt(
+//		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
+//		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+//		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+//	);
+//
+//	return projectionMatrix * viewMatrix;
+//}

@@ -10,6 +10,7 @@
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/ECS/Components/LineRendererComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
+#include <Game/GameCamera.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -20,6 +21,7 @@ void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 
 void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 {
+	//GameCamera camera = GameCamera();
 	auto view = world.view<const RenderableObjectComponent, const TransformComponent>();
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
@@ -29,7 +31,9 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 		rad::ShaderResource* shader = renderable->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera 
-		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		//glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+
+		glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
@@ -46,10 +50,10 @@ void sad::ecs::RenderingSystem::RenderLines(EntityWorld& world)
 		rad::ShaderResource* shader = lineRenderer->GetShader();
 
 		// TODO: Retrieve the view projection matrix from the Camera
-		glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();
+		//glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();
 
 		shader->Bind();
-		shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(vpMatrix));
+		//shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(vpMatrix));
 		rad::RenderBuddy::DrawLines(lineRenderer->GetVertexArray(), lineRenderer->GetVertexCount());
 	}
 }

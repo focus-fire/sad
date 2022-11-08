@@ -9,6 +9,7 @@
 #include <Engine/ECS/Systems/PlayerControllerSystem.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/ControllerComponent.h>
+#include <Game/GameCamera.h>
 
 void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
@@ -54,17 +55,20 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 		if (input.GetKey(sad::KeyCode::A))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			sad::GameCamera::SetViewMatrix(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::D))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			sad::GameCamera::SetViewMatrix(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		// Handles left/right rotation using LEFT and RIGHT arrow keys.
 		if (input.GetKey(sad::KeyCode::LeftArrow))
 		{
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
+			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::RightArrow))

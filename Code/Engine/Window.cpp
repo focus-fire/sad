@@ -6,6 +6,8 @@
 
 #include "ConfigManager.h"
 
+#include "AudioManager.h"
+
 sad::Window::Window(const WindowProperties& properties)
 	: m_Properties(properties)
 {
@@ -37,6 +39,9 @@ void sad::Window::Start()
 	SDL_WindowFlags flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
     m_Window = SDL_CreateWindow(m_Properties.Title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_Properties.Width, m_Properties.Height, flags);
 	SAD_ASSERT(m_Window != nullptr, "Failed to create SDL window");
+
+	int mixerInitialization = Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 512);
+	SAD_ASSERT(mixerInitialization >= 0, "Failed to open audio device for SDL_Mixer");
 
 	SDL_SetWindowMaximumSize(m_Window, m_Properties.MaxDimensions.first, m_Properties.MaxDimensions.second);
 	SDL_SetWindowMinimumSize(m_Window, m_Properties.MinDimensions.first, m_Properties.MinDimensions.second);

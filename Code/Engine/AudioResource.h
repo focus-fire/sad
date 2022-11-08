@@ -2,6 +2,8 @@
 
 #include "IResource.h"
 
+#include <SDL2/SDL_mixer.h>
+
 namespace sad
 {
 	class AudioResource final : public IResource
@@ -18,6 +20,8 @@ namespace sad
 		EAudioType AudioType;
 
 		// TODO: Should audio resources hold volumes?
-		int Volume;
+		int DefaultVolume;
+		Mix_Chunk* MixChunk;
+		Mix_Music* MixMusic;
 	};
 }

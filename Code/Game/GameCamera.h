@@ -3,10 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "ECS/Components/TransformComponent.h"
-#include "ECS/Components/PlayerControllerComponent.h"
+#include "Engine/ECS/Components/TransformComponent.h"
 #include "Engine/InputManager.h"
-#include "Window.h"
+#include "Engine/Window.h"
 
 namespace sad
 {

@@ -30,11 +30,20 @@ namespace cap
 		 * @param frameBufferTextureId Texture Id in OpenGL for the attached framebuffer that the game is being rendered to
 		*/
 		void RenderGameWindow(unsigned int frameBufferTextureId);
+		void RenderGizmos();
 		void Render();
 
 		void Teardown();
 
 	private:
+		enum class EInteractionMode
+		{
+			None,
+			Translate,
+			Rotate,
+			Scale
+		};
+
 		DebugTerminal* m_DebugTerminal;
 
 		bool m_ShowGameWindow;

@@ -39,6 +39,7 @@ project "Game"
         "glad",
         "stb_image",
         "imgui",
+		"ImGuizmo",
     }
 
     if os.target() == "windows" then

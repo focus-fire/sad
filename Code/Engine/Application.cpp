@@ -2,8 +2,6 @@
 
 #include "Application.h"
 
-#include <future>
-
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
@@ -168,13 +166,19 @@ void sad::Application::Teardown()
 
 glm::mat4 sad::Application::GetViewProjectionMatrix()
 {
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+	return GetProjectionMatrix() * GetViewMatrix();
+}
 
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
+glm::mat4 sad::Application::GetViewMatrix()
+{
+	return glm::lookAt(
+		glm::vec3(0.0f, 2.5f, -3.0f), // Camera position
+		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
 		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
 	);
+}
 
-	return projectionMatrix * viewMatrix;
+glm::mat4 sad::Application::GetProjectionMatrix()
+{
+	return glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 }

@@ -24,6 +24,7 @@ project "Editor"
         "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}/../Vendor/entt/single_include",
+		"%{prj.location}/../Vendor/ImGuizmo",
         "%{prj.location}",
     }
 
@@ -37,6 +38,7 @@ project "Editor"
 
     links {
         "imgui",
+		"ImGuizmo",
     }
 
 	filter "system:windows"

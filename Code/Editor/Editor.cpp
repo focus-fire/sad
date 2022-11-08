@@ -2,9 +2,12 @@
 
 #include "Editor.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
 #include <imterm/terminal.hpp>
+#include <ImGuizmo.h>
 
 #include <Engine/Application.h>
 
@@ -46,6 +49,7 @@ void cap::Editor::Clear()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 }
 
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
@@ -53,14 +57,32 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	bool showGameWindow = true;
 
 	// Set the window size once when the window opens
-	ImGui::Begin("level.json - sadEngine", &showGameWindow);
+	ImGui::Begin("level.json - sadEngine", &showGameWindow, 0);
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth, m_GameWindowHeight), ImGuiCond_Once);
 	ImGui::SetWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Once);
-	ImVec2 availableSize = ImGui::GetContentRegionAvail();
 
 	// Pass frameBuffer texture to be rendered in window
+	ImVec2 availableSize = ImGui::GetContentRegionAvail();
 	ImGui::Image(INT_TO_VOIDP(frameBufferTextureId), availableSize, ImVec2(0, 1), ImVec2(1, 0));
+
+	RenderGizmos();
+
 	ImGui::End();
+}
+
+void cap::Editor::RenderGizmos()
+{
+	static ImGuizmo::MODE currentGizmoMode(ImGuizmo::LOCAL);
+
+	ImGuizmo::SetDrawlist();
+	ImGuizmo::SetOrthographic(false);
+	ImGuizmo::Enable(true);
+
+	ImGuizmo::SetRect(0, 0, m_GameWindowWidth, m_GameWindowHeight);
+
+	glm::mat4 viewMatrix = sad::Application::GetViewMatrix();
+	glm::mat4 projectionMatrix = sad::Application::GetProjectionMatrix();
+	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
 }
 
 void cap::Editor::Render()

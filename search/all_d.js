@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['pathexists_86',['PathExists',['../classcore_1_1FileUtils.html#a33df5e56c7b53972607a05a7f22e79c4',1,'core::FileUtils']]],
-  ['pollevents_87',['PollEvents',['../classsad_1_1Application.html#a2cb55301d32025b66855adf84252e1e1',1,'sad::Application']]]
+  ['oncontrollerconnected_84',['OnControllerConnected',['../classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_85',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7',1,'sad::InputManager']]],
+  ['operator_28_29_86',['operator()',['../classNJSONOutputArchive.html#ad07a82cf8664720e84d406984be6391f',1,'NJSONOutputArchive::operator()(std::underlying_type_t&lt; entt::entity &gt; size)'],['../classNJSONOutputArchive.html#a4693ba95430680e4ab3f782e744a5783',1,'NJSONOutputArchive::operator()(entt::entity entity)']]]
 ];

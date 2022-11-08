@@ -22,9 +22,6 @@ sad::Bound::Bound(Transform transform)
 	CalculateBound(m_Position, m_Scale);
 }
 
-sad::Bound::~Bound()
-{ }
-
 void sad::Bound::CalculateBound(glm::vec3 position, glm::vec3 scale) {
 	float xMax = position.x + (scale.x / 2);
 	float yMax = position.y + (scale.y / 2);

@@ -56,10 +56,9 @@ namespace sad
 
 	public:
 		static Window* s_MainWindow;
+		static EngineStateManager* s_EngineState;
 
 	private:
 		cap::Editor* m_Editor = nullptr;
-
-		EngineStateManager m_EngineStateManager;
 	};
 }

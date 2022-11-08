@@ -2,6 +2,8 @@
 
 #include "Transform.h"
 
+#include <glm/gtc/type_ptr.hpp> 
+
 sad::Transform::Transform(glm::vec3 position, glm::quat rotation, glm::vec3 scale)
 	: m_Position(position)
 	, m_Rotation(rotation)
@@ -23,7 +25,14 @@ glm::mat4 sad::Transform::GetTransformMatrix()
 	glm::mat4 rotationMatrix = glm::mat4(m_Rotation);
 	glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.0f), m_Scale);
 
+	m_TransformMatrix = translateMatrix * rotationMatrix * scaleMatrix;
+
 	return translateMatrix * rotationMatrix * scaleMatrix;
+}
+
+glm::mat4& sad::Transform::GetMutableTransformMatrix()
+{
+	return m_TransformMatrix;
 }
 
 void sad::Transform::Translate(glm::vec3 translation)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SDL2/SDL.h>
+#include <glm/glm.hpp>
 
 #include <Engine/Window.h>
 
@@ -15,7 +16,7 @@ namespace cap
 	class Editor
 	{
 	public:
-		explicit Editor();
+		Editor();
 		~Editor();
 
 		void Start();
@@ -30,21 +31,19 @@ namespace cap
 		 * @param frameBufferTextureId Texture Id in OpenGL for the attached framebuffer that the game is being rendered to
 		*/
 		void RenderGameWindow(unsigned int frameBufferTextureId);
-		void RenderGizmos();
+		std::vector<glm::vec3> RenderGizmos(float* modelMatrix, bool transformDecomposition);
 		void Render();
+
+		// TODO: Maybe make an ImGuiHelpers class with static returns for things like this? 
+		bool ButtonCenteredOnLine(const char* label, float alignment = 0.5f);
 
 		void Teardown();
 
 	private:
-		enum class EInteractionMode
-		{
-			None,
-			Translate,
-			Rotate,
-			Scale
-		};
-
 		DebugTerminal* m_DebugTerminal;
+
+		ImGuiWindowFlags m_GameWindowFlags;
+		int m_LastGizmoUsed = 0;
 
 		bool m_ShowGameWindow;
 		float m_GameWindowWidth;

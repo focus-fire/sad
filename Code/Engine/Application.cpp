@@ -32,6 +32,7 @@
 #include "EngineStateManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
+sad::EngineStateManager* sad::Application::s_EngineState;
 
 sad::Application::Application()
 { 
@@ -39,12 +40,15 @@ sad::Application::Application()
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
+	s_EngineState = new EngineStateManager();
+
 	m_Editor = new cap::Editor;
 }
 
 sad::Application::~Application()
 {
 	delete s_MainWindow;
+	delete s_EngineState;
 	delete m_Editor;
 }
 
@@ -68,7 +72,7 @@ void sad::Application::EngineStart()
 	{
 		while (!isWindowClosed)
 		{
-			if (m_EngineStateManager.GetEngineMode() == EEngineMode::Game)
+			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
 			{
 				// Game Update
 				float dt = pog::Time::GetDeltaTime();
@@ -126,7 +130,7 @@ void sad::Application::Update(float dt)
 {
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
-	rad::RenderBuddy::ClearColor(glm::vec4(0.55f, 0.65f, 0.50f, 1.0f));
+	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 
@@ -172,7 +176,7 @@ glm::mat4 sad::Application::GetViewProjectionMatrix()
 glm::mat4 sad::Application::GetViewMatrix()
 {
 	return glm::lookAt(
-		glm::vec3(0.0f, 2.5f, -3.0f), // Camera position
+		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
 		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
 		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
 	);

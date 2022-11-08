@@ -14,8 +14,9 @@
 #include <Game/Application.h>
 
 #include "ECS/Registry.h"
-#include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/RenderingSystem.h"
+#include "ECS/Systems/BoundSystem.h"
+#include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/PlayerControllerSystem.h"
 
 #include "Renderer/RenderBuddy.h"
@@ -25,20 +26,21 @@
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
+#include "AudioManager.h"
 #include "InputManager.h"
 #include "Transform.h"
 #include "InputManager.h"
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
-
 #include "JsonManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 
 sad::Application::Application()
+	: m_PlayMusic(false)
 {
-	s_MainWindow = new sad::Window;
+	s_MainWindow = new sad::Window();
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
 
@@ -56,19 +58,18 @@ sad::Application::~Application()
 
 void sad::Application::EngineStart()
 {
-	// Import Resources
-	ResourceManager::Import();
-
 	// Launch editor 
 	m_Editor->Start();
+
+	// Import Resources
+	ResourceManager::Import();
+	
+	// Import Level
+	sad::JsonManager::ImportLevel();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
 
-	// Import Resources
-	ResourceManager::Import();
-	sad::JsonManager::ImportLevel();
-  
 	// Game Start
 	this->Start();
 
@@ -80,6 +81,14 @@ void sad::Application::EngineStart()
 		{
 			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
 			{
+				// TODO: REMOVE AFTER DEMO
+				if (!m_PlayMusic)
+				{
+					m_PlayMusic = true;
+					AudioResource* musicFile = ResourceManager::GetResource<AudioResource>("lol.mp3");
+					AudioManager::PlayMusic(*musicFile, 1);
+				}
+
 				// Game Update
 				float dt = pog::Time::GetDeltaTime();
 				this->Update(dt);
@@ -152,6 +161,7 @@ void sad::Application::Update(float dt)
 
 	// Update non-gameplay ECS systems
 	ecs::PlayerControllerSystem::Update(world);
+	ecs::BoundSystem::Update(world);
 
 	// Drawing 
 	ecs::RenderableObjectSystem::Update(world);
@@ -171,6 +181,7 @@ void sad::Application::Update(float dt)
 void sad::Application::Teardown()
 { 
 	JsonManager::ExportLevel();
+
 	m_Editor->Teardown();
 	s_MainWindow->Teardown();
 }

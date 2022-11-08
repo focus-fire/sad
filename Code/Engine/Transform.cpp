@@ -16,9 +16,6 @@ sad::Transform::Transform(glm::vec3 position, glm::vec3 rotation, glm::vec3 scal
 	, m_Scale(scale)
 { }
 
-sad::Transform::~Transform()
-{ }
-
 glm::mat4 sad::Transform::GetTransformMatrix()
 { 
 	glm::mat4 translateMatrix = glm::translate(glm::mat4(1.0f), m_Position);

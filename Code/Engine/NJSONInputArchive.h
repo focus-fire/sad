@@ -3,6 +3,8 @@
 #include <nlohmann/json.hpp>
 #include <entt/entt.hpp>
 
+#include <Core/Log.h>
+
 /**
  * @brief
  * nlohmann-json based entt-deserialization
@@ -26,7 +28,7 @@ public:
         m_RootIndex++;
         if (m_RootIndex >= m_Root.size())
         {
-            core::Log(ELogType::Error, "m_RootIndex exceeded or equal to size of m_Root. No idea what this means");
+            core::Log(ELogType::Error, "m_RootIndex exceeded or equal to size of m_Root");
             return;
         }
         m_Current = m_Root[m_RootIndex];

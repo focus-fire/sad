@@ -16,20 +16,17 @@ namespace sad
 		*/
 		explicit Bound(glm::vec3 position, glm::vec3 scale);
 		explicit Bound(Transform transform);
-		~Bound();
 
 		/*
 		* Value should be auto set to the transform position.
 		*/
 		void SetPosition(glm::vec3 position) { m_Position = position; }
 		void SetScale(glm::vec3 scale) { m_Scale = scale; }
-		// Haven't set rotation yet - this might be needed but could make it more complex
-		// void SetRotation(glm::quat rotation) { m_Rotation = rotation; }
 
 		/*
 		* Bound Max and Min calculations.
 		*/
-		void CalculateBound(glm::vec3 position, glm::vec3 scale);
+		void CalculateBound();
 
 		/*
 		* Checks for bound intersection with 
@@ -55,7 +52,6 @@ namespace sad
 
 		glm::vec3 m_Position;
 		glm::vec3 m_Scale;
-		// glm::quat m_Rotation;
 
 		/*
 		Max and Min vectors for a bounds box.

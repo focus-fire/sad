@@ -16,8 +16,6 @@ namespace sad
 			glm::vec3 rotation,
 			glm::vec3 scale = glm::vec3(1.0f));
 
-		~Transform();
-
 		/**
 		 * @brief Retrieves a matrix representing the current transform  
 		 * @return Model matrix with calculated translation, rotation, and scale matrices for the transform 

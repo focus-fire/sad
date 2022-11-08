@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <Engine/ResourceManager.h>
 
 #include "RenderableResource.h"
@@ -27,6 +29,9 @@ namespace sad
 		rad::IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
 		rad::TextureResource* GetTexture() { return m_Texture; }
 		rad::ShaderResource* GetShader() { return m_Shader; }
+
+		// TODO: Remove after demo
+		glm::vec4 UniformColor;
 
 	private:
 		RenderableResource* m_RenderableResource;

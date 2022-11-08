@@ -87,7 +87,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 		{
 			ImGuizmo::SetID(entityId);
 
-			sad::Transform* transform = transformComponent.m_Transform;
+			sad::Transform* transform = transformComponent.m_Transform.get();
 			std::vector<glm::vec3> manipulatedTransform = std::vector<glm::vec3>(3);
 			float* model = glm::value_ptr(transform->GetMutableTransformMatrix());
 

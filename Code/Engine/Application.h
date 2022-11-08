@@ -60,5 +60,8 @@ namespace sad
 
 	private:
 		cap::Editor* m_Editor = nullptr;
+
+		// TODO: REMOVE AFTER DEMO
+		bool m_PlayMusic;
 	};
 }

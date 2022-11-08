@@ -9,28 +9,29 @@
 *  Rotating the bound hasn't been implemented at the moment.
 */
 sad::Bound::Bound(glm::vec3 position, glm::vec3 scale)
+	: m_Position(position)
+	, m_Scale(scale)
 {
-	m_Position = position;
-	m_Scale = scale;
-	CalculateBound(m_Position, m_Scale);
+	CalculateBound();
 }
 
 sad::Bound::Bound(Transform transform)
 {
 	m_Position = transform.GetPosition();
 	m_Scale = transform.GetScale();
-	CalculateBound(m_Position, m_Scale);
+	CalculateBound();
 }
 
-void sad::Bound::CalculateBound(glm::vec3 position, glm::vec3 scale) {
-	float xMax = position.x + (scale.x / 2);
-	float yMax = position.y + (scale.y / 2);
-	float zMax = position.z + (scale.z / 2);
+void sad::Bound::CalculateBound() 
+{
+	float xMax = m_Position.x + (m_Scale.x / 2);
+	float yMax = m_Position.y + (m_Scale.y / 2);
+	float zMax = m_Position.z + (m_Scale.z / 2);
 	m_Max = glm::vec3(xMax, yMax, zMax);
 
-	float xMin = position.x - (scale.x / 2);
-	float yMin = position.y - (scale.y / 2);
-	float zMin = position.z - (scale.z / 2);
+	float xMin = m_Position.x - (m_Scale.x / 2);
+	float yMin = m_Position.y - (m_Scale.y / 2);
+	float zMin = m_Position.z - (m_Scale.z / 2);
 	m_Min = glm::vec3(xMin, yMin, zMin);
 }
 
@@ -42,15 +43,16 @@ bool sad::Bound::Intersects(glm::vec3 otherMax, glm::vec3 otherMin)
 bool sad::Bound::Intersects(Bound otherBound) {
 	glm::vec3 otherBMax = otherBound.GetBoundMax();
 	glm::vec3 otherBMin = otherBound.GetBoundMin();
+
 	return IntersectionMaxMin(otherBMax, otherBMin);
 }
 
 bool sad::Bound::IntersectionMaxMin(glm::vec3 otherMax, glm::vec3 otherMin) {
 	return
-		m_Min.x <= otherMin.x &&
-		m_Max.x >= otherMax.x &&
-		m_Min.y <= otherMin.y &&
-		m_Max.y >= otherMax.y &&
-		m_Min.z <= otherMin.z &&
-		m_Max.z >= otherMax.z;
+		m_Min.x <= otherMax.x &&
+		m_Max.x >= otherMin.x &&
+		m_Min.y <= otherMax.y &&
+		m_Max.y >= otherMin.y &&
+		m_Min.z <= otherMax.z &&
+		m_Max.z >= otherMin.z;
 }

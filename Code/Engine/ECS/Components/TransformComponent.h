@@ -1,26 +1,8 @@
-<<<<<<< HEAD
 #pragma once
 
-#include <Engine/Transform.h>
-
-namespace sad::ecs
-{
-	/**
-	 * @brief Component holding a reference to the Transform of a particular sad::Entity
-	 *
-	 * @note As most TransformComponents should be manipulated by entities themselves, there
-	 *       shouldn't be a corresponding TransformSystem or other systems attempting to modify them.
-	*/
-	struct TransformComponent
-	{
-		Transform* m_Transform;
-	};
-}
-=======
-#pragma once
-
-#include <Engine/Transform.h>
 #include <nlohmann/json.hpp>
+
+#include <Engine/Transform.h>
 
 namespace sad::ecs
 {
@@ -77,7 +59,6 @@ namespace sad::ecs
 		glm::quat rot = glm::quat();
 		glm::vec3 scl = glm::vec3();
 
-		
 		pos = glm::vec3(JSON["position"]["x"], JSON["position"]["y"], JSON["position"]["z"]);
 		rot = glm::quat(JSON["rotation"]["w"], JSON["rotation"]["x"], JSON["rotation"]["y"], JSON["rotation"]["z"]);
 		scl = glm::vec3(JSON["scale"]["x"], JSON["scale"]["y"], JSON["scale"]["z"]);
@@ -88,4 +69,3 @@ namespace sad::ecs
 		transformComponent.m_Transform->SetScale(scl);
 	}
 }
->>>>>>> dev

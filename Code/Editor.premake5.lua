@@ -18,13 +18,14 @@ project "Editor"
 
     local includes = {
         "%{prj.location}/../Vendor/spdlog/include",
-        "%{prj.location}/../Vendor/imgui",
-		"%{prj.location}/../Vendor/ImTerm/include/",
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}/../Vendor/entt/single_include",
+        "%{prj.location}/../Vendor/imgui",
 		"%{prj.location}/../Vendor/ImGuizmo",
+		"%{prj.location}/../Vendor/ImTerm/include/",
+        "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}",
     }
 

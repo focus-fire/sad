@@ -3,6 +3,7 @@
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/InputManager.h>
+#include <Engine/AudioResource.h>
 
 namespace sad::ecs
 {
@@ -26,6 +27,7 @@ namespace sad::ecs
 		 * @param moveSpeedMultiplier
 		*/
 		static void EditorControls(InputManager& input, const ecs::TransformComponent& transformComponent, float movespeed);
+
 	};
 
 }

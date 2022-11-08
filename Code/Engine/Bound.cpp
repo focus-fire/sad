@@ -15,10 +15,10 @@ sad::Bound::Bound(glm::vec3 position, glm::vec3 scale)
 	CalculateBound(m_Position, m_Scale);
 }
 
-sad::Bound::Bound(const sad::ecs::TransformComponent transformComponent)
+sad::Bound::Bound(Transform transform)
 {
-	m_Position = transformComponent.m_Transform->GetPosition();
-	m_Scale = transformComponent.m_Transform->GetScale();
+	m_Position = transform.GetPosition();
+	m_Scale = transform.GetScale();
 	CalculateBound(m_Position, m_Scale);
 }
 
@@ -42,9 +42,9 @@ bool sad::Bound::Intersects(glm::vec3 otherMax, glm::vec3 otherMin)
 	return IntersectionMaxMin(otherMax, otherMin);
 }
 
-bool sad::Bound::Intersects(sad::ecs::BoundComponent otherBound) {
-	glm::vec3 otherBMax = otherBound.m_Bound->GetBoundMax();
-	glm::vec3 otherBMin = otherBound.m_Bound->GetBoundMin();
+bool sad::Bound::Intersects(Bound otherBound) {
+	glm::vec3 otherBMax = otherBound.GetBoundMax();
+	glm::vec3 otherBMin = otherBound.GetBoundMin();
 	return IntersectionMaxMin(otherBMax, otherBMin);
 }
 

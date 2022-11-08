@@ -3,10 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 
-#include "ECS/Components/TransformComponent.h"
 #include "Transform.h"
-
-#include "ECS/Components/BoundComponent.h"
 
 namespace sad 
 {
@@ -18,7 +15,7 @@ namespace sad
 		* to get position to create bounds.
 		*/
 		explicit Bound(glm::vec3 position, glm::vec3 scale);
-		explicit Bound(const sad::ecs::TransformComponent transformComponent);
+		explicit Bound(Transform transform);
 		~Bound();
 
 		/*
@@ -44,7 +41,7 @@ namespace sad
 		* Checks for bound Intersection after 
 		* pulling MaxMin vectors from compoenent..
 		*/
-		bool Intersects(sad::ecs::BoundComponent otherBound);
+		bool Intersects(Bound otherBound);
 
 		/*
 		* Get position and scale values.

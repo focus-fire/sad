@@ -7,7 +7,7 @@ namespace sad::ecs
 	/**
 	 * @brief Component to mark entity for player movement and controls
 	*/
-	struct PlayerControllerComponent {};
+	struct PlayerControllerComponent{};
 
 	/**
 	 * @brief Component to mark entity for editor movement and controls

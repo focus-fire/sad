@@ -11,6 +11,6 @@ sad::EngineStateManager::EngineStateManager(EEngineMode mode /* = EEngineMode::E
 
 void sad::EngineStateManager::ToggleEngineMode()
 {
-	core::Log(ELogType::Trace, "Engine was switched to {}", m_EngineMode == EEngineMode::Editor ? "Editor" : "Game");
 	sad::EngineStateManager::m_EngineMode = m_EngineMode == EEngineMode::Editor ? EEngineMode::Game : EEngineMode::Editor;
+	core::Log(ELogType::Trace, "Engine was switched to {}", m_EngineMode == EEngineMode::Editor ? "Editor" : "Game");
 }

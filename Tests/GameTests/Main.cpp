@@ -1,6 +1,19 @@
-#define CATCH_CONFIG_MAIN
+#define CATCH_CONFIG_RUNNER
 #include <catch2/catch.hpp>
 
-// Note: Catch is providing a default main() function here 
-// This can be replaced with a custom main to provide custom setup/teardown logic or separate test-suites
-// https://github.com/catchorg/Catch2/blob/devel/docs/own-main.md
+#include <Core/Log.h>
+
+int main(int argc, char* argv[])
+{
+	// Setup
+	core::InitializeLogging();
+
+	Catch::Session session;
+	session.applyCommandLine(argc, argv);
+	int result = session.run();
+
+	// Teardown 
+	core::KillLogging();
+
+	return result;
+}

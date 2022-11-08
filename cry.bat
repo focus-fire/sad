@@ -1,4 +1,4 @@
-@ECHO OFF 
+@ECHO OFF
 
 ::
 :: cry.bat
@@ -9,7 +9,7 @@
 :: Clean previous premake artifacts
 CALL :clean "%~dp0"
 
-:: Build the project with premake 
+:: Build the project with premake
 CALL :build "%~dp0"
 
 :: Optional: Compile using msbuild

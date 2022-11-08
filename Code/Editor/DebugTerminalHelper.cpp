@@ -40,7 +40,7 @@ void cap::DebugTerminalHelper::Debug(argument_type& arg)
 		return;
 
 	std::string message = std::move(arg.command_line[1]);
-	core::Log(ELogType::Debug, "{}", message);
+	core::Log(ELogType::Debug, "[cmd] {}", message);
 }
 
 void cap::DebugTerminalHelper::Close(argument_type& arg)

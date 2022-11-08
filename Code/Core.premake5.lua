@@ -20,19 +20,26 @@ project "Core"
     -- Only link/include library headers as needed here...
     includedirs {
         "%{prj.location}/../Vendor/spdlog/include",
-        "%{prj.location}/../Vendor/glad/include", 
+        "%{prj.location}/../Vendor/glad/include",
         "%{prj.location}",
     }
 
-    links {
-        "glad",
-    }
+	local linkers = {
+		"glad"
+	}
+
+	if os.target() == "windows" then
+		table.insert(linkers, "Rpcrt4") -- .lib, required for GUIDs
+	end
+
+    links { linkers }
 
 	filter "system:windows"
-		defines { 
+		defines {
             "_WINDOWS",
             "_CRT_SECURE_NO_WARNINGS",
         }
     filter "system:macosx"
         defines { "_MAC" }
     filter {}
+

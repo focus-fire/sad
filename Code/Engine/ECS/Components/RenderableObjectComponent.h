@@ -12,6 +12,6 @@ namespace sad::ecs
 	*/
 	struct RenderableObjectComponent
 	{
-		Pointer<RenderableObject> m_RenderableObject;
+		core::Pointer<RenderableObject> m_RenderableObject;
 	};
 }

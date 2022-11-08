@@ -31,11 +31,13 @@
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
 
+#include "JsonManager.h"
+
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 
 sad::Application::Application()
-{ 
+{
 	s_MainWindow = new sad::Window;
 	s_MainWindow->Start();
 	s_MainWindow->CreateGLContext();
@@ -62,6 +64,10 @@ void sad::Application::EngineStart()
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
+
+	// Import Resources
+	ResourceManager::Import();
+	sad::JsonManager::ImportLevel();
   
 	// Game Start
 	this->Start();
@@ -164,6 +170,7 @@ void sad::Application::Update(float dt)
 
 void sad::Application::Teardown()
 { 
+	JsonManager::ExportLevel();
 	m_Editor->Teardown();
 	s_MainWindow->Teardown();
 }

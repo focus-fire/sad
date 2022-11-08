@@ -26,9 +26,9 @@ project "Game"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
-		"%{prj.location}/../Vendor/imgui",
-		"%{prj.location}/../Vendor/ImTerm/include",
-		"%{prj.location}/../Vendor/assimp/include",
+        "%{prj.location}/../Vendor/imgui",
+        "%{prj.location}/../Vendor/ImTerm/include",
+        "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}",
     }
 
@@ -45,10 +45,12 @@ project "Game"
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
+		table.insert(linkers, "SDL2_mixer") -- .dll
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework") -- .framework
+		table.insert(linkers, "SDL2_mixer.framework") -- .framework
         table.insert(linkers, "assimp.framework") -- .framework
     end
 
@@ -85,8 +87,9 @@ project "Game"
 		}
         -- Copy required mac frameworks to local framework directory before linking begins
         prebuildcommands {
-            -- Copy the SDL framework to the local framework directory
+            -- Copy the SDL frameworks to the local framework directory
             "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2.framework ~/Library/Frameworks",
+            "{COPY} %{wks.location}/Vendor/SDL/lib/mac/SDL2_mixer.framework ~/Library/Frameworks",
 
             -- Copy the assimp framework to the local framework directory
             "{COPY} %{wks.location}/Vendor/assimp/lib/mac/assimp.framework ~/Library/Frameworks",

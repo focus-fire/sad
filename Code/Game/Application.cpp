@@ -17,35 +17,24 @@
 
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
+#include <Engine/JsonManager.h>
 
+/**
+ * @brief 
+ * @sample
+ * Go to Docs folder and use ApplicationFileDefault.md to put back the test case
+*/
 pog::Application::Application()
 	: sad::Application()
-	, m_CubeGeometry(sad::RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount))
-{
-	// TODO: Solve IResource constructor dilemma
-	m_CubeResource = new sad::RenderableResource({ "TestCube.fake", "TestCube.fake" }, m_CubeGeometry);
-}
+{}
 
 pog::Application::~Application()
 {
 	// Game is destroyed here
-	delete m_CubeResource;
 }
 
 void pog::Application::Start()
-{
-	// Add resource and transform components to the entities
-	m_FirstCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_FirstCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_FirstCubeEntity.Transform });
-	m_FirstCubeEntity.AddEmptyComponent<sad::ecs::PlayerControllerComponent>({});
-
-	m_SecondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	m_SecondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ &m_SecondCubeEntity.Transform });
-
-	// Translation Logic (-pi to pi for demo)
-	m_CubeTranslate = -1.0f * glm::pi<float>();
-	m_LastTime = std::chrono::steady_clock::now();
-}
+{}
 
 void pog::Application::Update(float dt)
 {

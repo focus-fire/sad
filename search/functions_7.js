@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['lefttrim_240',['LeftTrim',['../classcore_1_1StringUtils.html#a6c42488421e5b598a8da1f8bf5cdbc7c',1,'core::StringUtils']]]
+  ['nocompletion_253',['NoCompletion',['../classcap_1_1DebugTerminalHelper.html#a74fdd11cb1710840f43adc3b5fe800ca',1,'cap::DebugTerminalHelper']]],
+  ['null_254',['Null',['../classsad_1_1Resource.html#abfdd777c1a98493f8349badc4e9c2ff6',1,'sad::Resource']]]
 ];

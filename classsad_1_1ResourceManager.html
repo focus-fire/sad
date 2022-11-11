@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>sad</b></li><li class="navelem"><a class="el" href="classsad_1_1ResourceManager.html">ResourceManager</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1ResourceManager.html">ResourceManager</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -83,10 +83,10 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5e8c8871c102c2e7aec7b0f4d7cf5f2f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5e8c8871c102c2e7aec7b0f4d7cf5f2f"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ResourceManager.html#a5e8c8871c102c2e7aec7b0f4d7cf5f2f">ResourceType</a> = std::enable_if&lt; std::is_base_of&lt; <a class="el" href="classsad_1_1IResource.html">IResource</a>, T &gt;::value &gt;</td></tr>
-<tr class="memdesc:a5e8c8871c102c2e7aec7b0f4d7cf5f2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type trait ensuring that passed template parameters inherit from <a class="el" href="classsad_1_1IResource.html">IResource</a>.  <a href="classsad_1_1ResourceManager.html#a5e8c8871c102c2e7aec7b0f4d7cf5f2f">More...</a><br /></td></tr>
-<tr class="separator:a5e8c8871c102c2e7aec7b0f4d7cf5f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a198829062873786779142e7680282442"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a198829062873786779142e7680282442"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">ResourceType</a> = std::enable_if&lt; std::is_base_of&lt; <a class="el" href="classsad_1_1Resource.html">Resource</a>, T &gt;::value &gt;</td></tr>
+<tr class="memdesc:a198829062873786779142e7680282442"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type trait ensuring that passed template parameters inherit from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a>.  <a href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">More...</a><br /></td></tr>
+<tr class="separator:a198829062873786779142e7680282442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -119,8 +119,8 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Determines the allocation, storage, and management of resources throughout the engine. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a5e8c8871c102c2e7aec7b0f4d7cf5f2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e8c8871c102c2e7aec7b0f4d7cf5f2f">&#9670;&nbsp;</a></span>ResourceType</h2>
+<a id="a198829062873786779142e7680282442"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a198829062873786779142e7680282442">&#9670;&nbsp;</a></span>ResourceType</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,15 +128,15 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classsad_1_1ResourceManager.html#a5e8c8871c102c2e7aec7b0f4d7cf5f2f">sad::ResourceManager::ResourceType</a> =  std::enable_if&lt;std::is_base_of&lt;<a class="el" href="classsad_1_1IResource.html">IResource</a>, T&gt;::value&gt;</td>
+          <td class="memname">using <a class="el" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">sad::ResourceManager::ResourceType</a> =  std::enable_if&lt;std::is_base_of&lt;<a class="el" href="classsad_1_1Resource.html">Resource</a>, T&gt;::value&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Type trait ensuring that passed template parameters inherit from <a class="el" href="classsad_1_1IResource.html">IResource</a>. </p>
+<p>Type trait ensuring that passed template parameters inherit from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>typename that inherits from <a class="el" href="classsad_1_1IResource.html">IResource</a> </td></tr>
+    <tr><td class="paramname">T</td><td>typename that inherits from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,7 +173,7 @@ template&lt;class T , typename  = ResourceType&lt;T&gt;&gt; </div>
 <p>Adds a smart pointer for a resource into the <a class="el" href="classsad_1_1ResourceManager.html" title="Determines the allocation, storage, and management of resources throughout the engine.">ResourceManager</a>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1IResource.html">IResource</a> </td></tr>
+    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -215,7 +215,7 @@ template&lt;class T , typename  = ResourceType&lt;T&gt;&gt; </div>
 <p>Retrieve a resource from the <a class="el" href="classsad_1_1ResourceManager.html" title="Determines the allocation, storage, and management of resources throughout the engine.">ResourceManager</a> by a valid GUID. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1IResource.html">IResource</a> </td></tr>
+    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -258,7 +258,7 @@ template&lt;class T , typename  = ResourceType&lt;T&gt;&gt; </div>
 <p>Retrieve a resource from the <a class="el" href="classsad_1_1ResourceManager.html" title="Determines the allocation, storage, and management of resources throughout the engine.">ResourceManager</a> by a valid name. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1IResource.html">IResource</a> </td></tr>
+    <tr><td class="paramname">T</td><td>Class type inheriting from <a class="el" href="classsad_1_1Resource.html" title="Main container for engine resources - these include models, textures, audio, and more.">Resource</a> </td></tr>
   </table>
   </dd>
 </dl>

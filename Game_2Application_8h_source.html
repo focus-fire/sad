@@ -72,34 +72,44 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;Engine/Application.h&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;Engine/RenderableResource.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span>pog</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
-<div class="line"><a name="l00008"></a><span class="lineno"><a class="line" href="classpog_1_1Application.html">    8</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classpog_1_1Application.html">Application</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1Application.html">sad::Application</a></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    {</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classpog_1_1Application.html#a567cc7aa14462fc70cfd61b4314947e8">Application</a>();</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        ~<a class="code" href="classpog_1_1Application.html">Application</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056">Start</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#a677ba126c938b0f34aa104f8c329d0b6">Update</a>(<span class="keywordtype">float</span> dt) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#ad1ba72edbdbacb13adb2547c4e6dcb70">Teardown</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="comment">// Temporary Variables for Test Level</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="comment">// Go to Docs folder and use ApplicationFileDefault.md to put back the test case</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    };</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;Core/Memory.h&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;Engine/Application.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Engine/RenderableResource.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;Engine/AudioResource.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;Engine/ECS/Entity.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacepog.html">pog</a></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;{</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classpog_1_1Application.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classpog_1_1Application.html">Application</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1Application.html">sad::Application</a></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classpog_1_1Application.html">Application</a>();</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        ~<a class="code" href="classpog_1_1Application.html">Application</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056">Start</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#a677ba126c938b0f34aa104f8c329d0b6">Update</a>(<span class="keywordtype">float</span> dt) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classpog_1_1Application.html#ad1ba72edbdbacb13adb2547c4e6dcb70">Teardown</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        std::mutex m_GameMutex;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">float</span> m_CubeTranslate;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        std::chrono::time_point&lt;std::chrono::steady_clock&gt; m_LastTime;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <a class="code" href="classsad_1_1AudioResource.html">sad::AudioResource</a>* m_CollisionSoundEffect;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    };</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasspog_1_1Application_html_ad1ba72edbdbacb13adb2547c4e6dcb70"><div class="ttname"><a href="classpog_1_1Application.html#ad1ba72edbdbacb13adb2547c4e6dcb70">pog::Application::Teardown</a></div><div class="ttdeci">void Teardown() override</div><div class="ttdoc">Destruction method that tears down the services associated with the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:42</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html"><div class="ttname"><a href="classsad_1_1Application.html">sad::Application</a></div><div class="ttdoc">Base class for all lifecycle specific methods for the Engine/Game projects.</div><div class="ttdef"><b>Definition:</b> Application.h:20</div></div>
-<div class="ttc" id="aclasspog_1_1Application_html_af5bf8eb0e65af9075e27014ea8458056"><div class="ttname"><a href="classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056">pog::Application::Start</a></div><div class="ttdeci">void Start() override</div><div class="ttdoc">Starting point for applications aside from the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:36</div></div>
-<div class="ttc" id="aclasspog_1_1Application_html"><div class="ttname"><a href="classpog_1_1Application.html">pog::Application</a></div><div class="ttdef"><b>Definition:</b> Application.h:8</div></div>
-<div class="ttc" id="aclasspog_1_1Application_html_a567cc7aa14462fc70cfd61b4314947e8"><div class="ttname"><a href="classpog_1_1Application.html#a567cc7aa14462fc70cfd61b4314947e8">pog::Application::Application</a></div><div class="ttdeci">Application()</div><div class="ttdoc">@sample Go to Docs folder and use ApplicationFileDefault.md to put back the test case</div><div class="ttdef"><b>Definition:</b> Application.cpp:27</div></div>
-<div class="ttc" id="aclasspog_1_1Application_html_a677ba126c938b0f34aa104f8c329d0b6"><div class="ttname"><a href="classpog_1_1Application.html#a677ba126c938b0f34aa104f8c329d0b6">pog::Application::Update</a></div><div class="ttdeci">void Update(float dt) override</div><div class="ttdoc">Main update loop for the Engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:39</div></div>
+<div class="ttc" id="aclasspog_1_1Application_html_ad1ba72edbdbacb13adb2547c4e6dcb70"><div class="ttname"><a href="classpog_1_1Application.html#ad1ba72edbdbacb13adb2547c4e6dcb70">pog::Application::Teardown</a></div><div class="ttdeci">void Teardown() override</div><div class="ttdoc">Destruction method that tears down the services associated with the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:77</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html"><div class="ttname"><a href="classsad_1_1Application.html">sad::Application</a></div><div class="ttdoc">Base class for all lifecycle specific methods for the Engine/Game projects.</div><div class="ttdef"><b>Definition:</b> Application.h:22</div></div>
+<div class="ttc" id="anamespacepog_html"><div class="ttname"><a href="namespacepog.html">pog</a></div><div class="ttdoc">Contains all game and gameplay related code and systems and much like the name - it is quite pog.</div></div>
+<div class="ttc" id="aclasspog_1_1Application_html_af5bf8eb0e65af9075e27014ea8458056"><div class="ttname"><a href="classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056">pog::Application::Start</a></div><div class="ttdeci">void Start() override</div><div class="ttdoc">Starting point for applications aside from the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:37</div></div>
+<div class="ttc" id="aclasspog_1_1Application_html"><div class="ttname"><a href="classpog_1_1Application.html">pog::Application</a></div><div class="ttdef"><b>Definition:</b> Application.h:13</div></div>
+<div class="ttc" id="aclasspog_1_1Application_html_a677ba126c938b0f34aa104f8c329d0b6"><div class="ttname"><a href="classpog_1_1Application.html#a677ba126c938b0f34aa104f8c329d0b6">pog::Application::Update</a></div><div class="ttdeci">void Update(float dt) override</div><div class="ttdoc">Main update loop for the Engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:46</div></div>
+<div class="ttc" id="aclasssad_1_1AudioResource_html"><div class="ttname"><a href="classsad_1_1AudioResource.html">sad::AudioResource</a></div><div class="ttdoc">Representation for an audio file in the engine.</div><div class="ttdef"><b>Definition:</b> AudioResource.h:12</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

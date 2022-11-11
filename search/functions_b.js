@@ -1,13 +1,7 @@
 var searchData=
 [
-  ['randombetween_247',['RandomBetween',['../classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996',1,'core::MathUtils']]],
-  ['readfile_248',['ReadFile',['../classcore_1_1FileUtils.html#ae1e127e1d57162005170a2cec7973e83',1,'core::FileUtils']]],
-  ['recreateguid_249',['RecreateGuid',['../classcore_1_1Guid.html#a063b8908bc8181a9e6c55475b69fce69',1,'core::Guid']]],
-  ['removecomponent_250',['RemoveComponent',['../classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df',1,'sad::ecs::Entity']]],
-  ['removefile_251',['RemoveFile',['../classcore_1_1FileUtils.html#a125f862e48b39084362bf4c5a847761d',1,'core::FileUtils']]],
-  ['removelistener_252',['RemoveListener',['../namespacecore.html#af02a5bd537f56425e6da55b45dd599ca',1,'core']]],
-  ['rendergamewindow_253',['RenderGameWindow',['../classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1',1,'cap::Editor']]],
-  ['righttrim_254',['RightTrim',['../classcore_1_1StringUtils.html#a7664faaaef48ee49b5efef8c275d4f3f',1,'core::StringUtils']]],
-  ['rotate_255',['Rotate',['../classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1',1,'sad::Transform::Rotate(glm::quat rotation)'],['../classsad_1_1Transform.html#a43a7f6157033322a57a9c90f9b1ffda4',1,'sad::Transform::Rotate(glm::vec3 rotation)'],['../classsad_1_1Transform.html#acfc8f173e72d481f7dd98ff143a69bb8',1,'sad::Transform::Rotate(glm::vec3 axis, float angle)']]],
-  ['roundto_256',['RoundTo',['../classcore_1_1MathUtils.html#a0327458059e4622dbc260e24ac1c3b47',1,'core::MathUtils']]]
+  ['scale_269',['Scale',['../classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1',1,'sad::Transform']]],
+  ['serialize_270',['Serialize',['../classsad_1_1Resource.html#ac585f7057146cdc6c33e37afac8ae9bd',1,'sad::Resource']]],
+  ['split_271',['Split',['../classcore_1_1StringUtils.html#a901644a55e44f28aef619d2718219d5e',1,'core::StringUtils']]],
+  ['start_272',['Start',['../classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67',1,'sad::Application::Start()'],['../classpog_1_1Application.html#af5bf8eb0e65af9075e27014ea8458056',1,'pog::Application::Start()']]]
 ];

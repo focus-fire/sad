@@ -62,7 +62,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>sad</b></li><li class="navelem"><a class="el" href="classsad_1_1Application.html">Application</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1Application.html">Application</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -100,10 +100,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">Start</a> ()=0</td></tr>
 <tr class="memdesc:a649ef7196503f7390806784aa6981b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting point for applications aside from the engine. <br /></td></tr>
 <tr class="separator:a649ef7196503f7390806784aa6981b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cb55301d32025b66855adf84252e1e1"><td class="memItemLeft" align="right" valign="top"><a id="a2cb55301d32025b66855adf84252e1e1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#a2cb55301d32025b66855adf84252e1e1">PollEvents</a> (bool *isClosed)</td></tr>
-<tr class="memdesc:a2cb55301d32025b66855adf84252e1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifecycle method that polls for window events and submits events to required systems. <br /></td></tr>
-<tr class="separator:a2cb55301d32025b66855adf84252e1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd6f427e090858e9a126bbe158362a88"><td class="memItemLeft" align="right" valign="top"><a id="afd6f427e090858e9a126bbe158362a88"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88">PollEvents</a> (bool &amp;isClosed)</td></tr>
+<tr class="memdesc:afd6f427e090858e9a126bbe158362a88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lifecycle method that polls for window events and submits events to required systems. <br /></td></tr>
+<tr class="separator:afd6f427e090858e9a126bbe158362a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad436b67432b7e80fc7bcc08c50bcd8c3"><td class="memItemLeft" align="right" valign="top"><a id="ad436b67432b7e80fc7bcc08c50bcd8c3"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">Update</a> (float dt)</td></tr>
 <tr class="memdesc:ad436b67432b7e80fc7bcc08c50bcd8c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main update loop for the Engine. <br /></td></tr>
@@ -118,12 +118,21 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a776f85664bccbfc212a65ea221be261e"><td class="memItemLeft" align="right" valign="top"><a id="a776f85664bccbfc212a65ea221be261e"></a>
 static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>GetViewProjectionMatrix</b> ()</td></tr>
 <tr class="separator:a776f85664bccbfc212a65ea221be261e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b25b707ce8f966a3d124ca5b82b830a"><td class="memItemLeft" align="right" valign="top"><a id="a9b25b707ce8f966a3d124ca5b82b830a"></a>
+static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>GetViewMatrix</b> ()</td></tr>
+<tr class="separator:a9b25b707ce8f966a3d124ca5b82b830a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1479476d5a7e4f74c584c8a79704ff14"><td class="memItemLeft" align="right" valign="top"><a id="a1479476d5a7e4f74c584c8a79704ff14"></a>
+static glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>GetProjectionMatrix</b> ()</td></tr>
+<tr class="separator:a1479476d5a7e4f74c584c8a79704ff14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a670039daca33ed71e33eab69b9c9ce7c"><td class="memItemLeft" align="right" valign="top"><a id="a670039daca33ed71e33eab69b9c9ce7c"></a>
 static <a class="el" href="classsad_1_1Window.html">Window</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>s_MainWindow</b></td></tr>
 <tr class="separator:a670039daca33ed71e33eab69b9c9ce7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaad8a5e57495749452dced63d6569360"><td class="memItemLeft" align="right" valign="top"><a id="aaad8a5e57495749452dced63d6569360"></a>
+static <a class="el" href="classsad_1_1EngineStateManager.html">EngineStateManager</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>s_EngineState</b></td></tr>
+<tr class="separator:aaad8a5e57495749452dced63d6569360"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for all lifecycle specific methods for the Engine/Game projects. </p>

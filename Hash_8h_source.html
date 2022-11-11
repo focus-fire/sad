@@ -76,40 +76,36 @@ $(function() {
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;bitset&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;random&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecore.html">core</a></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>core</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">   25</a></span>&#160;    <span class="keyword">inline</span> T <a class="code" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">XorShift</a>(<span class="keyword">const</span> T&amp; n, <span class="keywordtype">int</span> i)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keyword">inline</span> T XorShift(<span class="keyword">const</span> T&amp; n, <span class="keywordtype">int</span> i)</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordflow">return</span> n ^ (n &gt;&gt; i);</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    }</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="namespacecore.html#ad36aaf81066bfbf36ac7963b6d3fd280">   33</a></span>&#160;    <span class="keyword">inline</span> uint32_t <a class="code" href="namespacecore.html#ad36aaf81066bfbf36ac7963b6d3fd280">Distribute</a>(<span class="keyword">const</span> uint32_t&amp; n)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">inline</span> uint32_t Distribute(<span class="keyword">const</span> uint32_t&amp; n)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        uint32_t pattern = 0x55555555ul;            <span class="comment">// Alternating 0s/1s</span></div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        uint32_t constant = 1067348297ul;           <span class="comment">// Random uneven integer</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordflow">return</span> constant * <a class="code" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">XorShift</a>(pattern * <a class="code" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">XorShift</a>(n, 16), 16);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordflow">return</span> constant * XorShift(pattern * XorShift(n, 16), 16);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="namespacecore.html#a00276990a0b57383254553f2fb7bf68c">   43</a></span>&#160;    <span class="keyword">inline</span> uint64_t <a class="code" href="namespacecore.html#ad36aaf81066bfbf36ac7963b6d3fd280">Distribute</a>(<span class="keyword">const</span> uint64_t&amp; n)</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">inline</span> uint64_t Distribute(<span class="keyword">const</span> uint64_t&amp; n)</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    {</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        uint64_t pattern = 0x5555555555555555ull;    <span class="comment">// Alternating 0s/1s</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        uint64_t constant = 6238201529431549731ull;  <span class="comment">// Random uneven integer</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> constant * <a class="code" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">XorShift</a>(pattern * <a class="code" href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">XorShift</a>(n, 32), 32);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordflow">return</span> constant * XorShift(pattern * XorShift(n, 32), 32);</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    }</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317">   60</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317">HashCombine</a>(std::size_t&amp; seed, <span class="keyword">const</span> T&amp; item)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">size_t</span> HashCombine(std::size_t&amp; seed, <span class="keyword">const</span> T&amp; item)</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">const</span> uint32_t n = std::hash&lt;T&gt;{}(item);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> std::rotl(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(seed), std::numeric_limits&lt;size_t&gt;::digits / 3) ^ <a class="code" href="namespacecore.html#ad36aaf81066bfbf36ac7963b6d3fd280">Distribute</a>(n);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordflow">return</span> std::rotl(<span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(seed), std::numeric_limits&lt;size_t&gt;::digits / 3) ^ Distribute(n);</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    }</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="anamespacecore_html_aec2be81d2f43d89deb48572586f7deb4"><div class="ttname"><a href="namespacecore.html#aec2be81d2f43d89deb48572586f7deb4">core::XorShift</a></div><div class="ttdeci">T XorShift(const T &amp;n, int i)</div><div class="ttdoc">Performs an XOR of n against n right-shifted to a degree i.</div><div class="ttdef"><b>Definition:</b> Hash.h:25</div></div>
-<div class="ttc" id="anamespacecore_html_acebc0e52912ff872e3d7a0bc99c4a317"><div class="ttname"><a href="namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317">core::HashCombine</a></div><div class="ttdeci">size_t HashCombine(std::size_t &amp;seed, const T &amp;item)</div><div class="ttdoc">Custom hash combine function, can be leveraged in a functor for hashing of STL 'unordered' data struc...</div><div class="ttdef"><b>Definition:</b> Hash.h:60</div></div>
-<div class="ttc" id="anamespacecore_html"><div class="ttname"><a href="namespacecore.html">core</a></div><div class="ttdoc">Set of helpers and utilities for instrumenting hashes. The core::HashCombine uses multiple xor shifts...</div><div class="ttdef"><b>Definition:</b> EventHandler.h:5</div></div>
-<div class="ttc" id="anamespacecore_html_ad36aaf81066bfbf36ac7963b6d3fd280"><div class="ttname"><a href="namespacecore.html#ad36aaf81066bfbf36ac7963b6d3fd280">core::Distribute</a></div><div class="ttdeci">uint32_t Distribute(const uint32_t &amp;n)</div><div class="ttdoc">Hash function pseudo-randomly distributing a 32-bit integer.</div><div class="ttdef"><b>Definition:</b> Hash.h:33</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

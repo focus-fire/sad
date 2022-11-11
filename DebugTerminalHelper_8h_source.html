@@ -78,7 +78,7 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;imterm/utils.hpp&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;imterm/terminal_helpers.hpp&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>cap</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecap.html">cap</a></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
 <div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structcap_1_1DebugTerminalCommandItems.html">   14</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structcap_1_1DebugTerminalCommandItems.html">DebugTerminalCommandItems</a></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    { };</div>
@@ -99,8 +99,8 @@ $(function() {
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classcap_1_1DebugTerminalHelper.html#a2735fc4a8ca1d5ee16b7adeb5f17113d">Close</a>(argument_type&amp; arg);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    constexpr ImTerm::theme CapTerminalTheme</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    constexpr ImTerm::theme <a class="code" href="namespacecap.html#a18b1836e940e329e6dd4ee32abdbd798">CapTerminalTheme</a></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="namespacecap.html#a18b1836e940e329e6dd4ee32abdbd798">   55</a></span>&#160;    {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="stringliteral">&quot;Cap&quot;</span>,</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        std::nullopt,</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        std::nullopt,</div>
@@ -146,12 +146,14 @@ $(function() {
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="anamespacecap_html_a18b1836e940e329e6dd4ee32abdbd798"><div class="ttname"><a href="namespacecap.html#a18b1836e940e329e6dd4ee32abdbd798">cap::CapTerminalTheme</a></div><div class="ttdeci">constexpr ImTerm::theme CapTerminalTheme</div><div class="ttdoc">Theme with defaults to populate spdlog/ImTerm log level colors into the default ImGui theme.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.h:55</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html_a74fdd11cb1710840f43adc3b5fe800ca"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html#a74fdd11cb1710840f43adc3b5fe800ca">cap::DebugTerminalHelper::NoCompletion</a></div><div class="ttdeci">static std::vector&lt; std::string &gt; NoCompletion(argument_type &amp;arg)</div><div class="ttdoc">Specifies action taken by terminal for autocompleting user results.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.cpp:13</div></div>
 <div class="ttc" id="astructcap_1_1DebugTerminalCommandItems_html"><div class="ttname"><a href="structcap_1_1DebugTerminalCommandItems.html">cap::DebugTerminalCommandItems</a></div><div class="ttdoc">Declares variables that can be used to set state for commands in the terminal.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.h:14</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html_a2735fc4a8ca1d5ee16b7adeb5f17113d"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html#a2735fc4a8ca1d5ee16b7adeb5f17113d">cap::DebugTerminalHelper::Close</a></div><div class="ttdeci">static void Close(argument_type &amp;arg)</div><div class="ttdoc">Closes the currently focused terminal.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.cpp:46</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html_a5e4c03c4e023030707e3fac4e662811d"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html#a5e4c03c4e023030707e3fac4e662811d">cap::DebugTerminalHelper::Echo</a></div><div class="ttdeci">static void Echo(argument_type &amp;arg)</div><div class="ttdoc">Echoes the entered text into the terminal.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.cpp:20</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html">cap::DebugTerminalHelper</a></div><div class="ttdoc">Defines custom commands and spdlog sink for the DebugTerminal.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.h:20</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html_adc5ea32288ef969cd2870227850a8d8a"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html#adc5ea32288ef969cd2870227850a8d8a">cap::DebugTerminalHelper::Clear</a></div><div class="ttdeci">static void Clear(argument_type &amp;arg)</div><div class="ttdoc">Clears the terminal output.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.cpp:15</div></div>
+<div class="ttc" id="anamespacecap_html"><div class="ttname"><a href="namespacecap.html">cap</a></div><div class="ttdoc">&quot;Yo, that editor is cap!&quot; - sadEngine dev team 2022</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminalHelper_html_ad39d03aee0eea648614d3185cfa71805"><div class="ttname"><a href="classcap_1_1DebugTerminalHelper.html#ad39d03aee0eea648614d3185cfa71805">cap::DebugTerminalHelper::Debug</a></div><div class="ttdeci">static void Debug(argument_type &amp;arg)</div><div class="ttdoc">Prints to the terminal through the debug logging sinks.</div><div class="ttdef"><b>Definition:</b> DebugTerminalHelper.cpp:37</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -72,35 +72,39 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;IResource.h&quot;</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;Resource.h&quot;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;SDL2/SDL_mixer.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>sad</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="classsad_1_1AudioResource.html">    9</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1AudioResource.html">AudioResource</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1IResource.html">IResource</a></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    {</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">enum class</span> EAudioType</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            WAV,</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;            MP3</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        };</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1AudioResource.html">AudioResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; resourceData, EAudioType audioType);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        EAudioType AudioType;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="comment">// TODO: Should audio resources hold volumes?</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">int</span> DefaultVolume;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        Mix_Chunk* MixChunk;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        Mix_Music* MixMusic;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classsad_1_1AudioResource.html">   12</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1AudioResource.html">AudioResource</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1Resource.html">Resource</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">   18</a></span>&#160;        <span class="keyword">enum class</span> <a class="code" href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">EAudioType</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;            None,</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;            WAV,</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            MP3</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        };</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classsad_1_1AudioResource.html">AudioResource</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        ~<a class="code" href="classsad_1_1AudioResource.html">AudioResource</a>();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1AudioResource.html">AudioResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; resourceData, <a class="code" href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">EAudioType</a> audioType);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">int</span> DefaultVolume;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">EAudioType</a> AudioType;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        Mix_Chunk* MixChunk;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        Mix_Music* MixMusic;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructsad_1_1IResource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1IResource_1_1ResourceData.html">sad::IResource::ResourceData</a></div><div class="ttdef"><b>Definition:</b> IResource.h:11</div></div>
-<div class="ttc" id="aclasssad_1_1IResource_html"><div class="ttname"><a href="classsad_1_1IResource.html">sad::IResource</a></div><div class="ttdef"><b>Definition:</b> IResource.h:8</div></div>
-<div class="ttc" id="aclasssad_1_1AudioResource_html"><div class="ttname"><a href="classsad_1_1AudioResource.html">sad::AudioResource</a></div><div class="ttdef"><b>Definition:</b> AudioResource.h:9</div></div>
+<div class="ttc" id="aclasssad_1_1AudioResource_html_a8a59773b433b957051a54a254d2ee84a"><div class="ttname"><a href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">sad::AudioResource::EAudioType</a></div><div class="ttdeci">EAudioType</div><div class="ttdoc">Denotes the type of audio file conatined by the AudioResource.</div><div class="ttdef"><b>Definition:</b> AudioResource.h:18</div></div>
+<div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
+<div class="ttc" id="aclasssad_1_1Resource_html"><div class="ttname"><a href="classsad_1_1Resource.html">sad::Resource</a></div><div class="ttdoc">Main container for engine resources - these include models, textures, audio, and more.</div><div class="ttdef"><b>Definition:</b> Resource.h:11</div></div>
+<div class="ttc" id="astructsad_1_1Resource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1Resource_1_1ResourceData.html">sad::Resource::ResourceData</a></div><div class="ttdoc">Holds data common to the serialization and deserialization of all resource types.</div><div class="ttdef"><b>Definition:</b> Resource.h:17</div></div>
+<div class="ttc" id="aclasssad_1_1AudioResource_html"><div class="ttname"><a href="classsad_1_1AudioResource.html">sad::AudioResource</a></div><div class="ttdoc">Representation for an audio file in the engine.</div><div class="ttdef"><b>Definition:</b> AudioResource.h:12</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

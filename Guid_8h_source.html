@@ -89,7 +89,7 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;Core/Assert.h&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;Core/MathUtils.h&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecore.html">core</a></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">namespace </span>core</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;{</div>
 <div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html">   25</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classcore_1_1Guid.html">Guid</a></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
@@ -152,7 +152,7 @@ $(function() {
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01core_1_1Guid_01_4.html">  122</a></span>&#160;<span class="keyword">struct </span>std::hash&lt;<a class="code" href="namespacecore.html">core</a>::Guid&gt;</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01core_1_1Guid_01_4.html">  122</a></span>&#160;<span class="keyword">struct </span>std::hash&lt;core::Guid&gt;</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    std::size_t operator()(<a class="code" href="classcore_1_1Guid.html">core::Guid</a> <span class="keyword">const</span>&amp; guid) <span class="keyword">const</span> noexcept</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    {</div>
@@ -160,7 +160,7 @@ $(function() {
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="comment">// TODO: Research better method for seeding hashes...</span></div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordtype">size_t</span> seed = 0xadbebcdb * <a class="code" href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a>(0, 64);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317">core::HashCombine</a>(seed, guid.<a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>());</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> core::HashCombine(seed, guid.<a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>());</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
@@ -169,9 +169,7 @@ $(function() {
 <div class="ttc" id="aclasscore_1_1Guid_html_a15965f9af8e7ebcf466e98b74d97c1c8"><div class="ttname"><a href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a></div><div class="ttdeci">static Guid CreateGuid()</div><div class="ttdoc">Factory method to generate platform-specific GUIDs.</div><div class="ttdef"><b>Definition:</b> Guid.cpp:5</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html"><div class="ttname"><a href="classcore_1_1Guid.html">core::Guid</a></div><div class="ttdoc">Globally Unique Identifier, often used to identify things.</div><div class="ttdef"><b>Definition:</b> Guid.h:25</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html_afa0bb9762abff155d2e2cb6f14b53456"><div class="ttname"><a href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">core::Guid::Equals</a></div><div class="ttdeci">bool Equals(const Guid &amp;other) const</div><div class="ttdoc">Compares current Guid against another specified Guid for equality using private comparator function.</div><div class="ttdef"><b>Definition:</b> Guid.h:62</div></div>
-<div class="ttc" id="anamespacecore_html_acebc0e52912ff872e3d7a0bc99c4a317"><div class="ttname"><a href="namespacecore.html#acebc0e52912ff872e3d7a0bc99c4a317">core::HashCombine</a></div><div class="ttdeci">size_t HashCombine(std::size_t &amp;seed, const T &amp;item)</div><div class="ttdoc">Custom hash combine function, can be leveraged in a functor for hashing of STL 'unordered' data struc...</div><div class="ttdef"><b>Definition:</b> Hash.h:60</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html_ad3fdc5d6f19e2fc5caad18b8e322b0fe"><div class="ttname"><a href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">core::Guid::Guid</a></div><div class="ttdeci">Guid()</div><div class="ttdoc">Default constructor creates an empty GUID.</div><div class="ttdef"><b>Definition:</b> Guid.cpp:52</div></div>
-<div class="ttc" id="anamespacecore_html"><div class="ttname"><a href="namespacecore.html">core</a></div><div class="ttdoc">Set of helpers and utilities for instrumenting hashes. The core::HashCombine uses multiple xor shifts...</div><div class="ttdef"><b>Definition:</b> EventHandler.h:5</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html_af7bc2448963b45bc6c4c04f715e960d8"><div class="ttname"><a href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">core::Guid::ToString</a></div><div class="ttdeci">std::string ToString() const</div><div class="ttdoc">Retrieves string representation for the GUID.</div><div class="ttdef"><b>Definition:</b> Guid.h:49</div></div>
 <div class="ttc" id="aclasscore_1_1MathUtils_html_a0bd5d71ac0f34f5b3ef6239c4407c996"><div class="ttname"><a href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a></div><div class="ttdeci">static int RandomBetween(int min, int max)</div><div class="ttdoc">Generates a pseudo-random number between a specified min and max.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:30</div></div>
 <!-- start footer part -->

@@ -74,68 +74,73 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;entt/entt.hpp&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;Engine/Transform.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;Core/Memory.h&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;Registry.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">namespace </span>sad::ecs</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html">   15</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a> </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; entity) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">   24</a></span>&#160;        <span class="keyword">const</span> entt::entity <a class="code" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_EntityHandle; }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">   33</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">AddComponent</a>(T component)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">   44</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a>(T component)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        };</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">   55</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">RemoveComponent</a>()</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            Registry::GetEntityWorld().remove&lt;T&gt;(m_EntityHandle);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">   66</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a>()</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        {</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().get&lt;T&gt;(m_EntityHandle);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">        </span>{ </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle == other.m_EntityHandle;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        }</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        }</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        Transform Transform;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;Engine/Bound.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;Engine/Transform.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Registry.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad_1_1ecs.html">sad::ecs</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a> </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; entity) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">   27</a></span>&#160;        <span class="keyword">const</span> entt::entity <a class="code" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_EntityHandle; }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">   36</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">AddComponent</a>(T component)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        {</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">   47</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a>(T component)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        };</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">   58</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">RemoveComponent</a>()</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            Registry::GetEntityWorld().remove&lt;T&gt;(m_EntityHandle);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00069"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">   69</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a>()</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        {</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().get&lt;T&gt;(m_EntityHandle);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">        </span>{ </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle == other.m_EntityHandle;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        entt::entity m_EntityHandle;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        core::Pointer&lt;Transform&gt; Transform;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        core::Pointer&lt;Bound&gt; Bound;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        entt::entity m_EntityHandle;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    };</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aed324b7f2b751b527e3bef89b454502d"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">sad::ecs::Entity::AddComponent</a></div><div class="ttdeci">T &amp; AddComponent(T component)</div><div class="ttdoc">Adds a component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:33</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html">sad::ecs::Entity</a></div><div class="ttdoc">Wrapper class for an entt::entity, contains utility methods to update the entities components in the ...</div><div class="ttdef"><b>Definition:</b> Entity.h:15</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aafcf08b8cf54e9baffadd1e1afb06756"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">sad::ecs::Entity::GetHandle</a></div><div class="ttdeci">const entt::entity GetHandle() const</div><div class="ttdoc">Retrieves the entt::entity handle created for the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:24</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a788c83f1fad57d84cf1d824ea97f96df"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">sad::ecs::Entity::RemoveComponent</a></div><div class="ttdeci">void RemoveComponent()</div><div class="ttdoc">Removes a component from the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:55</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_ab445fe3c0805955a20fdc8c8110c66cc"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">sad::ecs::Entity::GetComponent</a></div><div class="ttdeci">T &amp; GetComponent()</div><div class="ttdoc">Retrieves a specified component from the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:66</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af17e9c8da23f44584711aa0d84abc470"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">sad::ecs::Entity::AddEmptyComponent</a></div><div class="ttdeci">void AddEmptyComponent(T component)</div><div class="ttdoc">Adds an empty 'tag' component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:44</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aed324b7f2b751b527e3bef89b454502d"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">sad::ecs::Entity::AddComponent</a></div><div class="ttdeci">T &amp; AddComponent(T component)</div><div class="ttdoc">Adds a component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:36</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html">sad::ecs::Entity</a></div><div class="ttdoc">Wrapper class for an entt::entity, contains utility methods to update the entities components in the ...</div><div class="ttdef"><b>Definition:</b> Entity.h:18</div></div>
+<div class="ttc" id="anamespacesad_1_1ecs_html"><div class="ttname"><a href="namespacesad_1_1ecs.html">sad::ecs</a></div><div class="ttdoc">Contains entt ecs wrappers, systems, and components.</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aafcf08b8cf54e9baffadd1e1afb06756"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">sad::ecs::Entity::GetHandle</a></div><div class="ttdeci">const entt::entity GetHandle() const</div><div class="ttdoc">Retrieves the entt::entity handle created for the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:27</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a788c83f1fad57d84cf1d824ea97f96df"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">sad::ecs::Entity::RemoveComponent</a></div><div class="ttdeci">void RemoveComponent()</div><div class="ttdoc">Removes a component from the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:58</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_ab445fe3c0805955a20fdc8c8110c66cc"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">sad::ecs::Entity::GetComponent</a></div><div class="ttdeci">T &amp; GetComponent()</div><div class="ttdoc">Retrieves a specified component from the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:69</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af17e9c8da23f44584711aa0d84abc470"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">sad::ecs::Entity::AddEmptyComponent</a></div><div class="ttdeci">void AddEmptyComponent(T component)</div><div class="ttdoc">Adds an empty 'tag' component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:47</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

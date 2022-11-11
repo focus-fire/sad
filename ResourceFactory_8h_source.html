@@ -78,81 +78,89 @@ $(function() {
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Core/Memory.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;Core/FileUtils.h&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;IResource.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Resource.h&quot;</span></div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;ResourceManager.h&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;RenderableResource.h&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;AudioResource.h&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Renderer/TextureResource.h&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Renderer/ShaderResource.h&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>sad</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
 <div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html">   21</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1ResourceFactory.html">ResourceFactory</a></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> ResourceType&gt;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceFactory.html#a3b99eb17c28f3c941e11b86cfa6d138c">CreateResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; data) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceFactory.html#aa11743d0880e3198cf17d47054f9d759">CreateResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data) = <span class="keyword">delete</span>;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#a5b7b89efe9b634578f94b5656f4072b6">   36</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;RenderableResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; data)</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb">   36</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;RenderableResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        {</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            core::Pointer&lt;RenderableResource&gt; renderableResource = core::CreatePointer&lt;RenderableResource&gt;(data);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            SAD_ASSERT(renderableResource, <span class="stringliteral">&quot;Failed to initialize pointer to a RenderableResource&quot;</span>);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            ResourceManager::AddResource&lt;RenderableResource&gt;(renderableResource);</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a RenderableResource with name {}&quot;</span>, data.Name);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            ResourceManager::AddResource&lt;RenderableResource&gt;(renderableResource);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#a5b7b89efe9b634578f94b5656f4072b6">   49</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;AudioResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; data)</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keyword">const</span> std::string absolutePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(data.FilePath);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">const</span> std::filesystem::path filePath = std::filesystem::path(absolutePath);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">const</span> std::string extension = filePath.extension().string();</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="comment">// Note: If more then .wav or .mp3 audio types are added, these will have to be updated</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="comment">//       At the moment, this at least ensures that all audio resources will be created with a type by default</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keyword">using</span> AudioType = AudioResource::EAudioType;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            AudioType type = <a class="code" href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a>(extension, <span class="stringliteral">&quot;.wav&quot;</span>) ? AudioType::WAV : AudioType::MP3;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            core::Pointer&lt;AudioResource&gt; audioResource = core::CreatePointer&lt;AudioResource&gt;(data, type);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            SAD_ASSERT(audioResource, <span class="stringliteral">&quot;Failed to initialize pointer to a AudioResource&quot;</span>);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a AudioResource with name {}&quot;</span>, data.Name);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            ResourceManager::AddResource&lt;AudioResource&gt;(audioResource);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#a5b7b89efe9b634578f94b5656f4072b6">   71</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;rad::TextureResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; data)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">const</span> std::string absolutePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(data.FilePath);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            core::Pointer&lt;rad::TextureResource&gt; textureResource = core::CreatePointer&lt;rad::TextureResource&gt;(data, absolutePath);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            SAD_ASSERT(textureResource, <span class="stringliteral">&quot;Failed to initialize pointer to a TextureResource&quot;</span>);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a TextureResource with name {}&quot;</span>, data.Name);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        }</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb">   47</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;AudioResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        {</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">const</span> std::string absolutePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(data.DataPath);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">const</span> std::filesystem::path filePath = std::filesystem::path(absolutePath);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keyword">const</span> std::string extension = filePath.extension().string();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="comment">// Note: If more then .wav or .mp3 audio types are added, these will have to be updated</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="comment">//       This at least ensures that audio files are marked as .wav, .mp3, or None</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <a class="code" href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">AudioResource::EAudioType</a> type = AudioResource::EAudioType::None;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a>(extension, <span class="stringliteral">&quot;.wav&quot;</span>))</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;                type = AudioResource::EAudioType::WAV;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            }</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a>(extension, <span class="stringliteral">&quot;.mp3&quot;</span>))</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                type = AudioResource::EAudioType::MP3;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            core::Pointer&lt;AudioResource&gt; audioResource = core::CreatePointer&lt;AudioResource&gt;(data, type);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            ResourceManager::AddResource&lt;AudioResource&gt;(audioResource);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a AudioResource with name {}&quot;</span>, data.Name);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb">   74</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;rad::TextureResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">using</span> ETextureType = rad::TextureResource::ETextureType;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            ETextureType textureType = ETextureType::Normal;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            ResourceManager::AddResource&lt;rad::TextureResource&gt;(textureResource);</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#a5b7b89efe9b634578f94b5656f4072b6">   86</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;rad::ShaderResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; data)</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        { </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keyword">const</span> std::string absolutePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(data.FilePath);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            core::Pointer&lt;rad::ShaderResource&gt; shaderResource = core::CreatePointer&lt;rad::ShaderResource&gt;(data, absolutePath);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            SAD_ASSERT(shaderResource, <span class="stringliteral">&quot;Failed to initialize pointer to a ShaderResource&quot;</span>);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a ShaderResource with name {}&quot;</span>, data.Name);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            ResourceManager::AddResource&lt;rad::ShaderResource&gt;(shaderResource);</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    };</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="comment">// Check if the texture file contains a &#39;skybox&#39; suffix</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="comment">// These textures are marked as being part of a cube map</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="comment">// ie: &#39;Top.skybox.png</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">if</span> (data.Name.find(<span class="stringliteral">&quot;.skybox.&quot;</span>) != std::string::npos)</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                textureType = ETextureType::CubeMap;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="comment">// Create a standard image/texture resource</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            core::Pointer&lt;rad::TextureResource&gt; textureResource = core::CreatePointer&lt;rad::TextureResource&gt;(data, textureType);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            ResourceManager::AddResource&lt;rad::TextureResource&gt;(textureResource);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a TextureResource with name {}&quot;</span>, data.Name);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb">   96</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;rad::ShaderResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        { </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            core::Pointer&lt;rad::ShaderResource&gt; shaderResource = core::CreatePointer&lt;rad::ShaderResource&gt;(data);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            ResourceManager::AddResource&lt;rad::ShaderResource&gt;(shaderResource);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a ShaderResource with name {}&quot;</span>, data.Name);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    };</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructsad_1_1IResource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1IResource_1_1ResourceData.html">sad::IResource::ResourceData</a></div><div class="ttdef"><b>Definition:</b> IResource.h:11</div></div>
-<div class="ttc" id="aclasssad_1_1ResourceFactory_html_a3b99eb17c28f3c941e11b86cfa6d138c"><div class="ttname"><a href="classsad_1_1ResourceFactory.html#a3b99eb17c28f3c941e11b86cfa6d138c">sad::ResourceFactory::CreateResource</a></div><div class="ttdeci">static void CreateResource(const IResource::ResourceData &amp;data)=delete</div><div class="ttdoc">Factory method to create and construct IResources.</div></div>
 <div class="ttc" id="aclasssad_1_1ResourceFactory_html"><div class="ttname"><a href="classsad_1_1ResourceFactory.html">sad::ResourceFactory</a></div><div class="ttdoc">Factory class used by the ResourceManager to provision the creation of specific resources.</div><div class="ttdef"><b>Definition:</b> ResourceFactory.h:21</div></div>
 <div class="ttc" id="aclasscore_1_1StringUtils_html_ac4816d66982d1938afa67255711c08e9"><div class="ttname"><a href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a></div><div class="ttdeci">static bool Equals(const std::string &amp;a, const std::string &amp;b)</div><div class="ttdoc">Compares two strings for equality.</div><div class="ttdef"><b>Definition:</b> StringUtils.cpp:5</div></div>
+<div class="ttc" id="aclasssad_1_1AudioResource_html_a8a59773b433b957051a54a254d2ee84a"><div class="ttname"><a href="classsad_1_1AudioResource.html#a8a59773b433b957051a54a254d2ee84a">sad::AudioResource::EAudioType</a></div><div class="ttdeci">EAudioType</div><div class="ttdoc">Denotes the type of audio file conatined by the AudioResource.</div><div class="ttdef"><b>Definition:</b> AudioResource.h:18</div></div>
+<div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
 <div class="ttc" id="aclasscore_1_1FileUtils_html_ad41e13f5d8a19329cd94dc7e59c93e2e"><div class="ttname"><a href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a></div><div class="ttdeci">static std::string GetPathInsideDataDirectory(const std::string &amp;path)</div><div class="ttdoc">Retrieves a platform-specific absolute path inside the data directory of the engine ('sad/Data/PATH')</div><div class="ttdef"><b>Definition:</b> FileUtils.cpp:122</div></div>
+<div class="ttc" id="astructsad_1_1Resource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1Resource_1_1ResourceData.html">sad::Resource::ResourceData</a></div><div class="ttdoc">Holds data common to the serialization and deserialization of all resource types.</div><div class="ttdef"><b>Definition:</b> Resource.h:17</div></div>
+<div class="ttc" id="aclasssad_1_1ResourceFactory_html_aa11743d0880e3198cf17d47054f9d759"><div class="ttname"><a href="classsad_1_1ResourceFactory.html#aa11743d0880e3198cf17d47054f9d759">sad::ResourceFactory::CreateResource</a></div><div class="ttdeci">static void CreateResource(const Resource::ResourceData &amp;data)=delete</div><div class="ttdoc">Factory method to create and construct Resources.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

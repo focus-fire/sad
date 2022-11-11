@@ -75,11 +75,11 @@ $(function() {
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Engine/IResource.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Engine/Resource.h&gt;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span>sad::rad</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad_1_1rad.html">sad::rad</a></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1ShaderResource.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1IResource.html">IResource</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1ShaderResource.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1Resource.html">Resource</a></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    {</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">struct </span>Source</div>
@@ -105,30 +105,33 @@ $(function() {
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        std::unordered_map&lt;std::string, int&gt; m_UniformLocations;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1IResource_1_1ResourceData.html">IResource::ResourceData</a>&amp; resourceData, <span class="keyword">const</span> std::string&amp; combinedShaderPath);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> Bind() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">void</span> Unbind() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> SetUniform1i(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> i0);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> SetUniform4f(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">float</span> f0, <span class="keywordtype">float</span> f1, <span class="keywordtype">float</span> f2, <span class="keywordtype">float</span> f3);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> SetUniformMatrix3fv(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">float</span>* matrix);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> SetUniformMatrix4fv(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">float</span>* matrix);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">int</span> GetUniformLocation(<span class="keyword">const</span> std::string&amp; name);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        Source ParseCombinedShader(<span class="keyword">const</span> std::string&amp; filePath);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> CompileShader(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> type, <span class="keyword">const</span> std::string&amp; shaderSource);</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> CreateShader(<span class="keyword">const</span> std::string&amp; vertexShader, <span class="keyword">const</span> std::string&amp; fragmentShader);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    };</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a>();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        ~<a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a>();</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1rad_1_1ShaderResource.html">ShaderResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; resourceData);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> Bind() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> Unbind() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> SetUniform1i(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">int</span> i0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> SetUniform4f(<span class="keyword">const</span> std::string&amp; name, <span class="keywordtype">float</span> f0, <span class="keywordtype">float</span> f1, <span class="keywordtype">float</span> f2, <span class="keywordtype">float</span> f3);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> SetUniformMatrix3fv(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">float</span>* matrix);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> SetUniformMatrix4fv(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">float</span>* matrix);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">int</span> GetUniformLocation(<span class="keyword">const</span> std::string&amp; name);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        Source ParseCombinedShader(<span class="keyword">const</span> std::string&amp; filePath);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> CompileShader(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> type, <span class="keyword">const</span> std::string&amp; shaderSource);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> CreateShader(<span class="keyword">const</span> std::string&amp; vertexShader, <span class="keyword">const</span> std::string&amp; fragmentShader);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    };</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructsad_1_1IResource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1IResource_1_1ResourceData.html">sad::IResource::ResourceData</a></div><div class="ttdef"><b>Definition:</b> IResource.h:11</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1ShaderResource_html"><div class="ttname"><a href="classsad_1_1rad_1_1ShaderResource.html">sad::rad::ShaderResource</a></div><div class="ttdef"><b>Definition:</b> ShaderResource.h:10</div></div>
-<div class="ttc" id="aclasssad_1_1IResource_html"><div class="ttname"><a href="classsad_1_1IResource.html">sad::IResource</a></div><div class="ttdef"><b>Definition:</b> IResource.h:8</div></div>
+<div class="ttc" id="anamespacesad_1_1rad_html"><div class="ttname"><a href="namespacesad_1_1rad.html">sad::rad</a></div><div class="ttdoc">Rendering and drawing, draws pretty things to the screen.</div></div>
+<div class="ttc" id="aclasssad_1_1Resource_html"><div class="ttname"><a href="classsad_1_1Resource.html">sad::Resource</a></div><div class="ttdoc">Main container for engine resources - these include models, textures, audio, and more.</div><div class="ttdef"><b>Definition:</b> Resource.h:11</div></div>
+<div class="ttc" id="astructsad_1_1Resource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1Resource_1_1ResourceData.html">sad::Resource::ResourceData</a></div><div class="ttdoc">Holds data common to the serialization and deserialization of all resource types.</div><div class="ttdef"><b>Definition:</b> Resource.h:17</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

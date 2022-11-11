@@ -2,6 +2,9 @@
 
 #include <entt/entt.hpp>
 
+#include <Core/Memory.h>
+
+#include <Engine/Bound.h>
 #include <Engine/Transform.h>
 
 #include "Registry.h"
@@ -79,7 +82,8 @@ namespace sad::ecs
 		}
 
 	public:
-		Transform Transform;
+		core::Pointer<Transform> Transform;
+		core::Pointer<Bound> Bound;
 
 	private:
 		entt::entity m_EntityHandle;

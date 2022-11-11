@@ -34,7 +34,7 @@ bool sad::JsonManager::ImportLevel(int saveFile)
 
 	NJSONInputArchive json_in(json_output);
 	entt::basic_snapshot_loader loader(sad::ecs::Registry::GetEntityWorld());
-	loader.entities(json_in).component<COMPONENT_TYPES>(json_in);
+	loader.entities(json_in).component<SERIALIZED_COMPONENT_TYPES>(json_in);
 
 	return true;
 }
@@ -64,7 +64,7 @@ bool sad::JsonManager::ExportLevel(int saveFile)
 
 	NJSONOutputArchive json_archive;
 	entt::basic_snapshot snapshot(sad::ecs::Registry::GetEntityWorld());
-	snapshot.entities(json_archive).component<COMPONENT_TYPES>(json_archive);
+	snapshot.entities(json_archive).component<SERIALIZED_COMPONENT_TYPES>(json_archive);
 	json_archive.Close();
 
 	std::string json_output = json_archive.AsString();

@@ -5,15 +5,9 @@ namespace pog
 	class Time final
 	{
 	private:
-		explicit Time() { }
-
 		static float CalculateDeltaTime();
 
 	public:
-		Time(const Time&) = delete;
-
-		static Time& GetInstance();
-
 		/**
 		 * @brief Retrieves the current frame calculation for deltaTime
 		*/

@@ -1,26 +1,34 @@
 #pragma once
 
-#include "IResource.h"
+#include "Resource.h"
 
 #include <SDL2/SDL_mixer.h>
 
 namespace sad
 {
-	class AudioResource final : public IResource
+	/**
+	 * @brief Representation for an audio file in the engine
+	*/
+	class AudioResource final : public Resource
 	{
 	public:
+		/**
+		 * @brief Denotes the type of audio file conatined by the AudioResource
+		*/
 		enum class EAudioType
 		{
+			None,
 			WAV,
 			MP3
 		};
 
-		explicit AudioResource(const IResource::ResourceData& resourceData, EAudioType audioType);
+		AudioResource();
+		~AudioResource();
 
-		EAudioType AudioType;
+		explicit AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType);
 
-		// TODO: Should audio resources hold volumes?
 		int DefaultVolume;
+		EAudioType AudioType;
 		Mix_Chunk* MixChunk;
 		Mix_Music* MixMusic;
 	};

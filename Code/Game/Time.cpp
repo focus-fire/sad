@@ -7,15 +7,9 @@
 float pog::Time::TimeScale = 1.0f;
 float pog::Time::m_StartTime = 0.0f;
 
-pog::Time& pog::Time::GetInstance()
-{
-	static Time instance;
-	return instance;
-}
-
 float pog::Time::GetDeltaTime()
 {
-	return GetInstance().CalculateDeltaTime();
+	return CalculateDeltaTime();
 }
 
 float pog::Time::CalculateDeltaTime()

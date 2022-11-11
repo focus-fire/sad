@@ -3,11 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-#include <Engine/IResource.h>
+#include <Engine/Resource.h>
 
 namespace sad::rad
 {
-	class ShaderResource final : public IResource
+	class ShaderResource final : public Resource
 	{
 	private:
 		struct Source
@@ -33,7 +33,9 @@ namespace sad::rad
 		std::unordered_map<std::string, int> m_UniformLocations;
 
 	public:
-		explicit ShaderResource(const IResource::ResourceData& resourceData, const std::string& combinedShaderPath);
+		ShaderResource();
+		~ShaderResource();
+		explicit ShaderResource(const Resource::ResourceData& resourceData);
 
 		void Bind() const;
 		void Unbind() const;

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <Engine/Transform.h>
 #include <nlohmann/json.hpp>
+
+#include <Engine/Transform.h>
 
 namespace sad::ecs
 {
@@ -58,7 +59,6 @@ namespace sad::ecs
 		glm::quat rot = glm::quat();
 		glm::vec3 scl = glm::vec3();
 
-		
 		pos = glm::vec3(JSON["position"]["x"], JSON["position"]["y"], JSON["position"]["z"]);
 		rot = glm::quat(JSON["rotation"]["w"], JSON["rotation"]["x"], JSON["rotation"]["y"], JSON["rotation"]["z"]);
 		scl = glm::vec3(JSON["scale"]["x"], JSON["scale"]["y"], JSON["scale"]["z"]);

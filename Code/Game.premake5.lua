@@ -26,9 +26,9 @@ project "Game"
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/entt/single_include",
-	"%{prj.location}/../Vendor/imgui",
-	"%{prj.location}/../Vendor/ImTerm/include",
-	"%{prj.location}/../Vendor/assimp/include",
+        "%{prj.location}/../Vendor/imgui",
+        "%{prj.location}/../Vendor/ImTerm/include",
+        "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}",
     }
 
@@ -39,6 +39,7 @@ project "Game"
         "glad",
         "stb_image",
         "imgui",
+		"ImGuizmo",
     }
 
     if os.target() == "windows" then

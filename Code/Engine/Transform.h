@@ -16,13 +16,12 @@ namespace sad
 			glm::vec3 rotation,
 			glm::vec3 scale = glm::vec3(1.0f));
 
-		~Transform();
-
 		/**
 		 * @brief Retrieves a matrix representing the current transform  
 		 * @return Model matrix with calculated translation, rotation, and scale matrices for the transform 
 		*/
 		glm::mat4 GetTransformMatrix();
+		glm::mat4& GetMutableTransformMatrix();
 
 		void SetPosition(glm::vec3 position) { m_Position = position; }
 		void SetRotation(glm::quat rotation) { m_Rotation = rotation; }
@@ -67,5 +66,7 @@ namespace sad
 		glm::vec3 m_Position;
 		glm::quat m_Rotation;
 		glm::vec3 m_Scale;
+
+		glm::mat4 m_TransformMatrix;
 	};
 }

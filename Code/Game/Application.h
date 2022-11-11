@@ -1,7 +1,12 @@
 #pragma once
 
+#include <Core/Memory.h>
+
 #include <Engine/Application.h>
 #include <Engine/RenderableResource.h>
+#include <Engine/AudioResource.h>
+
+#include <Engine/ECS/Entity.h>
 
 namespace pog
 {
@@ -15,9 +20,13 @@ namespace pog
 
 		void Update(float dt) override;
 		void Teardown() override;
-	
+
 	private:
-		// Temporary Variables for Test Level
-		// Go to Docs folder and use ApplicationFileDefault.md to put back the test case
+		std::mutex m_GameMutex;
+
+		float m_CubeTranslate;
+		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
+
+		sad::AudioResource* m_CollisionSoundEffect;
 	};
 }

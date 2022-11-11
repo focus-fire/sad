@@ -1,5 +1,7 @@
 #pragma once 
 
+#include <thread>
+
 #include <Editor/Editor.h>
 
 #include "ECS/Entity.h"
@@ -7,8 +9,8 @@
 
 #include "Window.h"
 #include "RenderableResource.h"
+#include "AudioResource.h"
 #include "EngineStateManager.h"
-
 
 struct SDL_Window;
 
@@ -36,7 +38,7 @@ namespace sad
 		/**
 		 * @brief Lifecycle method that polls for window events and submits events to required systems
 		*/
-		void PollEvents(bool* isClosed);
+		void PollEvents(bool& isClosed);
 
 		/**
 		 * @brief Main update loop for the Engine
@@ -50,13 +52,17 @@ namespace sad
 
 		// TODO: Abstract view projection matrix into camera
 		static glm::mat4 GetViewProjectionMatrix();
+		static glm::mat4 GetViewMatrix();
+		static glm::mat4 GetProjectionMatrix();
 
 	public:
 		static Window* s_MainWindow;
+		static EngineStateManager* s_EngineState;
 
 	private:
 		cap::Editor* m_Editor = nullptr;
 
-		EngineStateManager m_EngineStateManager;
+		bool m_PlayMusic;
+		AudioResource* m_MusicResource;
 	};
 }

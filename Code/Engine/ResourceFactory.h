@@ -66,9 +66,19 @@ namespace sad
 		template<>
 		static void CreateResource<rad::TextureResource>(const Resource::ResourceData& data)
 		{
-			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
+			using ETextureType = rad::TextureResource::ETextureType;
+			ETextureType textureType = ETextureType::Normal;
 
-			core::Pointer<rad::TextureResource> textureResource = core::CreatePointer<rad::TextureResource>(data, absolutePath);
+			// Check if the texture file contains a 'skybox' suffix
+			// These textures are marked as being part of a cube map
+			// ie: 'Top.skybox.png
+			if (data.Name.find(".skybox.") != std::string::npos)
+				textureType = ETextureType::CubeMap;
+
+			// Create a standard image/texture resource
+			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
+			core::Pointer<rad::TextureResource> textureResource = core::CreatePointer<rad::TextureResource>(data, absolutePath, textureType);
+
 			ResourceManager::AddResource<rad::TextureResource>(textureResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a TextureResource with name {}", data.Name);
 		}

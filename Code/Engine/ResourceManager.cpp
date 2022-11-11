@@ -215,7 +215,7 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(const std::string& fileName)
 {
 	SAD_ASSERT(!fileName.empty(), "Empty string is being evaluated as a type of resource");
-
+	
 	const std::filesystem::path filePath = std::filesystem::path(fileName);
 	const std::string ext = filePath.extension().string();
 

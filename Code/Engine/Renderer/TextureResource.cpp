@@ -15,18 +15,23 @@ sad::rad::TextureResource::TextureResource()
 { }
 
 
-sad::rad::TextureResource::TextureResource(const Resource::ResourceData& resourceData, const std::string& absoluteFilePath, ETextureType type)
+sad::rad::TextureResource::TextureResource(const Resource::ResourceData& resourceData, ETextureType type)
 	: Resource(resourceData)
+	, m_RendererId(-1)
+	, m_LocalBuffer(nullptr)
+	, m_Width(0)
+	, m_Height(0)
+	, m_BitsPerPixel(0)
 {
 	if (type == ETextureType::Normal)
-		InitializeNormalTexture(absoluteFilePath);
+		InitializeNormalTexture(resourceData.AbsolutePath);
 
 	if (type == ETextureType::CubeMap)
 		InitialzieCubeMapTexture();
 }
 
 sad::rad::TextureResource::TextureResource(int width, int height)
-	: Resource({ "FrameBuffer.fake", "FrameBuffer.fake" })
+	: Resource({ "FrameBuffer.fake", "FrameBuffer.fake", "FrameBuffer.fake"})
 	, m_Width(width)
 	, m_Height(height)
 {

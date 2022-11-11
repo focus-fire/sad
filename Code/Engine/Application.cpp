@@ -75,18 +75,20 @@ void sad::Application::EngineStart()
 
 	bool isWindowClosed = false;
 
+	// TODO: Remove temporary music resource
+	m_MusicResource = ResourceManager::GetResource<AudioResource>("lol.mp3");
+
 	std::thread gameThread = std::thread([&]() 
 	{
 		while (!isWindowClosed)
 		{
 			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
 			{
-				// TODO: REMOVE AFTER DEMO
+				// TODO: Remove temporary music resource
 				if (!m_PlayMusic)
 				{
 					m_PlayMusic = true;
-					AudioResource* musicFile = ResourceManager::GetResource<AudioResource>("lol.mp3");
-					AudioManager::PlayMusic(musicFile, 1);
+					AudioManager::PlayMusic(m_MusicResource, 1);
 				}
 
 				// Game Update
@@ -180,7 +182,7 @@ void sad::Application::Update(float dt)
 
 void sad::Application::Teardown()
 { 
-	JsonManager::ExportLevel();
+	//JsonManager::ExportLevel();
 
 	m_Editor->Teardown();
 	s_MainWindow->Teardown();

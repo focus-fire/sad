@@ -8,6 +8,12 @@
 #include "RenderableResource.h"
 #include "Renderer/ShaderResource.h"
 
+
+sad::ResourceManager::~ResourceManager()
+{
+
+}
+
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
 	static ResourceManager instance;
@@ -95,7 +101,7 @@ bool sad::ResourceManager::ImportResources()
 			core::Guid guid = core::Guid::RecreateGuid(rows[0]);
 
 			// Create generic data for this resource 
-			Resource::ResourceData data = { fileName, relativePath, guid };
+			Resource::ResourceData data = { fileName, relativePath, absolutePath, guid };
 			EResourceType type = CheckResourceType(fileName);
 
 			// Submit resource to data factory if it has a valid type
@@ -143,7 +149,7 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 				const std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
 
 				// Create standard resource data
-				Resource::ResourceData data = { fileName, relativePath };
+				Resource::ResourceData data = { fileName, relativePath, absolutePath.string() };
 				EResourceType type = CheckResourceType(fileName);
 
 				// Send data to factory if the resource has a valid type

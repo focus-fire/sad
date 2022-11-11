@@ -5,7 +5,7 @@
 #include "RenderableResourceComponent.h"
 #include "ControllerComponent.h"
 
-#define COMPONENT_TYPES sad::ecs::TransformComponent,\
+#define SERIALIZED_COMPONENT_TYPES sad::ecs::TransformComponent,\
 	sad::ecs::BoundComponent,\
 	sad::ecs::RenderableResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\

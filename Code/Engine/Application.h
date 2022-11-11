@@ -9,6 +9,7 @@
 
 #include "Window.h"
 #include "RenderableResource.h"
+#include "AudioResource.h"
 #include "EngineStateManager.h"
 
 struct SDL_Window;
@@ -61,7 +62,7 @@ namespace sad
 	private:
 		cap::Editor* m_Editor = nullptr;
 
-		// TODO: REMOVE AFTER DEMO
 		bool m_PlayMusic;
+		AudioResource* m_MusicResource;
 	};
 }

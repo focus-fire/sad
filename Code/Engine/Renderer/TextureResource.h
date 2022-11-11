@@ -19,7 +19,7 @@ namespace sad::rad
 		 * @brief Allocates texture memory and sets default texture parameters for an image 
 		 * @param filePath Path to the target texture resource
 		*/
-		explicit TextureResource(const Resource::ResourceData& resourceData, const std::string& absoluteFilePath, ETextureType type);
+		explicit TextureResource(const Resource::ResourceData& resourceData, ETextureType type);
 
 		/**
 		 * @brief Allocates memory for an empty texture without an image 

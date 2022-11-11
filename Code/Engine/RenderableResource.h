@@ -23,6 +23,7 @@ namespace sad
 				, Indices(nullptr)
 				, IndexCount(0)
 			{ }
+
 			explicit Geometry(const float* vertices, const unsigned int vertexSize, const unsigned int* indices, const unsigned int indexCount)
 				: Vertices(vertices)
 				, VertexSize(vertexSize)
@@ -31,10 +32,12 @@ namespace sad
 			{ }
 		};
 
+		RenderableResource();
+		~RenderableResource();
+
 		explicit RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry);
 
 		// TODO: Remove this constructor when 3D models can be parsed - the AddResource for RenderableResource will have to change as well.
-		//		 When removing this constructor also remove the constructors in Geometry.
 		explicit RenderableResource(const Resource::ResourceData& resourceData)
 			: Resource(resourceData)
 		{ }

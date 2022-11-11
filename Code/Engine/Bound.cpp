@@ -19,6 +19,7 @@ sad::Bound::Bound(Transform transform)
 {
 	m_Position = transform.GetPosition();
 	m_Scale = transform.GetScale();
+
 	CalculateBound();
 }
 

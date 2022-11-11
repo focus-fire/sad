@@ -60,11 +60,11 @@ void pog::Application::Update(float dt)
 		transform->Rotate(glm::vec3(10.0f * dt));
 		transform->Translate(glm::vec3(glm::sin(-m_CubeTranslate * 2) * dt, 0.0f, 0.0f));
 
-		for (auto [e, t, b, r] : view.each())
+		for (auto [secondEntity, secondTransform, secondBound, secondRenderable] : view.each())
 		{
-			if (entity != e)
+			if (entity != secondEntity)
 			{
-				sad::Bound* bound2 = b.m_Bound.get();
+				sad::Bound* bound2 = secondBound.m_Bound.get();
 				if (bound->Intersects(*bound2))
 				{
 					sad::AudioManager::PlaySFX(m_CollisionSoundEffect);

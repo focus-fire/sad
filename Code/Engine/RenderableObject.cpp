@@ -28,11 +28,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Default.glsl");
 	m_Shader->Bind();
 
-	// TODO: REMOVE AFTER DEMO
-	float r1 = static_cast<float>(rand() / static_cast<float>(RAND_MAX));
-	float r2 = static_cast<float>(rand() / static_cast<float>(RAND_MAX));
-	float r3 = static_cast<float>(rand() / static_cast<float>(RAND_MAX));
-	UniformColor = glm::vec4(r1, r2, r3, 1.0f);
+	m_Shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
 	m_Texture = ResourceManager::GetResource<rad::TextureResource>("Default.png");
 	m_Texture->Bind(1);

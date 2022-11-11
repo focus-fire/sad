@@ -6,6 +6,8 @@
 #include <Engine/RenderableResource.h>
 #include <Engine/AudioResource.h>
 
+#include <Engine/ECS/Entity.h>
+
 namespace pog
 {
 	class Application final : public sad::Application

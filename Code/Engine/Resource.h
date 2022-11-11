@@ -16,16 +16,15 @@ namespace sad
 		*/
 		struct ResourceData
 		{
-			core::Guid Guid;
 			std::string Name;
-			std::string FilePath;
-
-			ResourceData(const std::string& name, const std::string& filePath, core::Guid guid = core::Guid::CreateGuid());
+			std::string DataPath;
+			std::string AbsolutePath;
+			core::Guid Guid = core::Guid::CreateGuid();
 		};
 
 		Resource();
 		Resource(const ResourceData& data);
-		virtual ~Resource() { }
+		virtual ~Resource();
 
 		/**
 		 * @brief Serializes the resource in a CSV format used in the Resources.sad.meta file
@@ -37,7 +36,7 @@ namespace sad
 		 * @brief Definition for a null resource
 		 * @return Empty resource definition
 		*/
-		static Resource Null() { return Resource({ "", "", core::Guid() }); }
+		static Resource Null() { return Resource({ "", "", "", core::Guid() }); }
 
 		/**
 		 * @brief Retrieves the GUID associated with the called resource
@@ -51,8 +50,17 @@ namespace sad
 		*/
 		inline std::string GetResourceFileName() const { return m_Name; }
 
-		// TODO: Add relative/absolute path distinction?
-		inline std::string GetResourceFilePath() const { return m_FilePath; }
+		/**
+		 * @brief Retrieves the file path relative to the project's `./Data` directory
+		 * @return The file path relative to the './Data' directory 
+		*/
+		inline std::string GetResourceDataPath() const { return m_DataPath; }
+
+		/**
+		 * @brief Retrieves the absolute path for the resource on the filesystem
+		 * @return The absoluate file path for the resource
+		*/
+		inline std::string GetResourceAbsolutePath() const { return m_AbsolutePath; }
 
 		bool operator==(const Resource& other) const
 		{
@@ -67,6 +75,7 @@ namespace sad
 	private:
 		core::Guid m_Guid;
 		std::string m_Name;
-		std::string m_FilePath;
+		std::string m_DataPath;
+		std::string m_AbsolutePath;
 	};
 }

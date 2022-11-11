@@ -33,10 +33,6 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 
 		shader->Bind();
 
-		// TODO: REMOVE AFTER DEMO
-		glm::vec4 u_Color = renderable->UniformColor;
-		shader->SetUniform4f("u_Color", u_Color.x, u_Color.y, u_Color.z, 1.0f);
-
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
 	}

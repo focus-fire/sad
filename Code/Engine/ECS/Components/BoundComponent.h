@@ -12,7 +12,6 @@ namespace sad::ecs
 		core::Pointer<Bound> m_Bound;
 	};
 
-	// TODO: Bounds converted to/and from json might not be functioning properly
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::BoundComponent& boundComponent)
 	{
 		glm::vec3 pos = boundComponent.m_Bound->GetPosition();

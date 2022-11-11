@@ -2,12 +2,25 @@
 
 #include "AudioResource.h"
 
+sad::AudioResource::AudioResource()
+    : Resource(Resource::Null())
+    , AudioType(EAudioType::None)
+    , DefaultVolume(0)
+    , MixChunk(nullptr)
+    , MixMusic(nullptr)
+{ }
+
+sad::AudioResource::~AudioResource()
+{ }
+
 sad::AudioResource::AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType)
 	: Resource(resourceData)
 	, AudioType(audioType)
 	, DefaultVolume(10)
+    , MixChunk(nullptr)
+    , MixMusic(nullptr)
 {
-    const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(resourceData.FilePath);
+    const std::string absolutePath = resourceData.AbsolutePath;
 
     if (audioType == EAudioType::MP3)
     {

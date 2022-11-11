@@ -30,9 +30,6 @@ namespace sad
 		rad::TextureResource* GetTexture() const { return m_Texture; }
 		rad::ShaderResource* GetShader() const { return m_Shader; }
 
-		// TODO: Remove after demo
-		glm::vec4 UniformColor;
-
 	private:
 		RenderableResource* m_RenderableResource;
 

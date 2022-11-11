@@ -46,14 +46,21 @@ namespace sad
 		template<>
 		static void CreateResource<AudioResource>(const Resource::ResourceData& data)
 		{
-			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
+			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.DataPath);
 			const std::filesystem::path filePath = std::filesystem::path(absolutePath);
 			const std::string extension = filePath.extension().string();
 
 			// Note: If more then .wav or .mp3 audio types are added, these will have to be updated
-			//       At the moment, this at least ensures that all audio resources will be created with a type by default
-			using AudioType = AudioResource::EAudioType;
-			AudioType type = core::StringUtils::Equals(extension, ".wav") ? AudioType::WAV : AudioType::MP3;
+			//		 This at least ensures that audio files are marked as .wav, .mp3, or None
+			AudioResource::EAudioType type = AudioResource::EAudioType::None;
+			if (core::StringUtils::Equals(extension, ".wav"))
+			{
+				type = AudioResource::EAudioType::WAV;
+			}
+			else if (core::StringUtils::Equals(extension, ".mp3"))
+			{
+				type = AudioResource::EAudioType::MP3;
+			}
 
 			core::Pointer<AudioResource> audioResource = core::CreatePointer<AudioResource>(data, type);
 			ResourceManager::AddResource<AudioResource>(audioResource);
@@ -76,8 +83,7 @@ namespace sad
 				textureType = ETextureType::CubeMap;
 
 			// Create a standard image/texture resource
-			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
-			core::Pointer<rad::TextureResource> textureResource = core::CreatePointer<rad::TextureResource>(data, absolutePath, textureType);
+			core::Pointer<rad::TextureResource> textureResource = core::CreatePointer<rad::TextureResource>(data, textureType);
 
 			ResourceManager::AddResource<rad::TextureResource>(textureResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a TextureResource with name {}", data.Name);
@@ -89,9 +95,7 @@ namespace sad
 		template<>
 		static void CreateResource<rad::ShaderResource>(const Resource::ResourceData& data)
 		{ 
-			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
-
-			core::Pointer<rad::ShaderResource> shaderResource = core::CreatePointer<rad::ShaderResource>(data, absolutePath);
+			core::Pointer<rad::ShaderResource> shaderResource = core::CreatePointer<rad::ShaderResource>(data);
 			ResourceManager::AddResource<rad::ShaderResource>(shaderResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a ShaderResource with name {}", data.Name);
 		}

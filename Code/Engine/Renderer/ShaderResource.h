@@ -34,7 +34,8 @@ namespace sad::rad
 
 	public:
 		ShaderResource();
-		explicit ShaderResource(const Resource::ResourceData& resourceData, const std::string& combinedShaderPath);
+		~ShaderResource();
+		explicit ShaderResource(const Resource::ResourceData& resourceData);
 
 		void Bind() const;
 		void Unbind() const;

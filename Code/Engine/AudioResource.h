@@ -6,22 +6,29 @@
 
 namespace sad
 {
+	/**
+	 * @brief Representation for an audio file in the engine
+	*/
 	class AudioResource final : public Resource
 	{
 	public:
+		/**
+		 * @brief Denotes the type of audio file conatined by the AudioResource
+		*/
 		enum class EAudioType
 		{
+			None,
 			WAV,
 			MP3
 		};
 
-		AudioResource() { }
+		AudioResource();
+		~AudioResource();
+
 		explicit AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType);
 
-		EAudioType AudioType;
-
-		// TODO: Should audio resources hold volumes?
 		int DefaultVolume;
+		EAudioType AudioType;
 		Mix_Chunk* MixChunk;
 		Mix_Music* MixMusic;
 	};

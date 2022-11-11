@@ -10,13 +10,19 @@
 sad::rad::ShaderResource::ShaderResource()
     : Resource(Resource::Null())
     , m_RendererId(-1)
+    , m_FileName("")
+    , m_UniformLocations()
 { }
 
-sad::rad::ShaderResource::ShaderResource(const Resource::ResourceData& resourceData, const std::string& combinedShaderPath)
+sad::rad::ShaderResource::~ShaderResource()
+{ }
+
+sad::rad::ShaderResource::ShaderResource(const Resource::ResourceData& resourceData)
     : Resource(resourceData)
-    , m_FileName(combinedShaderPath)
+    , m_FileName(resourceData.AbsolutePath)
+    , m_UniformLocations()
 {
-    const Source source = ParseCombinedShader(combinedShaderPath);
+    const Source source = ParseCombinedShader(m_FileName);
 
     m_RendererId = CreateShader(source.VertexSource, source.FragmentSource);
     SAD_ASSERT(m_RendererId, "Shader was properly created in the renderer")

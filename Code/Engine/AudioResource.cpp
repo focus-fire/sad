@@ -2,8 +2,8 @@
 
 #include "AudioResource.h"
 
-sad::AudioResource::AudioResource(const IResource::ResourceData& resourceData, EAudioType audioType)
-	: IResource(resourceData)
+sad::AudioResource::AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType)
+	: Resource(resourceData)
 	, AudioType(audioType)
 	, DefaultVolume(10)
 {

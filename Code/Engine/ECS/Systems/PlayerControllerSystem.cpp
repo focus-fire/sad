@@ -46,14 +46,14 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
-			AudioManager::GetInstance().PlaySFX(*audioResource);
+			AudioManager::GetInstance().PlaySFX(audioResource);
 		}
 
 		if (input.GetKey(sad::KeyCode::S))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
-			AudioManager::GetInstance().PlaySFX(*audioResource);
+			AudioManager::GetInstance().PlaySFX(audioResource);
 		}
 
 		// Handles left/right movement using A and D
@@ -61,14 +61,14 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
-			AudioManager::GetInstance().PlaySFX(*audioResource);
+			AudioManager::GetInstance().PlaySFX(audioResource);
 		}
 
 		if (input.GetKey(sad::KeyCode::D))
 		{
 			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
-			AudioManager::GetInstance().PlaySFX(*audioResource);
+			AudioManager::GetInstance().PlaySFX(audioResource);
 		}
 
 		// Handles left/right rotation using LEFT and RIGHT arrow keys.

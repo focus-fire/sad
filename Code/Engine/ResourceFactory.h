@@ -6,7 +6,7 @@
 #include <Core/Memory.h>
 #include <Core/FileUtils.h>
 
-#include "IResource.h"
+#include "Resource.h"
 #include "ResourceManager.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
@@ -22,31 +22,29 @@ namespace sad
 	{
 	public:
 		/**
-		 * @brief Factory method to create and construct IResources
-		 * @tparam ResourceType Class type inheriting from IResource
-		 * @param data Required default set of data for serialization of IResources
+		 * @brief Factory method to create and construct Resources
+		 * @tparam ResourceType Class type inheriting from Resource
+		 * @param data Required default set of data for serialization of Resources
 		*/
 		template<class ResourceType>
-		static void CreateResource(const IResource::ResourceData& data) = delete;
+		static void CreateResource(const Resource::ResourceData& data) = delete;
 
 		/**
 		 * @brief Factory construction for RenderableResources 
 		*/
 		template<>
-		static void CreateResource<RenderableResource>(const IResource::ResourceData& data)
+		static void CreateResource<RenderableResource>(const Resource::ResourceData& data)
 		{
 			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data);
-			SAD_ASSERT(renderableResource, "Failed to initialize pointer to a RenderableResource");
-			core::Log(ELogType::Trace, "[ResourceFactory] Created a RenderableResource with name {}", data.Name);
-
 			ResourceManager::AddResource<RenderableResource>(renderableResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a RenderableResource with name {}", data.Name);
 		}
 
 		/**
 		 * @brief Factory construction for AudioResources 
 		*/
 		template<>
-		static void CreateResource<AudioResource>(const IResource::ResourceData& data)
+		static void CreateResource<AudioResource>(const Resource::ResourceData& data)
 		{
 			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
 			const std::filesystem::path filePath = std::filesystem::path(absolutePath);
@@ -58,40 +56,34 @@ namespace sad
 			AudioType type = core::StringUtils::Equals(extension, ".wav") ? AudioType::WAV : AudioType::MP3;
 
 			core::Pointer<AudioResource> audioResource = core::CreatePointer<AudioResource>(data, type);
-			SAD_ASSERT(audioResource, "Failed to initialize pointer to a AudioResource");
-			core::Log(ELogType::Trace, "[ResourceFactory] Created a AudioResource with name {}", data.Name);
-
 			ResourceManager::AddResource<AudioResource>(audioResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a AudioResource with name {}", data.Name);
 		}
 
 		/**
 		 * @brief Factory construction for TextureResources
 		*/
 		template<>
-		static void CreateResource<rad::TextureResource>(const IResource::ResourceData& data)
+		static void CreateResource<rad::TextureResource>(const Resource::ResourceData& data)
 		{
 			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
 
 			core::Pointer<rad::TextureResource> textureResource = core::CreatePointer<rad::TextureResource>(data, absolutePath);
-			SAD_ASSERT(textureResource, "Failed to initialize pointer to a TextureResource");
-			core::Log(ELogType::Trace, "[ResourceFactory] Created a TextureResource with name {}", data.Name);
-
 			ResourceManager::AddResource<rad::TextureResource>(textureResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a TextureResource with name {}", data.Name);
 		}
 
 		/**
 		 * @brief Factory construction for ShaderResources 
 		*/
 		template<>
-		static void CreateResource<rad::ShaderResource>(const IResource::ResourceData& data)
+		static void CreateResource<rad::ShaderResource>(const Resource::ResourceData& data)
 		{ 
 			const std::string absolutePath = core::FileUtils::GetPathInsideDataDirectory(data.FilePath);
 
 			core::Pointer<rad::ShaderResource> shaderResource = core::CreatePointer<rad::ShaderResource>(data, absolutePath);
-			SAD_ASSERT(shaderResource, "Failed to initialize pointer to a ShaderResource");
-			core::Log(ELogType::Trace, "[ResourceFactory] Created a ShaderResource with name {}", data.Name);
-
 			ResourceManager::AddResource<rad::ShaderResource>(shaderResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a ShaderResource with name {}", data.Name);
 		}
 	};
 }

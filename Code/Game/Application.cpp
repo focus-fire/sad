@@ -17,43 +17,26 @@
 #include <Engine/Renderer/ShaderResource.h>
 #include <Engine/Renderer/RenderBuddy.h>
 
+#include <Engine/AudioManager.h>
+#include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
 #include <Engine/JsonManager.h>
 
-/**
- * @brief 
- * @sample
- * Go to Docs folder and use ApplicationFileDefault.md to put back the test case
-*/
 pog::Application::Application()
 	: sad::Application()
-	//, m_CubeGeometry(sad::RenderableResource::Geometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount))
 {
-	//m_CubeResource = new sad::RenderableResource({ "TestCube.fake", "TestCube.fake" }, m_CubeGeometry);
+	// Game is initialized here
 }
 
 pog::Application::~Application()
 {
 	// Game is destroyed here
-	//delete m_CubeResource;
 }
 
 void pog::Application::Start()
 {
-	// Add resource and transform components to the entities
-	//m_FirstCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	//m_FirstCubeEntity.AddComponent<sad::ecs::TransformComponent>({ m_FirstCubeEntity.Transform });
-	//m_FirstCubeEntity.AddComponent<sad::ecs::BoundComponent>({ m_FirstCubeEntity.Bound });
-
-	//m_FirstCubeEntity.AddEmptyComponent<sad::ecs::PlayerControllerComponent>({});
-
-	//m_SecondCubeEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	//m_SecondCubeEntity.AddComponent<sad::ecs::TransformComponent>({ m_SecondCubeEntity.Transform });
-	//m_SecondCubeEntity.AddComponent<sad::ecs::BoundComponent>({ m_SecondCubeEntity.Bound });
-
-	//m_ThirdPlaneEntity.AddComponent<sad::ecs::RenderableResourceComponent>({ m_CubeResource });
-	//m_ThirdPlaneEntity.AddComponent<sad::ecs::TransformComponent>({ m_ThirdPlaneEntity.Transform });
+	m_CollisionSoundEffect = sad::ResourceManager::GetResource<sad::AudioResource>("jump.wav");
 
 	// Translation Logic (-pi to pi for demo)
 	m_CubeTranslate = -1.0f * glm::pi<float>();
@@ -68,20 +51,26 @@ void pog::Application::Update(float dt)
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;
 
-	//if (m_FirstCubeEntity.Bound->Intersects(*m_SecondCubeEntity.Bound.get()) && m_LogLimit <= 50)
-	//{
-	//	glm::vec3 firstBoundPos = m_FirstCubeEntity.Bound->GetPosition();
-	//	core::Log(ELogType::Debug, "Collision detected @ {}, {}, {}", firstBoundPos.x, firstBoundPos.y, firstBoundPos.z);
-	//	m_LogLimit++;
-	//}
-
 	// Sample 'Script' to rotate objects
 	auto view = sad::ecs::Registry::GetEntityWorld().view<const sad::ecs::TransformComponent, const sad::ecs::BoundComponent, const sad::ecs::RenderableObjectComponent>();
 	for (auto [entity, transformComponent, boundComponent, renderableComponent] : view.each())
 	{
+		sad::Bound* bound = boundComponent.m_Bound.get();
 		sad::Transform* transform = transformComponent.m_Transform.get();
 		transform->Rotate(glm::vec3(10.0f * dt));
 		transform->Translate(glm::vec3(glm::sin(-m_CubeTranslate * 2) * dt, 0.0f, 0.0f));
+
+		for (auto [e, t, b, r] : view.each())
+		{
+			if (entity != e)
+			{
+				sad::Bound* bound2 = b.m_Bound.get();
+				if (bound->Intersects(*bound2))
+				{
+					sad::AudioManager::PlaySFX(m_CollisionSoundEffect);
+				}
+			}
+		}
 	}
 }
 

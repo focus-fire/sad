@@ -8,7 +8,7 @@
 #include <Core/Assert.h>
 #include <Core/Guid.h>
 
-#include "IResource.h"
+#include "Resource.h"
 
 namespace sad
 {
@@ -39,7 +39,7 @@ namespace sad
 		/**
 		 * @brief Main lookup for instantiated resources
 		*/
-		std::unordered_map<core::Guid, core::Pointer<IResource>> m_ResourceLookup;
+		std::unordered_map<core::Guid, core::Pointer<Resource>> m_ResourceLookup;
 
 		/**
 		 * @brief Local cache for resources that have been imported via MImport().
@@ -97,19 +97,19 @@ namespace sad
 		 * @param resourceType EResourceType enum dictating which type of resource it is
 		 * @param resourceData Mandatory ResourceData struct that initializes the resource
 		*/
-		void SendDataToFactory(const EResourceType& resourceType, const IResource::ResourceData& resourceData);
+		void SendDataToFactory(const EResourceType& resourceType, const Resource::ResourceData& resourceData);
 
 	public:
 		/**
-		 * @brief Type trait ensuring that passed template parameters inherit from IResource
-		 * @tparam T typename that inherits from IResource
+		 * @brief Type trait ensuring that passed template parameters inherit from Resource
+		 * @tparam T typename that inherits from Resource
 		*/
 		template<typename T>
-		using ResourceType = std::enable_if<std::is_base_of<IResource, T>::value>;
+		using ResourceType = std::enable_if<std::is_base_of<Resource, T>::value>;
 
 		/**
 		 * @brief Adds a smart pointer for a resource into the ResourceManager
-		 * @tparam T Class type inheriting from IResource
+		 * @tparam T Class type inheriting from Resource
 		 * @param resource Reference to the smart pointer containing the resource being inserted 
 		*/
 		template<class T, typename = ResourceType<T>>
@@ -120,7 +120,7 @@ namespace sad
 
 		/**
 		 * @brief Retrieve a resource from the ResourceManager by a valid GUID 
-		 * @tparam T Class type inheriting from IResource
+		 * @tparam T Class type inheriting from Resource
 		 * @param guid Refernce to a GUID object containing a valid GUID
 		 * @return Pointer to the reference being retrieved, nullptr if the resource isn't found
 		*/
@@ -132,7 +132,7 @@ namespace sad
 
 		/**
 		 * @brief Retrieve a resource from the ResourceManager by a valid name
-		 * @tparam T Class type inheriting from IResource
+		 * @tparam T Class type inheriting from Resource
 		 * @param name Reference to a string containing a valid resource name 
 		 * @return Pointer to the reference being retrieved, nullptr if the resource isn't found
 		*/
@@ -147,7 +147,7 @@ namespace sad
 		void MAddResource(const core::Pointer<T>& resource)
 		{
 			SAD_ASSERT(resource, "Attempting to instert a null resource!")
-			m_ResourceLookup.emplace(resource->GetResourceId(), resource);
+			m_ResourceLookup.emplace(resource->GetResourceGuid(), resource);
 		}
 
 		template<class T, typename = ResourceType<T>>
@@ -156,8 +156,8 @@ namespace sad
 			SAD_ASSERT(!guid.IsNull(), "Attempting to retrieve a resource with a null GUID!");
 			core::Log(ELogType::Trace, "[ResourceManager] Attempting to retrieve resource with GUID {}", guid);
 
-			std::unordered_map<core::Guid, core::Pointer<IResource>>::const_iterator it = m_ResourceLookup.find(guid);
-			return it == m_ResourceLookup.end() ? nullptr : dynamic_cast<T*>(it->second);
+			auto& it = m_ResourceLookup.find(guid);
+			return it != m_ResourceLookup.end() ? dynamic_cast<T*>(it->second.get()) : nullptr;
 		}
 
 		template <class T, typename = ResourceType<T>>
@@ -168,7 +168,8 @@ namespace sad
 
 			for (auto& it : m_ResourceLookup)
 			{
-				const std::string& resourceName = it.second->GetResourceName();
+				std::string resourceName = it.second->GetResourceFileName();
+
 				if (core::StringUtils::Equals(name, resourceName))
 					return dynamic_cast<T*>(it.second.get());
 			}

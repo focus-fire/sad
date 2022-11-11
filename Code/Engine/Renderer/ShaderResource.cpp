@@ -7,8 +7,13 @@
 
 #include <glad/glad.h>
 
-sad::rad::ShaderResource::ShaderResource(const IResource::ResourceData& resourceData, const std::string& combinedShaderPath)
-    : IResource(resourceData)
+sad::rad::ShaderResource::ShaderResource()
+    : Resource(Resource::Null())
+    , m_RendererId(-1)
+{ }
+
+sad::rad::ShaderResource::ShaderResource(const Resource::ResourceData& resourceData, const std::string& combinedShaderPath)
+    : Resource(resourceData)
     , m_FileName(combinedShaderPath)
 {
     const Source source = ParseCombinedShader(combinedShaderPath);

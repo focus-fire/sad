@@ -4,7 +4,7 @@
 
 #include <Engine/RenderableResource.h>
 #include <Engine/Renderer/Sample/Cube.h>
-#include <Engine/IResource.h>
+#include <Engine/Resource.h>
 
 namespace sad::ecs
 {
@@ -30,8 +30,8 @@ namespace sad::ecs
 	{
 		JSON =
 		{
-			{ "GUID", renderableResource.m_RenderableResource->GetResourceId().ToString() },
-			{ "Name", renderableResource.m_RenderableResource->GetResourceName() },
+			{ "GUID", renderableResource.m_RenderableResource->GetResourceGuid().ToString() },
+			{ "FileName", renderableResource.m_RenderableResource->GetResourceFileName() },
 		};
 	}
 
@@ -40,7 +40,7 @@ namespace sad::ecs
 		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
 
 		// TODO: Remove IReource requirement... 
-		IResource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test"};
+		Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test"};
 		renderableResource.m_RenderableResource = core::CreatePointer<RenderableResource>(cubeData, std::move(CubeGeometry));
 		renderableResource.m_IsResourceDirty = true;
 	}

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "IResource.h"
+#include "Resource.h"
 
 #include <SDL2/SDL_mixer.h>
 
 namespace sad
 {
-	class AudioResource final : public IResource
+	class AudioResource final : public Resource
 	{
 	public:
 		enum class EAudioType
@@ -15,7 +15,8 @@ namespace sad
 			MP3
 		};
 
-		explicit AudioResource(const IResource::ResourceData& resourceData, EAudioType audioType);
+		AudioResource() { }
+		explicit AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType);
 
 		EAudioType AudioType;
 

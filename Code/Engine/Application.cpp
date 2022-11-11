@@ -86,7 +86,7 @@ void sad::Application::EngineStart()
 				{
 					m_PlayMusic = true;
 					AudioResource* musicFile = ResourceManager::GetResource<AudioResource>("lol.mp3");
-					AudioManager::PlayMusic(*musicFile, 1);
+					AudioManager::PlayMusic(musicFile, 1);
 				}
 
 				// Game Update

@@ -157,7 +157,7 @@ namespace sad
 			SAD_ASSERT(!guid.IsNull(), "Attempting to retrieve a resource with a null GUID!");
 			core::Log(ELogType::Trace, "[ResourceManager] Attempting to retrieve resource with GUID {}", guid);
 
-			auto& it = m_ResourceLookup.find(guid);
+			auto it = m_ResourceLookup.find(guid);
 			return it != m_ResourceLookup.end() ? dynamic_cast<T*>(it->second.get()) : nullptr;
 		}
 

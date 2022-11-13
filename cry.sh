@@ -6,6 +6,9 @@
 ## Note: Should be run from the root of the repository
 ##
 
+# Update project submodules and dependencies (this can be commented if it's slowing things down)
+python3 ./Scripts/bet.py --update
+
 # Clean previous premake artifacts
 python3 ./Scripts/bet.py --clean
 
@@ -18,5 +21,5 @@ make
 # Optional: Run the unit tests
 # python3 ./Scripts/bet.py --tests
 
-# Optional: Run the project 
+# Optional: Run the project
 ./Build/Bin/Game/Game.app

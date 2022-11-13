@@ -19,3 +19,6 @@ Vendor/SDL/** linguist-vendored
 
 # Remove assimp as a vendored path
 Vendor/assimp/** linguist-vendored
+
+# Remove mono as a vendored path
+Vendor/mono/** linguist-vendored

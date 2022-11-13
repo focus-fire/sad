@@ -29,6 +29,7 @@ project "Game"
         "%{prj.location}/../Vendor/imgui",
         "%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}/../Vendor/assimp/include",
+        "%{prj.location}/../Vendor/mono/include",
         "%{prj.location}",
     }
 
@@ -49,7 +50,6 @@ project "Game"
 
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
 
-        table.insert(includes, "%{prj.location}/../Vendor/mono/include/win") 
         table.insert(linkers, "libmono-static-sgen") -- .lib
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
@@ -58,7 +58,6 @@ project "Game"
 
         table.insert(linkers, "assimp.framework") -- .framework
 
-        table.insert(includes, "%{prj.location}/../Vendor/mono/include/win") 
         table.insert(linkers, "monosgen-2.0") -- .a
     end
 

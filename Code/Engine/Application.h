@@ -6,6 +6,7 @@
 
 #include "ECS/Entity.h"
 #include "Renderer/Renderer.h"
+#include "Scripting/ScriptingEngine.h"
 
 #include "Window.h"
 #include "RenderableResource.h"
@@ -60,6 +61,7 @@ namespace sad
 		static EngineStateManager* s_EngineState;
 
 	private:
+		cs::ScriptingEngine* m_ScriptingEngine = nullptr;
 		cap::Editor* m_Editor = nullptr;
 
 		bool m_PlayMusic;

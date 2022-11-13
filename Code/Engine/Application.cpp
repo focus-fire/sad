@@ -47,6 +47,7 @@ sad::Application::Application()
 	s_EngineState = new EngineStateManager();
 
 	m_Editor = new cap::Editor;
+	m_ScriptingEngine = new cs::ScriptingEngine();
 }
 
 sad::Application::~Application()
@@ -60,6 +61,9 @@ void sad::Application::EngineStart()
 {
 	// Launch editor 
 	m_Editor->Start();
+
+	// Initialize Scripting
+	m_ScriptingEngine->Start();
 
 	// Import Resources
 	ResourceManager::Import();
@@ -185,6 +189,8 @@ void sad::Application::Teardown()
 	//JsonManager::ExportLevel();
 
 	m_Editor->Teardown();
+	m_ScriptingEngine->Teardown();
+
 	s_MainWindow->Teardown();
 }
 

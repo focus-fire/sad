@@ -475,6 +475,7 @@ Release/**/*
 *.vscode
 *.sln
 *.vcxproj*
+*.csproj*
 
 # XCode
 *.xcworkspace

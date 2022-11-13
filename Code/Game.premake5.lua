@@ -53,10 +53,13 @@ project "Game"
         table.insert(linkers, "libmono-static-sgen") -- .lib
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-
         table.insert(linkers, "SDL2.framework") -- .framework
 		table.insert(linkers, "SDL2_mixer.framework") -- .framework
+
         table.insert(linkers, "assimp.framework") -- .framework
+
+        table.insert(includes, "%{prj.location}/../Vendor/mono/include/win") 
+        table.insert(linkers, "monosgen-2.0") -- .a
     end
 
     includedirs { includes }
@@ -73,7 +76,11 @@ project "Game"
         frameworkdirs {
 			"%{prj.location}/../Vendor/SDL/lib/mac",
 			"%{prj.location}/../Vendor/assimp/lib/mac",
+            "%{prj.location}/../Vendor/mono/lib/mac",
 		}
+        libdirs {
+            "%{prj.location}/../Vendor/mono/lib/mac",
+        }
     filter {}
 
     filter "system:windows"

@@ -75,6 +75,7 @@ workspace "sad"
         -- Placeholders
         include "Vendor/SDL.premake5.lua"
         include "Vendor/assimp.premake5.lua"
+        include "Vendor/mono.premake5.lua"
         -- Header Only Deps
         -- spdlog
         -- json

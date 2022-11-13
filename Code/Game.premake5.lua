@@ -46,9 +46,14 @@ project "Game"
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
 		table.insert(linkers, "SDL2_mixer") -- .dll
+
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
+
+        table.insert(includes, "%{prj.location}/../Vendor/mono/include/win") 
+        table.insert(linkers, "libmono-static-sgen") -- .lib
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
+
         table.insert(linkers, "SDL2.framework") -- .framework
 		table.insert(linkers, "SDL2_mixer.framework") -- .framework
         table.insert(linkers, "assimp.framework") -- .framework
@@ -62,6 +67,7 @@ project "Game"
         libdirs {
 			"%{prj.location}/../Vendor/SDL/lib/win",
 			"%{prj.location}/../Vendor/assimp/lib/win",
+            "%{prj.location}/../Vendor/mono/lib/win/%{cfg.buildcfg}"
 		}
     filter "system:macosx"
         frameworkdirs {
@@ -78,6 +84,7 @@ project "Game"
         postbuildcommands {
             -- Copy the SDL .dll to the application directory
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)",
+
 			-- Copy the assimp .dll to the application directory
 			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }

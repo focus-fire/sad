@@ -61,11 +61,111 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
 <div class="title">sad Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p align="center"></p>
+<p><img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100" class="inline"/> </p>
+<p align="center"></p>
+<p><object type="image/svg+xml" data="https://github.com/focus-fire/sad/actions/workflows/build.yml/badge.svg" style="pointer-events: none;">build-badge</object> <object type="image/svg+xml" data="https://github.com/focus-fire/sad/actions/workflows/test.yml/badge.svg" style="pointer-events: none;">test-badge</object> </p>
+<h2><a class="anchor" id="autotoc_md0"></a>
+Installation</h2>
+<p>Luckily most of the setup for the repository has been automated using the <code>bet</code> (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only <a href="https://www.python.org/downloads/">Python v3.10+</a> is required to properly install the project on either Windows or Mac.</p>
+<p>To start, recursively clone the repository and follow the instructions below for your OS.</p>
+<div class="fragment"><div class="line">$ git clone --recursive git@github.com:focus-fire/sad.git</div>
+<div class="line"> </div>
+<div class="line">or</div>
+<div class="line"> </div>
+<div class="line">$ git clone --recursive https://github.com/focus-fire/sad.git</div>
+</div><!-- fragment --><p><b>Note:</b> If you're using a GUI client for git such as GitHub Desktop or SourceTree it should automatically perform a recursive clone on the repository. Otherwise copy the command above, right click your file explorer, and run the command in git bash.</p>
+<p>If the repository is not cloned recursively <b>nothing will work</b>.</p>
+<h3><a class="anchor" id="autotoc_md1"></a>
+Quick Setup</h3>
+<p>When in doubt, just <code>cry</code>!</p>
+<p>On Windows, double-click the <code>cry.bat</code> script. Or enter the following command in a Terminal on either Windows or Mac.</p>
+<p>This command can be used as an alternative to using separate commands to clean and build the project when required.</p>
+<div class="fragment"><div class="line">$ ./cry</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2"></a>
+Windows</h3>
+<ol type="1">
+<li>Run the <code>bet.py</code> script from the terminal and specify the proper build flag for your target toolset</li>
+</ol>
+<div class="fragment"><div class="line"># Visual Studio 2022 Solution (default)</div>
+<div class="line">$ python3 .\Scripts\bet.py --build </div>
+<div class="line"> </div>
+<div class="line"># Visual Studio 2019 Solution</div>
+<div class="line">$ python3 .\Scripts\bet.py --build vs2019</div>
+<div class="line"> </div>
+<div class="line"># OS Independent Makefiles (must have WSL, cygwin, or mingw installed) </div>
+<div class="line">$ python3 .\Scripts\bet.py --build gmake2</div>
+</div><!-- fragment --><p>This step will have to be rerun <b>each</b> time any premake file (<code>*.premake5.lua*</code>) is changed. Please note that personal changes to generated files (such as a Visual Studio solution) <em>may</em> not persist once this command is re-executed. <br  />
+</p>
+<ol type="1">
+<li>Open the <code>sad.sln</code> solution file in Visual Studio if <code>vs2022</code> or <code>vs2019</code> was your desired toolset</li>
+<li>If your target toolset was <code>gmake2</code>, run the Makefiles in a terminal</li>
+</ol>
+<div class="fragment"><div class="line">$ make</div>
+</div><!-- fragment --><p>The binaries and static libraries should be located in the <code>Build/Bin</code> directory of the project. These can be run in a GUI using something like the Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools">Makefile Tools</a> or can be run in the terminal.</p>
+<div class="fragment"><div class="line">$ .\Build\Bin\Game\Game</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
+Mac</h3>
+<ol type="1">
+<li>Execute the <code>bet.py</code> script from the terminal to build the project with the <code>gmake2</code> or <code>xcode4</code> toolsets</li>
+</ol>
+<div class="fragment"><div class="line"># OS Independent Makefiles </div>
+<div class="line">$ python3 ./Scripts/bet.py --build gmake2</div>
+<div class="line"> </div>
+<div class="line"># XCode Workspace (WARNING: Untested, unsupported, and unrecommended)</div>
+<div class="line">$ python3 ./Scripts/bet.py --build xcode4</div>
+</div><!-- fragment --><p>Similar to the Windows installation, this step will have to be redone <b>every</b> time a change is made to a <code>*premake5.lua*</code> file.</p>
+<ol type="1">
+<li>Generate compile commands for the project</li>
+</ol>
+<div class="fragment"><div class="line">$ python3 ./Scripts/bet.py --gen-cc</div>
+</div><!-- fragment --><p>This will install a <a href="https://github.com/tarruda/premake-export-compile-commands">tool</a> for premake to export compile commands for the current project if it is not yet installed. These will provide intellisense in projects without an IDE or configured compiler (ie: a default Visual Studio Code installation).</p>
+<ol type="1">
+<li>Install the Microsoft C/C++ tools for Visual Studio Code and edit the project configuration (ex: cmd+shift+p &gt; <code>C/C++: Edit Configurations</code>)</li>
+<li>Under 'Advanced Settings' modify the 'Compile Commands' to <code>compile_commands/debug.json</code> (or another <code>compile_commands/*.json</code> file for your desired configuration)</li>
+<li>Run the target Makefiles in a terminal</li>
+</ol>
+<div class="fragment"><div class="line">$ make</div>
+</div><!-- fragment --><p>The binaries and static libraries should be located in the <code>Build/Bin</code> directory of the project. These can be run in a GUI using something like the Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools">Makefile Tools</a> or can be run in the terminal.</p>
+<div class="fragment"><div class="line">$ ./Build/Bin/Game/Game</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+Tests</h2>
+<p>This project is setup to use <a href="https://github.com/catchorg/Catch2">Catch2</a> for unit and integration testing. Running tests is also tied into the bet scripting pipeline.</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Running Tests</h3>
+<ol type="1">
+<li>Build the <code>Tests</code> project using Visual Studio, msbuild (might have to be manually added to your system's environment variables), or make with respect to your desired toolset</li>
+</ol>
+<div class="fragment"><div class="line">Launch Visual Studio &gt; Right-click the &#39;Tests&#39; project &gt; Select &#39;Build&#39;</div>
+<div class="line"> </div>
+<div class="line">or</div>
+<div class="line"> </div>
+<div class="line">$ msbuild sad.sln</div>
+<div class="line"> </div>
+<div class="line">or</div>
+<div class="line"> </div>
+<div class="line">$ make</div>
+</div><!-- fragment --><ol type="1">
+<li>Run the <code>bet.py</code> script with the <code>--tests</code> flag enabled in a terminal</li>
+</ol>
+<div class="fragment"><div class="line">$ python3 ./Scripts/bet.py --tests</div>
+</div><!-- fragment --><p><b>Note:</b> Alternatively the <code>--compile-tests</code> flag can be used to compile the tests with a particular toolchain and then run the testbed (basically steps 1/2 combined).</p>
+<div class="fragment"><div class="line"># Alternatively, the --compile-tests flag can be used to compile with a toolchain before running the testbed</div>
+<div class="line">$ python3 ./Scripts/bet.py --compile-tests msbuild</div>
+<div class="line">$ python3 ./Scripts/bet.py --compile-tests make</div>
+</div><!-- fragment --><p>After running the script you should see some output similar to the following...</p>
+<div class="fragment"><div class="line">[tests.py] Running Catch2 tests...</div>
+<div class="line"> </div>
+<div class="line">===============================================================================</div>
+<div class="line">All tests passed (4 assertions in 1 test case)</div>
+<div class="line"> </div>
+<div class="line">[tests.py] bet! Successfully ran tests.</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

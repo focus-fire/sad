@@ -1,5 +1,7 @@
 #pragma once
 
+#include <glm/glm.hpp>
+
 #include <Engine/ResourceManager.h>
 
 #include "RenderableResource.h"
@@ -25,8 +27,8 @@ namespace sad
 		rad::VertexArray* GetVertexArray() { return m_VertexArray; }
 		rad::VertexBuffer* GetVertexBuffer() { return m_VertexBuffer; }
 		rad::IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
-		rad::TextureResource* GetTexture() { return m_Texture; }
-		rad::ShaderResource* GetShader() { return m_Shader; }
+		rad::TextureResource* GetTexture() const { return m_Texture; }
+		rad::ShaderResource* GetShader() const { return m_Shader; }
 
 	private:
 		RenderableResource* m_RenderableResource;

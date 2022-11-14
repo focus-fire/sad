@@ -21,6 +21,10 @@ namespace sad
 		 * @return Model matrix with calculated translation, rotation, and scale matrices for the transform
 		*/
 
+		static glm::mat4 GetViewMatrix();
+
+		static glm::mat4 GetProjectionMatrix();
+
 		static glm::mat4 GetViewProjectionMatrix();
 
 		static void SetViewMatrix(glm::vec3 vector);

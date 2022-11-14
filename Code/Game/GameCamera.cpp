@@ -15,17 +15,25 @@ sad::GameCamera::GameCamera()
 sad::GameCamera::~GameCamera()
 { }
 
+glm::mat4 sad::GameCamera::GetProjectionMatrix() {
+	return glm::perspective(glm::radians(60.0f), sad::Application::s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+}
+
+glm::mat4 sad::GameCamera::GetViewMatrix() {
+	return glm::lookAt(
+		glm::vec3(cameraVector.x, 0.0f, -5.0f), // Camera position
+		glm::vec3(cameraVector.x - 3.0f, -0.5f, 2.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	);
+}
+
 glm::mat4 sad::GameCamera::GetViewProjectionMatrix()
 {
 	//glm::mat4 rotationMatrix = glm::mat4(m_Rotation);
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), sad::Application::s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+	glm::mat4 projectionMatrix = GetProjectionMatrix();
 	//core::Log(ELogType::Debug, "Camera vector: {}", glm::to_string(cameraVector));
 
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(cameraVector.x, 0.0f, -5.0f), // Camera position
-		glm::vec3(cameraVector.x-3.0f, -0.5f, 2.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
+	glm::mat4 viewMatrix = GetViewMatrix();
 
 	return projectionMatrix * viewMatrix;
 }

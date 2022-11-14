@@ -2,11 +2,11 @@
 
 #include <entt/entt.hpp>
 
-#include "IResource.h"
+#include "Resource.h"
 
 namespace sad
 {
-	class RenderableResource final : public IResource
+	class RenderableResource final : public Resource
 	{
 	public:
 		struct Geometry
@@ -23,6 +23,7 @@ namespace sad
 				, Indices(nullptr)
 				, IndexCount(0)
 			{ }
+
 			explicit Geometry(const float* vertices, const unsigned int vertexSize, const unsigned int* indices, const unsigned int indexCount)
 				: Vertices(vertices)
 				, VertexSize(vertexSize)
@@ -31,12 +32,14 @@ namespace sad
 			{ }
 		};
 
-		explicit RenderableResource(const IResource::ResourceData& resourceData, const Geometry& geometry);
+		RenderableResource();
+		~RenderableResource();
+
+		explicit RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry);
 
 		// TODO: Remove this constructor when 3D models can be parsed - the AddResource for RenderableResource will have to change as well.
-		//		 When removing this constructor also remove the constructors in Geometry.
-		explicit RenderableResource(const IResource::ResourceData& resourceData)
-			: IResource(resourceData)
+		explicit RenderableResource(const Resource::ResourceData& resourceData)
+			: Resource(resourceData)
 		{ }
 
 		const Geometry GetGeometry() const { return m_Geometry; }

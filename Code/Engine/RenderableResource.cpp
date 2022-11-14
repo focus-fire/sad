@@ -4,8 +4,16 @@
 
 #include "ECS/Registry.h"
 
-sad::RenderableResource::RenderableResource(const IResource::ResourceData& resourceData, const Geometry& geometry)
-	: IResource(resourceData)
+sad::RenderableResource::RenderableResource()
+	: Resource(Resource::Null())
+	, m_Geometry()
+{ }
+
+sad::RenderableResource::~RenderableResource()
+{ }
+
+sad::RenderableResource::RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry)
+	: Resource(resourceData)
 	, m_Geometry(geometry)
 { }
 

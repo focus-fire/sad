@@ -4,17 +4,17 @@
 #include <bitset>
 #include <random>
 
-/**
- * @brief Set of helpers and utilities for instrumenting hashes. 
- *		  The core::HashCombine uses multiple xor shifts and a binary rotation.
- *
- * @reference http://burtleburtle.net/bob/hash/doobs.html
- * @reference https://stackoverflow.com/questions/664014/what-integer-hash-function-are-good-that-accepts-an-integer-hash-key/57556517#57556517
- * @reference https://stackoverflow.com/questions/35985960/c-why-is-boosthash-combine-the-best-way-to-combine-hash-values
-*/
-
 namespace core
 {
+	/**
+	 * @brief Set of helpers and utilities for instrumenting hashes. 
+	 *		  The core::HashCombine uses multiple xor shifts and a binary rotation.
+	 *
+	 * @reference http://burtleburtle.net/bob/hash/doobs.html
+	 * @reference https://stackoverflow.com/questions/664014/what-integer-hash-function-are-good-that-accepts-an-integer-hash-key/57556517#57556517
+	 * @reference https://stackoverflow.com/questions/35985960/c-why-is-boosthash-combine-the-best-way-to-combine-hash-values
+	*/
+
 	/**
 	 * @brief Performs an XOR of n against n right-shifted to a degree i
 	 * @tparam T Type being XOR'ed and right shifted, must have respective operators implemented

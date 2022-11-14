@@ -1,0 +1,29 @@
+/**
+ * @namespace sad
+ *
+ * @brief The one and only, contains the engine's core features and functionality
+ */
+
+/**
+ * @namespace sad::ecs
+ *
+ * @brief Contains entt ecs wrappers, systems, and components
+ */
+
+/**
+ * @namespace sad::rad
+ *
+ * @brief Rendering and drawing, draws pretty things to the screen
+ */
+
+/**
+ * @namespace cap
+ *
+ * @brief "Yo, that editor is cap!" - sadEngine dev team 2022
+ */
+
+/**
+ * @namespace pog
+ *
+ * @brief Contains all game and gameplay related code and systems and much like the name - it is quite pog
+ */

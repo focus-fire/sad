@@ -27,6 +27,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// All RenderableObjects start with this 'Material' by default
 	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Default.glsl");
 	m_Shader->Bind();
+
 	m_Shader->SetUniform4f("u_Color", 1.0f, 1.0f, 1.0f, 1.0f);
 
 	m_Texture = ResourceManager::GetResource<rad::TextureResource>("Default.png");

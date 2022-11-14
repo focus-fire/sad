@@ -8,6 +8,12 @@
 #include "RenderableResource.h"
 #include "Renderer/ShaderResource.h"
 
+
+sad::ResourceManager::~ResourceManager()
+{
+
+}
+
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
 	static ResourceManager instance;
@@ -95,7 +101,7 @@ bool sad::ResourceManager::ImportResources()
 			core::Guid guid = core::Guid::RecreateGuid(rows[0]);
 
 			// Create generic data for this resource 
-			IResource::ResourceData data = { fileName, relativePath, guid };
+			Resource::ResourceData data = { fileName, relativePath, absolutePath, guid };
 			EResourceType type = CheckResourceType(fileName);
 
 			// Submit resource to data factory if it has a valid type
@@ -143,7 +149,7 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 				const std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
 
 				// Create standard resource data
-				IResource::ResourceData data = { fileName, relativePath };
+				Resource::ResourceData data = { fileName, relativePath, absolutePath.string() };
 				EResourceType type = CheckResourceType(fileName);
 
 				// Send data to factory if the resource has a valid type
@@ -162,7 +168,7 @@ void sad::ResourceManager::ExportUncachedResources()
 
 	for (auto& it : m_ResourceLookup)
 	{
-		const std::string resourceFileName = it.second->GetResourceName();
+		const std::string resourceFileName = it.second->GetResourceFileName();
 
 		// Item wasn't cached previously, save it to the resource map
 		if (!m_CachedResourcesFromFile.contains(resourceFileName))
@@ -188,7 +194,7 @@ void sad::ResourceManager::ExportAllResources()
 	}
 }
 
-void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, const IResource::ResourceData& resourceData)
+void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, const Resource::ResourceData& resourceData)
 {
 	SAD_ASSERT(resourceType != EResourceType::None, "Resources with unidentified types should not be submitted to the factory for insertion");
 
@@ -215,7 +221,7 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(const std::string& fileName)
 {
 	SAD_ASSERT(!fileName.empty(), "Empty string is being evaluated as a type of resource");
-
+	
 	const std::filesystem::path filePath = std::filesystem::path(fileName);
 	const std::string ext = filePath.extension().string();
 

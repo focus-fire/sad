@@ -36,6 +36,7 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 		glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
+
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
 	}

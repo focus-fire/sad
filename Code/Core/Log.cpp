@@ -18,7 +18,7 @@ namespace
 
 	// Change these logging levels for different levels of information
 	// ie: Changing the debug level to 'trace' will view trace logs
-	const spdlog::level::level_enum c_DebugLoggerLevel = spdlog::level::trace;
+	const spdlog::level::level_enum c_DebugLoggerLevel = spdlog::level::debug;
 	const spdlog::level::level_enum c_AssertLoggerLevel = spdlog::level::err;
 
 	// Logs follow the format: [MM-DD-YY HH:MM:SS.mm] [level] message

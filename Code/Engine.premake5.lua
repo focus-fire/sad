@@ -42,10 +42,12 @@ project "Engine"
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
+		table.insert(linkers, "SDL2_mixer") -- .dll
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework") -- .framework
+		table.insert(linkers, "SDL2_mixer.framework") -- .framework
         table.insert(linkers, "assimp.framework") -- .framework
     end
 

@@ -71,6 +71,7 @@ workspace "sad"
         include "Vendor/glm.premake5.lua"
         include "Vendor/stb_image.premake5.lua"
         include "Vendor/imgui.premake5.lua"
+		include "Vendor/ImGuizmo.premake5.lua"
         -- Placeholders
         include "Vendor/SDL.premake5.lua"
         include "Vendor/assimp.premake5.lua"

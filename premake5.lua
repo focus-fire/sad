@@ -54,12 +54,11 @@ workspace "sad"
     filter {}
 
     -- Core Projects
-    group "Core"
-        include "Code/SadScripting/SadScripting.premake5.lua"
-        include "Code/Core.premake5.lua"
-        include "Code/Engine.premake5.lua"
-        include "Code/Editor.premake5.lua"
-        include "Code/Game.premake5.lua"
+    include "Code/SadCSFramework/SadCSFramework.premake5.lua"
+    include "Code/Core.premake5.lua"
+    include "Code/Engine.premake5.lua"
+    include "Code/Editor.premake5.lua"
+    include "Code/Game.premake5.lua"
 
     -- Tests
     group "Tests"

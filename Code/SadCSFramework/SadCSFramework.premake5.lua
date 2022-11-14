@@ -1,16 +1,16 @@
-project "SadScripting"
+project "SadCSFramework"
     kind "SharedLib"
     language "C#"
     dotnetframework "4.7.2"
 
-	targetdir "%{prj.location}/Build/Scripts"
+	targetdir "%{prj.location}/Build/Scripts/"
 	objdir "%{prj.location}/Build/Scripts/Obj/%{prj.name}"
 
-    files { "Source/**.cs" }
+    files { "Sad/**.cs" }
 
     vpaths {
-        ["Source/*"] = { "Source/**.cs" },
-        ["Docs"] = { "**.md", "**.txt", "Source/**.md", "Source/**.txt" },
+        ["Source/*"] = { "Sad/**.cs" },
+        ["Docs"] = { "**.md", "**.txt", "Sad/**.md", "Sad/**.txt" },
     }
 
     filter "system:windows"

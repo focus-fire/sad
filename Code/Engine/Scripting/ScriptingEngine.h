@@ -2,6 +2,8 @@
 
 #include <mono/jit/jit.h>
 
+#include <Engine/Level.h>
+
 namespace sad::cs
 {
 	/**
@@ -15,26 +17,33 @@ namespace sad::cs
 			MonoDomain* RootDomain = nullptr;
 			MonoDomain* AppDomain = nullptr;
 			MonoAssembly* SadCSFrameworkAssembly = nullptr;
+
+			Level* CurrentLevelInstance = nullptr;
 		};
 
 	public:
-		void Start();
-		void Teardown();
+		static void Start();
+		static void Teardown();
+
+		static void RuntimeStart(Level* level);
+		static void RuntimeStop();
 
 	private:
-		void StartMono();
-		void TeardownMono();
+		static void StartMono();
+		static void TeardownMono();
 
-		char* ReadBytes(const std::string& filePath, uint32_t* outputSize);
-		MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
-		void PrintAssemblyTypes(MonoAssembly* assembly);
-		MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
+		static char* ReadBytes(const std::string& filePath, uint32_t* outputSize);
+		static MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
+		static void PrintAssemblyTypes(MonoAssembly* assembly);
+		static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
+
+		static MonoObject* InstantiateClass(const char* namespaceName, const char* className);
 
 		// TEMP
-		MonoObject* InstantiateClass(const char* namespaceName, const char* className);
-		void CallTestMethod(MonoObject* objectInstance);
-		void CallIncrementTestMethod(MonoObject* objectInstance, int value);
+		static void CallTestMethod(MonoObject* objectInstance);
+		static void CallIncrementTestMethod(MonoObject* objectInstance, int value);
+		static void CallStringTestMethod(MonoObject* objectInstance, const char* str);
 
-		ScriptingEngineConfig* m_ScriptingConfig;
+		static ScriptingEngineConfig* s_ScriptingConfig;
 	};
 }

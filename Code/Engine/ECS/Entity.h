@@ -3,11 +3,13 @@
 #include <entt/entt.hpp>
 
 #include <Core/Memory.h>
+#include <Core/Guid.h>
 
 #include <Engine/Bound.h>
 #include <Engine/Transform.h>
 
 #include "Registry.h"
+#include "Components/GuidComponent.h"
 
 namespace sad::ecs
 {
@@ -19,7 +21,8 @@ namespace sad::ecs
 	{
 	public:
 		Entity();
-		Entity(const Entity& entity) = delete;
+		Entity(entt::entity entityHandle);
+		Entity(const Entity& entity) = default;
 
 		/**
 		 * @brief Retrieves the entt::entity handle created for the entity
@@ -36,6 +39,18 @@ namespace sad::ecs
 		T& AddComponent(T component)
 		{
 			return Registry::GetEntityWorld().emplace<T>(m_EntityHandle, component);
+		}
+
+		/**
+		 * @brief Potentially overwrites a component on the entity with the component passed
+		 * @tparam T Generic struct component to add
+		 * @param component Component to add or replace on the entity
+		 * @return Reference to the added component
+		*/
+		template<typename T>
+		T& OverwriteComponent(T component)
+		{
+			return Registry::GetEntityWorld().emplace_or_replace<T>(m_EntityHandle, component);
 		}
 
 		/**
@@ -57,6 +72,7 @@ namespace sad::ecs
 		template<typename T>
 		void RemoveComponent()
 		{
+			SAD_ASSERT(HasComponent<T>(), "Attempting to remove a component that does not exist on the entity");
 			Registry::GetEntityWorld().remove<T>(m_EntityHandle);
 		}
 
@@ -71,6 +87,23 @@ namespace sad::ecs
 			return Registry::GetEntityWorld().get<T>(m_EntityHandle);
 		}
 
+		/**
+		 * @brief Checks if a particular component exists on an entity
+		 * @tparam T Generic struct component to evaluate the existence of
+		 * @return True if the component exists on the entity, false if it does not 
+		*/
+		template<typename T>
+		bool HasComponent()
+		{
+			return Registry::GetEntityWorld().has<T>(m_EntityHandle);
+		}
+
+		core::Guid GetGuid() { return this->GetComponent<ecs::GuidComponent>().m_GUID; }
+
+		operator bool() const { return m_EntityHandle != entt::null; }
+
+		operator entt::entity() const { return m_EntityHandle; }
+
 		bool operator==(const Entity& other) const
 		{ 
 			return m_EntityHandle == other.m_EntityHandle;
@@ -82,8 +115,8 @@ namespace sad::ecs
 		}
 
 	public:
-		core::Pointer<Transform> Transform;
-		core::Pointer<Bound> Bound;
+		//core::Pointer<Transform> Transform;
+		//core::Pointer<Bound> Bound;
 
 	private:
 		entt::entity m_EntityHandle;

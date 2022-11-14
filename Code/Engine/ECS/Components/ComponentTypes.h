@@ -1,5 +1,14 @@
 #pragma once
 
+/* Non-Serialized */
+
+#include "GuidComponent.h"
+#include "LineRendererComponent.h"
+#include "RenderableObjectComponent.h"
+#include "RenderableResourceComponent.h"
+
+/* Serialized */
+
 #include "TransformComponent.h"
 #include "BoundComponent.h"
 #include "RenderableResourceComponent.h"

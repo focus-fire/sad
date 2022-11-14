@@ -29,6 +29,7 @@ namespace core
 		 * @brief Default constructor creates an empty GUID
 		*/
 		Guid();
+		Guid(const Guid& other) = default;
 
 		/**
 		 * @brief Factory method to generate platform-specific GUIDs

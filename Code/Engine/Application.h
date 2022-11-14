@@ -8,6 +8,7 @@
 #include "Renderer/Renderer.h"
 #include "Scripting/ScriptingEngine.h"
 
+#include "Level.h"
 #include "Window.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
@@ -61,10 +62,7 @@ namespace sad
 		static EngineStateManager* s_EngineState;
 
 	private:
-		cs::ScriptingEngine* m_ScriptingEngine = nullptr;
 		cap::Editor* m_Editor = nullptr;
-
-		bool m_PlayMusic;
-		AudioResource* m_MusicResource;
+		Level* m_CurrentLevel;
 	};
 }

@@ -37,6 +37,7 @@ project "Game"
         "Core",
         "Engine",
         "Editor",
+        "SadCSFramework",
         "glad",
         "stb_image",
         "imgui",

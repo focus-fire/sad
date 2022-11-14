@@ -48,7 +48,6 @@ namespace sad
 
 	public:
 		ResourceManager(ResourceManager& other) = delete;
-		~ResourceManager();
 
 		static ResourceManager& GetInstance();
 

@@ -8,12 +8,6 @@
 #include "RenderableResource.h"
 #include "Renderer/ShaderResource.h"
 
-
-sad::ResourceManager::~ResourceManager()
-{
-
-}
-
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
 	static ResourceManager instance;
@@ -144,8 +138,6 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 			// Cache unrecognized files if they have a VALID TYPE
 			if (!m_CachedResourcesFromFile.contains(fileName))
 			{
-				core::Log(ELogType::Trace, "[ResourceManager] Resource not found in cache with name {} - creating a resource for it now", fileName);
-
 				const std::string relativePath = std::filesystem::relative(absolutePath, dataDirectory).string();
 
 				// Create standard resource data
@@ -154,7 +146,10 @@ void sad::ResourceManager::FindResourcesInDataDirectory()
 
 				// Send data to factory if the resource has a valid type
 				if (type != EResourceType::None)
+				{
+					core::Log(ELogType::Trace, "[ResourceManager] Resource not found in cache with name {} - creating a resource for it now", fileName);
 					SendDataToFactory(type, data);
+				}
 			}
 		}
 	}

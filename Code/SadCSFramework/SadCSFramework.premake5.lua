@@ -3,8 +3,10 @@ project "SadCSFramework"
     language "C#"
     dotnetframework "4.7.2"
 
-	targetdir "%{prj.location}/Build/Scripts/"
-	objdir "%{prj.location}/Build/Scripts/Obj/%{prj.name}"
+    -- SadCSFramework has all of the utilities exposed by the engine into scripting
+    -- This is why it's exposed like an asset or unit of data in the data directory
+	targetdir "%{wks.location}/Data/Resources/%{prj.name}"
+	objdir "%{wks.location}/Data/Resources/%{prj.name}/Obj"
 
     files { "Sad/**.cs" }
 

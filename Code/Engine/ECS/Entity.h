@@ -95,14 +95,24 @@ namespace sad::ecs
 		template<typename T>
 		bool HasComponent()
 		{
-			return Registry::GetEntityWorld().has<T>(m_EntityHandle);
+			return Registry::GetEntityWorld().all_of<T>(m_EntityHandle);
 		}
 
+		/**
+		 * @brief Retrieves native GUID attached to the entity
+		 * @return Native GUID associated with the entity's GuidComponent
+		*/
 		core::Guid GetGuid() { return this->GetComponent<ecs::GuidComponent>().m_GUID; }
 
-		operator bool() const { return m_EntityHandle != entt::null; }
+		operator bool() const 
+		{ 
+			return m_EntityHandle != entt::null; 
+		}
 
-		operator entt::entity() const { return m_EntityHandle; }
+		operator entt::entity() const 
+		{ 
+			return m_EntityHandle; 
+		}
 
 		bool operator==(const Entity& other) const
 		{ 
@@ -113,10 +123,6 @@ namespace sad::ecs
 		{
 			return !(*this == other);
 		}
-
-	public:
-		//core::Pointer<Transform> Transform;
-		//core::Pointer<Bound> Bound;
 
 	private:
 		entt::entity m_EntityHandle;

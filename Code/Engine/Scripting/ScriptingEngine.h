@@ -32,11 +32,7 @@ namespace sad::cs
 		static void StartMono();
 		static void TeardownMono();
 
-		static char* ReadBytes(const std::string& filePath, uint32_t* outputSize);
-		static MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
-		static void PrintAssemblyTypes(MonoAssembly* assembly);
 		static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
-
 		static MonoObject* InstantiateClass(const char* namespaceName, const char* className);
 
 		// TEMP

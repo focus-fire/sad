@@ -26,6 +26,7 @@ void sad::Level::PopulateLevelGuids()
 {
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
+	// Loop through all valid entities and add them to the level cache
 	world.each<>([&](const auto entity) 
 	{
 		ImportEntityFromHandle(entity);
@@ -58,9 +59,13 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle, core::Guid guid /* = core::Guid::CreateGuid() */)
 {
 	ecs::Entity entity = ecs::Entity(handle);
-	entity.AddComponent<ecs::GuidComponent>({ guid });
 
-	m_EntityMap[guid] = entity;
+	if (!entity.HasComponent<ecs::GuidComponent>())
+	{
+		entity.OverwriteComponent<ecs::GuidComponent>({ guid });
+
+		m_EntityMap[guid] = entity;
+	}
 
 	return entity;
 }

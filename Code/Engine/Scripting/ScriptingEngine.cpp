@@ -4,6 +4,9 @@
 
 #include <mono/metadata/assembly.h>
 
+#include "ScriptingBridge.h"
+#include "ScriptingEngineUtils.h"
+
 sad::cs::ScriptingEngine::ScriptingEngineConfig* sad::cs::ScriptingEngine::s_ScriptingConfig = nullptr;
 
 void sad::cs::ScriptingEngine::Start()
@@ -18,6 +21,16 @@ void sad::cs::ScriptingEngine::Teardown()
 	TeardownMono();
 
 	delete s_ScriptingConfig;
+}
+
+void sad::cs::ScriptingEngine::RuntimeStart(sad::Level* level)
+{
+	s_ScriptingConfig->CurrentLevelInstance = level;
+}
+
+void sad::cs::ScriptingEngine::RuntimeStop()
+{
+	s_ScriptingConfig->CurrentLevelInstance = nullptr;
 }
 
 void sad::cs::ScriptingEngine::StartMono()
@@ -37,13 +50,16 @@ void sad::cs::ScriptingEngine::StartMono()
 	s_ScriptingConfig->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
 	mono_domain_set(s_ScriptingConfig->AppDomain, true);
 
+	// Register functions in the engine API
+	ScriptingBridge::SetupEngineAPIFunctions();
+
 	// Testing, load and print assembly types 
 	std::string assemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
-	s_ScriptingConfig->SadCSFrameworkAssembly = LoadCSharpAssembly(assemblyPath);
-	PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
+	s_ScriptingConfig->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(assemblyPath);
+	ScriptingEngineUtils::PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
 
 	// Testing, retrieve class from CS assembly and allocate it in memory
-	MonoObject* testObject = InstantiateClass("Sad", "HelloWorld");
+	MonoObject* testObject = InstantiateClass("", "HelloWorld");
 	CallTestMethod(testObject);
 
 	CallIncrementTestMethod(testObject, 1);
@@ -63,82 +79,6 @@ void sad::cs::ScriptingEngine::TeardownMono()
 
 	mono_jit_cleanup(s_ScriptingConfig->RootDomain);
 	s_ScriptingConfig->RootDomain = nullptr;
-}
-
-void sad::cs::ScriptingEngine::RuntimeStart(sad::Level* level)
-{
-	s_ScriptingConfig->CurrentLevelInstance = level;
-}
-
-void sad::cs::ScriptingEngine::RuntimeStop()
-{
-	s_ScriptingConfig->CurrentLevelInstance = nullptr;
-}
-
-char* sad::cs::ScriptingEngine::ReadBytes(const std::string& filePath, uint32_t* outputSize)
-{
-	// End the stream immediately after opening it
-	std::ifstream fileStream = std::ifstream(filePath, std::ios::binary | std::ios::ate);
-	SAD_ASSERT(fileStream, "Failed to open stream for Mono assembly");
-
-	// Get byte size by subtracting end and beginning of stream
-	std::streampos end = fileStream.tellg();
-	fileStream.seekg(0, std::ios::beg);
-	uint32_t size = end - fileStream.tellg();
-	SAD_ASSERT(size != 0, "Stream for Mono assembly is empty (loaded assembly contained 0 bytes)");
-
-	// Read stream into a buffer of bytes
-	char* buffer = new char[size];
-	fileStream.read((char*) buffer, size);
-	fileStream.close();
-
-	// Assign the number of bytes for the returned buffer
-	*outputSize = size;
-
-	return buffer;
-}
-
-MonoAssembly* sad::cs::ScriptingEngine::LoadCSharpAssembly(const std::string& assemblyPath)
-{
-	uint32_t size = 0;
-	char* bytes = ReadBytes(assemblyPath, &size);
-	
-	// This image can only be used for loading the assmebly since it doesn't have a direct reference
-	MonoImageOpenStatus status;
-	MonoImage* image = mono_image_open_from_data_full(bytes, size, 1, &status, 0);
-	SAD_ASSERT(status == MONO_IMAGE_OK, "Mono failed to load an image from the corresponding assembly");
-
-	if (status != MONO_IMAGE_OK)
-	{
-		const char* error = mono_image_strerror(status);
-		core::Log(ELogType::Error, "[ScriptingEngine] Mono failed to load an image from an assembly at {} with error {}", assemblyPath, error);
-		return nullptr;
-	}
-
-	MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyPath.c_str(), &status, 0);
-	mono_image_close(image);
-
-	delete[] bytes;
-
-	return assembly;
-}
-
-void sad::cs::ScriptingEngine::PrintAssemblyTypes(MonoAssembly* assembly)
-{
-	MonoImage* image = mono_assembly_get_image(assembly);
-	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
-	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
-
-	for (int32_t i = 0; i < numberOfTypes; ++i)
-	{
-		uint32_t columns[MONO_TYPEDEF_SIZE];
-		mono_metadata_decode_row(typeDefinitionsTable, i, columns, MONO_TYPEDEF_SIZE);
-
-		const char* nameSpace = mono_metadata_string_heap(image, columns[MONO_TYPEDEF_NAMESPACE]);
-		const char* name = mono_metadata_string_heap(image, columns[MONO_TYPEDEF_NAME]);
-
-		core::Log(ELogType::Debug, "[Scripting] {}.{}", nameSpace, name);
-	}
 }
 
 MonoClass* sad::cs::ScriptingEngine::GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)

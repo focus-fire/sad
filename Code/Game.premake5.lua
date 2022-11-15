@@ -62,6 +62,11 @@ project "Game"
         -- Mono
         table.insert(linkers, "libmono-static-sgen") -- .lib
     else
+        -- Mac
+        table.insert(linkers, "Foundation.framework") -- .framework
+        table.insert(linkers, "iconv") -- .a
+        table.insert(linkers, "z") -- .a
+
         -- SDL
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework") -- .framework

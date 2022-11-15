@@ -67,14 +67,14 @@ void cap::Editor::Clear()
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
 	// Update game window title with current level name
-	if (!m_CurrentLevelContext)
-	{
-		m_CurrentLevelContext = sad::cs::ScriptingEngine::GetCurrentLevelInstance();
-	}
-	else
-	{
-		m_GameWindowTitle = m_CurrentLevelContext->LevelName + " - sadEngine";
-	}
+	// if (!m_CurrentLevelContext)
+	// {
+	// 	m_CurrentLevelContext = sad::cs::ScriptingEngine::GetCurrentLevelInstance();
+	// }
+	// else
+	// {
+	// 	m_GameWindowTitle = m_CurrentLevelContext->LevelName + " - sadEngine";
+	// }
 
 	bool showGameWindow = true;
 
@@ -140,7 +140,7 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 	float viewManipulateRight = windowPos.x + ImGui::GetWindowWidth();
 	float viewManipulateTop = windowPos.y;
 
-	ImGui::Begin("Gizmo", 0);
+	ImGui::Begin("Transform", 0);
 	ImGui::SetWindowPos(ImVec2(1150.0f, 115.0f), ImGuiCond_Once);
 	ImGui::SetWindowSize(ImVec2(250.0f, 125.0f), ImGuiCond_Once);
 

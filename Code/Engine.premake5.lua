@@ -44,14 +44,6 @@ project "Engine"
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-
-        -- TODO: These links can probably be removed on Mac
-        table.insert(linkers, "SDL2.framework") -- .framework
-		table.insert(linkers, "SDL2_mixer.framework") -- .framework
-
-        table.insert(linkers, "assimp.framework") -- .framework
-
-        table.insert(linkers, "monosgen-2.0") -- .a
     end
 
     includedirs { includes }

@@ -4,7 +4,7 @@
 
 #include <mono/metadata/object.h>
 
-#define SAD_CSF_ADD_CORE_INTERNAL(name) mono_add_internal_call("Sad.Core::" #name, name)
+#define SAD_CSF_ADD_CORE_INTERNAL(name) mono_add_internal_call("Sad.Core::" #name, (const void*) name)
 
 namespace sad::cs
 {

@@ -25,18 +25,11 @@ namespace sad::cs
 
 		mono_free(cString);
 	}
-
-	static void Play(MonoString* string)
-	{
-		char* cString = mono_string_to_utf8(string);
-		
-		// Ad
-	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 {
-	//
+	// Core Internal Calls
 	SAD_CSF_ADD_CORE_INTERNAL(Log);
 	SAD_CSF_ADD_CORE_INTERNAL(Warn);
 }

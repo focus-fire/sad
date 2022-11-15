@@ -14,6 +14,23 @@ void sad::cs::ScriptingEngine::Start()
 	s_ScriptingConfig = new ScriptingEngineConfig();
 	
 	StartMono();
+
+	// Register functions in the engine API
+	ScriptingBridge::SetupEngineAPIFunctions();
+
+	// Load the SadCSFramework assembly
+	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
+	LoadSadCSFrameworkAssembly(sadCSFrameworkAssemblyPath);
+
+	// TODO: Create an assembly for the scripting project and mount it
+	// std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Assets/Scripts/Assembly/Project.dll");
+	// LoadProjectAssembly(projectAssemblyPath);
+
+	// Testing, print the types that exist in the loaded assembly
+	ScriptingEngineUtils::PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
+
+	// Testing, retrieve class from CS assembly and allocate it in memory
+	// MonoObject* testObject = InstantiateClass("", "HelloWorld");
 }
 
 void sad::cs::ScriptingEngine::Teardown()
@@ -44,22 +61,6 @@ void sad::cs::ScriptingEngine::StartMono()
 	MonoDomain* csRootDomain = mono_jit_init("sadJITRuntime");
 	SAD_ASSERT(csRootDomain, "Failed to initialize Mono JIT runtime");
 	s_ScriptingConfig->RootDomain = csRootDomain;
-
-	// Create app domain for Mono
-	char appDomainName[] = "sadScriptRuntime";
-	s_ScriptingConfig->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
-	mono_domain_set(s_ScriptingConfig->AppDomain, true);
-
-	// Register functions in the engine API
-	ScriptingBridge::SetupEngineAPIFunctions();
-
-	// Testing, load and print assembly types 
-	std::string assemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
-	s_ScriptingConfig->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(assemblyPath);
-	ScriptingEngineUtils::PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
-
-	// Testing, retrieve class from CS assembly and allocate it in memory
-	// MonoObject* testObject = InstantiateClass("", "HelloWorld");
 }
 
 void sad::cs::ScriptingEngine::TeardownMono()
@@ -72,6 +73,41 @@ void sad::cs::ScriptingEngine::TeardownMono()
 	mono_jit_cleanup(s_ScriptingConfig->RootDomain);
 	s_ScriptingConfig->RootDomain = nullptr;
 }
+
+//////////////////////////////////
+/// Assembly Loading/Unloading ///
+//////////////////////////////////
+
+void sad::cs::ScriptingEngine::LoadSadCSFrameworkAssembly(const std::string& filePath)
+{
+	// Create domain for the SadCSFramework runtime
+	char appDomainName[] = "SadCSFrameworkScriptRuntime";
+	s_ScriptingConfig->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
+	mono_domain_set(s_ScriptingConfig->AppDomain, true);
+
+	// Save a reference to the assembly
+	s_ScriptingConfig->SadCSFrameworkAssemblyFilePath = filePath;
+	s_ScriptingConfig->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
+	SAD_ASSERT(s_ScriptingConfig->SadCSFrameworkAssembly, "Failed to load assembly for SadCSFramework");
+
+	// Save a reference to image for the assembly
+	s_ScriptingConfig->SadCSFrameworkImage = mono_assembly_get_image(s_ScriptingConfig->SadCSFrameworkAssembly);
+	SAD_ASSERT(s_ScriptingConfig->SadCSFrameworkImage, "Failed to mount image for the SadCSFramework assembly");
+}
+
+void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
+{
+	s_ScriptingConfig->ProjectAssemblyFilePath = filePath;
+	s_ScriptingConfig->ProjectAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
+	SAD_ASSERT(s_ScriptingConfig->ProjectAssembly, "Failed to load project assembly");
+
+	s_ScriptingConfig->ProjectImage = mono_assembly_get_image(s_ScriptingConfig->ProjectAssembly);
+	SAD_ASSERT(s_ScriptingConfig->ProjectImage, "Failed to mount image for the requested project assembly");
+}
+
+///////////////
+/// Classes ///
+///////////////
 
 MonoClass* sad::cs::ScriptingEngine::GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)
 {

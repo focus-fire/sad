@@ -10,6 +10,8 @@
 #include <entt/entt.hpp>
 
 #include <Engine/Application.h>
+#include <Engine/Scripting/ScriptingEngine.h>
+#include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 
@@ -21,9 +23,11 @@ namespace
 }
 
 cap::Editor::Editor()
-	: m_DebugTerminal(new cap::DebugTerminal())
-	, m_ShowGameWindow(true)
+	: m_CurrentLevelContext(nullptr)
+	, m_DebugTerminal(new cap::DebugTerminal())
 	, m_GameWindowFlags(ImGuiWindowFlags_None)
+	, m_ShowGameWindow(true)
+	, m_GameWindowTitle("Default - sadEngine")
 	, m_IsEditorInPlayMode(false)
 {
 	IMGUI_CHECKVERSION();
@@ -62,11 +66,22 @@ void cap::Editor::Clear()
 
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
+	// Update game window title with current level name
+	if (!m_CurrentLevelContext)
+	{
+		m_CurrentLevelContext = sad::cs::ScriptingEngine::GetCurrentLevelInstance();
+	}
+	else
+	{
+		m_GameWindowTitle = m_CurrentLevelContext->LevelName + " - sadEngine";
+	}
+
 	bool showGameWindow = true;
 
 	// Set the window size once when the window opens
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.83f, 0.83f, 0.83f));
-	ImGui::Begin("level.json - sadEngine", &showGameWindow, m_GameWindowFlags);
+
+	ImGui::Begin(m_GameWindowTitle.c_str(), &showGameWindow, m_GameWindowFlags);
 	ImGui::PopStyleColor();
 
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
@@ -192,6 +207,16 @@ void cap::Editor::Render()
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
 		core::SignalEvent("OnToggleEngineMode");
 	}
+	ImGui::End();
+
+	// Really scuffed way to list entities, included mainly for debugging
+	// Cycles through available names and lists them in the editor
+	ImGui::Begin("Scuffed Entity List");
+	ImGui::SetWindowPos(ImVec2(1150.0f, 265.0f), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(200.0f, 225.0f), ImGuiCond_Once);
+	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
+	for (auto [entity, name] : view.each())
+		ImGui::Text(name.m_Name.c_str());
 	ImGui::End();
 
 	ImGui::Render();

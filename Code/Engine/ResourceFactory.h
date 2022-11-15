@@ -8,6 +8,7 @@
 
 #include "Resource.h"
 #include "ResourceManager.h"
+#include "LevelResource.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
 #include "Renderer/TextureResource.h"
@@ -98,6 +99,14 @@ namespace sad
 			core::Pointer<rad::ShaderResource> shaderResource = core::CreatePointer<rad::ShaderResource>(data);
 			ResourceManager::AddResource<rad::ShaderResource>(shaderResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a ShaderResource with name {}", data.Name);
+		}
+
+		template<>
+		static void CreateResource<LevelResource>(const Resource::ResourceData& data)
+		{
+			core::Pointer<LevelResource> levelResource = core::CreatePointer<LevelResource>(data);
+			ResourceManager::AddResource<LevelResource>(levelResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a LevelResource with name {}", data.Name);
 		}
 	};
 }

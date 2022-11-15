@@ -2,7 +2,10 @@
 
 #include <string>
 
+#include <mono/metadata/metadata.h>
 #include <mono/metadata/assembly.h>
+
+#include "ScriptableTypes.h"
 
 namespace sad::cs
 {
@@ -12,16 +15,6 @@ namespace sad::cs
 	class ScriptingEngineUtils
 	{
 	public:
-		/**
-		 * @brief Reads the bytes of a file (or specifically a .dll) into a char array 
-		 * @param filePath Path indicating the file to read
-		 * @param outputSize Pointer to an unsigned int that will contain the size of the buffer allocated
-		 * @return Allocated buffer containing the file's byte data
-		 * @todo Move into core::FileUtils when appropriate (or when it could be multi-purposed)
-		 * @note Warning: This performs allocation, remember to `delete` returned data
-		*/
-		static char* ReadBytes(const std::string& filePath, uint32_t* outputSize);
-
 		/**
 		 * @brief Loads a CSharp assembly (.dll) at a given path
 		 * @param assemblyPath Path to the assembly required for loading
@@ -34,5 +27,12 @@ namespace sad::cs
 		 * @param assembly Raw pointer to assembly in Mono
 		*/
 		static void PrintAssemblyTypes(MonoAssembly* assembly);
+
+		/**
+		 * @brief Converts from a mono type to a pre-defined scriptable type
+		 * @param type The mono type to make a conversion against
+		 * @return Enum containing the evaluated ScriptableType
+		*/
+		static ScriptableType MonoTypeToScriptableType(MonoType* type);
 	};
 }

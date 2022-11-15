@@ -16,7 +16,11 @@ namespace sad::cs
 		{
 			MonoDomain* RootDomain = nullptr;
 			MonoDomain* AppDomain = nullptr;
+
 			MonoAssembly* SadCSFrameworkAssembly = nullptr;
+			MonoAssembly* ProjectAssembly = nullptr;
+
+			std::filesystem::path path;
 
 			Level* CurrentLevelInstance = nullptr;
 		};
@@ -28,10 +32,16 @@ namespace sad::cs
 		static void RuntimeStart(Level* level);
 		static void RuntimeStop();
 
+		static Level* GetCurrentLevelInstance() { return s_ScriptingConfig->CurrentLevelInstance; }
+
 	private:
 		static void StartMono();
 		static void TeardownMono();
 
+		static void LoadFrameworkAssembly();
+		static void LoadProjectAssembly();
+
+		// UTIL
 		static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
 		static MonoObject* InstantiateClass(const char* namespaceName, const char* className);
 

@@ -3,8 +3,8 @@ using System;
 
 public class HelloWorld
 {
-    public int m_Counter = 1;
-    public string m_TestString = "You just sent ";
+    private int m_Counter = 1;
+    private string m_TestString = "You just sent ";
 
     public void Increment(int i) => m_Counter += i;
 
@@ -14,8 +14,7 @@ public class HelloWorld
 
     public void PrintIntegerVariable()
     {
-        System.IO.File.WriteAllLines($"SadCSFrameworkTest{m_Counter}.txt", 
-            new string[] { "pog!", $"Integer -> {m_Counter}", $"{m_TestString}" });
+        // System.IO.File.WriteAllLines($"SadCSFrameworkTest{m_Counter}.txt", new string[] { "pog!", $"Integer -> {m_Counter}", $"{m_TestString}" });
 
         Console.WriteLine($"Hello World! This int is {m_Counter}");
         

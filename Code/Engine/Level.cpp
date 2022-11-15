@@ -33,14 +33,14 @@ void sad::Level::PopulateLevelGuids()
 	});
 }
 
-sad::ecs::Entity sad::Level::InstantiateEntity()
+sad::ecs::Entity sad::Level::InstantiateEntity(const std::string& name)
 {
 	entt::entity handle = ecs::Registry::GenerateEntityHandle();
 
-	return InstantiateEntityFromHandle(handle);
+	return InstantiateEntityFromHandle(handle, name);
 }
 
-sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, core::Guid guid /* = core::Guid::CreateGuid() */)
+sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, const std::string& name, core::Guid guid /* = core::Guid::CreateGuid() */)
 {
 	ecs::Entity entity = ecs::Entity(handle);
 	core::Pointer<sad::Transform> transform = core::CreatePointer<sad::Transform>();
@@ -48,6 +48,7 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 
 	// All entities should have a GUID, Transform, and Bound
 	entity.AddComponent<ecs::GuidComponent>({ guid });
+	entity.AddComponent<ecs::NameComponent>({ name });
 	entity.AddComponent<ecs::TransformComponent>({ transform });
 	entity.AddComponent<ecs::BoundComponent>({ bound });
 
@@ -72,7 +73,28 @@ sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle, core::G
 
 void sad::Level::DestroyEntity(sad::ecs::Entity entity)
 {
-	//sad::ecs::Registry::EraseEntityHandle(entity);
 	m_EntityMap.erase(entity.GetGuid());
+	sad::ecs::Registry::EraseEntityHandle(entity);
 }
 
+void sad::Level::DestroyEntityByName(const std::string& name)
+{
+	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
+
+	ecs::Entity target;
+
+	auto view = world.view<ecs::NameComponent>();
+	for (auto [entity, nameComponent] : view.each())
+	{
+		// Search all name components for an entity with a matching name
+		// Only remove first occurrence of the name
+		if (core::StringUtils::Equals(name, nameComponent.m_Name))
+		{
+			target = entity;
+			break;
+		}
+	}
+
+	if (target)
+		DestroyEntity(target);
+}

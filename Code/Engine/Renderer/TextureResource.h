@@ -41,7 +41,7 @@ namespace sad::rad
 	private:
 		void InitializeNormalTexture(const std::string& absoluteFilePath);
 
-		void InitialzieCubeMapTexture();
+		void InitializeCubeMapTexture();
 
 	private:
 		unsigned int m_RendererId;

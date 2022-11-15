@@ -14,7 +14,6 @@ sad::rad::TextureResource::TextureResource()
 	, m_BitsPerPixel(0)
 { }
 
-
 sad::rad::TextureResource::TextureResource(const Resource::ResourceData& resourceData, ETextureType type)
 	: Resource(resourceData)
 	, m_RendererId(-1)
@@ -27,7 +26,7 @@ sad::rad::TextureResource::TextureResource(const Resource::ResourceData& resourc
 		InitializeNormalTexture(resourceData.AbsolutePath);
 
 	if (type == ETextureType::CubeMap)
-		InitialzieCubeMapTexture();
+		InitializeCubeMapTexture();
 }
 
 sad::rad::TextureResource::TextureResource(int width, int height)
@@ -99,7 +98,7 @@ void sad::rad::TextureResource::InitializeNormalTexture(const std::string& absol
 		stbi_image_free(m_LocalBuffer);
 }
 
-void sad::rad::TextureResource::InitialzieCubeMapTexture()
+void sad::rad::TextureResource::InitializeCubeMapTexture()
 {
 	core::Log(ELogType::Warn, "No initialization written for CubeMap/Skybox textures yet!");
 }

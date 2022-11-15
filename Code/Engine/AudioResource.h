@@ -23,7 +23,7 @@ namespace sad
 		};
 
 		AudioResource();
-		~AudioResource();
+		~AudioResource() = default;
 
 		explicit AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType);
 

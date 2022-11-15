@@ -99,7 +99,7 @@ namespace core
 		 * @brief Compares GUIDs using platform-specific comparison algorithms
 		 * @param a First native GUID to compare with
 		 * @param b Second native GUID to compare against
-		 * @return Integer representing result
+		 * @return Int representing result
 		 *		   -1 if a is less than b
 		 *		    0 if a is equal to b
 		 *		    1 if a is greater than b

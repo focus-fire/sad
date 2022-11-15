@@ -10,9 +10,6 @@ sad::AudioResource::AudioResource()
     , MixMusic(nullptr)
 { }
 
-sad::AudioResource::~AudioResource()
-{ }
-
 sad::AudioResource::AudioResource(const Resource::ResourceData& resourceData, EAudioType audioType)
 	: Resource(resourceData)
 	, AudioType(audioType)

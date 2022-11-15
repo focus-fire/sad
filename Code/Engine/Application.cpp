@@ -175,6 +175,8 @@ void sad::Application::Teardown()
 { 
 	sad::cs::ScriptingEngine::Teardown();
 
+	LevelManager::ExportLevel();
+
 	m_Editor->Teardown();
 
 	s_MainWindow->Teardown();

@@ -20,7 +20,6 @@ namespace sad::ecs
 		bool m_IsResourceDirty;
 	};
 
-	
 	//TODO: Temporary Filler for serialization, fill in when 3d modelling is done
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::RenderableResourceComponent& renderableResource)
 	{

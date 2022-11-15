@@ -59,15 +59,7 @@ void sad::cs::ScriptingEngine::StartMono()
 	ScriptingEngineUtils::PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
 
 	// Testing, retrieve class from CS assembly and allocate it in memory
-	MonoObject* testObject = InstantiateClass("", "HelloWorld");
-	CallTestMethod(testObject);
-
-	CallIncrementTestMethod(testObject, 1);
-	CallTestMethod(testObject);
-
-	CallIncrementTestMethod(testObject, 500);
-	CallStringTestMethod(testObject, "test");
-	CallTestMethod(testObject);
+	// MonoObject* testObject = InstantiateClass("", "HelloWorld");
 }
 
 void sad::cs::ScriptingEngine::TeardownMono()

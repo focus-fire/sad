@@ -100,7 +100,7 @@ bool sad::ResourceManager::ImportResources()
 
 			// Submit resource to data factory if it has a valid type
 			// Resources retrieved from the Resources.sad.meta file should be cached
-			if (type != EResourceType::None)
+			if (type != EResourceType::Ignore && type != EResourceType::None)
 			{
 				SendDataToFactory(type, data);
 				m_CachedResourcesFromFile.emplace(std::move(fileName));
@@ -207,8 +207,13 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 	case EResourceType::Shader:
 		ResourceFactory::CreateResource<rad::ShaderResource>(resourceData);
 		break;
+	case EResourceType::Level:
+		ResourceFactory::CreateResource<LevelResource>(resourceData);
+		break;
+	case EResourceType::Ignore:
+		break;
 	case EResourceType::None:
-		core::Log(ELogType::Warn, "[ResourceManager] Attempting to submit {} for creation but it has an unrecognized type, ignoring it", resourceData.Name);
+		core::Log(ELogType::Error, "[ResourceManager] Attempting to submit {} for creation but it has an unrecognized type, ignoring it", resourceData.Name);
 		break;
 	}
 }
@@ -234,6 +239,22 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 	if (String::Equals(ext, ".mp3") || String::Equals(ext, ".wav"))
 		return EResourceType::Audio;
 
+	if (String::Equals(ext, ".json"))
+		return EResourceType::Level;
+
+	if (String::Equals(ext, ".cs") 
+		|| String::Equals(ext, ".pdb") 
+		|| String::Equals(ext, ".dll") 
+		|| String::Equals(ext, ".csproj")
+		|| String::Equals(ext, ".cache"))
+		return EResourceType::Ignore;
+
+	const std::string strFilePath = filePath.string();
+	if (String::Contains(strFilePath, ".csproj")
+		|| String::Contains(strFilePath, ".vcxproj")
+		|| String::Contains(strFilePath, ".cache"))
+		return EResourceType::Ignore;
+	
 	core::Log(ELogType::Warn, "[ResourceManager] {} is being processed as a resource but {} is not a valid type yet, it will be ignored.", fileName, ext);
 
 	return EResourceType::None;

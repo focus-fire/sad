@@ -7,7 +7,7 @@
 MonoAssembly* sad::cs::ScriptingEngineUtils::LoadCSharpAssembly(const std::string& assemblyPath)
 {
 	uint32_t size = 0;
-	char* bytes = ReadBytes(assemblyPath, &size);
+	char* bytes = core::FileUtils::ReadBytes(assemblyPath, &size);
 	
 	// This image can only be used for loading the assmebly since it doesn't have a direct reference
 	MonoImageOpenStatus status;
@@ -17,7 +17,7 @@ MonoAssembly* sad::cs::ScriptingEngineUtils::LoadCSharpAssembly(const std::strin
 	if (status != MONO_IMAGE_OK)
 	{
 		const char* error = mono_image_strerror(status);
-		core::Log(ELogType::Error, "[ScriptingEngine] Mono failed to load an image from an assembly at {} with error {}", assemblyPath, error);
+		core::Log(ELogType::Error, "[ScriptingUtils] Mono failed to load an image from an assembly at {} with error {}", assemblyPath, error);
 		return nullptr;
 	}
 
@@ -43,29 +43,20 @@ void sad::cs::ScriptingEngineUtils::PrintAssemblyTypes(MonoAssembly* assembly)
 		const char* nameSpace = mono_metadata_string_heap(image, columns[MONO_TYPEDEF_NAMESPACE]);
 		const char* name = mono_metadata_string_heap(image, columns[MONO_TYPEDEF_NAME]);
 
-		core::Log(ELogType::Debug, "[Scripting] {}.{}", nameSpace, name);
+		core::Log(ELogType::Info, "[ScriptingUtils] {}.{}", nameSpace, name);
 	}
 }
 
-char* sad::cs::ScriptingEngineUtils::ReadBytes(const std::string& filePath, uint32_t* outputSize)
+sad::cs::ScriptableType sad::cs::ScriptingEngineUtils::MonoTypeToScriptableType(MonoType* type)
 {
-	// End the stream immediately after opening it
-	std::ifstream fileStream = std::ifstream(filePath, std::ios::binary | std::ios::ate);
-	SAD_ASSERT(fileStream, "Failed to open stream for Mono assembly");
+	std::string typeName = mono_type_get_name(type);
+	
+	auto it = s_MonoScriptableTypeLookup.find(typeName);
+	if (it == s_MonoScriptableTypeLookup.end())
+	{
+		core::Log(ELogType::Error, "[ScriptingUtils] Attempted to lookup undefined type {}", typeName);
+		return ScriptableType::None;
+	}
 
-	// Get byte size by subtracting end and beginning of stream
-	std::streampos end = fileStream.tellg();
-	fileStream.seekg(0, std::ios::beg);
-	uint32_t size = end - fileStream.tellg();
-	SAD_ASSERT(size != 0, "Stream for Mono assembly is empty (loaded assembly contained 0 bytes)");
-
-	// Read stream into a buffer of bytes
-	char* buffer = new char[size];
-	fileStream.read((char*) buffer, size);
-	fileStream.close();
-
-	// Assign the number of bytes for the returned buffer
-	*outputSize = size;
-
-	return buffer;
+	return it->second;
 }

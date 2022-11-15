@@ -2,9 +2,12 @@
 
 namespace Sad
 {
-    public static class Core
+    public static class Core 
     {
         [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        public extern static void Log(string message);
+        internal extern static void Log(string message);
+        
+        [MethodImplAttribute(MethodImplOptions.InternalCall)]
+        internal extern static void Warn(string message);
     }
 }

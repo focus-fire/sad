@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['textureresource_180',['TextureResource',['../classsad_1_1rad_1_1TextureResource.html',1,'sad::rad']]],
-  ['time_181',['Time',['../classpog_1_1Time.html',1,'pog']]],
-  ['transform_182',['Transform',['../classsad_1_1Transform.html',1,'sad']]]
+  ['window_207',['Window',['../classsad_1_1Window.html',1,'sad']]],
+  ['windowproperties_208',['WindowProperties',['../structsad_1_1WindowProperties.html',1,'sad']]]
 ];

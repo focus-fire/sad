@@ -68,7 +68,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classsad_1_1ecs_1_1Entity-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">sad::ecs::Entity Class Reference</div>  </div>
@@ -82,9 +81,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab84ea712cbefbc8af8bbf2af459fa192"><td class="memItemLeft" align="right" valign="top"><a id="ab84ea712cbefbc8af8bbf2af459fa192"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Entity</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;entity)=delete</td></tr>
-<tr class="separator:ab84ea712cbefbc8af8bbf2af459fa192"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad37bf0464631af066ab1deaf813a85aa"><td class="memItemLeft" align="right" valign="top"><a id="ad37bf0464631af066ab1deaf813a85aa"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Entity</b> (entt::entity entityHandle)</td></tr>
+<tr class="separator:ad37bf0464631af066ab1deaf813a85aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaf259e2f322da9d03440cff018806be"><td class="memItemLeft" align="right" valign="top"><a id="aeaf259e2f322da9d03440cff018806be"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Entity</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;entity)=default</td></tr>
+<tr class="separator:aeaf259e2f322da9d03440cff018806be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafcf08b8cf54e9baffadd1e1afb06756"><td class="memItemLeft" align="right" valign="top"><a id="aafcf08b8cf54e9baffadd1e1afb06756"></a>
 const entt::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a> () const</td></tr>
 <tr class="memdesc:aafcf08b8cf54e9baffadd1e1afb06756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the entt::entity handle created for the entity. <br /></td></tr>
@@ -93,6 +95,10 @@ const entt::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <tr class="memitem:aed324b7f2b751b527e3bef89b454502d"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">AddComponent</a> (T component)</td></tr>
 <tr class="memdesc:aed324b7f2b751b527e3bef89b454502d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a component to the current entity.  <a href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">More...</a><br /></td></tr>
 <tr class="separator:aed324b7f2b751b527e3bef89b454502d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a415f24c9f7ff3dc1fb71d8d1d4313563"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a415f24c9f7ff3dc1fb71d8d1d4313563"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">OverwriteComponent</a> (T component)</td></tr>
+<tr class="memdesc:a415f24c9f7ff3dc1fb71d8d1d4313563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Potentially overwrites a component on the entity with the component passed.  <a href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">More...</a><br /></td></tr>
+<tr class="separator:a415f24c9f7ff3dc1fb71d8d1d4313563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:af17e9c8da23f44584711aa0d84abc470"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a> (T component)</td></tr>
 <tr class="memdesc:af17e9c8da23f44584711aa0d84abc470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an empty 'tag' component to the current entity.  <a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">More...</a><br /></td></tr>
@@ -105,21 +111,25 @@ const entt::entity&#160;</td><td class="memItemRight" valign="bottom"><a class="
 <tr class="memitem:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a> ()</td></tr>
 <tr class="memdesc:ab445fe3c0805955a20fdc8c8110c66cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a specified component from the entity.  <a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">More...</a><br /></td></tr>
 <tr class="separator:ab445fe3c0805955a20fdc8c8110c66cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a617776b7c0d89561c9462fad5f26510f"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a617776b7c0d89561c9462fad5f26510f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">HasComponent</a> ()</td></tr>
+<tr class="memdesc:a617776b7c0d89561c9462fad5f26510f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a particular component exists on an entity.  <a href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">More...</a><br /></td></tr>
+<tr class="separator:a617776b7c0d89561c9462fad5f26510f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af64edcb63ab792b2af6412dde8b6c375"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcore_1_1Guid.html">core::Guid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">GetGuid</a> ()</td></tr>
+<tr class="memdesc:af64edcb63ab792b2af6412dde8b6c375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves native GUID attached to the entity.  <a href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">More...</a><br /></td></tr>
+<tr class="separator:af64edcb63ab792b2af6412dde8b6c375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af269981f1bdf00a6250d9d6337101235"><td class="memItemLeft" align="right" valign="top"><a id="af269981f1bdf00a6250d9d6337101235"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator bool</b> () const</td></tr>
+<tr class="separator:af269981f1bdf00a6250d9d6337101235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f231892eeb2e02a59748996f86c5ea3"><td class="memItemLeft" align="right" valign="top"><a id="a5f231892eeb2e02a59748996f86c5ea3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>operator entt::entity</b> () const</td></tr>
+<tr class="separator:a5f231892eeb2e02a59748996f86c5ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab47a9a048e88e3e8490a98c0852577ca"><td class="memItemLeft" align="right" valign="top"><a id="ab47a9a048e88e3e8490a98c0852577ca"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;other) const</td></tr>
 <tr class="separator:ab47a9a048e88e3e8490a98c0852577ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d9b6a092756eb425571df0302eb6d2f"><td class="memItemLeft" align="right" valign="top"><a id="a2d9b6a092756eb425571df0302eb6d2f"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classsad_1_1ecs_1_1Entity.html">Entity</a> &amp;other) const</td></tr>
 <tr class="separator:a2d9b6a092756eb425571df0302eb6d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a78b43f0e771b8180b1b2c00faf5658c2"><td class="memItemLeft" align="right" valign="top"><a id="a78b43f0e771b8180b1b2c00faf5658c2"></a>
-core::Pointer&lt; <a class="el" href="classsad_1_1Transform.html">Transform</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Transform</b></td></tr>
-<tr class="separator:a78b43f0e771b8180b1b2c00faf5658c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed3ef931bf8f917e58c1e2aaf9246f82"><td class="memItemLeft" align="right" valign="top"><a id="aed3ef931bf8f917e58c1e2aaf9246f82"></a>
-core::Pointer&lt; <a class="el" href="classsad_1_1Bound.html">Bound</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Bound</b></td></tr>
-<tr class="separator:aed3ef931bf8f917e58c1e2aaf9246f82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wrapper class for an entt::entity, contains utility methods to update the entities components in the EntityWorld. </p>
@@ -242,6 +252,113 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the retrieved component </dd></dl>
+
+</div>
+</div>
+<a id="af64edcb63ab792b2af6412dde8b6c375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af64edcb63ab792b2af6412dde8b6c375">&#9670;&nbsp;</a></span>GetGuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classcore_1_1Guid.html">core::Guid</a> sad::ecs::Entity::GetGuid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves native GUID attached to the entity. </p>
+<dl class="section return"><dt>Returns</dt><dd>Native GUID associated with the entity's GuidComponent </dd></dl>
+
+</div>
+</div>
+<a id="a617776b7c0d89561c9462fad5f26510f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a617776b7c0d89561c9462fad5f26510f">&#9670;&nbsp;</a></span>HasComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sad::ecs::Entity::HasComponent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a particular component exists on an entity. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct component to evaluate the existence of </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the component exists on the entity, false if it does not </dd></dl>
+
+</div>
+</div>
+<a id="a415f24c9f7ff3dc1fb71d8d1d4313563"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a415f24c9f7ff3dc1fb71d8d1d4313563">&#9670;&nbsp;</a></span>OverwriteComponent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T&amp; sad::ecs::Entity::OverwriteComponent </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>component</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Potentially overwrites a component on the entity with the component passed. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Generic struct component to add </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">component</td><td>Component to add or replace on the entity </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the added component </dd></dl>
 
 </div>
 </div>

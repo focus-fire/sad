@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: NJSONOutputArchive Class Reference</title>
+<title>sad: sad::LevelSnapshotOutput Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,44 +60,48 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1LevelSnapshotOutput.html">LevelSnapshotOutput</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classNJSONOutputArchive-members.html">List of all members</a>  </div>
+<a href="classsad_1_1LevelSnapshotOutput-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">NJSONOutputArchive Class Reference</div>  </div>
+<div class="title">sad::LevelSnapshotOutput Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>nlohmann-json based entt-serialization  
- <a href="classNJSONOutputArchive.html#details">More...</a></p>
+<p>Serializes entt-snapshots into nlohmann-json.  
+ <a href="classsad_1_1LevelSnapshotOutput.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="NJSONOutputArchive_8h_source.html">NJSONOutputArchive.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="LevelSnapshotOutput_8h_source.html">LevelSnapshotOutput.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad07a82cf8664720e84d406984be6391f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNJSONOutputArchive.html#ad07a82cf8664720e84d406984be6391f">operator()</a> (std::underlying_type_t&lt; entt::entity &gt; size)</td></tr>
-<tr class="separator:ad07a82cf8664720e84d406984be6391f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4693ba95430680e4ab3f782e744a5783"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNJSONOutputArchive.html#a4693ba95430680e4ab3f782e744a5783">operator()</a> (entt::entity entity)</td></tr>
-<tr class="memdesc:a4693ba95430680e4ab3f782e744a5783"><td class="mdescLeft">&#160;</td><td class="mdescRight">persist entity ids  <a href="classNJSONOutputArchive.html#a4693ba95430680e4ab3f782e744a5783">More...</a><br /></td></tr>
-<tr class="separator:a4693ba95430680e4ab3f782e744a5783"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69579f5777895ee6df18b5a0c36c77b0"><td class="memTemplParams" colspan="2"><a id="a69579f5777895ee6df18b5a0c36c77b0"></a>
+<tr class="memitem:abb13e85dcab8980d05901b6121e4623f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1LevelSnapshotOutput.html#abb13e85dcab8980d05901b6121e4623f">operator()</a> (std::underlying_type_t&lt; entt::entity &gt; size)</td></tr>
+<tr class="separator:abb13e85dcab8980d05901b6121e4623f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa59f98feaa7107099c4bb85732ce4191"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1LevelSnapshotOutput.html#aa59f98feaa7107099c4bb85732ce4191">operator()</a> (entt::entity entity)</td></tr>
+<tr class="memdesc:aa59f98feaa7107099c4bb85732ce4191"><td class="mdescLeft">&#160;</td><td class="mdescRight">persist entity ids  <a href="classsad_1_1LevelSnapshotOutput.html#aa59f98feaa7107099c4bb85732ce4191">More...</a><br /></td></tr>
+<tr class="separator:aa59f98feaa7107099c4bb85732ce4191"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a192d0cc641e885c08829cd7973a874fc"><td class="memTemplParams" colspan="2"><a id="a192d0cc641e885c08829cd7973a874fc"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a69579f5777895ee6df18b5a0c36c77b0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (entt::entity ent, const T &amp;t)</td></tr>
-<tr class="separator:a69579f5777895ee6df18b5a0c36c77b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a009462cf502bef43e7e02c9c49c5ec97"><td class="memItemLeft" align="right" valign="top"><a id="a009462cf502bef43e7e02c9c49c5ec97"></a>
+<tr class="memitem:a192d0cc641e885c08829cd7973a874fc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (entt::entity ent, const T &amp;t)</td></tr>
+<tr class="separator:a192d0cc641e885c08829cd7973a874fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabd5da5221ffec675d946ffa3b14eac1"><td class="memItemLeft" align="right" valign="top"><a id="aabd5da5221ffec675d946ffa3b14eac1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr>
-<tr class="separator:a009462cf502bef43e7e02c9c49c5ec97"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c4ea4e1fc2560a09390a29df391e1d9"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNJSONOutputArchive.html#a5c4ea4e1fc2560a09390a29df391e1d9">AsString</a> ()</td></tr>
-<tr class="memdesc:a5c4ea4e1fc2560a09390a29df391e1d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a json as string  <a href="classNJSONOutputArchive.html#a5c4ea4e1fc2560a09390a29df391e1d9">More...</a><br /></td></tr>
-<tr class="separator:a5c4ea4e1fc2560a09390a29df391e1d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aabd5da5221ffec675d946ffa3b14eac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb69eb39e4dd4a34a814d630c16ea9f"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1LevelSnapshotOutput.html#a0eb69eb39e4dd4a34a814d630c16ea9f">AsString</a> ()</td></tr>
+<tr class="memdesc:a0eb69eb39e4dd4a34a814d630c16ea9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">create a json as string  <a href="classsad_1_1LevelSnapshotOutput.html#a0eb69eb39e4dd4a34a814d630c16ea9f">More...</a><br /></td></tr>
+<tr class="separator:a0eb69eb39e4dd4a34a814d630c16ea9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>nlohmann-json based entt-serialization </p>
+<div class="textblock"><p>Serializes entt-snapshots into nlohmann-json. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5c4ea4e1fc2560a09390a29df391e1d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c4ea4e1fc2560a09390a29df391e1d9">&#9670;&nbsp;</a></span>AsString()</h2>
+<a id="a0eb69eb39e4dd4a34a814d630c16ea9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb69eb39e4dd4a34a814d630c16ea9f">&#9670;&nbsp;</a></span>AsString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -106,7 +110,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string NJSONOutputArchive::AsString </td>
+          <td class="memname">const std::string sad::LevelSnapshotOutput::AsString </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -124,8 +128,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
 
 </div>
 </div>
-<a id="a4693ba95430680e4ab3f782e744a5783"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4693ba95430680e4ab3f782e744a5783">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+<a id="aa59f98feaa7107099c4bb85732ce4191"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa59f98feaa7107099c4bb85732ce4191">&#9670;&nbsp;</a></span>operator()() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,7 +138,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void NJSONOutputArchive::operator() </td>
+          <td class="memname">void sad::LevelSnapshotOutput::operator() </td>
           <td>(</td>
           <td class="paramtype">entt::entity&#160;</td>
           <td class="paramname"><em>entity</em></td><td>)</td>
@@ -158,8 +162,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
 
 </div>
 </div>
-<a id="ad07a82cf8664720e84d406984be6391f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad07a82cf8664720e84d406984be6391f">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+<a id="abb13e85dcab8980d05901b6121e4623f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb13e85dcab8980d05901b6121e4623f">&#9670;&nbsp;</a></span>operator()() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -168,7 +172,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void NJSONOutputArchive::operator() </td>
+          <td class="memname">void sad::LevelSnapshotOutput::operator() </td>
           <td>(</td>
           <td class="paramtype">std::underlying_type_t&lt; entt::entity &gt;&#160;</td>
           <td class="paramname"><em>size</em></td><td>)</td>
@@ -181,9 +185,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">   @brief 
-   // new element for serialization. giving you the amount of elements that is going to be
-</pre><p> pumped into <a class="el" href="classNJSONOutputArchive.html#a4693ba95430680e4ab3f782e744a5783" title="persist entity ids">operator()(entt::entity ent)</a> or operator()(entt::entity ent, const T &amp;t) </p><dl class="params"><dt>Parameters</dt><dd>
+<pre class="fragment">       @brief 
+       // new element for serialization. giving you the amount of elements that is going to be
+</pre><p> pumped into <a class="el" href="classsad_1_1LevelSnapshotOutput.html#aa59f98feaa7107099c4bb85732ce4191" title="persist entity ids">operator()(entt::entity ent)</a> or operator()(entt::entity ent, const T &amp;t) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td></td></tr>
   </table>
@@ -193,7 +197,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Close</b> ()</td></tr
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Code/Engine/<a class="el" href="NJSONOutputArchive_8h_source.html">NJSONOutputArchive.h</a></li>
+<li>Code/Engine/<a class="el" href="LevelSnapshotOutput_8h_source.html">LevelSnapshotOutput.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

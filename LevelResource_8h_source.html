@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: Code/Engine/JsonManager.h Source File</title>
+<title>sad: Code/Engine/LevelResource.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,25 +67,31 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">JsonManager.h</div>  </div>
+<div class="title">LevelResource.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;{</div>
-<div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="classsad_1_1JsonManager.html">    5</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1JsonManager.html">JsonManager</a></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    {</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        <span class="keywordtype">bool</span> <span class="keyword">static</span> <a class="code" href="classsad_1_1JsonManager.html#ad2c66231677ed957c503d67126e74d99">ImportLevel</a>(<span class="keywordtype">int</span> saveFile = 1);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keywordtype">bool</span> <span class="keyword">static</span> <a class="code" href="classsad_1_1JsonManager.html#aab5edb9bdd4e7af2d9006d854c54e73b">ExportLevel</a>(<span class="keywordtype">int</span> saveFile = 1);</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    };</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;}</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;Resource.h&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;{</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="classsad_1_1LevelResource.html">    7</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1LevelResource.html">LevelResource</a> final : <span class="keyword">public</span> <a class="code" href="classsad_1_1Resource.html">Resource</a></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    {</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;        <a class="code" href="classsad_1_1LevelResource.html">LevelResource</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        ~<a class="code" href="classsad_1_1LevelResource.html">LevelResource</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1LevelResource.html">LevelResource</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; resourceData)</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;            : <a class="code" href="classsad_1_1Resource.html">Resource</a>(resourceData)</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        { }</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    };</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1JsonManager_html_ad2c66231677ed957c503d67126e74d99"><div class="ttname"><a href="classsad_1_1JsonManager.html#ad2c66231677ed957c503d67126e74d99">sad::JsonManager::ImportLevel</a></div><div class="ttdeci">static bool ImportLevel(int saveFile=1)</div><div class="ttdoc">Adds entities of the last saved level Level 0 is the default location saveFile default value is 1.</div><div class="ttdef"><b>Definition:</b> JsonManager.cpp:21</div></div>
-<div class="ttc" id="aclasssad_1_1JsonManager_html"><div class="ttname"><a href="classsad_1_1JsonManager.html">sad::JsonManager</a></div><div class="ttdef"><b>Definition:</b> JsonManager.h:5</div></div>
-<div class="ttc" id="aclasssad_1_1JsonManager_html_aab5edb9bdd4e7af2d9006d854c54e73b"><div class="ttname"><a href="classsad_1_1JsonManager.html#aab5edb9bdd4e7af2d9006d854c54e73b">sad::JsonManager::ExportLevel</a></div><div class="ttdeci">static bool ExportLevel(int saveFile=1)</div><div class="ttdoc">Saves entities of the level into a json save file saveFile default value is 1.</div><div class="ttdef"><b>Definition:</b> JsonManager.cpp:47</div></div>
+<div class="ttc" id="aclasssad_1_1LevelResource_html"><div class="ttname"><a href="classsad_1_1LevelResource.html">sad::LevelResource</a></div><div class="ttdef"><b>Definition:</b> LevelResource.h:7</div></div>
 <div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
+<div class="ttc" id="aclasssad_1_1Resource_html"><div class="ttname"><a href="classsad_1_1Resource.html">sad::Resource</a></div><div class="ttdoc">Main container for engine resources - these include models, textures, audio, and more.</div><div class="ttdef"><b>Definition:</b> Resource.h:11</div></div>
+<div class="ttc" id="astructsad_1_1Resource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1Resource_1_1ResourceData.html">sad::Resource::ResourceData</a></div><div class="ttdoc">Holds data common to the serialization and deserialization of all resource types.</div><div class="ttdef"><b>Definition:</b> Resource.h:17</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

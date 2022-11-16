@@ -95,82 +95,83 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    {</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>();</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keyword">static</span> <a class="code" href="classcore_1_1Guid.html">Guid</a> <a class="code" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">CreateGuid</a>();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">static</span> <a class="code" href="classcore_1_1Guid.html">Guid</a> <a class="code" href="classcore_1_1Guid.html#a063b8908bc8181a9e6c55475b69fce69">RecreateGuid</a>(<span class="keyword">const</span> std::string&amp; stringGuid);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">   49</a></span>&#160;        <span class="keyword">inline</span> std::string <a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_StringGuid; }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">   55</a></span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">IsNull</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_StringGuid.empty(); }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">   62</a></span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">Equals</a>(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">Guid</a>&amp; other)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 0; }</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 0;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != 0;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">bool</span> operator&lt;(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == -1;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">bool</span> operator&lt;=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != 1;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 1;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != -1;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        }</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        std::string m_StringGuid;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">int</span> CompareGuid(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; a, <span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; b);</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="preprocessor">#ifdef _SAD_WINDOWS</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>(GUID guid);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        GUID m_Guid;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>(uuid_t uuid);</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        uuid_t m_Guid;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    };</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01core_1_1Guid_01_4.html">  122</a></span>&#160;<span class="keyword">struct </span>std::hash&lt;core::Guid&gt;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    std::size_t operator()(<a class="code" href="classcore_1_1Guid.html">core::Guid</a> <span class="keyword">const</span>&amp; guid) <span class="keyword">const</span> noexcept</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    {</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        SAD_ASSERT(!guid.<a class="code" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">IsNull</a>(), <span class="stringliteral">&quot;Hashed GUID is null and does not exist, was the GUID created properly?&quot;</span>);</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="comment">// TODO: Research better method for seeding hashes...</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordtype">size_t</span> seed = 0xadbebcdb * <a class="code" href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a>(0, 64);</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordflow">return</span> core::HashCombine(seed, guid.<a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>());</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    }</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">Guid</a>&amp; other) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">static</span> <a class="code" href="classcore_1_1Guid.html">Guid</a> <a class="code" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">CreateGuid</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">static</span> <a class="code" href="classcore_1_1Guid.html">Guid</a> <a class="code" href="classcore_1_1Guid.html#a063b8908bc8181a9e6c55475b69fce69">RecreateGuid</a>(<span class="keyword">const</span> std::string&amp; stringGuid);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">   50</a></span>&#160;        <span class="keyword">inline</span> std::string <a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_StringGuid; }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">   56</a></span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">IsNull</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_StringGuid.empty(); }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">   63</a></span>&#160;        <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">Equals</a>(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">Guid</a>&amp; other)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 0; }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 0;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        }</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        }</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordtype">bool</span> operator&lt;(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == -1;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">bool</span> operator&lt;=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != 1;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) == 1;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <span class="keywordflow">return</span> CompareGuid(*<span class="keyword">this</span>, other) != -1;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        }</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        std::string m_StringGuid;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">int</span> CompareGuid(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; a, <span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>&amp; b);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">#ifdef _SAD_WINDOWS</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>(GUID guid);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        GUID m_Guid;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">Guid</a>(uuid_t uuid);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        uuid_t m_Guid;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    };</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;}</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="structstd_1_1hash_3_01core_1_1Guid_01_4.html">  123</a></span>&#160;<span class="keyword">struct </span>std::hash&lt;core::Guid&gt;</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;{</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    std::size_t operator()(<a class="code" href="classcore_1_1Guid.html">core::Guid</a> <span class="keyword">const</span>&amp; guid) <span class="keyword">const</span> noexcept</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    {</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        SAD_ASSERT(!guid.<a class="code" href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">IsNull</a>(), <span class="stringliteral">&quot;Hashed GUID is null and does not exist, was the GUID created properly?&quot;</span>);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="comment">// TODO: Research better method for seeding hashes...</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keywordtype">size_t</span> seed = 0xadbebcdb * <a class="code" href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a>(0, 64);</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">return</span> core::HashCombine(seed, guid.<a class="code" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a>());</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    }</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;};</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasscore_1_1Guid_html_a063b8908bc8181a9e6c55475b69fce69"><div class="ttname"><a href="classcore_1_1Guid.html#a063b8908bc8181a9e6c55475b69fce69">core::Guid::RecreateGuid</a></div><div class="ttdeci">static Guid RecreateGuid(const std::string &amp;stringGuid)</div><div class="ttdoc">Factory method to recreate a platform-specific GUID from a string.</div><div class="ttdef"><b>Definition:</b> Guid.cpp:27</div></div>
-<div class="ttc" id="aclasscore_1_1Guid_html_afdfada9907d6ac1c68d74d023cff4b46"><div class="ttname"><a href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">core::Guid::IsNull</a></div><div class="ttdeci">bool IsNull() const</div><div class="ttdoc">Evaluates if a generated GUID is null.</div><div class="ttdef"><b>Definition:</b> Guid.h:55</div></div>
+<div class="ttc" id="aclasscore_1_1Guid_html_afdfada9907d6ac1c68d74d023cff4b46"><div class="ttname"><a href="classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46">core::Guid::IsNull</a></div><div class="ttdeci">bool IsNull() const</div><div class="ttdoc">Evaluates if a generated GUID is null.</div><div class="ttdef"><b>Definition:</b> Guid.h:56</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html_a15965f9af8e7ebcf466e98b74d97c1c8"><div class="ttname"><a href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a></div><div class="ttdeci">static Guid CreateGuid()</div><div class="ttdoc">Factory method to generate platform-specific GUIDs.</div><div class="ttdef"><b>Definition:</b> Guid.cpp:5</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html"><div class="ttname"><a href="classcore_1_1Guid.html">core::Guid</a></div><div class="ttdoc">Globally Unique Identifier, often used to identify things.</div><div class="ttdef"><b>Definition:</b> Guid.h:25</div></div>
-<div class="ttc" id="aclasscore_1_1Guid_html_afa0bb9762abff155d2e2cb6f14b53456"><div class="ttname"><a href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">core::Guid::Equals</a></div><div class="ttdeci">bool Equals(const Guid &amp;other) const</div><div class="ttdoc">Compares current Guid against another specified Guid for equality using private comparator function.</div><div class="ttdef"><b>Definition:</b> Guid.h:62</div></div>
+<div class="ttc" id="aclasscore_1_1Guid_html_afa0bb9762abff155d2e2cb6f14b53456"><div class="ttname"><a href="classcore_1_1Guid.html#afa0bb9762abff155d2e2cb6f14b53456">core::Guid::Equals</a></div><div class="ttdeci">bool Equals(const Guid &amp;other) const</div><div class="ttdoc">Compares current Guid against another specified Guid for equality using private comparator function.</div><div class="ttdef"><b>Definition:</b> Guid.h:63</div></div>
 <div class="ttc" id="aclasscore_1_1Guid_html_ad3fdc5d6f19e2fc5caad18b8e322b0fe"><div class="ttname"><a href="classcore_1_1Guid.html#ad3fdc5d6f19e2fc5caad18b8e322b0fe">core::Guid::Guid</a></div><div class="ttdeci">Guid()</div><div class="ttdoc">Default constructor creates an empty GUID.</div><div class="ttdef"><b>Definition:</b> Guid.cpp:52</div></div>
-<div class="ttc" id="aclasscore_1_1Guid_html_af7bc2448963b45bc6c4c04f715e960d8"><div class="ttname"><a href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">core::Guid::ToString</a></div><div class="ttdeci">std::string ToString() const</div><div class="ttdoc">Retrieves string representation for the GUID.</div><div class="ttdef"><b>Definition:</b> Guid.h:49</div></div>
+<div class="ttc" id="aclasscore_1_1Guid_html_af7bc2448963b45bc6c4c04f715e960d8"><div class="ttname"><a href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">core::Guid::ToString</a></div><div class="ttdeci">std::string ToString() const</div><div class="ttdoc">Retrieves string representation for the GUID.</div><div class="ttdef"><b>Definition:</b> Guid.h:50</div></div>
 <div class="ttc" id="aclasscore_1_1MathUtils_html_a0bd5d71ac0f34f5b3ef6239c4407c996"><div class="ttname"><a href="classcore_1_1MathUtils.html#a0bd5d71ac0f34f5b3ef6239c4407c996">core::MathUtils::RandomBetween</a></div><div class="ttdeci">static int RandomBetween(int min, int max)</div><div class="ttdoc">Generates a pseudo-random number between a specified min and max.</div><div class="ttdef"><b>Definition:</b> MathUtils.cpp:30</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -5,7 +5,7 @@ var searchData=
   ['addresource_2',['AddResource',['../classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176',1,'sad::ResourceManager']]],
   ['appendfile_3',['AppendFile',['../classcore_1_1FileUtils.html#a51ad131ece9888aed30aed7b05fc48d6',1,'core::FileUtils']]],
   ['application_4',['Application',['../classsad_1_1Application.html',1,'sad::Application'],['../classpog_1_1Application.html',1,'pog::Application']]],
-  ['asstring_5',['AsString',['../classNJSONOutputArchive.html#a5c4ea4e1fc2560a09390a29df391e1d9',1,'NJSONOutputArchive']]],
+  ['asstring_5',['AsString',['../classsad_1_1LevelSnapshotOutput.html#a0eb69eb39e4dd4a34a814d630c16ea9f',1,'sad::LevelSnapshotOutput']]],
   ['audiomanager_6',['AudioManager',['../classsad_1_1AudioManager.html',1,'sad']]],
   ['audioresource_7',['AudioResource',['../classsad_1_1AudioResource.html',1,'sad']]]
 ];

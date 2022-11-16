@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['timescale_281',['TimeScale',['../classpog_1_1Time.html#ae3a826353f72e66d205640771f2275db',1,'pog::Time']]]
+  ['levelname_315',['LevelName',['../classsad_1_1Level.html#a357c231994d6647f34873bb551e934e3',1,'sad::Level']]]
 ];

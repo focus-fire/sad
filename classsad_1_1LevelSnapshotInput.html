@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: NJSONInputArchive Class Reference</title>
+<title>sad: sad::LevelSnapshotInput Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,44 +60,48 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1LevelSnapshotInput.html">LevelSnapshotInput</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classNJSONInputArchive-members.html">List of all members</a>  </div>
+<a href="classsad_1_1LevelSnapshotInput-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">NJSONInputArchive Class Reference</div>  </div>
+<div class="title">sad::LevelSnapshotInput Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>nlohmann-json based entt-deserialization  
- <a href="classNJSONInputArchive.html#details">More...</a></p>
+<p>Deserializes nlohmann-json into entt snapshots.  
+ <a href="classsad_1_1LevelSnapshotInput.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="NJSONInputArchive_8h_source.html">NJSONInputArchive.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="LevelSnapshotInput_8h_source.html">LevelSnapshotInput.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a34c68b5c16227a4fa01373881ed700ed"><td class="memItemLeft" align="right" valign="top"><a id="a34c68b5c16227a4fa01373881ed700ed"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>NJSONInputArchive</b> (const std::string &amp;json_string)</td></tr>
-<tr class="separator:a34c68b5c16227a4fa01373881ed700ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86ba3f7daf43b0a47ff720e4cbf86f0c"><td class="memItemLeft" align="right" valign="top"><a id="a86ba3f7daf43b0a47ff720e4cbf86f0c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>next_root</b> ()</td></tr>
-<tr class="separator:a86ba3f7daf43b0a47ff720e4cbf86f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48c1c8256cf8fb4ea9f61a94c7e8f3b1"><td class="memItemLeft" align="right" valign="top"><a id="a48c1c8256cf8fb4ea9f61a94c7e8f3b1"></a>
+<tr class="memitem:afc39dab94b6fc92346e1eb201c1cfb0a"><td class="memItemLeft" align="right" valign="top"><a id="afc39dab94b6fc92346e1eb201c1cfb0a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>LevelSnapshotInput</b> (const std::string &amp;jsonString)</td></tr>
+<tr class="separator:afc39dab94b6fc92346e1eb201c1cfb0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81e022ecbb26f8b115a34dd1b5fd04ea"><td class="memItemLeft" align="right" valign="top"><a id="a81e022ecbb26f8b115a34dd1b5fd04ea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>IncreaseRoot</b> ()</td></tr>
+<tr class="separator:a81e022ecbb26f8b115a34dd1b5fd04ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa05e897221becc21c33a0f4fb79708a6"><td class="memItemLeft" align="right" valign="top"><a id="aa05e897221becc21c33a0f4fb79708a6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (std::underlying_type_t&lt; entt::entity &gt; &amp;s)</td></tr>
-<tr class="separator:a48c1c8256cf8fb4ea9f61a94c7e8f3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ef50c50b9394ff8ad28c12c394257c8"><td class="memItemLeft" align="right" valign="top"><a id="a6ef50c50b9394ff8ad28c12c394257c8"></a>
+<tr class="separator:aa05e897221becc21c33a0f4fb79708a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb3ed6f85bbfe80bd0ff6cfcacf4e78"><td class="memItemLeft" align="right" valign="top"><a id="a8bb3ed6f85bbfe80bd0ff6cfcacf4e78"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (entt::entity &amp;entity)</td></tr>
-<tr class="separator:a6ef50c50b9394ff8ad28c12c394257c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5463ca685f24a606a4175a59a4f5faf6"><td class="memTemplParams" colspan="2"><a id="a5463ca685f24a606a4175a59a4f5faf6"></a>
+<tr class="separator:a8bb3ed6f85bbfe80bd0ff6cfcacf4e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad46f2f1cdb0dd8580bc35b295a789f8e"><td class="memTemplParams" colspan="2"><a id="ad46f2f1cdb0dd8580bc35b295a789f8e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5463ca685f24a606a4175a59a4f5faf6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (entt::entity &amp;ent, T &amp;t)</td></tr>
-<tr class="separator:a5463ca685f24a606a4175a59a4f5faf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad46f2f1cdb0dd8580bc35b295a789f8e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (entt::entity &amp;ent, T &amp;t)</td></tr>
+<tr class="separator:ad46f2f1cdb0dd8580bc35b295a789f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>nlohmann-json based entt-deserialization </p>
+<div class="textblock"><p>Deserializes nlohmann-json into entt snapshots. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>Code/Engine/<a class="el" href="NJSONInputArchive_8h_source.html">NJSONInputArchive.h</a></li>
+<li>Code/Engine/<a class="el" href="LevelSnapshotInput_8h_source.html">LevelSnapshotInput.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

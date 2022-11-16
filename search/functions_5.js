@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['import_246',['Import',['../classsad_1_1ResourceManager.html#af8219231dc5016e996215d952b0556d1',1,'sad::ResourceManager']]],
-  ['importlevel_247',['ImportLevel',['../classsad_1_1JsonManager.html#ad2c66231677ed957c503d67126e74d99',1,'sad::JsonManager']]],
-  ['iscontrolleractive_248',['IsControllerActive',['../classsad_1_1InputManager.html#a3b1bb503365d6295500fc3bbb03c4138',1,'sad::InputManager']]],
-  ['iscontrollerconnected_249',['IsControllerConnected',['../classsad_1_1InputManager.html#ac3a1b50e050a07dcf2a1ad14c4a79095',1,'sad::InputManager']]],
-  ['isnull_250',['IsNull',['../classcore_1_1Guid.html#afdfada9907d6ac1c68d74d023cff4b46',1,'core::Guid']]]
+  ['hascomponent_272',['HasComponent',['../classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f',1,'sad::ecs::Entity']]]
 ];

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['pathexists_257',['PathExists',['../classcore_1_1FileUtils.html#a33df5e56c7b53972607a05a7f22e79c4',1,'core::FileUtils']]],
-  ['pollevents_258',['PollEvents',['../classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88',1,'sad::Application']]]
+  ['oncontrollerconnected_285',['OnControllerConnected',['../classsad_1_1InputManager.html#a3fb1ad8a43e895fc7eba528eedcef203',1,'sad::InputManager']]],
+  ['oncontrollerdisconnected_286',['OnControllerDisconnected',['../classsad_1_1InputManager.html#ad3ae300adfdc154a2ab449c1e69c98c7',1,'sad::InputManager']]],
+  ['operator_28_29_287',['operator()',['../classsad_1_1LevelSnapshotOutput.html#abb13e85dcab8980d05901b6121e4623f',1,'sad::LevelSnapshotOutput::operator()(std::underlying_type_t&lt; entt::entity &gt; size)'],['../classsad_1_1LevelSnapshotOutput.html#aa59f98feaa7107099c4bb85732ce4191',1,'sad::LevelSnapshotOutput::operator()(entt::entity entity)']]],
+  ['overwritecomponent_288',['OverwriteComponent',['../classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563',1,'sad::ecs::Entity']]]
 ];

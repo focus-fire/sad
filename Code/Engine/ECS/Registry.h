@@ -18,6 +18,7 @@ namespace sad::ecs
 		static EntityWorld& GetEntityWorld();
 
 		static entt::entity GenerateEntityHandle();
+		static void EraseEntityHandle(entt::entity entity);
 
 		EntityWorld World;
 	};

@@ -461,21 +461,21 @@ Build/**/*
 # Let imgui create its own inline config
 imgui.ini
 
-# Include .lib and .dll files for SDL and assimp
-!Vendor/SDL/**/*.dll
-!Vendor/SDL/**/*.lib
-!Vendor/assimp/**/*.dll
-!Vendor/assimp/**/*.lib
+# Include .lib and .dll files for SDL, assimp, and mono
+!Vendor/SDL/**/**
+!Vendor/assimp/**/**
+!Vendor/mono/**/**
 
 # Builds
-Debug
-Release
+Debug/**/*
+Release/**/*
 
 # Visual Studio
 *.vs
 *.vscode
 *.sln
 *.vcxproj*
+*.csproj*
 
 # XCode
 *.xcworkspace

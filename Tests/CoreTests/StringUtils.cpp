@@ -23,6 +23,23 @@ TEST_CASE("Equals properly evaluates string equality")
 	}
 }
 
+TEST_CASE("Contains properly evaultes if a string exists")
+{
+	std::string a = "Contains properly evaluates string containment";
+
+	SECTION("string is found")
+	{
+		std::string b = "Contains properly";
+		REQUIRE(core::StringUtils::Contains(a, b));
+	}
+
+	SECTION("string is not found")
+	{
+		std::string b = "properly Contains";
+		REQUIRE_FALSE(core::StringUtils::Contains(a, b));
+	}
+}
+
 TEST_CASE("Strings are trimmed properly")
 {
 	std::string sample = "  The quick brown fox jumps over the lazy dog  ";

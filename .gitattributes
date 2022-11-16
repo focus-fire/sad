@@ -1,13 +1,3 @@
-# Set default behaviour
-* text=auto
-
-# Force default line-endings for core files to CRLF
-*.sln text eol=crlf
-*.c text eol=crlf
-*.cpp text eol=crlf
-*.h text eol=crlf
-*.hpp text eol=crlf
-
 # Remove glad as a vendored path
 Vendor/glad/** linguist-vendored
 
@@ -19,3 +9,6 @@ Vendor/SDL/** linguist-vendored
 
 # Remove assimp as a vendored path
 Vendor/assimp/** linguist-vendored
+
+# Remove mono as a vendored path
+Vendor/mono/** linguist-vendored

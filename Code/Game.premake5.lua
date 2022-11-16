@@ -29,6 +29,7 @@ project "Game"
         "%{prj.location}/../Vendor/imgui",
         "%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}/../Vendor/assimp/include",
+        "%{prj.location}/../Vendor/mono/include",
         "%{prj.location}",
     }
 
@@ -36,6 +37,7 @@ project "Game"
         "Core",
         "Engine",
         "Editor",
+        "SadCSFramework",
         "glad",
         "stb_image",
         "imgui",
@@ -43,15 +45,38 @@ project "Game"
     }
 
     if os.target() == "windows" then
+        -- Win32
+        table.insert(linkers, "Ws2_32") -- .lib
+        table.insert(linkers, "winmm") -- .lib
+        table.insert(linkers, "version") -- .lib
+        table.insert(linkers, "Bcrypt") -- .lib
+
+        -- SDL
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
         table.insert(linkers, "SDL2") -- .dll
 		table.insert(linkers, "SDL2_mixer") -- .dll
+
+        -- Assimp
 		table.insert(linkers, "assimp-vc143-mt") -- .dll
+
+        -- Mono
+        table.insert(linkers, "libmono-static-sgen") -- .lib
     else
+        -- Mac
+        table.insert(linkers, "Foundation.framework") -- .framework
+        table.insert(linkers, "iconv") -- .a
+        table.insert(linkers, "z") -- .a
+
+        -- SDL
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
         table.insert(linkers, "SDL2.framework") -- .framework
 		table.insert(linkers, "SDL2_mixer.framework") -- .framework
+
+        -- Assimp
         table.insert(linkers, "assimp.framework") -- .framework
+
+        -- Mono
+        table.insert(linkers, "monosgen-2.0") -- .a
     end
 
     includedirs { includes }
@@ -62,14 +87,16 @@ project "Game"
         libdirs {
 			"%{prj.location}/../Vendor/SDL/lib/win",
 			"%{prj.location}/../Vendor/assimp/lib/win",
+            "%{prj.location}/../Vendor/mono/lib/win/%{cfg.buildcfg}"
 		}
     filter "system:macosx"
         frameworkdirs {
 			"%{prj.location}/../Vendor/SDL/lib/mac",
 			"%{prj.location}/../Vendor/assimp/lib/mac",
 		}
-    filter {}
-
+        libdirs {
+            "%{prj.location}/../Vendor/mono/lib/mac",
+        }
     filter "system:windows"
         defines {
             "_WINDOWS",
@@ -78,6 +105,7 @@ project "Game"
         postbuildcommands {
             -- Copy the SDL .dll to the application directory
             "{COPY} %{wks.location}/Vendor/SDL/lib/win/*.dll $(OutDir)",
+
 			-- Copy the assimp .dll to the application directory
 			"{COPY} %{wks.location}/Vendor/assimp/lib/win/*.dll $(OutDir)",
         }

@@ -20,8 +20,9 @@ namespace sad::ecs
 	class Entity 
 	{
 	public:
-		Entity();
+		Entity() = default;
 		Entity(entt::entity entityHandle);
+		Entity(entt::null_t null);
 		Entity(const Entity& entity) = default;
 
 		/**
@@ -123,6 +124,8 @@ namespace sad::ecs
 		{
 			return !(*this == other);
 		}
+
+		static ecs::Entity Null() { return ecs::Entity(entt::null); }
 
 	private:
 		entt::entity m_EntityHandle;

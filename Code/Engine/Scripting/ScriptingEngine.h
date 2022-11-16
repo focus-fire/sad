@@ -1,8 +1,14 @@
 #pragma once
 
+#include <unordered_map>
+
 #include <mono/jit/jit.h>
 
+#include <Core/Memory.h>
 #include <Engine/Level.h>
+
+#include "ScriptClass.h"
+#include "SadBehaviourInstance.h"
 
 namespace sad::cs
 {
@@ -15,7 +21,7 @@ namespace sad::cs
 		/**
 		 * @brief Struct containing data required to perform mono operations throughout the scripting engine
 		*/
-		struct ScriptingEngineConfig
+		struct ScriptingEngineData
 		{
 			MonoDomain* RootDomain = nullptr;
 			MonoDomain* AppDomain = nullptr;
@@ -28,6 +34,10 @@ namespace sad::cs
 			MonoAssembly* ProjectAssembly = nullptr;
 			MonoImage* ProjectImage = nullptr;
 
+			// TODO: Is mapping required here? Sets?
+			std::unordered_map<std::string, core::Pointer<ScriptClass>> SadBehaviourScriptLookup;
+			std::unordered_map<core::Guid, core::Pointer<SadBehaviourInstance>> SadBehaviourInstanceLookup;
+
 			Level* CurrentLevelInstance = nullptr;
 		};
 
@@ -38,7 +48,17 @@ namespace sad::cs
 		static void RuntimeStart(Level* level);
 		static void RuntimeStop();
 
-		static Level* GetCurrentLevelInstance() { return s_ScriptingConfig->CurrentLevelInstance; }
+		static void AwakeSadBehaviourInstance(ecs::Entity entity);
+		static void UpdateSadBehaviourInstance(ecs::Entity entity);
+
+		static MonoObject* InstantiateClass(MonoClass* monoClass);
+		static bool SadBehaviourExists(const std::string& qualifiedName);
+		static bool SadBehaviourInstanceExists(const core::Guid& guid);
+
+		static Level* GetCurrentLevelInstance() { return s_ScriptingData->CurrentLevelInstance; }
+
+	public:
+		static ScriptingEngineData* s_ScriptingData;
 
 	private:
 		static void StartMono();
@@ -56,15 +76,13 @@ namespace sad::cs
 		*/
 		static void LoadProjectAssembly(const std::string& filePath);
 
-		// UTIL
-		static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
-		static MonoObject* InstantiateClass(const char* namespaceName, const char* className);
+		/**
+		 * @brief Caches all SadBehaviours detected in target asesmbly into the scripting engine's ScriptLookup 
+		 * @todo Add PrintAssemblySadBehaviours to the cli?
+		*/
+		static void CacheAssemblySadBehaviours(MonoAssembly* monoAssembly);
 
 		// TEMP
-		static void CallTestMethod(MonoObject* objectInstance);
-		static void CallIncrementTestMethod(MonoObject* objectInstance, int value);
-		static void CallStringTestMethod(MonoObject* objectInstance, const char* str);
-
-		static ScriptingEngineConfig* s_ScriptingConfig;
+		static void MonoSanityCheck();
 	};
 }

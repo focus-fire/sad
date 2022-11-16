@@ -4,11 +4,28 @@
 
 #include <mono/metadata/object.h>
 
-#define SAD_CSF_ADD_CORE_INTERNAL(name) mono_add_internal_call("Sad.Core::" #name, (const void*) name)
+/// Refer to SadCSFramework.Internal.cs for a reference on currently implemented internal methods
+/// In order to add a new method to the scripting api, use this macro with the className (in the 'Sad.Internal' namespace) and the method name
+/// Note: Parameters can be added to the 'mono_add_internal_call' signature in order to define an overload
+/// ie: mono_add_internal_call("Sad.Internal.Log::Debug(string)") vs mono_add_internal_call("Sad.Internal.Log::Debug(Vector3)")
+#define SAD_CSF_ADD_INTERNAL(className, method) mono_add_internal_call("Sad.Internal." className "::" #method, (const void*) method)
 
 namespace sad::cs
 {
-	static void Log(MonoString* string)
+	///////////
+	/// Log ///
+	///////////
+
+	static void Info(MonoString* string)
+	{
+		char* cString = mono_string_to_utf8(string);
+
+		core::Log(ELogType::Info, "{}", cString);
+
+		mono_free(cString);
+	}
+
+	static void Debug(MonoString* string)
 	{
 		char* cString = mono_string_to_utf8(string);
 
@@ -25,11 +42,24 @@ namespace sad::cs
 
 		mono_free(cString);
 	}
+
+	static void Error(MonoString* string)
+	{
+		char* cString = mono_string_to_utf8(string);
+
+		core::Log(ELogType::Error, "{}", cString);
+
+		mono_free(cString);
+	}
+
+	///////
+	///////
+	///////
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 {
-	// Core Internal Calls
-	SAD_CSF_ADD_CORE_INTERNAL(Log);
-	SAD_CSF_ADD_CORE_INTERNAL(Warn);
+	SAD_CSF_ADD_INTERNAL("Log", Debug);
+	SAD_CSF_ADD_INTERNAL("Log", Warn);
+	SAD_CSF_ADD_INTERNAL("Log", Error);
 }

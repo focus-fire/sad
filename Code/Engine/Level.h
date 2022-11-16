@@ -16,6 +16,7 @@ namespace sad
 	public:
 		Level() = default;
 
+		void Start();
 		void Update(ecs::EntityWorld& world);
 
 		/**
@@ -23,6 +24,16 @@ namespace sad
 		 * @note This is currently only used after level import to populate entities with GUIDComponents.
 		*/
 		void PopulateLevelGuids();
+
+		/**
+		 * @brief Retrieves an entity in the level by GUID
+		*/
+		ecs::Entity LookupEntityByGuid(const core::Guid& guid);
+
+		/**
+		 * @brief Retrieves an entity in the level by name 
+		*/
+		ecs::Entity LookupEntityByName(const std::string& name);
 
 		/**
 		 * @brief Creates an entity in the level from scratch with a new GUID, an empty transform, and a fresh bound
@@ -42,14 +53,16 @@ namespace sad
 		/**
 		 * @brief Destroys an entity from the registry and from the level cache
 		 * @param entity Handle associated with the entity requested for removal
+		 * @return True if the entity was successfully destroyed, false if it was not
 		*/
-		void DestroyEntity(ecs::Entity entity);
+		bool DestroyEntity(ecs::Entity entity);
 
 		/**
 		 * @brief Destroys an entity from the registry and from the level cache with a particular name
 		 * @param name Name associated with the entity requested for removal 
+		 * @return True if the entity was successfully destroyed, false if it was not
 		*/
-		void DestroyEntityByName(const std::string& name);
+		bool DestroyEntityByName(const std::string& name);
 
 		/**
 		 * @brief Imports an enitity handle into the level cache with a GUIDComponent

@@ -6,8 +6,23 @@
     <img src="https://github.com/focus-fire/sad/actions/workflows/test.yml/badge.svg" alt="test-badge">
 </p>
 
+# Table of Contents
+
+1. [Installation](##Installation)
+2. [Quick Setup](###Quick-Setup)
+3. [Windows](###Windows)
+4. [Mac](###Mac)
+5. [Updates](##Updates)
+6. [Tests](##Tests)
+7. [Running Tests](###Running-Tests)
+8. [Issues](##Issues)
+
+--------------
+
 ## Installation
 Luckily most of the setup for the repository has been automated using the `bet` (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only [Python v3.10+](https://www.python.org/downloads/) is required to properly install the project on either Windows or Mac.
+
+***Note: For windows users, please ensure you have Python 3 installed from the Windows Store.***
 
 To start, recursively clone the repository and follow the instructions below for your OS.
 
@@ -103,6 +118,17 @@ The binaries and static libraries should be located in the `Build/Bin` directory
 $ ./Build/Bin/Game/Game
 ```
 
+-------------
+## Updates
+
+```
+git pull --recurse-submodules
+```
+Run this command inside of the main folder of the repository and it will pull all changes in the repo, as well as changes in the submodules.
+
+It is ***recommended*** that you run this command often when you start working on the repo after cloning it.
+
+-------------
 ## Tests
 This project is setup to use [Catch2](https://github.com/catchorg/Catch2) for unit and integration testing. Running tests is also tied into the bet scripting pipeline.
 
@@ -146,3 +172,23 @@ All tests passed (4 assertions in 1 test case)
 
 [tests.py] bet! Successfully ran tests.
 ```
+
+-------------
+## Issues
+
+Here are some errors people have run into while working on the project or attempting to build the project.
+
+-------------
+You are able to build the solution file, but the build fails, and this is in the output log.
+
+```
+Element <LanguageStandard> has an invalid value of "stdcpp20".
+```
+
+**Solution: Update your Visual Studio. You are most likely using an outdated version.**
+
+-------------
+
+You run into some sort of GL Error while attempting to build the project.
+
+**Solution: Your graphics card may be outdated, in this case, you may need to lower the GL version locally in order to run the project.**

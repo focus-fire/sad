@@ -73,7 +73,7 @@ $(function() {
 <p>💕 <em>Cause putting a bit of love into the code we write helps!</em> 💕 </p>
 <hr  />
 <p>This could be much, much, much longer - but as discussed, we'll limit this to some hard/fast rules that are good practices but will make the code look a little clean/consistent.</p>
-<h3><a class="anchor" id="autotoc_md10"></a>
+<h3><a class="anchor" id="autotoc_md19"></a>
 TLDR</h3>
 <p>If you need to <b>push and get a review</b> fast, follow these six steps and honestly - we won't care about anything else.</p>
 <ol type="1">
@@ -84,12 +84,12 @@ TLDR</h3>
 <li>Member (private) variables should <b>always</b> be prefixed with <code>m_</code> to indicate ownership.</li>
 <li>Avoid unnecessary <b>dead code</b>. Long blocks of commented, unused, or old code is not pog.</li>
 </ol>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<h3><a class="anchor" id="autotoc_md20"></a>
 Commenting</h3>
 <p>Comment where you deem necessary! No need to comment absolutely everything, but if an operation/method is long or ambiguous feel free to comment for clarity.</p>
 <p>In lieu of Doxygen support, set the <em>Generated Doxygen Comments Style</em> option in Visual Studio to <code>Doxygen (/**)</code>.</p>
 <p>Similar to line comments, use the Doxygen comments where you deem necessary (ie: A basic 'getter' for a private variable may not need an entire <code>@brief</code>).</p>
-<h3><a class="anchor" id="autotoc_md12"></a>
+<h3><a class="anchor" id="autotoc_md21"></a>
 Files and Extensions</h3>
 <p>Each source file should have an associated header file. Prefer <code>.h</code> and <code>.cpp</code> for file extensions.</p>
 <p>If the source or header is an <b>ECS</b> component or system, files should be suffixed with <code>Component</code> and <code>System</code> respectively.</p>
@@ -101,12 +101,12 @@ Files and Extensions</h3>
 <div class="line">struct TransformComponent       // Pog</div>
 <div class="line">{ }</div>
 </div><!-- fragment --><p>Prefer using <code>#pragma once</code> as a header guard over <code>#ifndef GUARD</code>.</p>
-<h3><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md22"></a>
 Dead Code</h3>
 <p><b>Early note:</b> If code is dead, let it stay dead.</p>
 <p>This is obviously 110% discretionary - sometimes leaving a few lines commented works. Obviously if it's something that is getting reverted or is required by the next feature in line, leave it.</p>
 <p>However, entire implementations or previous ways of doing things should be removed and not commented (we have git for a reason).</p>
-<h3><a class="anchor" id="autotoc_md14"></a>
+<h3><a class="anchor" id="autotoc_md23"></a>
 Bracket Style</h3>
 <p>Avoid Egyptian braces wherever possible! Placing brackets on a new line in almost all cases adds some space and makes C/C++ code happier to read.</p>
 <div class="fragment"><div class="line">int Foo()</div>
@@ -123,7 +123,7 @@ Bracket Style</h3>
 <div class="line"> </div>
 <div class="line">if (foo)</div>
 <div class="line">    int i = 2; i += 2; return i; // Not Pog</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
 Order of Includes</h3>
 <p>Prioritize the source header and any precompiled headers when ordering includes. Then use the following:</p>
 <ul>
@@ -143,7 +143,7 @@ Order of Includes</h3>
 <div class="line">#include &lt;proj/ProjHeader.h&gt; // Headers from other projects (ie: Game, Engine, Core, etc.)</div>
 <div class="line"> </div>
 <div class="line">#include &quot;OtherClass.h&quot; // Headers associated with other source files in the same project</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md25"></a>
 Classes/Functions Name</h3>
 <p>Start them with a capital, prefer CapitalCamelCase for more words. Keep access modifiers inline with the class definition. Make them descriptive.</p>
 <p>CapitalCamelCase can be used for public variables. Use the following prefixes for class variables.</p>
@@ -168,7 +168,7 @@ Classes/Functions Name</h3>
 <div class="line">    public:                 // Ultra Not Pog</div>
 <div class="line">        void debug();       // Mega Ultra Not Pog</div>
 <div class="line">};</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md26"></a>
 Namespaces</h3>
 <p>Prefer lowerCamelCase for namespace names. Try to keep namespace names as short and descriptive as possible.</p>
 <div class="fragment"><div class="line">namespace sad</div>
@@ -201,22 +201,22 @@ Namespaces</h3>
 <div class="line">        // Not Pog</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md27"></a>
 nullptr</h3>
 <p>Please just use <code>nullptr</code> over <code>NULL</code>. Thanks.</p>
-<h3><a class="anchor" id="autotoc_md19"></a>
+<h3><a class="anchor" id="autotoc_md28"></a>
 Globals and Macros</h3>
 <p>If you can avoid using them, please do.</p>
 <p>If you have to, follow <code>ALL_CAPS</code> for macros and <code>g_GlobalVariableName</code> for globals.</p>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md29"></a>
 Reference Arguments</h3>
 <p>If you pass references as an argument, label tham as <code>const</code>.</p>
 <div class="fragment"><div class="line">void Foo(const std::string&amp; bar);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md30"></a>
 const</h3>
 <p>Use it where it makes sense! If you aren't going to modify something or don't want anyone to change it, just make it const.</p>
 <p>If its safer to just make something const, feel free to do it.</p>
-<h3><a class="anchor" id="autotoc_md22"></a>
+<h3><a class="anchor" id="autotoc_md31"></a>
 auto</h3>
 <p>Let's avoid using it unless we're repeating long and obvious return types.</p>
 <div class="fragment"><div class="line">// I&#39;m cool if you don&#39;t want to repeat that namespace... (5/6 deep)</div>
@@ -225,7 +225,7 @@ auto</h3>
 <div class="line">// Let&#39;s not be cool with this...</div>
 <div class="line">auto num = 2;</div>
 </div><!-- fragment --><p>Prefer not using it though.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 Casting</h3>
 <p>Prefer C++ casts.</p>
 <div class="fragment"><div class="line">float x = 1.2;</div>
@@ -234,7 +234,7 @@ Casting</h3>
 <div class="line"> </div>
 <div class="line">Check this out for a deeper dive.</div>
 <div class="line">http://cppblogs.blogspot.com/2013/08/c-style-casts.html</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md33"></a>
 Using Statements</h3>
 <p>Avoid using statements if possible.</p>
 <div class="fragment"><div class="line">// Let&#39;s avoid this where possible...</div>

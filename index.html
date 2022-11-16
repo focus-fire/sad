@@ -70,9 +70,23 @@ $(function() {
 <p><img src="./.github/assets/pensive-cowboy.png" alt="sad" height="100" class="inline"/> </p>
 <p align="center"></p>
 <p><object type="image/svg+xml" data="https://github.com/focus-fire/sad/actions/workflows/build.yml/badge.svg" style="pointer-events: none;">build-badge</object> <object type="image/svg+xml" data="https://github.com/focus-fire/sad/actions/workflows/test.yml/badge.svg" style="pointer-events: none;">test-badge</object> </p>
-<h2><a class="anchor" id="autotoc_md0"></a>
+<h1><a class="anchor" id="autotoc_md0"></a>
+Table of Contents</h1>
+<ol type="1">
+<li><a href="##Installation">Installation</a></li>
+<li><a href="###Quick-Setup">Quick Setup</a></li>
+<li><a href="###Windows">Windows</a></li>
+<li><a href="###Mac">Mac</a></li>
+<li><a href="##Updates">Updates</a></li>
+<li><a href="##Tests">Tests</a></li>
+<li><a href="###Running-Tests">Running Tests</a></li>
+<li><a href="##Issues">Issues</a></li>
+</ol>
+<hr  />
+<h2><a class="anchor" id="autotoc_md2"></a>
 Installation</h2>
 <p>Luckily most of the setup for the repository has been automated using the <code>bet</code> (**b**efore **e**ven **t**rying) scripting pipeline. As a result, only <a href="https://www.python.org/downloads/">Python v3.10+</a> is required to properly install the project on either Windows or Mac.</p>
+<p><em><b>Note: For windows users, please ensure you have Python 3 installed from the Windows Store.</b></em></p>
 <p>To start, recursively clone the repository and follow the instructions below for your OS.</p>
 <div class="fragment"><div class="line">$ git clone --recursive git@github.com:focus-fire/sad.git</div>
 <div class="line"> </div>
@@ -81,13 +95,13 @@ Installation</h2>
 <div class="line">$ git clone --recursive https://github.com/focus-fire/sad.git</div>
 </div><!-- fragment --><p><b>Note:</b> If you're using a GUI client for git such as GitHub Desktop or SourceTree it should automatically perform a recursive clone on the repository. Otherwise copy the command above, right click your file explorer, and run the command in git bash.</p>
 <p>If the repository is not cloned recursively <b>nothing will work</b>.</p>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md3"></a>
 Quick Setup</h3>
 <p>When in doubt, just <code>cry</code>!</p>
 <p>On Windows, double-click the <code>cry.bat</code> script. Or enter the following command in a Terminal on either Windows or Mac.</p>
 <p>This command can be used as an alternative to using separate commands to clean and build the project when required.</p>
 <div class="fragment"><div class="line">$ ./cry</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md4"></a>
 Windows</h3>
 <ol type="1">
 <li>Run the <code>bet.py</code> script from the terminal and specify the proper build flag for your target toolset</li>
@@ -109,7 +123,7 @@ Windows</h3>
 <div class="fragment"><div class="line">$ make</div>
 </div><!-- fragment --><p>The binaries and static libraries should be located in the <code>Build/Bin</code> directory of the project. These can be run in a GUI using something like the Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools">Makefile Tools</a> or can be run in the terminal.</p>
 <div class="fragment"><div class="line">$ .\Build\Bin\Game\Game</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
 Mac</h3>
 <ol type="1">
 <li>Execute the <code>bet.py</code> script from the terminal to build the project with the <code>gmake2</code> or <code>xcode4</code> toolsets</li>
@@ -133,10 +147,17 @@ Mac</h3>
 <div class="fragment"><div class="line">$ make</div>
 </div><!-- fragment --><p>The binaries and static libraries should be located in the <code>Build/Bin</code> directory of the project. These can be run in a GUI using something like the Visual Studio Code <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools">Makefile Tools</a> or can be run in the terminal.</p>
 <div class="fragment"><div class="line">$ ./Build/Bin/Game/Game</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><hr  />
+ <h2><a class="anchor" id="autotoc_md7"></a>
+Updates</h2>
+<div class="fragment"><div class="line">git pull --recurse-submodules</div>
+</div><!-- fragment --><p>Run this command inside of the main folder of the repository and it will pull all changes in the repo, as well as changes in the submodules.</p>
+<p>It is <em><b>recommended</b></em> that you run this command often when you start working on the repo after cloning it.</p>
+<hr  />
+ <h2><a class="anchor" id="autotoc_md9"></a>
 Tests</h2>
 <p>This project is setup to use <a href="https://github.com/catchorg/Catch2">Catch2</a> for unit and integration testing. Running tests is also tied into the bet scripting pipeline.</p>
-<h3><a class="anchor" id="autotoc_md5"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Running Tests</h3>
 <ol type="1">
 <li>Build the <code>Tests</code> project using Visual Studio, msbuild (might have to be manually added to your system's environment variables), or make with respect to your desired toolset</li>
@@ -165,7 +186,18 @@ Running Tests</h3>
 <div class="line">All tests passed (4 assertions in 1 test case)</div>
 <div class="line"> </div>
 <div class="line">[tests.py] bet! Successfully ran tests.</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div><!-- fragment --><hr  />
+ <h2><a class="anchor" id="autotoc_md12"></a>
+Issues</h2>
+<p>Here are some errors people have run into while working on the project or attempting to build the project.</p>
+<hr  />
+<p> You are able to build the solution file, but the build fails, and this is in the output log.</p>
+<div class="fragment"><div class="line">Element &lt;LanguageStandard&gt; has an invalid value of &quot;stdcpp20&quot;.</div>
+</div><!-- fragment --><p><b>Solution: Update your Visual Studio. You are most likely using an outdated version.</b></p>
+<hr  />
+<p>You run into some sort of GL Error while attempting to build the project.</p>
+<p><b>Solution: Your graphics card may be outdated, in this case, you may need to lower the GL version locally in order to run the project.</b> </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

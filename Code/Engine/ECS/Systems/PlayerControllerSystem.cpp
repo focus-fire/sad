@@ -48,6 +48,7 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
+			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
 		}
 
 		if (input.GetKey(sad::KeyCode::S))
@@ -55,6 +56,7 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
+			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
 		}
 
 		// Handles left/right movement using A and D

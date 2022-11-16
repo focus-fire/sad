@@ -9,7 +9,7 @@ glm::vec3 sad::GameCamera::cameraVector;
 
 sad::GameCamera::GameCamera()
 { 
-	cameraVector = glm::vec3(0.0f, 0.0f, -5.0f);
+	cameraVector = glm::vec3(0.0f, 0.0f, 0.0f);
 }
 
 sad::GameCamera::~GameCamera()
@@ -21,8 +21,8 @@ glm::mat4 sad::GameCamera::GetProjectionMatrix() {
 
 glm::mat4 sad::GameCamera::GetViewMatrix() {
 	return glm::lookAt(
-		glm::vec3(cameraVector.x, 0.0f, -5.0f), // Camera position
-		glm::vec3(cameraVector.x - 3.0f, -0.5f, 2.0f), // 'Looks At' this point
+		glm::vec3(cameraVector.x, 1.0f, cameraVector.z + 5.0f), // Camera position
+		glm::vec3(cameraVector.x, 0.5f, cameraVector.z), // 'Looks At' this point
 		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
 	);
 }

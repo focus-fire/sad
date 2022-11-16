@@ -1,8 +1,9 @@
 import sys
 import argparse
 
-from build import build
+from update import update
 from clean import clean
+from build import build
 from tests import tests, compile_tests
 from cc import gen_cc
 from utils import bet_log
@@ -19,6 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description='bet (before even trying) - the sad engine scripting pipeline')
 
     # Initialize command line arguments
+    parser.add_argument('--update', action=argparse.BooleanOptionalAction, help='updates the project\'s dependencies and submodules')
     parser.add_argument('--clean', action=argparse.BooleanOptionalAction, help='cleans the project of auto-generated premake files')
     parser.add_argument('--build', nargs="?", const="vs2022", metavar='toolset', type=str, help='build the premake project (toolsets: vs2022 [default], vs2019, or gmake2)')
     parser.add_argument('--tests', action=argparse.BooleanOptionalAction, help='tries to run the sad testbed')
@@ -32,6 +34,8 @@ def main():
         return
 
     # Execute operations for passed arguments
+    if args.update is not None:
+        update()
     if args.clean is not None:
         clean()
     if args.build is not None:

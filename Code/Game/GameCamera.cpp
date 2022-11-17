@@ -39,7 +39,7 @@ void sad::GameCamera::Update()
 	input.SetMousePosition(800.0, 450.0);
 
 	float delta_x{ static_cast<float>(mouse_x - 800.0) };
-	sad::GameCamera::cameraEulers.y -= delta_x * 0.01f;
+	sad::GameCamera::cameraEulers.y -= delta_x;
 
 	float delta_y{ static_cast<float>(mouse_y - 450.0) };
 	sad::GameCamera::cameraEulers.x = std::max(std::min(sad::GameCamera::cameraEulers.x + delta_y, 180.0f), 0.0f);
@@ -63,29 +63,14 @@ glm::mat4 sad::GameCamera::GetViewMatrix()
 	glm::vec3 right{ glm::cross(forwards, globalUp) };
 
 	glm::vec3 up{ glm::cross(right, forwards) };
-	core::Log(ELogType::Debug, "Camera forward: {}", glm::to_string(forwards));
 	return glm::lookAt(cameraPosition, cameraPosition + forwards, up);
 }
 
 glm::mat4 sad::GameCamera::GetViewProjectionMatrix()
 {
 	glm::mat4 projectionMatrix = GetProjectionMatrix();
-	//core::Log(ELogType::Debug, "Camera vector: {}", glm::to_string(cameraVector));
-	core::Log(ELogType::Debug, "Camera position: {}", glm::to_string(cameraPosition));
-	core::Log(ELogType::Debug, "wasd State: {}", wasdState);
-	core::Log(ELogType::Debug, "Camera euler: {}", glm::to_string(cameraEulers));
-
 	glm::mat4 viewMatrix = GetViewMatrix();
-
 	return projectionMatrix * viewMatrix;
-}
-
-void sad::GameCamera::SetViewMatrix(glm::vec3 vector) {
-	//cameraPosition += vector;
-}
-
-void sad::GameCamera::RotateViewMatrix(glm::vec3 vector) {
-	//rotateVector += vector;
 }
 
 //void sad::Transform::Translate(glm::vec3 translation)

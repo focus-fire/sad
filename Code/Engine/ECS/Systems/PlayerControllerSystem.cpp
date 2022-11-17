@@ -13,6 +13,7 @@
 #include <Engine/ResourceManager.h>
 #include <Game/GameCamera.h>
 #include <imgui.h>
+#include <SDL2/SDL.h>
 
 void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
@@ -131,7 +132,7 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 
 		if (sad::GameCamera::walking) 
 		{
-			sad::GameCamera::cameraPosition += 0.1f * glm::vec3{
+			sad::GameCamera::cameraPosition += 0.01f * glm::vec3{
 				glm::cos(glm::radians(sad::GameCamera::walkDirection)),
 				0.0f,
 				glm::sin(glm::radians(sad::GameCamera::walkDirection))
@@ -142,7 +143,6 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 		if (input.GetKey(sad::KeyCode::LeftArrow))
 		{
 			transformComponent.m_Transform->Rotate(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
-			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 1.0f * 0.25f, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::RightArrow))

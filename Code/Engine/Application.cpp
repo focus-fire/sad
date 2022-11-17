@@ -166,7 +166,8 @@ void sad::Application::Update(float dt)
 	ecs::PlayerControllerSystem::Update(world);
 	ecs::BoundSystem::Update(world);
 
-	//Update Game Camera
+	// Update Game Camera
+	SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
 	sad::GameCamera::Update();
 
 	// Drawing 

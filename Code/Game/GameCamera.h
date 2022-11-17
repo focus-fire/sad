@@ -24,10 +24,6 @@ namespace sad
 
 		static glm::mat4 GetViewProjectionMatrix();
 
-		static void SetViewMatrix(glm::vec3 vector);
-
-		static void RotateViewMatrix(glm::vec3 vector);
-
 		static int wasdState;
 		static bool walking;
 		static float walkDirection;

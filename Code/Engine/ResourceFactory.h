@@ -36,6 +36,11 @@ namespace sad
 		template<>
 		static void CreateResource<RenderableResource>(const Resource::ResourceData& data)
 		{
+			// Load model?
+			std::string strPath = data.AbsolutePath;
+			RenderableResource model(strPath.data());
+			core::Log(ELogType::Debug, "[ResourceFactory] Path to model file: {}", data.AbsolutePath);
+
 			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data);
 			ResourceManager::AddResource<RenderableResource>(renderableResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a RenderableResource with name {}", data.Name);

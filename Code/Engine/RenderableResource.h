@@ -38,6 +38,20 @@ namespace sad
 			{ }
 		};
 
+		struct Vertex
+		{
+			glm::vec3 Position;
+			glm::vec3 Normal;
+			glm::vec2 TexCoords;
+		};
+
+		struct Texture
+		{
+			unsigned int Id;
+			std::string Type;
+			std::string Path;
+		};
+
 		std::vector<sad::rad::MeshResource::Texture> LoadedTextures;
 
 		RenderableResource();

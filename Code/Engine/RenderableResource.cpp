@@ -40,7 +40,7 @@ void sad::RenderableResource::MLoadModel(std::string path)
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		core::Log(ELogType::Error, "ERROR::ASSIMP:: {}", importer.GetErrorString());
+		core::Log(ELogType::Error, "[RenderableResource] ERROR::ASSIMP:: {}", importer.GetErrorString());
 		return;
 	}
 	m_Directory = path.substr(0, path.find_last_of('/'));

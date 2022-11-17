@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
+#include <imgui_internal.h>
 
 sad::InputManager& sad::InputManager::GetInstance()
 {
@@ -13,10 +14,21 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
-// Keyboard Events
+ImGuiID m_currentActiveId = 0;
+// Detects if the game window is focused
+bool CheckGameFocus()
+{
+    return m_currentActiveId == 2776656528;
+}
 
+// Keyboard Events
 void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 {
+    if (ImGui::GetActiveID() != 0)
+    {
+        m_currentActiveId = ImGui::GetActiveID();
+    }
+    
     if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && !event.key.repeat)
     {
         m_ControllerBeingUsed = false;
@@ -27,18 +39,27 @@ void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 
 bool sad::InputManager::GetKey(KeyCode key)
 {
+    if (!CheckGameFocus())
+        return false;
+
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
     return SDL_GetKeyboardState(nullptr)[keyScancode];
 }
 
 bool sad::InputManager::GetKeyPressed(KeyCode key)
 {
+    if (!CheckGameFocus())
+        return false;
+
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
     return m_KeyboardState[keyScancode] && (m_KeyboardUpdateFrames[keyScancode] == SDL_GetTicks64());
 }
 
 bool sad::InputManager::GetKeyReleased(KeyCode key)
 {
+    if (!CheckGameFocus())
+        return false;
+
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
     return !m_KeyboardState[keyScancode] && (m_KeyboardUpdateFrames[keyScancode] == SDL_GetTicks64());
 }

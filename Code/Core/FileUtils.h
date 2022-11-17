@@ -40,6 +40,16 @@ namespace core
 		 * @return True if removing the file succeeded, false if removing the file failed
 		*/
 		static bool RemoveFile(const std::string& path);
+
+		/**
+		 * @brief Reads the bytes of a file (or specifically a .dll) into a char array 
+		 * @param filePath Path indicating the file to read
+		 * @param outputSize Pointer to an unsigned int that will contain the size of the buffer allocated
+		 * @return Allocated buffer containing the file's byte data
+		 * @todo Move into core::FileUtils when appropriate (or when it could be multi-purposed)
+		 * @note Warning: This performs allocation, remember to `delete` returned data
+		*/
+		static char* ReadBytes(const std::string& filePath, uint32_t* outputSize);
 		
 		/**
 		 * @brief Evaluates if a pass exists on the filesystem

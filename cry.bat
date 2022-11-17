@@ -6,9 +6,6 @@
 :: Note: Should be run from the root of the repository
 ::
 
-:: Check for submodule updates (this can be commented if it's slowing things down)
-CALL :update "%~dp0"
-
 :: Clean previous premake artifacts
 CALL :clean "%~dp0"
 
@@ -24,10 +21,6 @@ CALL :build "%~dp0"
 :: Optional: Run the project
 :: CALL :execute "%~dp0"
 
-GOTO :eof
-
-:update
-CALL python3 %~f1\Scripts\bet.py --update
 GOTO :eof
 
 :clean

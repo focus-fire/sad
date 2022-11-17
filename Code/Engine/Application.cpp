@@ -10,11 +10,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
+
 #include <Game/Time.h>
 #include <Game/Application.h>
 #include <Game/GameCamera.h>
 
 #include "ECS/Registry.h"
+
 #include "ECS/Systems/RenderingSystem.h"
 #include "ECS/Systems/BoundSystem.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
@@ -33,13 +35,12 @@
 #include "InputManager.h"
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
-#include "JsonManager.h"
+#include "LevelManager.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 
 sad::Application::Application()
-	: m_PlayMusic(false)
 {
 	s_MainWindow = new sad::Window();
 	s_MainWindow->Start();
@@ -55,6 +56,9 @@ sad::Application::~Application()
 	delete s_MainWindow;
 	delete s_EngineState;
 	delete m_Editor;
+	
+	// Allocated in LevelManager::ImportLevel()
+	delete m_CurrentLevel;
 }
 
 void sad::Application::EngineStart()
@@ -64,34 +68,32 @@ void sad::Application::EngineStart()
 
 	// Import Resources
 	ResourceManager::Import();
-	
-	// Import Level
-	sad::JsonManager::ImportLevel();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
+
+	// Initialize Scripting
+	cs::ScriptingEngine::Start();
+	
+	// Import Level and GUIDs 
+	m_CurrentLevel = LevelManager::ImportLevel();
+	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
+
+	// Start the ScriptingRuntime in association with the current level
+	cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
 
 	// Game Start
 	this->Start();
 
 	bool isWindowClosed = false;
 
-	// TODO: Remove temporary music resource
-	m_MusicResource = ResourceManager::GetResource<AudioResource>("lol.mp3");
-
+	// TODO: This is a nuclear bomb, make it safer
 	std::thread gameThread = std::thread([&]() 
 	{
 		while (!isWindowClosed)
 		{
 			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
 			{
-				// TODO: Remove temporary music resource
-				if (!m_PlayMusic)
-				{
-					m_PlayMusic = true;
-					AudioManager::PlayMusic(m_MusicResource, 1);
-				}
-
 				// Game Update
 				float dt = pog::Time::GetDeltaTime();
 				this->Update(dt);
@@ -157,22 +159,13 @@ void sad::Application::Update(float dt)
 	// Second 'pass' to recolor outside the framebuffer
 	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
 
-	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
-
 	// Update events subscribed to the update loop
 	core::UpdateEvents();
 
-	// Update non-gameplay ECS systems
-	ecs::PlayerControllerSystem::Update(world);
-	ecs::BoundSystem::Update(world);
-
-	// Update Game Camera
-	SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
-	sad::GameCamera::Update();
-
-	// Drawing 
-	ecs::RenderableObjectSystem::Update(world);
-	ecs::RenderingSystem::Draw(world);
+	// Update current level context
+	// Rendering and ecs systems
+	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
+	m_CurrentLevel->Update(world);
 
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();
@@ -187,23 +180,30 @@ void sad::Application::Update(float dt)
 
 void sad::Application::Teardown()
 { 
-	// JsonManager::ExportLevel();
+	sad::cs::ScriptingEngine::Teardown();
+
+	LevelManager::ExportLevel();
 
 	m_Editor->Teardown();
+
 	s_MainWindow->Teardown();
 }
 
-/*
 glm::mat4 sad::Application::GetViewProjectionMatrix()
 {
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
-
-	glm::mat4 viewMatrix = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 0.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up'
-	);
-
-	return projectionMatrix * viewMatrix;
+	return GetProjectionMatrix() * GetViewMatrix();
 }
-*/
+
+glm::mat4 sad::Application::GetViewMatrix()
+{
+	return glm::lookAt(
+		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
+		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
+	);
+}
+
+glm::mat4 sad::Application::GetProjectionMatrix()
+{
+	return glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
+}

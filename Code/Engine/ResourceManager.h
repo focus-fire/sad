@@ -29,7 +29,9 @@ namespace sad
 			Model,
 			Audio,
 			Texture,
-			Shader
+			Shader,
+			Level,
+			Ignore   // Used for .dll/.pdb/.cs files required for scripting
 		};
 
 	private:
@@ -48,7 +50,6 @@ namespace sad
 
 	public:
 		ResourceManager(ResourceManager& other) = delete;
-		~ResourceManager();
 
 		static ResourceManager& GetInstance();
 

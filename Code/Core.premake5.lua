@@ -21,7 +21,7 @@ project "Core"
     includedirs {
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/glad/include",
-        "%{prj.location}",
+        "%{prj.location}"
     }
 
 	local linkers = {

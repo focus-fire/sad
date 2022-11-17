@@ -54,6 +54,7 @@ workspace "sad"
     filter {}
 
     -- Core Projects
+    include "Code/SadCSFramework/SadCSFramework.premake5.lua"
     include "Code/Core.premake5.lua"
     include "Code/Engine.premake5.lua"
     include "Code/Editor.premake5.lua"
@@ -75,6 +76,7 @@ workspace "sad"
         -- Placeholders
         include "Vendor/SDL.premake5.lua"
         include "Vendor/assimp.premake5.lua"
+        include "Vendor/mono.premake5.lua"
         -- Header Only Deps
         -- spdlog
         -- json

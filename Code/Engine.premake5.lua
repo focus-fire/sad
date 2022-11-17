@@ -29,6 +29,7 @@ project "Engine"
         "%{prj.location}/../Vendor/imgui",
 		"%{prj.location}/../Vendor/ImTerm/include",
 		"%{prj.location}/../Vendor/assimp/include",
+        "%{prj.location}/../Vendor/mono/include",
         "%{prj.location}",
     }
 
@@ -41,32 +42,22 @@ project "Engine"
 
     if os.target() == "windows" then
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/win")
-        table.insert(linkers, "SDL2") -- .dll
-		table.insert(linkers, "SDL2_mixer") -- .dll
-		table.insert(linkers, "assimp-vc143-mt") -- .dll
     else
         table.insert(includes, "%{prj.location}/../Vendor/SDL/include/mac")
-        table.insert(linkers, "SDL2.framework") -- .framework
-		table.insert(linkers, "SDL2_mixer.framework") -- .framework
-        table.insert(linkers, "assimp.framework") -- .framework
     end
 
     includedirs { includes }
 
     links { linkers }
 
-    filter "system:windows"
-        libdirs {
-			"%{prj.location}/../Vendor/SDL/lib/win",
-			"%{prj.location}/../Vendor/assimp/lib/win",
-		}
     filter "system:macosx"
         frameworkdirs {
 			"%{prj.location}/../Vendor/SDL/lib/mac",
 			"%{prj.location}/../Vendor/assimp/lib/mac",
 		}
-    filter {}
-
+        libdirs {
+            "%{prj.location}/../Vendor/mono/lib/mac",
+        }
 	filter "system:windows"
 		defines {
             "_WINDOWS",

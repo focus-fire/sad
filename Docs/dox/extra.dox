@@ -17,6 +17,12 @@
  */
 
 /**
+ * @namespace sad::cs
+ *
+ * @brief C-Sharp, makes things do cool stuff with nice words
+ */
+
+/**
  * @namespace cap
  *
  * @brief "Yo, that editor is cap!" - sadEngine dev team 2022

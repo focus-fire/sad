@@ -24,8 +24,9 @@ project "Editor"
         "%{prj.location}/../Vendor/entt/single_include",
         "%{prj.location}/../Vendor/imgui",
 		"%{prj.location}/../Vendor/ImGuizmo",
-		"%{prj.location}/../Vendor/ImTerm/include/",
+		"%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}/../Vendor/json/single_include",
+        "%{prj.location}/../Vendor/mono/include",
         "%{prj.location}",
     }
 

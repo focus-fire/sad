@@ -21,7 +21,6 @@
 #include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
-#include <Engine/JsonManager.h>
 
 pog::Application::Application()
 	: sad::Application()

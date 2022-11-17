@@ -17,3 +17,8 @@ entt::entity sad::ecs::Registry::GenerateEntityHandle()
 {
 	return GetInstance().World.create();
 }
+
+void sad::ecs::Registry::EraseEntityHandle(entt::entity entity)
+{
+	GetInstance().World.destroy(entity);
+}

@@ -7,6 +7,11 @@ bool core::StringUtils::Equals(const std::string& a, const std::string& b)
     return a.compare(b) == 0; 
 }
 
+bool core::StringUtils::Contains(const std::string& a, const std::string& b)
+{
+    return a.find(b) != std::string::npos;
+}
+
 std::string core::StringUtils::Trim(const std::string& str)
 {
     std::string trimmedString = str;

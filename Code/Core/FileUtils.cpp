@@ -70,6 +70,29 @@ bool core::FileUtils::RemoveFile(const std::string& path)
 	return std::remove(path.c_str()) == 0;
 }
 
+char* core::FileUtils::ReadBytes(const std::string& filePath, uint32_t* outputSize)
+{
+	// End the stream immediately after opening it
+	std::ifstream fileStream = std::ifstream(filePath, std::ios::binary | std::ios::ate);
+	SAD_ASSERT(fileStream, "Failed to open stream for Mono assembly");
+
+	// Get byte size by subtracting end and beginning of stream
+	std::streampos end = fileStream.tellg();
+	fileStream.seekg(0, std::ios::beg);
+	uint32_t size = end - fileStream.tellg();
+	SAD_ASSERT(size != 0, "Stream for Mono assembly is empty (loaded assembly contained 0 bytes)");
+
+	// Read stream into a buffer of bytes
+	char* buffer = new char[size];
+	fileStream.read((char*) buffer, size);
+	fileStream.close();
+
+	// Assign the number of bytes for the returned buffer
+	*outputSize = size;
+
+	return buffer;
+}
+
 bool core::FileUtils::PathExists(const std::string& path)
 {
 	return std::filesystem::exists(path);

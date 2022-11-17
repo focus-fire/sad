@@ -12,6 +12,7 @@
 
 #include <Game/Time.h>
 #include <Game/Application.h>
+#include <Game/GameCamera.h>
 
 #include "ECS/Registry.h"
 #include "ECS/Systems/RenderingSystem.h"
@@ -164,6 +165,9 @@ void sad::Application::Update(float dt)
 	// Update non-gameplay ECS systems
 	ecs::PlayerControllerSystem::Update(world);
 	ecs::BoundSystem::Update(world);
+
+	//Update Game Camera
+	sad::GameCamera::Update();
 
 	// Drawing 
 	ecs::RenderableObjectSystem::Update(world);

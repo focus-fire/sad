@@ -12,6 +12,7 @@
 #include <Engine/AudioManager.h>
 #include <Engine/ResourceManager.h>
 #include <Game/GameCamera.h>
+#include <imgui.h>
 
 void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
@@ -42,38 +43,99 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 	}
 	else
 	{
+		// Capture player state
+		sad::GameCamera::walkDirection = -sad::GameCamera::cameraEulers.y;
+		sad::GameCamera::wasdState = 0;
+		sad::GameCamera::walking = false;
+
 		// Handles forward/backward movement using W and S
 		if (input.GetKey(sad::KeyCode::W))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
+			//transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
+			sad::GameCamera::wasdState += 1;
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
-			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 0.0f, 1.0f * moveSpeedMultiplier));
 		}
 
 		if (input.GetKey(sad::KeyCode::S))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
+			//transformComponent.m_Transform->Translate(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
+			sad::GameCamera::wasdState += 4;
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
-			sad::GameCamera::SetViewMatrix(glm::vec3(0.0f, 0.0f, -1.0f * moveSpeedMultiplier));
 		}
 
 		// Handles left/right movement using A and D
 		if (input.GetKey(sad::KeyCode::A))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			//transformComponent.m_Transform->Translate(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			sad::GameCamera::wasdState += 2;
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
-			sad::GameCamera::SetViewMatrix(glm::vec3(1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
 		}
 
 		if (input.GetKey(sad::KeyCode::D))
 		{
-			transformComponent.m_Transform->Translate(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			//transformComponent.m_Transform->Translate(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+			sad::GameCamera::wasdState += 8;
 			AudioResource* audioResource = ResourceManager::GetResource<sad::AudioResource>("step.wav");
 			AudioManager::GetInstance().PlaySFX(audioResource);
-			sad::GameCamera::SetViewMatrix(glm::vec3(-1.0f * moveSpeedMultiplier, 0.0f, 0.0f));
+		}
+
+		// Interpret wasd state
+		switch (sad::GameCamera::wasdState) 
+		{
+			case 1:
+			case 11:
+				// Forwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 90;
+				break;
+			case 3:
+				//left-forwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 45;
+				break;
+			case 2:
+			case 7:
+				//left
+				sad::GameCamera::walking = true;
+				break;
+			case 6:
+				//left-backwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 315;
+				break;
+			case 4:
+			case 14:
+				//backwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 270;
+				break;
+			case 12:
+				//right-backwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 225;
+				break;
+			case 8:
+			case 13:
+				//right
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 180;
+				break;
+			case 9:
+				//right-forwards
+				sad::GameCamera::walking = true;
+				sad::GameCamera::walkDirection += 135;
+		}
+
+		if (sad::GameCamera::walking) 
+		{
+			sad::GameCamera::cameraPosition += 0.1f * glm::vec3{
+				glm::cos(glm::radians(sad::GameCamera::walkDirection)),
+				0.0f,
+				glm::sin(glm::radians(sad::GameCamera::walkDirection))
+			};
 		}
 
 		// Handles left/right rotation using LEFT and RIGHT arrow keys.

@@ -9,17 +9,14 @@
 
 namespace sad
 {
-	class GameCamera
+	static class GameCamera
 	{
 	public:
 		explicit GameCamera();
 
 		~GameCamera();
 
-		/**
-		 * @brief Retrieves a matrix representing the current transform
-		 * @return Model matrix with calculated translation, rotation, and scale matrices for the transform
-		*/
+		static void Update();
 
 		static glm::mat4 GetViewMatrix();
 
@@ -31,33 +28,13 @@ namespace sad
 
 		static void RotateViewMatrix(glm::vec3 vector);
 
-		//glm::mat4 GetViewProjectionMatrix() { return projectionMatrix * viewMatrix; };
-
-		//void SetRotation(glm::quat rotation) { m_Rotation = rotation; }
-
-
-
-		/**
-		 * @brief Performs a rotation on the current transform by a quaternion
-		 * @param rotation Quaternion to rotate by
-		*/
-		//void Rotate(glm::quat rotation);
-
-		/**
-		 * @brief Performs a rotation on the current transform by a Vector3
-		 * @param rotation Vector3 to rotate by
-		*/
-		//void Rotate(glm::vec3 rotation);
-
-		/**
-		 * @brief Performs a rotation on the current transform by a given axis and angle
-		 * @param axis Vector3 representing the active axis(') to rotate against
-		 * @param angle Float representing the angle in degrees to rotate by
-		*/
-		//void Rotate(glm::vec3 axis, float angle);
+		static int wasdState;
+		static bool walking;
+		static float walkDirection;
+		static glm::vec3 cameraPosition;
+		static glm::vec3 cameraEulers;
 
 	private:
-		//glm::quat m_Rotation;
-		static glm::vec3 cameraVector;
+
 	};
 }

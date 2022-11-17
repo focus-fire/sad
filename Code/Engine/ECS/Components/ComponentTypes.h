@@ -2,14 +2,13 @@
 
 /* Non-Serialized */
 
-#include "NameComponent.h"
 #include "GuidComponent.h"
 #include "LineRendererComponent.h"
 #include "RenderableObjectComponent.h"
-#include "RenderableResourceComponent.h"
 
 /* Serialized */
 
+#include "NameComponent.h"
 #include "TransformComponent.h"
 #include "BoundComponent.h"
 #include "RenderableResourceComponent.h"

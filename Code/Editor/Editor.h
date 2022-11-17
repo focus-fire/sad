@@ -53,5 +53,6 @@ namespace cap
 		std::string m_GameWindowTitle;
 
 		bool m_IsEditorInPlayMode;
+		bool saved = false;
 	};
 }

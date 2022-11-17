@@ -14,6 +14,7 @@
 #include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
+#include <Engine/LevelManager.h>
 
 #include <Game/Time.h>
 
@@ -218,6 +219,33 @@ void cap::Editor::Render()
 	for (auto [entity, name] : view.each())
 		ImGui::Text(name.m_Name.c_str());
 	ImGui::End();
+
+	ImGui::Begin("Tools");
+	ImGui::SetWindowPos(ImVec2(1150.0f, 500.0f), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(100.0f, 100.0f), ImGuiCond_Once);
+	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+	{
+		sad::LevelManager::ExportLevel();
+	}
+	ImGui::End();
+
+
+	// Save current game state if paused with ctrl+s
+	if (!m_IsEditorInPlayMode)
+	{
+		if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_S))
+		{
+			if (!saved)
+			{
+				sad::LevelManager::ExportLevel();
+				core::Log(ELogType::Debug, "Saved");
+				saved = true;
+			}
+		}
+		else {
+			saved = false;
+		}
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

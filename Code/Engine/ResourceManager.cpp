@@ -39,7 +39,7 @@ void sad::ResourceManager::MImport()
 	// Resources that exist in the file but don't exist in the filesystem will be ignored
 	// These resources will be marked as 'orphans' and will require a full export in order to remove them
 	bool isCleanImport = ImportResources();
-	
+
 	// Recurse through the './Data' directory to search for new resources
 	// Resources that were cached during the import step are skipped
 	FindResourcesInDataDirectory();

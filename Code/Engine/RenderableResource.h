@@ -9,6 +9,7 @@
 #include <Engine/Renderer/ShaderResource.h>
 
 #include "Resource.h"
+#include "Model.h"
 
 namespace sad
 {
@@ -38,22 +39,6 @@ namespace sad
 			{ }
 		};
 
-		struct Vertex
-		{
-			glm::vec3 Position;
-			glm::vec3 Normal;
-			glm::vec2 TexCoords;
-		};
-
-		struct Texture
-		{
-			unsigned int Id;
-			std::string Type;
-			std::string Path;
-		};
-
-		std::vector<sad::rad::MeshResource::Texture> LoadedTextures;
-
 		RenderableResource();
 		~RenderableResource();
 
@@ -64,20 +49,10 @@ namespace sad
 			: Resource(resourceData)
 		{ }
 
-		explicit RenderableResource(char* path);
-
-		void Draw(sad::rad::ShaderResource& shader);
 		const Geometry GetGeometry() const { return m_Geometry; }
 
 	private:
 		Geometry m_Geometry;
-		std::vector<sad::rad::MeshResource> m_Meshes;
-		std::string m_Directory;
-
-		void MLoadModel(std::string path);
-		void MProcessNode(aiNode* node, const aiScene* scene);
-		sad::rad::MeshResource MProcessMesh(aiMesh* mesh, const aiScene* scene);
-		std::vector<sad::rad::MeshResource::Texture> MLoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
-		unsigned int MRetrieveTextureFromFile(const char* path, const std::string& directory, bool gamma = false);
+		Model m_Model;
 	};
 }

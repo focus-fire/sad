@@ -38,8 +38,7 @@ namespace sad
 		{
 			// Load model?
 			std::string strPath = data.AbsolutePath;
-			RenderableResource model(strPath.data());
-			core::Log(ELogType::Debug, "[ResourceFactory] Path to model file: {}", data.AbsolutePath);
+
 
 			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data);
 			ResourceManager::AddResource<RenderableResource>(renderableResource);

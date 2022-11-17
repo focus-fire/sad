@@ -17,6 +17,7 @@ cap::DebugTerminalHelper::DebugTerminalHelper()
 	add_command_({ "instantiate", "Instantiates an entity with a name and default resource", Instantiate, NoCompletion });
 	add_command_({ "destroy", "Destroys an entity in the level with a name", Destroy, NoCompletion });
 	add_command_({ "bind_script", "Binds a script to an entity in the level", BindScriptToEntity, NoCompletion });
+	add_command_({ "unbind_script", "Unbinds a script to an entity in the level", UnbindScriptFromEntity, NoCompletion });
 }
 
 std::vector<std::string> cap::DebugTerminalHelper::NoCompletion(argument_type& arg) { return {}; }
@@ -90,7 +91,7 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 {
 	if (arg.command_line.size() < 3)
 	{
-		core::Log(ELogType::Error, "[Terminal] usage: bind <entity_name> <script_name>");
+		core::Log(ELogType::Error, "[Terminal] usage: bind_script <entity_name> <script_name>");
 		return;
 	}
 
@@ -106,11 +107,40 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 	}
 
 	// Check if script exists
-	if (sad::cs::ScriptingEngine::SadBehaviourExists(scriptName))
+	if (!sad::cs::ScriptingEngine::SadBehaviourExists(scriptName))
 	{
 		core::Log(ELogType::Error, "[Terminal] The script {} doesn't exist in the currently loaded project assembly!", scriptName);
 		return;
 	}
 
 	entity.AddComponent<sad::ecs::ScriptComponent>({ scriptName });
+}
+
+void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
+{
+	if (arg.command_line.size() < 3)
+	{
+		core::Log(ELogType::Error, "[Terminal] usage: unbind_script <entity_name> <script_name>");
+		return;
+	}
+
+	std::string entityName = std::move(arg.command_line[1]);
+	std::string scriptName = std::move(arg.command_line[2]);
+
+	// Check if entity exists
+	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->LookupEntityByName(entityName);
+	if (!entity)
+	{
+		core::Log(ELogType::Error, "[Terminal] The entity {} doesn't exist in the level", entityName);
+		return;
+	}
+
+	// Check if script exists
+	if (!sad::cs::ScriptingEngine::SadBehaviourExists(scriptName))
+	{
+		core::Log(ELogType::Error, "[Terminal] The script {} doesn't exist in the currently loaded project assembly!", scriptName);
+		return;
+	}
+	
+	entity.RemoveComponent<sad::ecs::ScriptComponent>();
 }

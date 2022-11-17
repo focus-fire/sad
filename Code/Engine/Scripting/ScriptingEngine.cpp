@@ -229,14 +229,14 @@ void sad::cs::ScriptingEngine::MonoSanityCheck()
 	testClass.CallMethod(testMethod, testObject, nullptr);
 
 	// Test 2: Method with one parameter
-	int val = 5;
-	void* param = &val;
-	MonoMethod* incrementMethod = testClass.GetMethod("Increment", 1);
-	testClass.CallMethod(incrementMethod, testObject, &param);
+	//int val = 5;
+	//void* param = &val;
+	//MonoMethod* incrementMethod = testClass.GetMethod("Increment", 1);
+	//testClass.CallMethod(incrementMethod, testObject, &param);
 
 	// Test 3: Method with two parameters
-	int val2 = 10;
-	void* params[2] = { &val, &val2 };
-	MonoMethod* addNumbersMethod = testClass.GetMethod("AddNumbers", 2);
-	testClass.CallMethod(addNumbersMethod, testObject, params);
+	//int val2 = 10;
+	//void* params[2] = { &val, &val2 };
+	//MonoMethod* addNumbersMethod = testClass.GetMethod("AddNumbers", 2);
+	//testClass.CallMethod(addNumbersMethod, testObject, params);
 }

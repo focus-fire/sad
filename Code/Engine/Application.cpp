@@ -73,24 +73,22 @@ void sad::Application::EngineStart()
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
 	m_CurrentLevel->Start();
 
-	// Game Start
-	this->Start();
-
 	bool isWindowClosed = false;
 
 	// TODO: This is a nuclear bomb, make it safer
-	std::thread gameThread = std::thread([&]() 
-	{
-		while (!isWindowClosed)
-		{
-			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
-			{
-				// Game Update
-				float dt = pog::Time::GetDeltaTime();
-				this->Update(dt);
-			}
-		}
-	});
+	//		 To update scripts offthread, mono has to be told where to invoke things...
+	//std::thread gameThread = std::thread([&]() 
+	//{
+	//	while (!isWindowClosed)
+	//	{
+	//		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
+	//		{
+	//			// Game Update
+	//			float dt = pog::Time::GetDeltaTime();
+	//			this->Update(dt);
+	//		}
+	//	}
+	//});
 
 	while (!isWindowClosed) 
 	{
@@ -99,9 +97,21 @@ void sad::Application::EngineStart()
 		// Engine Update
 		float dt = pog::Time::GetDeltaTime();
 		sad::Application::Update(dt);
+
+		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
+		{
+			// TODO: When stop button is implemented, this should revert to 'false' on stop
+			if (!m_IsGameOn)
+			{
+				this->Start();
+				m_IsGameOn = true;
+			}
+
+			this->Update(dt);
+		}
 	}
 
-	gameThread.join();
+	// gameThread.join();
 
 	Teardown();
 }

@@ -64,5 +64,7 @@ namespace sad
 	private:
 		cap::Editor* m_Editor = nullptr;
 		Level* m_CurrentLevel;
+
+		bool m_IsGameOn = false;
 	};
 }

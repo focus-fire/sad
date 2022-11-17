@@ -14,32 +14,10 @@
 void sad::Level::Start()
 {
 	cs::ScriptingEngine::RuntimeStart(this);
-
-	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
-	auto view = world.view<ecs::ScriptComponent>();
-	for (auto handle : view)
-	{
-		ecs::Entity entity = ecs::Entity(handle);
-
-		// Scripting engine should handle instantiation of script methods
-		// Also should handle validating that the provdied script still exists on the entity
-		// tldr: this is what calls Awake() on all SadBehaviours
-		cs::ScriptingEngine::AwakeSadBehaviourInstance(entity);
-	}
 }
 
 void sad::Level::Update(sad::ecs::EntityWorld& world)
 {
-	// Update SadBehaviours
-	auto view = world.view<ecs::ScriptComponent>();
-	for (auto handle : view)
-	{
-		ecs::Entity entity = ecs::Entity(handle);
-
-		// tldr: this is what calls Update() on all SadBehaviours
-		cs::ScriptingEngine::UpdateSadBehaviourInstance(entity);
-	}
-
 	// Update non-gameplay ECS systems
 	ecs::PlayerControllerSystem::Update(world);
 	ecs::BoundSystem::Update(world);

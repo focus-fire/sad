@@ -4,11 +4,7 @@
 
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Systems/RenderableObjectSystem.h>
-#include <Engine/ECS/Components/RenderableResourceComponent.h>
-#include <Engine/ECS/Components/RenderableObjectComponent.h>
-#include <Engine/ECS/Components/TransformComponent.h>
-#include <Engine/ECS/Components/ControllerComponent.h>
-#include <Engine/ECS/Components/BoundComponent.h>
+#include <Engine/ECS/Components/ComponentTypes.h>
 
 #include <Engine/Renderer/Sample/Cube.h>
 #include <Engine/Renderer/VertexArray.h>
@@ -40,26 +36,50 @@ void pog::Application::Start()
 	// Translation Logic (-pi to pi for demo)
 	m_CubeTranslate = -1.0f * glm::pi<float>();
 	m_LastTime = std::chrono::steady_clock::now();
+
+	// Awaken scripts
+	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
+	auto view = world.view<sad::ecs::ScriptComponent>();
+	for (auto handle : view)
+	{
+		sad::ecs::Entity entity = sad::ecs::Entity(handle);
+
+		// Scripting engine should handle instantiation of script methods
+		// Also should handle validating that the provdied script still exists on the entity
+		// tldr: this is what calls Awake() on all SadBehaviours
+		sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(entity);
+	}
 }
 
 void pog::Application::Update(float dt)
 {
 	std::lock_guard lock = std::lock_guard<std::mutex>(m_GameMutex);
 
+	// Update scripts
+	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
+	auto view = world.view<sad::ecs::ScriptComponent>();
+	for (auto handle : view)
+	{
+		sad::ecs::Entity entity = sad::ecs::Entity(handle);
+
+		// tldr: this is what calls Update() on all SadBehaviours
+		sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(entity);
+	}
+
+	// Sample 'Script' to rotate objects
 	auto currentTime = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_LastTime).count();
 	m_LastTime = currentTime;
 
-	// Sample 'Script' to rotate objects
-	auto view = sad::ecs::Registry::GetEntityWorld().view<const sad::ecs::TransformComponent, const sad::ecs::BoundComponent, const sad::ecs::RenderableObjectComponent>();
-	for (auto [entity, transformComponent, boundComponent, renderableComponent] : view.each())
+	auto oldView = world.view<const sad::ecs::TransformComponent, const sad::ecs::BoundComponent, const sad::ecs::RenderableObjectComponent>();
+	for (auto [entity, transformComponent, boundComponent, renderableComponent] : oldView.each())
 	{
 		sad::Bound* bound = boundComponent.m_Bound.get();
 		sad::Transform* transform = transformComponent.m_Transform.get();
 		transform->Rotate(glm::vec3(10.0f * dt));
 		transform->Translate(glm::vec3(glm::sin(-m_CubeTranslate * 2) * dt, 0.0f, 0.0f));
 
-		for (auto [secondEntity, secondTransform, secondBound, secondRenderable] : view.each())
+		for (auto [secondEntity, secondTransform, secondBound, secondRenderable] : oldView.each())
 		{
 			if (entity != secondEntity)
 			{

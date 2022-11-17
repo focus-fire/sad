@@ -68,6 +68,13 @@ namespace cap
 		 * @usage bind_script <entity_name> <script_name>
 		*/
 		static void BindScriptToEntity(argument_type& arg);
+
+		/**
+		 * @brief Unbinds a script from an entity in the level with a particular name
+		 *
+		 * @usage unbind_script <entity_name> <script_name>
+		*/
+		static void UnbindScriptFromEntity(argument_type& arg);
 	};
 
 	/**

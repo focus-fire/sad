@@ -101,6 +101,9 @@ namespace sad
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a ShaderResource with name {}", data.Name);
 		}
 
+		/**
+		 * @brief Factory construction for LevelResource
+		*/
 		template<>
 		static void CreateResource<LevelResource>(const Resource::ResourceData& data)
 		{

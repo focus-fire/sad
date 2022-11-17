@@ -2,7 +2,7 @@
 
 namespace SampleScripts
 {
-    class SadBehaviour
+    class SadBehaviour 
     { }
 
     class PlayerController : SadBehaviour

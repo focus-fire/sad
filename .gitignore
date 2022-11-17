@@ -466,6 +466,9 @@ imgui.ini
 !Vendor/assimp/**/**
 !Vendor/mono/**/**
 
+# Include all files in SadCSFramework/.net/
+!Code/SadCSFramework/.net/lib/mono/**/**
+
 # Builds
 Debug/**/*
 Release/**/*

@@ -18,6 +18,12 @@ namespace core
 		static bool Equals(const std::string& a, const std::string& b);
 
 		/**
+		 * @brief Checks if string b is contained in string a 
+		 * @return True if string b exists in a, false if it does not
+		*/
+		static bool Contains(const std::string& a, const std::string& b);
+
+		/**
 		 * @brief Trims leading and trailing white-spaces
 		 * @param s String to trim leading and trailing white-spaces from
 		*/

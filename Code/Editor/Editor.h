@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include <Engine/Window.h>
+#include <Engine/Level.h>
 
 #include "DebugTerminal.h"
 
@@ -40,6 +41,7 @@ namespace cap
 		void Teardown();
 
 	private:
+		sad::Level* m_CurrentLevelContext;
 		DebugTerminal* m_DebugTerminal;
 
 		ImGuiWindowFlags m_GameWindowFlags;
@@ -48,6 +50,7 @@ namespace cap
 		bool m_ShowGameWindow;
 		float m_GameWindowWidth;
 		float m_GameWindowHeight;
+		std::string m_GameWindowTitle;
 
 		bool m_IsEditorInPlayMode;
 	};

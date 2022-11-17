@@ -49,7 +49,7 @@ namespace sad::rad
 		/**
 		 * @brief Retrives the index position of a shader's uniform 
 		 * @param name The name of a uniform declared in the shader source
-		 * @return Integer representing the uniform's position
+		 * @return Int representing the uniform's position
 		*/
 		int GetUniformLocation(const std::string& name);
 
@@ -64,7 +64,7 @@ namespace sad::rad
 		 * @brief Compiles shaders from a source string with shader contents 
 		 * @param type GLenum for the type of shader being parsed, normally GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
 		 * @param shaderSource String containing the parsed source for the target shader
-		 * @return Integer representing the ID of the shader created by OpenGL
+		 * @return Int representing the ID of the shader created by OpenGL
 		*/
 		unsigned int CompileShader(unsigned int type, const std::string& shaderSource);
 
@@ -72,7 +72,7 @@ namespace sad::rad
 		 * @brief Creates, compiles, and attaches shader programs - deletes shader sources after compilation 
 		 * @param vertexShader Source string for the target vertex shader
 		 * @param fragmentShader Source string for the target fragment shader
-		 * @return Integer representing the ID of the shader program created by OpenGL 
+		 * @return Int representing the ID of the shader program created by OpenGL 
 		*/
 		unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 	};

@@ -46,6 +46,16 @@ namespace cap
 		 * @brief Closes the currently focused terminal
 		*/
 		static void Close(argument_type& arg);
+
+		/**
+		 * @brief Instantiates an entity in the level with a provided name
+		*/
+		static void Instantiate(argument_type& arg);
+		
+		/**
+		 * @brief Destroys an entity in the level with a particular name 
+		*/
+		static void Destroy(argument_type& arg);
 	};
 
 	/**

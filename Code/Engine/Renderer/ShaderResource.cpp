@@ -41,6 +41,17 @@ void sad::rad::ShaderResource::Unbind() const
     GL_CALL(glUseProgram(0));
 }
 
+// necessary? could prolli use Bind() instead
+void sad::rad::ShaderResource::Use()
+{
+    GL_CALL(glUseProgram(m_RendererId));
+}
+
+void sad::rad::ShaderResource::SetInt(const std::string& name, int value) const
+{
+    GL_CALL(glUniform1i(glGetUniformLocation(m_RendererId, name.c_str()), value));
+}
+
 int sad::rad::ShaderResource::GetUniformLocation(const std::string& name)
 {
     // Return uniform location if it exists in the cache

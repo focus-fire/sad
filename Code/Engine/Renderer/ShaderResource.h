@@ -40,6 +40,8 @@ namespace sad::rad
 		void Bind() const;
 		void Unbind() const;
 
+		void Use(); // necessary? prolli could use Bind() instead
+		void SetInt(const std::string& name, int value) const;
 		void SetUniform1i(const std::string& name, int i0);
 		void SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3);
 		void SetUniformMatrix3fv(const std::string& name, const float* matrix);

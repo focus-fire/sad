@@ -96,6 +96,8 @@ void sad::Application::EngineStart()
 
 		// Engine Update
 		float dt = pog::Time::GetDeltaTime();
+		//core::Log(ELogType::Info, "{}", dt);
+		
 		sad::Application::Update(dt);
 
 		if (s_EngineState->GetEngineMode() == EEngineMode::Game)

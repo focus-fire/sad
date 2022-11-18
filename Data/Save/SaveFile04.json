@@ -70,15 +70,13 @@
     {
       "FileName": "Charcter.fbx",
       "GUID": "c2551807-c0f2-4426-abc1-97c75b1fb419",
-      "DataPath":  "hello there",
-      "AbsolutePath":  "General Kenobi"
+      "DataPath":  "Assets/Character.fbx"
     },
     1,
     {
       "FileName": "FakeCube.test",
       "GUID": "f296c320-1fff-48fe-a5c1-875c4ab91b9d",
-      "DataPath": "hello there",
-      "AbsolutePath": "General Kenobi"
+      "DataPath": "hello there"
     }
   ],
   [ 0 ],

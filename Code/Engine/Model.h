@@ -24,6 +24,8 @@ namespace sad
 
 		void Draw(sad::rad::ShaderResource& shader);
 
+		std::vector<sad::rad::MeshResource> GetMeshes() { return m_Meshes; }
+
 	private:
 		std::vector<sad::rad::MeshResource> m_Meshes;
 		std::string m_Directory;

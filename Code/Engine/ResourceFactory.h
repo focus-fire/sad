@@ -37,10 +37,10 @@ namespace sad
 		static void CreateResource<RenderableResource>(const Resource::ResourceData& data)
 		{
 			// Load model?
-			std::string strPath = data.AbsolutePath;
+			std::string absolutePath = data.AbsolutePath;
+			sad::Model model(absolutePath.data());
 
-
-			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data);
+			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data, model);
 			ResourceManager::AddResource<RenderableResource>(renderableResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a RenderableResource with name {}", data.Name);
 		}

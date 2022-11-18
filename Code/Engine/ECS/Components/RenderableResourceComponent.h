@@ -28,7 +28,6 @@ namespace sad::ecs
 			{ "GUID", renderableResource.m_RenderableResource->GetResourceGuid().ToString() },
 			{ "FileName", renderableResource.m_RenderableResource->GetResourceFileName() },
 			{ "DataPath", renderableResource.m_RenderableResource->GetResourceDataPath() },
-			{ "AbsolutePath", renderableResource.m_RenderableResource->GetResourceAbsolutePath() },
 		};
 	}
 
@@ -36,7 +35,7 @@ namespace sad::ecs
 	{
 		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
 		// TODO: Remove IReource requirement... 
-		Resource::ResourceData modelData = { JSON["FileName"],JSON["DataPath"], JSON["AbsolutePath"] };
+		Resource::ResourceData modelData = { JSON["FileName"],JSON["DataPath"], JSON["DataPath"] };
 
 		renderableResource.m_RenderableResource = core::CreatePointer<RenderableResource>(modelData, std::move(CubeGeometry));
 		renderableResource.m_IsResourceDirty = true;

@@ -49,7 +49,14 @@ namespace sad
 			: Resource(resourceData)
 		{ }
 
+		explicit RenderableResource(const Resource::ResourceData& resourceData, const Model& model)
+			: Resource(resourceData)
+			, m_Model(model)
+		{ }
+
 		const Geometry GetGeometry() const { return m_Geometry; }
+
+		const Model GetModel() const { return m_Model; }
 
 	private:
 		Geometry m_Geometry;

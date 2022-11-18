@@ -42,6 +42,9 @@ sad::Application::Application()
 	s_EngineState = new EngineStateManager();
 
 	m_Editor = new cap::Editor;
+
+	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
+	core::InitializeListener("ResetLevel", resetLevel);
 }
 
 sad::Application::~Application()
@@ -106,6 +109,17 @@ void sad::Application::EngineStart()
 	gameThread.join();
 
 	Teardown();
+}
+
+void sad::Application::LevelReset()
+{
+	sad::ecs::Registry::GetEntityWorld().clear();
+	// Import Level and GUIDs 
+	m_CurrentLevel = LevelManager::ImportLevel();
+	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
+
+	// Start the ScriptingRuntime in association with the current level
+	cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
 }
 
 void sad::Application::PollEvents(bool& isWindowClosed)

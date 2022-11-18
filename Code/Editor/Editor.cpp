@@ -223,9 +223,17 @@ void cap::Editor::Render()
 	ImGui::Begin("Tools");
 	ImGui::SetWindowPos(ImVec2(1150.0f, 500.0f), ImGuiCond_Once);
 	ImGui::SetWindowSize(ImVec2(100.0f, 100.0f), ImGuiCond_Once);
+	// Saves current game if paused
 	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
 	{
 		sad::LevelManager::ExportLevel();
+	}
+	// Reloads to the last saved instance
+	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	{
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
+		core::SignalEvent("ResetLevel");
 	}
 	ImGui::End();
 

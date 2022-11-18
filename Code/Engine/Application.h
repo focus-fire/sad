@@ -33,6 +33,11 @@ namespace sad
 		void EngineStart();
 
 		/**
+		 * @brief Resets the level back to the last saved instance
+		*/
+		void LevelReset();
+
+		/**
 		 * @brief Starting point for applications aside from the engine
 		*/
 		virtual void Start() = 0;

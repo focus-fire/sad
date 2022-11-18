@@ -223,9 +223,27 @@ namespace sad
         */
         float GetRightAxis(const std::string& orientation);
 
+        /**
+         * @brief Sets the ImGUIID of the game window, the window which recieves the inputs.
+         * @param id 
+        */
+        void SetGameWindowID(ImGuiID id)
+        {
+            m_GameWindowID = id;
+        };
+
+        /**
+         * @brief Checks if the game window is in focus.
+         * @return 
+        */
+        bool CheckGameFocus();
+
     private:
         InputManager() {}
         static sad::InputManager s_InputManager;
+
+        ImGuiID m_GameWindowID;
+        ImGuiID m_currentActiveId = 0;
 
         std::unordered_map<SDL_Scancode, bool> m_KeyboardState;
         std::unordered_map<SDL_Scancode, Uint64>  m_KeyboardUpdateFrames;

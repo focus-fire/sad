@@ -14,11 +14,9 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
-ImGuiID m_currentActiveId = 0;
-// Detects if the game window is focused
-bool CheckGameFocus()
+bool sad::InputManager::CheckGameFocus()
 {
-    return m_currentActiveId == 2776656528;
+    return m_currentActiveId == m_GameWindowID;
 }
 
 // Keyboard Events

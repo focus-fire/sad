@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/Catch2" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm/example/external/SFML" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm/example/external/fmt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm/example/external/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm/example/external/imgui-sfml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/ImTerm/example/external/spdlog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/entt" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/json" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Vendor/spdlog" vcs="Git" />
+  </component>
+</project>

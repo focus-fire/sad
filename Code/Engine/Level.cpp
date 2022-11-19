@@ -99,10 +99,10 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 	core::Pointer<sad::Bound> bound = core::CreatePointer<sad::Bound>(*transform.get());
 
 	// All entities should have a GUID, Transform, and Bound
-	entity.AddComponent<ecs::GuidComponent>({ guid });
-	entity.AddComponent<ecs::NameComponent>({ name });
-	entity.AddComponent<ecs::TransformComponent>({ transform });
-	entity.AddComponent<ecs::BoundComponent>({ bound });
+	entity.AddComponent<ecs::GuidComponent>(guid);
+	entity.AddComponent<ecs::NameComponent>(name);
+	entity.AddComponent<ecs::TransformComponent>(transform);
+	entity.AddComponent<ecs::BoundComponent>(bound);
 
 	m_EntityMap[guid] = entity;
 

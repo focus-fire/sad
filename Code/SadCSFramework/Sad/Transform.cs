@@ -1,80 +1,76 @@
-﻿using System;
-
-namespace Sad
+﻿namespace Sad
 {
-    public class Transform
+    public class Transform : Component
     {
-        private readonly Guid GUID;
-
-        protected Transform() { }
-        internal Transform(Guid guid) => GUID = guid;
-
-        private Vector3 m_Position;
         public Vector3 position
         {
             get
             {
-                Internal.Transform.GetPosition(GUID, out Vector3 position);
-                m_Position = position;
-                return m_Position;
+                Internal.Transform.GetPosition(Entity.GUID, out Vector3 position);
+                return position;
             }
             set
             {
-                Internal.Transform.SetPosition(GUID, ref value);
-                m_Position = value;
+                Internal.Transform.SetPosition(Entity.GUID, ref value);
             }
         }
 
-        private Quaternion m_Rotation;
         public Quaternion rotation
         {
             get
             {
-                Internal.Transform.GetRotation(GUID, out Quaternion rotation);
-                m_Rotation = rotation;
-                return m_Rotation;
+                Internal.Transform.GetRotation(Entity.GUID, out Quaternion rotation);
+                return rotation;
             }
             set
             {
-                Internal.Transform.SetRotation(GUID, ref value);
-                m_Rotation = value;
+                Internal.Transform.SetRotation(Entity.GUID, ref value);
             }
         }
 
-        private Vector3 m_Scale;
         public Vector3 scale
         {
             get
             { 
-                Internal.Transform.GetScale(GUID, out Vector3 scale);
-                m_Scale = scale;
-                return m_Scale;
+                Internal.Transform.GetScale(Entity.GUID, out Vector3 scale);
+                return scale;
             }
             set
             {
-                Internal.Transform.SetScale(GUID, ref value);
-                m_Scale = value;
+                Internal.Transform.SetScale(Entity.GUID, ref value);
             }
         }
 
+        /// <summary>
+        /// Translates this transform by a vector 
+        /// </summary>
         public void Translate(Vector3 translation)
         {
-            Internal.Transform.Translate(GUID, ref translation);
+            Internal.Transform.Translate(Entity.GUID, ref translation);
         }
 
+        /// <summary>
+        /// Rotates this transform by a vector 
+        /// </summary>
         public void Rotate(Vector3 rotation)
         {
-            Internal.Transform.Rotate(GUID, ref rotation);
+            Internal.Transform.Rotate(Entity.GUID, ref rotation);
         }
 
+        /// <summary>
+        /// Rotates this transform by a quaternion 
+        /// </summary>
         public void RotateByQuaternion(Quaternion rotation)
         {
-            Internal.Transform.RotateByQuaternion(GUID, ref rotation);
+            Internal.Transform.RotateByQuaternion(Entity.GUID, ref rotation);
         }
 
+        /// <summary>
+        /// Scales this transform by a vector 
+        /// </summary>
         public void Scale(Vector3 scale)
         {
-            Internal.Transform.Scale(GUID, ref scale);
+            Internal.Transform.Scale(Entity.GUID, ref scale);
         }
     }
 }

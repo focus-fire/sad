@@ -7,13 +7,13 @@
 
 #include <Engine/ECS/Components/ComponentTypes.h>
 
-#include "ScriptingEngine.h"
-
 /// Refer to SadCSFramework.Internal.cs for a reference on currently implemented internal methods
 /// In order to add a new method to the scripting api, use this macro with the className (in the 'Sad.Internal' namespace) and the method name
 /// Note: Parameters can be added to the 'mono_add_internal_call' signature in order to define an overload
 /// ie: mono_add_internal_call("Sad.Internal.Log::Debug(string)") vs mono_add_internal_call("Sad.Internal.Log::Debug(Vector3)")
 #define SAD_CSF_ADD_INTERNAL(className, method) mono_add_internal_call("Sad.Internal." className "::" #method, (const void*) method)
+
+sad::cs::ScriptingBridge::EntityECSFunctions sad::cs::ScriptingBridge::s_EntityECSFunctions;
 
 namespace sad::cs
 {
@@ -23,7 +23,51 @@ namespace sad::cs
 
 	static ecs::Entity GetEntityInLevel(core::NativeGuid guid)
 	{
-		return ScriptingEngine::GetCurrentLevelInstance()->GetEntityByGuid(guid);
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		SAD_ASSERT(level, "Failed to retrieve valid level instance");
+
+		ecs::Entity entity = level->GetEntityByGuid(guid);
+		SAD_ASSERT(entity, "Failed to retrieve entity from level with passed GUID");
+
+		return entity;
+	}
+
+	///////////
+	/// ECS ///
+	///////////
+
+	static bool HasComponent(core::NativeGuid guid, MonoReflectionType* type)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		MonoType* componentType = mono_reflection_type_get_type(type);
+
+		auto& hasComponentFunctions = ScriptingBridge::s_EntityECSFunctions.HasComponents;
+		SAD_ASSERT(hasComponentFunctions.find(componentType) != hasComponentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+
+		return hasComponentFunctions[componentType](entity);
+	}
+
+	static void AddComponent(core::NativeGuid guid, MonoReflectionType* type)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		MonoType* componentType = mono_reflection_type_get_type(type);
+
+		auto& componentFunctions = ScriptingBridge::s_EntityECSFunctions.AddComponents;
+		SAD_ASSERT(componentFunctions.find(componentType) != componentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+
+		std::function<void(ecs::Entity&)> addComponentFunction = componentFunctions[componentType];
+		addComponentFunction(entity);
+	}
+
+	static void RemoveComponent(core::NativeGuid guid, MonoReflectionType* type)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		MonoType* componentType = mono_reflection_type_get_type(type);
+
+		auto& removeComponentFunctions = ScriptingBridge::s_EntityECSFunctions.RemoveComponents;
+		SAD_ASSERT(removeComponentFunctions.find(componentType) != removeComponentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+
+		removeComponentFunctions[componentType](entity);
 	}
 
 	///////////
@@ -137,6 +181,10 @@ namespace sad::cs
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 {
+	SAD_CSF_ADD_INTERNAL("ECS", HasComponent);
+	SAD_CSF_ADD_INTERNAL("ECS", AddComponent);
+	SAD_CSF_ADD_INTERNAL("ECS", RemoveComponent);
+
 	SAD_CSF_ADD_INTERNAL("Log", Debug);
 	SAD_CSF_ADD_INTERNAL("Log", Warn);
 	SAD_CSF_ADD_INTERNAL("Log", Error);
@@ -151,4 +199,9 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Transform", Rotate);
 	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
 	SAD_CSF_ADD_INTERNAL("Transform", Scale);
+}
+
+void sad::cs::ScriptingBridge::SetupEngineAPIComponents()
+{
+	RegisterManagedComponent<ecs::TransformComponent>(true);
 }

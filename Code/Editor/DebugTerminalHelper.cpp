@@ -113,7 +113,7 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 		return;
 	}
 
-	entity.AddComponent<sad::ecs::ScriptComponent>({ scriptName });
+	entity.AddComponent<sad::ecs::ScriptComponent>(scriptName);
 	core::Log(ELogType::Info, "[Terminal] Succesfully added {} to {}", scriptName, entityName);
 }
 

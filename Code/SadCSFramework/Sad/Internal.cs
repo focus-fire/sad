@@ -5,7 +5,19 @@ namespace Sad
 {
     namespace Internal
     {
-        public static class Log 
+        internal static class ECS
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static bool HasComponent(Guid entityGuid, Type componentType);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void AddComponent(Guid entityGuid, Type componentType);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void RemoveComponent(Guid entityGuid, Type componentType);
+        }
+
+        internal static class Log 
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void Debug(string message);
@@ -17,7 +29,7 @@ namespace Sad
             internal extern static void Error(string message);
         }
 
-        public static class Transform
+        internal static class Transform
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void GetPosition(Guid entityGuid, out Vector3 position);

@@ -22,6 +22,9 @@ void sad::cs::ScriptingEngine::Start()
 	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
 	LoadSadCSFrameworkAssembly(sadCSFrameworkAssemblyPath);
 
+	// Register components in the engine API
+	ScriptingBridge::SetupEngineAPIComponents();
+
 	// Register functions in the engine API
 	ScriptingBridge::SetupEngineAPIFunctions();
 

@@ -30,9 +30,11 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 
 		// TODO: Retrieve the view projection matrix from the Camera 
 		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		glm::mat4 transformMatrix = transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 
+		shader->SetUniformMatrix4fv("u_ModelMatrix", glm::value_ptr(transformMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
 	}

@@ -25,6 +25,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	m_IndexBuffer = new sad::rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
 	// All RenderableObjects start with this 'Material' by default
+	// m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Default.glsl");
 	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Ambient.glsl");
 	m_Shader->Bind();
 
@@ -34,6 +35,9 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	m_Texture = ResourceManager::GetResource<rad::TextureResource>("Default.png");
 	m_Texture->Bind(1);
 	m_Shader->SetUniform1i("u_Texture", 1);
+
+	// TODO: update this to non hardcoded
+	m_Shader->SetUniform3f("lightPos", 0.0f, 2.0f, -1.0f);
 }
 
 sad::RenderableObject::~RenderableObject()

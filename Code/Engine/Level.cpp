@@ -18,6 +18,15 @@ void sad::Level::Start()
 
 void sad::Level::Update(sad::ecs::EntityWorld& world)
 {
+	// Check if new scripts have been added and need to be instantiated
+	auto view = world.view<ecs::ScriptComponent>();
+	for (auto [handle, scriptComponent] : view.each())
+	{
+		ecs::Entity entity = ecs::Entity(handle);
+		if (!cs::ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid()))
+			cs::ScriptingEngine::CreateSadBehaviourInstance(entity);
+	}
+
 	// Update non-gameplay ECS systems
 	ecs::PlayerControllerSystem::Update(world);
 	ecs::BoundSystem::Update(world);
@@ -119,7 +128,15 @@ bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 	if (m_EntityMap.find(entity.GetGuid()) == m_EntityMap.end())
 		return false;
 
+	// Check if the entity had a SadBehaviour script
+	// All SadBehaviours must be cleaned before entities are destroyed
+	if (entity.HasComponent<ecs::ScriptComponent>())
+		sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
+
+	// Unbind the entity from the level's entity map
 	m_EntityMap.erase(entity.GetGuid());
+
+	// Remove the entity from the registry
 	sad::ecs::Registry::EraseEntityHandle(entity);
 
 	return true;

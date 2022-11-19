@@ -117,7 +117,7 @@ void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
 /// Entity Ops ///
 //////////////////
 
-void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
+void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity)
 {
 	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
 	if (SadBehaviourExists(scriptComponent.m_ClassName))
@@ -130,6 +130,21 @@ void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
 
 		// Store the instantiated behaviour in the lookup
 		s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
+	}
+}
+
+void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+	if (SadBehaviourExists(scriptComponent.m_ClassName))
+	{
+		// If the SadBehaviour hasn't been instantiated, instantiate it in the engine
+		core::Guid guid = entity.GetGuid();
+		if (!SadBehaviourInstanceExists(guid))
+			CreateSadBehaviourInstance(entity);
+
+		// Retrieve the SadBehaviour from the lookup
+		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
 
 		// Call awake on the script instance
 		sadBehaviourInstance->CallAwake();

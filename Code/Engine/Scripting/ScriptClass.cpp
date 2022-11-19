@@ -22,10 +22,7 @@ MonoObject* sad::cs::ScriptClass::Instantiate()
 
 MonoMethod* sad::cs::ScriptClass::GetMethod(const std::string& methodName, int paramCount)
 {
-	MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, methodName.c_str(), paramCount);
-	SAD_ASSERT(method, "Failed to retrieve Mono method from class");
-	 
-	return method;
+	return mono_class_get_method_from_name(m_MonoClass, methodName.c_str(), paramCount);
 }
 
 MonoObject* sad::cs::ScriptClass::CallMethod(MonoMethod* method, MonoObject* instance, void** params /* = nullptr */)

@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Sad
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Vector3
     {
         public float x;
         public float y;
         public float z;
 
+        public const float kEpsilon = 0.00001f;
+        public const float kEpsilonNormalSqrt = 1e-15f;
+
         /// <summary>
         /// Creates a Vector with all components as passed arguments 
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3(float x, float y, float z)
         {
             this.x = x;
@@ -22,21 +28,13 @@ namespace Sad
         /// <summary>
         /// Creates a Vector and sets the x and y components to a passed value and z to 0
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Vector3(float x, float y)
         {
             this.x = x;
             this.y = y;
             z = 0;
         }
-
-        public static Vector3 zero => new Vector3(0.0f);
-        public static Vector3 one => new Vector3(1.0f);
-        public static Vector3 up => new Vector3(0.0f, 1.0f, 0.0f);
-        public static Vector3 down => new Vector3(0.0f, -1.0f, 0.0f);
-        public static Vector3 left => new Vector3(-1.0f, 0.0f, 0.0f);
-        public static Vector3 right => new Vector3(1.0f, 0.0f, 0.0f);
-        public static Vector3 forward => new Vector3(0.0f, 0.0f, 1.0f);
-        public static Vector3 backward => new Vector3(0.0f, 0.0f, -1.0f);
 
         /// <summary>
         /// Creates a Vector and sets all components to the value of a provided scalar
@@ -48,6 +46,15 @@ namespace Sad
             y = scalar;
             z = scalar;
         }
+
+        public static Vector3 zero => new Vector3(0.0f);
+        public static Vector3 one => new Vector3(1.0f);
+        public static Vector3 up => new Vector3(0.0f, 1.0f, 0.0f);
+        public static Vector3 down => new Vector3(0.0f, -1.0f, 0.0f);
+        public static Vector3 left => new Vector3(-1.0f, 0.0f, 0.0f);
+        public static Vector3 right => new Vector3(1.0f, 0.0f, 0.0f);
+        public static Vector3 forward => new Vector3(0.0f, 0.0f, 1.0f);
+        public static Vector3 backward => new Vector3(0.0f, 0.0f, -1.0f);
 
         /// <summary>
         /// Accesses the x, y, and z components of the vector by using the [] operator
@@ -79,6 +86,20 @@ namespace Sad
                         throw new Exception("Invalid Vector3 index!"); 
                 }
             }
+        }
+
+        /// <summary>
+        /// Linearly interpolates two vectors 
+        /// </summary>
+        public static Vector3 Lerp(Vector3 a, Vector3 b, float t)
+        {
+            t = SadMath.NormalizedClamp(t);
+
+            return new Vector3(
+                a.x + (b.x - a.x) * t,
+                a.y + (b.y - a.y) * t,
+                a.z + (b.z - a.z) * t
+            );
         }
 
         /// <summary>
@@ -129,7 +150,7 @@ namespace Sad
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Magnitude(Vector3 a)
         {
-            return (float) Math.Sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+            return (float) SadMath.Sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
         }
 
         /// <summary>
@@ -138,8 +159,29 @@ namespace Sad
         public float magnitude
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => (float) Math.Sqrt(x * x + y * y + z * z);
+            get => (float) SadMath.Sqrt(x * x + y * y + z * z);
            
+        }
+
+        /// <summary>
+        /// Normalizes the components of the provied vector 
+        /// </summary>
+        public static Vector3 Normalize(Vector3 a)
+        {
+            float mag = Magnitude(a); 
+            if (mag > kEpsilon)
+                return a / mag;
+            else
+                return zero;
+        }
+
+        /// <summary>
+        /// Normalizes the components of the referenced vector
+        /// </summary>
+        public Vector3 normalized
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => Normalize(this);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

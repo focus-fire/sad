@@ -60,6 +60,7 @@ namespace sad::cs
 		static void RuntimeStart(Level* level);
 		static void RuntimeStop();
 
+		static void CreateSadBehaviourInstance(ecs::Entity entity);
 		static void AwakeSadBehaviourInstance(ecs::Entity entity);
 		static void UpdateSadBehaviourInstance(ecs::Entity entity);
 		static void DestroySadBehaviourInstance(ecs::Entity entity);

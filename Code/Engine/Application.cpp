@@ -107,7 +107,9 @@ void sad::Application::EngineStart()
 				m_IsGameOn = true;
 			}
 
-			this->Update(dt);
+			// Only start updating the game if `Start` has been called`
+			if (m_IsGameOn)
+				this->Update(dt);
 		}
 
 		// Engine Update

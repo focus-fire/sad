@@ -1,7 +1,7 @@
 ﻿using Sad;
 
 public class Player : SadBehaviour 
-{ 
+{
     void Awake()
     {
         Log.Debug($"Player.Awake => {GUID}");
@@ -10,13 +10,6 @@ public class Player : SadBehaviour
     void Update()
     {
         Log.Debug("Player.Update");
-
-        float speed = 1.0f;
-
-        Vector3 position = transform.Position;
-        Log.Debug($"he go fast ! {position}");
-        position.y += speed;
-        transform.Position = position;
     }
 }
 

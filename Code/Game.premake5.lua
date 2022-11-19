@@ -12,7 +12,7 @@ project "Game"
 
     vpaths {
         ["Headers"] = { "Game/**.h", "Game/**.hpp" },
-        ["Sources/*"] = { "Game/**.c", "Game/**.cpp" },
+        ["Sources/**"] = { "Game/**.c", "Game/**.cpp" },
         ["Docs"] = { "Game/**.md", "Game/**.txt" },
         ["Resources"] = { "**pch.cpp" },
     }

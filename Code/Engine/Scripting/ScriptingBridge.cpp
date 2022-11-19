@@ -17,6 +17,15 @@
 
 namespace sad::cs
 {
+	////////////
+	/// Util ///
+	////////////
+
+	static ecs::Entity GetEntityInLevel(core::NativeGuid guid)
+	{
+		return ScriptingEngine::GetCurrentLevelInstance()->GetEntityByGuid(guid);
+	}
+
 	///////////
 	/// Log ///
 	///////////
@@ -61,25 +70,69 @@ namespace sad::cs
 	///////
 	///////
 
-	//////////////
-	/// Entity ///
-	//////////////
+	/////////////////
+	/// Transform ///
+	/////////////////
 
 	static void GetPosition(core::NativeGuid guid, glm::vec3* outPosition)
 	{
-		Level* level = ScriptingEngine::GetCurrentLevelInstance();
-		ecs::Entity entity = level->GetEntityByGuid(guid);
-
+		ecs::Entity entity = GetEntityInLevel(guid);
 		*outPosition = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
 	}
 
 	static void SetPosition(core::NativeGuid guid, glm::vec3* position)
 	{
-		Level* level = ScriptingEngine::GetCurrentLevelInstance();
-		ecs::Entity entity = level->GetEntityByGuid(guid);
-
+		ecs::Entity entity = GetEntityInLevel(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetPosition(*position);
 	} 
+
+	static void GetRotation(core::NativeGuid guid, glm::quat* outRotation)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		*outRotation = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
+	}
+
+	static void SetRotation(core::NativeGuid guid, glm::quat* rotation)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetRotation(*rotation);
+	}
+
+	static void GetScale(core::NativeGuid guid, glm::vec3* outScale)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		*outScale = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetScale();
+	}
+
+	static void SetScale(core::NativeGuid guid, glm::vec3* scale)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetScale(*scale);
+	}
+
+	static void Translate(core::NativeGuid guid, glm::vec3* translation)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->Translate(*translation);
+	}
+
+	static void Rotate(core::NativeGuid guid, glm::vec3* rotation)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->Rotate(*rotation);
+	}
+
+	static void RotateByQuaternion(core::NativeGuid guid, glm::quat* rotation)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->Rotate(*rotation);
+	}
+
+	static void Scale(core::NativeGuid guid, glm::vec3* scale)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->Scale(*scale);
+	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
@@ -90,4 +143,12 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 	SAD_CSF_ADD_INTERNAL("Transform", GetPosition);
 	SAD_CSF_ADD_INTERNAL("Transform", SetPosition);
+	SAD_CSF_ADD_INTERNAL("Transform", GetRotation);
+	SAD_CSF_ADD_INTERNAL("Transform", SetRotation);
+	SAD_CSF_ADD_INTERNAL("Transform", GetScale);
+	SAD_CSF_ADD_INTERNAL("Transform", SetScale);
+	SAD_CSF_ADD_INTERNAL("Transform", Translate);
+	SAD_CSF_ADD_INTERNAL("Transform", Rotate);
+	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
+	SAD_CSF_ADD_INTERNAL("Transform", Scale);
 }

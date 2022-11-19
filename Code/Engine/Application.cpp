@@ -94,13 +94,13 @@ void sad::Application::EngineStart()
 	{
 		PollEvents(isWindowClosed);
 
-		// Engine Update
 		float dt = pog::Time::GetDeltaTime();
-		sad::Application::Update(dt);
 
+		// Game Update
 		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
 		{
 			// TODO: When stop button is implemented, this should revert to 'false' on stop
+			//		 This way, entities with scripts can be 'Awakened' each time the game is actually started 
 			if (!m_IsGameOn)
 			{
 				this->Start();
@@ -109,6 +109,9 @@ void sad::Application::EngineStart()
 
 			this->Update(dt);
 		}
+
+		// Engine Update
+		sad::Application::Update(dt);
 	}
 
 	// gameThread.join();

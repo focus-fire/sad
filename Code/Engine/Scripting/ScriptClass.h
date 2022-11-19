@@ -14,7 +14,8 @@ namespace sad::cs
 
 		MonoObject* Instantiate();
 		MonoMethod* GetMethod(const std::string& methodName, int paramCount);
-		MonoObject* CallMethod(MonoMethod* method, MonoObject* instance, void* params[] = nullptr);
+
+		MonoObject* CallMethod(MonoMethod* method, MonoObject* instance, void** params = nullptr);
 
 	private:
 		std::string m_NameSpace;

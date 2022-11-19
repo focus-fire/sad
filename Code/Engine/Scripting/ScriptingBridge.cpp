@@ -2,7 +2,12 @@
 
 #include "ScriptingBridge.h"
 
+#include <glm/glm.hpp>
 #include <mono/metadata/object.h>
+
+#include <Engine/ECS/Components/ComponentTypes.h>
+
+#include "ScriptingEngine.h"
 
 /// Refer to SadCSFramework.Internal.cs for a reference on currently implemented internal methods
 /// In order to add a new method to the scripting api, use this macro with the className (in the 'Sad.Internal' namespace) and the method name
@@ -55,6 +60,26 @@ namespace sad::cs
 	///////
 	///////
 	///////
+
+	//////////////
+	/// Entity ///
+	//////////////
+
+	static void GetPosition(core::NativeGuid guid, glm::vec3* outPosition)
+	{
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		ecs::Entity entity = level->GetEntityByGuid(guid);
+
+		*outPosition = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
+	}
+
+	static void SetPosition(core::NativeGuid guid, glm::vec3* position)
+	{
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		ecs::Entity entity = level->GetEntityByGuid(guid);
+
+		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetPosition(*position);
+	} 
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
@@ -62,4 +87,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Log", Debug);
 	SAD_CSF_ADD_INTERNAL("Log", Warn);
 	SAD_CSF_ADD_INTERNAL("Log", Error);
+
+	SAD_CSF_ADD_INTERNAL("Transform", GetPosition);
+	SAD_CSF_ADD_INTERNAL("Transform", SetPosition);
 }

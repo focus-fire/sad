@@ -18,6 +18,8 @@
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
 
+#include "ECS/Systems/ScriptingSystem.h"
+
 pog::Application::Application()
 	: sad::Application()
 {
@@ -39,16 +41,7 @@ void pog::Application::Start()
 
 	// Awaken scripts
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-	auto view = world.view<sad::ecs::ScriptComponent>();
-	for (auto handle : view)
-	{
-		sad::ecs::Entity entity = sad::ecs::Entity(handle);
-
-		// Scripting engine should handle instantiation of script methods
-		// Also should handle validating that the provdied script still exists on the entity
-		// tldr: this is what calls Awake() on all SadBehaviours
-		sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(entity);
-	}
+	ecs::ScriptingSystem::Awake(world);
 }
 
 void pog::Application::Update(float dt)
@@ -57,14 +50,7 @@ void pog::Application::Update(float dt)
 
 	// Update scripts
 	sad::ecs::EntityWorld& world = sad::ecs::Registry::GetEntityWorld();
-	auto view = world.view<sad::ecs::ScriptComponent>();
-	for (auto handle : view)
-	{
-		sad::ecs::Entity entity = sad::ecs::Entity(handle);
-
-		// tldr: this is what calls Update() on all SadBehaviours
-		sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(entity);
-	}
+	ecs::ScriptingSystem::Update(world);
 
 	// Sample 'Script' to rotate objects
 	auto currentTime = std::chrono::steady_clock::now();

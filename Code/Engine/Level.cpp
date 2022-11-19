@@ -38,7 +38,12 @@ void sad::Level::PopulateLevelGuids()
 	});
 }
 
-sad::ecs::Entity sad::Level::LookupEntityByGuid(const core::Guid& guid)
+sad::ecs::Entity sad::Level::GetEntityByGuid(const core::NativeGuid& guid)
+{
+	return GetEntityByGuid(core::Guid(guid));
+}
+
+sad::ecs::Entity sad::Level::GetEntityByGuid(const core::Guid& guid)
 {
 	if (m_EntityMap.find(guid) == m_EntityMap.end())
 		return ecs::Entity::Null();
@@ -46,7 +51,7 @@ sad::ecs::Entity sad::Level::LookupEntityByGuid(const core::Guid& guid)
 	return m_EntityMap[guid];
 }
 
-sad::ecs::Entity sad::Level::LookupEntityByName(const std::string& name)
+sad::ecs::Entity sad::Level::GetEntityByName(const std::string& name)
 {
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
@@ -124,7 +129,7 @@ bool sad::Level::DestroyEntityByName(const std::string& name)
 {
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	ecs::Entity target = LookupEntityByName(name);
+	ecs::Entity target = GetEntityByName(name);
 	if (!target)
 		return false;
 

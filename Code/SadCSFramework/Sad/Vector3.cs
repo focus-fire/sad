@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Sad;
+using System.Runtime.CompilerServices;
 
 namespace Sad
 {
@@ -30,11 +29,32 @@ namespace Sad
             z = 0;
         }
 
+        public static Vector3 zero => new Vector3(0.0f);
+        public static Vector3 one => new Vector3(1.0f);
+        public static Vector3 up => new Vector3(0.0f, 1.0f, 0.0f);
+        public static Vector3 down => new Vector3(0.0f, -1.0f, 0.0f);
+        public static Vector3 left => new Vector3(-1.0f, 0.0f, 0.0f);
+        public static Vector3 right => new Vector3(1.0f, 0.0f, 0.0f);
+        public static Vector3 forward => new Vector3(0.0f, 0.0f, 1.0f);
+        public static Vector3 backward => new Vector3(0.0f, 0.0f, -1.0f);
+
+        /// <summary>
+        /// Creates a Vector and sets all components to the value of a provided scalar
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Vector3(float scalar)
+        {
+            x = scalar;
+            y = scalar;
+            z = scalar;
+        }
+
         /// <summary>
         /// Accesses the x, y, and z components of the vector by using the [] operator
         /// </summary>
         public float this[int index]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 switch(index)
@@ -47,6 +67,7 @@ namespace Sad
                 }
             }
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 switch(index)
@@ -63,6 +84,7 @@ namespace Sad
         /// <summary>
         /// Multiplies the components of two vectors together and returns the result
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Scale(Vector3 a, Vector3 b)
         {
             return new Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
@@ -71,6 +93,7 @@ namespace Sad
         /// <summary>
         /// Multiplies the components of this vector by another set of components 
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Scale(Vector3 b)
         {
             x *= b.x;
@@ -81,6 +104,7 @@ namespace Sad
         /// <summary>
         /// Calculates the cross product of two vectors and returns it into a new one 
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 Cross(Vector3 a, Vector3 b)
         {
             return new Vector3(
@@ -88,6 +112,76 @@ namespace Sad
                 a.z * b.x - a.x * b.z,
                 a.x * b.y - a.y * b.x
             );
+        }
+
+        /// <summary>
+        /// Calculates the dot product of two vectors
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Dot(Vector3 a, Vector3 b)
+        {
+            return a.x * b.x + a.y * b.y + a.z * b.z; 
+        }
+
+        /// <summary>
+        /// Calculates the magnitude of the provided vector 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Magnitude(Vector3 a)
+        {
+            return (float) Math.Sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+        }
+
+        /// <summary>
+        /// Property for retrieving the magnitude of the current vector
+        /// </summary>
+        public float magnitude
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (float) Math.Sqrt(x * x + y * y + z * z);
+           
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator+(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator-(Vector3 a, Vector3 b)
+        {
+            return new Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator-(Vector3 a)
+        {
+            return new Vector3(-a.x, -a.y, -a.z);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator*(Vector3 a, float s)
+        {
+            return new Vector3(a.x * s, a.y * s, a.z * s);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator*(float s, Vector3 a)
+        {
+            return new Vector3(a.x * s, a.y * s, a.z * s);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 operator/(Vector3 a, float s)
+        {
+            return new Vector3(a.x / s, a.y / s, a.z / s);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override string ToString()
+        {
+            return "Vector3(" + x + ", " + y + ", " + z + ")" ;
         }
     }
 }

@@ -28,7 +28,7 @@ MonoMethod* sad::cs::ScriptClass::GetMethod(const std::string& methodName, int p
 	return method;
 }
 
-MonoObject* sad::cs::ScriptClass::CallMethod(MonoMethod* method, MonoObject* instance, void* params[] /* = nullptr */)
+MonoObject* sad::cs::ScriptClass::CallMethod(MonoMethod* method, MonoObject* instance, void** params /* = nullptr */)
 {
 	MonoObject* exception = nullptr;
 	MonoObject* result = mono_runtime_invoke(method, instance, params, &exception);

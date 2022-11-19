@@ -22,7 +22,7 @@ sad::rad::Renderer sad::rad::RenderBuddy::s_Renderer = sad::rad::Renderer();
 void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 {
 	core::Pointer<LineRenderer> lineRenderer = core::CreatePointer<LineRenderer>(from, to, color);
-	ecs::Entity lineEntity = ecs::Entity();
+	ecs::Entity lineEntity = ecs::Registry::GenerateEntityHandle();
 	lineEntity.AddComponent<ecs::LineRendererComponent>({ lineRenderer });
 }
 

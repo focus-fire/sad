@@ -26,14 +26,19 @@ namespace sad
 		void PopulateLevelGuids();
 
 		/**
+		 * @brief Retrieves an entity by reconstructing a core::Guid with a core::NativeGuid
+		*/
+		ecs::Entity GetEntityByGuid(const core::NativeGuid& guid);
+
+		/**
 		 * @brief Retrieves an entity in the level by GUID
 		*/
-		ecs::Entity LookupEntityByGuid(const core::Guid& guid);
+		ecs::Entity GetEntityByGuid(const core::Guid& guid);
 
 		/**
 		 * @brief Retrieves an entity in the level by name 
 		*/
-		ecs::Entity LookupEntityByName(const std::string& name);
+		ecs::Entity GetEntityByName(const std::string& name);
 
 		/**
 		 * @brief Creates an entity in the level from scratch with a new GUID, an empty transform, and a fresh bound

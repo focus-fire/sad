@@ -7,61 +7,44 @@
 
 namespace sad 
 {
+	/**
+	 * @brief Basic AABB Bound, attached to most objects as a simple reference-point for collision detection
+	*/
 	class Bound 
 	{
 	public:
-		/*
-		* Find entity and use transform data 
-		* to get position to create bounds.
-		*/
-		explicit Bound(glm::vec3 position, glm::vec3 scale);
+		explicit Bound(glm::vec3 center, glm::vec3 size);
 		explicit Bound(Transform transform);
 
-		/*
-		* Value should be auto set to the transform position.
-		*/
-		void SetPosition(glm::vec3 position) { m_Position = position; }
-		void SetScale(glm::vec3 scale) { m_Scale = scale; }
-
-		/*
-		* Bound Max and Min calculations.
-		*/
-		void CalculateBound();
-
-		/*
-		* Checks for bound intersection with 
-		* another pair of MaxMin vectors.
+		/**
+		 * @brief Checks for bound intersection with another pair of max and min vectors
 		*/
 		bool Intersects(glm::vec3 otherMax, glm::vec3 otherMin);
 		
-		/* 
-		* Checks for bound Intersection after 
-		* pulling MaxMin vectors from compoenent..
+		/** 
+		 * @brief Checks for bound Intersection after pulling max and min vectors from bound
 		*/
 		bool Intersects(Bound otherBound);
 
-		/*
-		* Get position and scale values.
-		*/
-		glm::vec3 GetPosition() { return m_Position; }
-		glm::vec3 GetScale() { return m_Scale; }
-		glm::vec3 GetBoundMax() { return m_Max; }
-		glm::vec3 GetBoundMin() { return m_Min; }
+		glm::vec3 GetCenter() { return m_Center; }
+		void SetCenter(glm::vec3 center) { m_Center = center; }
+
+		glm::vec3 GetSize() { return m_Extents * 2.0f; }
+		void SetSize(glm::vec3 size) { m_Extents = size * 0.5f; }
+
+		void SetMinMax(glm::vec3 min, glm::vec3 max);
+		glm::vec3 GetBoundMax() { return m_Center + m_Extents; }
+		glm::vec3 GetBoundMin() { return m_Center - m_Extents; }
 
 	private:
-
-		glm::vec3 m_Position;
-		glm::vec3 m_Scale;
-
-		/*
-		Max and Min vectors for a bounds box.
-		*/
-		glm::vec3 m_Max;
-		glm::vec3 m_Min;
-
-		/*
-		* Checks another bound's max and min vectors to check for overlap or intersection.
+		/**
+		 * @brief Checks another bound's max and min vectors to check for overlap or intersection.
 		*/
 		bool IntersectionMaxMin(glm::vec3 otherMax, glm::vec3 otherMin);
+
+	private:
+		glm::vec3 m_Center;
+		glm::vec3 m_Extents;
+		glm::vec3 m_Size;
 	};
 }

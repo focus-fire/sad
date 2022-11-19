@@ -8,10 +8,11 @@
 #include <Engine/Level.h>
 
 #include "ScriptClass.h"
-#include "SadBehaviourInstance.h"
 
 namespace sad::cs
 {
+	class SadBehaviourInstance;
+
 	/**
 	 * @brief Handles the initialization, loading/unloading, and teardown of scripting assemblies
 	*/
@@ -23,9 +24,13 @@ namespace sad::cs
 		*/
 		struct ScriptingEngineData
 		{
+			/// Mono Domains
+
 			MonoDomain* RootDomain = nullptr;
 			MonoDomain* AppDomain = nullptr;
 			
+			/// Assembly Information
+
 			std::string SadCSFrameworkAssemblyFilePath;
 			MonoAssembly* SadCSFrameworkAssembly = nullptr;
 			MonoImage* SadCSFrameworkImage = nullptr;
@@ -34,9 +39,16 @@ namespace sad::cs
 			MonoAssembly* ProjectAssembly = nullptr;
 			MonoImage* ProjectImage = nullptr;
 
-			// TODO: Is mapping required here? Sets?
+			/// Script Lookups
+
 			std::unordered_map<std::string, core::Pointer<ScriptClass>> SadBehaviourScriptLookup;
 			std::unordered_map<core::Guid, core::Pointer<SadBehaviourInstance>> SadBehaviourInstanceLookup;
+
+			/// Default Classes
+
+			ScriptClass SadBehaviourClass;
+
+			/// Level Data
 
 			Level* CurrentLevelInstance = nullptr;
 		};
@@ -50,6 +62,7 @@ namespace sad::cs
 
 		static void AwakeSadBehaviourInstance(ecs::Entity entity);
 		static void UpdateSadBehaviourInstance(ecs::Entity entity);
+		static void DestroySadBehaviourInstance(ecs::Entity entity);
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
 		static bool SadBehaviourExists(const std::string& qualifiedName);

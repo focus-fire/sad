@@ -8,6 +8,7 @@
 
 #include "ScriptingBridge.h"
 #include "ScriptingEngineUtils.h"
+#include "SadBehaviourInstance.h"
 
 sad::cs::ScriptingEngine::ScriptingEngineData* sad::cs::ScriptingEngine::s_ScriptingData = nullptr;
 
@@ -30,6 +31,9 @@ void sad::cs::ScriptingEngine::Start()
 	// TODO: Create an assembly for the scripting project and mount it
 	// std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Assets/Scripts/Assembly/Project.dll");
 	// LoadProjectAssembly(projectAssemblyPath);
+
+	// Hold onto reference of SadBehaviour class
+	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour");
 
 	MonoSanityCheck();
 }
@@ -122,7 +126,7 @@ void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
 		core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptComponent.m_ClassName];
 
 		// Instantiate the script using the class definition
-		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass);
+		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
 
 		// Store the instantiated behaviour in the lookup
 		s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
@@ -142,6 +146,15 @@ void sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(ecs::Entity entity)
 	s_ScriptingData->SadBehaviourInstanceLookup[guid]->CallUpdate();
 }
 
+void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+	if (SadBehaviourExists(scriptComponent.m_ClassName))
+	{
+		s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+	}
+}
+
 ////////////////////////////
 /// Scripting Engine Ops ///
 ////////////////////////////
@@ -154,7 +167,7 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAsse
 	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(monoImage, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
-	MonoClass* sadBehaviourClass = mono_class_from_name(monoImage, "SampleScripts", "SadBehaviour");
+	MonoClass* sadBehaviourClass = mono_class_from_name(monoImage, "Sad", "SadBehaviour");
 
 	for (int32_t i = 0; i < numberOfTypes; ++i)
 	{

@@ -99,7 +99,7 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 	std::string scriptName = std::move(arg.command_line[2]);
 
 	// Check if entity exists
-	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->LookupEntityByName(entityName);
+	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->GetEntityByName(entityName);
 	if (!entity)
 	{
 		core::Log(ELogType::Error, "[Terminal] The entity {} doesn't exist in the level", entityName);
@@ -114,6 +114,7 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 	}
 
 	entity.AddComponent<sad::ecs::ScriptComponent>({ scriptName });
+	core::Log(ELogType::Info, "[Terminal] Succesfully added {} to {}", scriptName, entityName);
 }
 
 void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
@@ -128,7 +129,7 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 	std::string scriptName = std::move(arg.command_line[2]);
 
 	// Check if entity exists
-	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->LookupEntityByName(entityName);
+	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->GetEntityByName(entityName);
 	if (!entity)
 	{
 		core::Log(ELogType::Error, "[Terminal] The entity {} doesn't exist in the level", entityName);
@@ -142,5 +143,10 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 		return;
 	}
 	
+	// Remove active script instance
+	sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
+	
+	// Remove script component
 	entity.RemoveComponent<sad::ecs::ScriptComponent>();
+	core::Log(ELogType::Info, "[Terminal] Succesfully removed {} from {}", scriptName, entityName);
 }

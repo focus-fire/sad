@@ -31,5 +31,6 @@ public class TestClass
         Log.Debug($"This is a test log from C# with a variable {m_Counter}");
         Log.Warn($"This is a warning message from C#");
         Log.Error($"This is an error message from C#");
+
     }
 }

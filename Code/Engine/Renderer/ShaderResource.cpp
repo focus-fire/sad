@@ -63,6 +63,11 @@ void sad::rad::ShaderResource::SetUniform1i(const std::string& name, int i0)
     GL_CALL(glUniform1i(GetUniformLocation(name), i0));
 }
 
+void sad::rad::ShaderResource::SetUniform3f(const std::string& name, float f0, float f1, float f2)
+{
+    GL_CALL(glUniform3f(GetUniformLocation(name), f0, f1, f2));
+}
+
 void sad::rad::ShaderResource::SetUniform4f(const std::string& name, float f0, float f1, float f2, float f3)
 {
     GL_CALL(glUniform4f(GetUniformLocation(name), f0, f1, f2, f3));

@@ -1,10 +1,30 @@
 using Sad;
 
+public class Test : SadBehaviour
+{
+    public string test = "Test";
+}
+
 public class PlayerController : SadBehaviour
 {
+    private Entity AnotherCube;
+    private int Counter = 0;
+
     void Awake()
     {
         Log.Debug($"PlayerController.Awake => {GUID}");
+
+        // Testing Instantiation
+        // AnotherCube = Instantiate("AnotherCube");
+        // Log.Debug($"Instantiated an entity with GUID => {AnotherCube?.GUID}");
+
+        // Testing Finds
+        AnotherCube = FindEntityWithName("AnotherCube");
+        Log.Debug($"Found a component with GUID => {AnotherCube?.GUID}");
+
+        // Testing Script Retrieval
+        //Test t = AnotherCube.GetScriptComponent<Test>();
+        //Log.Debug($"Found a test component with a string: {t?.test}");
     }
 
     void Update()
@@ -32,7 +52,7 @@ public class PlayerController : SadBehaviour
         if (Input.GetMouseButton(MouseButton.Right))
         {
             Log.Warn("Right Mouse Pressed!!!");
-            transform.Translate(new Vector3(moveSpeed, moveSpeed, moveSpeed));
+            transform.Translate(new Vector3(-moveSpeed, -moveSpeed, -moveSpeed));
         }
     }
 

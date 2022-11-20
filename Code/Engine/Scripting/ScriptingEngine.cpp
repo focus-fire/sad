@@ -33,7 +33,7 @@ void sad::cs::ScriptingEngine::Start()
 	LoadProjectAssembly(projectAssemblyPath);
 
 	// Cache classes in assembly
-	CacheAssemblySadBehaviours(s_ScriptingData->ProjectAssembly);
+	CacheAssemblySadBehaviours();
 
 	// Hold onto reference of SadBehaviour class in the SadCSFramework image
 	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour", true);
@@ -183,12 +183,11 @@ void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)
 /// Scripting Engine Ops ///
 ////////////////////////////
 
-void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAssembly)
+void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
 {
 	s_ScriptingData->SadBehaviourScriptLookup.clear();
 
-	MonoImage* monoImage = mono_assembly_get_image(monoAssembly);
-	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(monoImage, MONO_TABLE_TYPEDEF);
+	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_ScriptingData->ProjectImage, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
 	// Retrieve Sad.SadBehaviour from the SadCSFramework internal API 
@@ -199,11 +198,11 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAsse
 		uint32_t columns[MONO_TYPEDEF_SIZE];
 		mono_metadata_decode_row(typeDefinitionsTable, i, columns, MONO_TYPEDEF_SIZE);
 
-		const char* nameSpace = mono_metadata_string_heap(monoImage, columns[MONO_TYPEDEF_NAMESPACE]);
-		const char* className = mono_metadata_string_heap(monoImage, columns[MONO_TYPEDEF_NAME]);
+		const char* nameSpace = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAMESPACE]);
+		const char* className = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAME]);
 
 		// Evaluate if class in the assembly is inheriting from SadBehaviour
-		MonoClass* monoClass = mono_class_from_name(monoImage, nameSpace, className);
+		MonoClass* monoClass = mono_class_from_name(s_ScriptingData->ProjectImage, nameSpace, className);
 		bool isSadBehaviour = mono_class_is_subclass_of(monoClass, sadBehaviourClass, false);
 
 		// Continue to next assembly type if it's not a SadBehaviour or the SadBehaviour class itself
@@ -260,29 +259,10 @@ bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid
 	return core::StringUtils::Equals(qualifiedName, retrievedQualifiedName);
 }
 
-///////////////
-/// Testing ///
-///////////////
-
-void sad::cs::ScriptingEngine::MonoSanityCheck()
+MonoObject* sad::cs::ScriptingEngine::GetSadBehaviourInstance(const core::Guid& guid)
 {
-	// Create sample TestClass
-	//ScriptClass testClass = ScriptClass("", "TestClass", true);
-	//MonoObject* testObject = testClass.Instantiate();
+	bool exists = s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
+	SAD_ASSERT(exists, "Instance of SadBehaviour being retrieved doesn't exist")
 
-	// Test 1: Method with no parameters 
-	//MonoMethod* testMethod = testClass.GetMethod("TestMethod", 0);
-	//testClass.CallMethod(testMethod, testObject, nullptr);
-
-	// Test 2: Method with one parameter
-	//int val = 5;
-	//void* param = &val;
-	//MonoMethod* incrementMethod = testClass.GetMethod("Increment", 1);
-	//testClass.CallMethod(incrementMethod, testObject, &param);
-
-	// Test 3: Method with two parameters
-	//int val2 = 10;
-	//void* params[2] = { &val, &val2 };
-	//MonoMethod* addNumbersMethod = testClass.GetMethod("AddNumbers", 2);
-	//testClass.CallMethod(addNumbersMethod, testObject, params);
+	return s_ScriptingData->SadBehaviourInstanceLookup.at(guid)->GetManagedInstance();
 }

@@ -9,7 +9,7 @@
         {
             get 
             { 
-                Internal.Bound.GetBoundMin(Entity.GUID, out Vector3 boundMin);
+                Internal.Bound.GetBoundMin(EntityGuid, out Vector3 boundMin);
                 return boundMin;
             }
         }
@@ -21,7 +21,7 @@
         {
             get
             {
-                Internal.Bound.GetBoundMax(Entity.GUID, out Vector3 boundMax);
+                Internal.Bound.GetBoundMax(EntityGuid, out Vector3 boundMax);
                 return boundMax;
             }
         }

@@ -72,6 +72,7 @@ namespace sad::cs
 		static bool SadBehaviourInstanceExists(const core::Guid& guid);
 		static bool SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName);
 
+		static MonoObject* GetSadBehaviourInstance(const core::Guid& guid);
 		static Level* GetCurrentLevelInstance() { return s_ScriptingData->CurrentLevelInstance; }
 
 	public:
@@ -95,11 +96,7 @@ namespace sad::cs
 
 		/**
 		 * @brief Caches all SadBehaviours detected in target asesmbly into the scripting engine's ScriptLookup 
-		 * @todo Add PrintAssemblySadBehaviours to the cli?
 		*/
-		static void CacheAssemblySadBehaviours(MonoAssembly* monoAssembly);
-
-		// TEMP
-		static void MonoSanityCheck();
+		static void CacheAssemblySadBehaviours();
 	};
 }

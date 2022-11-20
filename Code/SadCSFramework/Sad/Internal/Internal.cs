@@ -10,6 +10,22 @@ namespace Sad
         /// </summary>
         internal static class ECS
         {
+            /* Entity Queries */
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static Guid FindEntityByName(string entityName);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static Guid Instantiate(string entityName);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void DestroyEntityByName(string entityName);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void DestroyEntityByGuid(Guid entityName);
+
+            /* Component Queries */
+
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static bool HasComponent(Guid entityGuid, Type componentType);
 
@@ -18,6 +34,12 @@ namespace Sad
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void RemoveComponent(Guid entityGuid, Type componentType);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static object GetScriptInstance(Guid entityGuid);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static bool HasScriptInstance(Guid entityGuid);
         }
 
         /// <summary>
@@ -158,6 +180,9 @@ namespace Sad
             internal extern static float GetRightAxis(string orientation);
         }
 
+        /// <summary>
+        /// Internal helper methods for native utilities 
+        /// </summary>
         public static class Misc
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]

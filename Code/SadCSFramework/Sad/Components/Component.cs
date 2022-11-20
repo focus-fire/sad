@@ -1,7 +1,9 @@
-﻿namespace Sad
+﻿using System;
+
+namespace Sad
 {
     public abstract class Component
     {
-        public SadBehaviour Entity { get; internal set; }
+        public Guid EntityGuid { get; internal set; }
     }
 }

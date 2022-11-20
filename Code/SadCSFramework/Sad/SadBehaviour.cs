@@ -3,26 +3,11 @@ using System.Collections.Generic;
 
 namespace Sad
 {
-    public class SadBehaviour
+    public class SadBehaviour : Entity
     {
-        /// <summary>
-        /// GUID of the entity this SadBehaviour belongs to
-        /// </summary>
-        public readonly Guid GUID;
+        protected SadBehaviour() : base() { }
 
-        /// <summary>
-        /// Cache for local 'GetComponent' calls.
-        /// This is mainly used to reduce heap allocations.
-        /// ex: calling 'new T()' everytime we fetch a native component. 
-        /// </summary>
-        internal Dictionary<Type, object> ComponentCache;
-
-        protected SadBehaviour() => GUID = Guid.Empty;
-        internal SadBehaviour(Guid guid)
-        { 
-            GUID = guid;
-            ComponentCache = new Dictionary<Type, object>();
-        }
+        internal SadBehaviour(Guid guid) : base(guid) { }
 
         /// <summary>
         /// Each SadBehaviour should have a transform by default
@@ -54,63 +39,5 @@ namespace Sad
             }
         }
 
-        /// <summary>
-        /// Calls the native implementation for 'HasComponent' on the desired component
-        /// </summary>
-        public bool HasComponent<T>() where T: Component, new()
-        {
-            Type componentType = typeof(T);
-
-            return Internal.ECS.HasComponent(GUID, componentType);
-        }
-
-        /// <summary>
-        /// Retrieves the managed implementation for desired component if it exists  
-        /// </summary>
-        public T GetComponent<T>() where T: Component, new()
-        {
-            if (!HasComponent<T>())
-                return null;
-
-            Type componentType = typeof(T);
-            if (ComponentCache.ContainsKey(componentType))
-                return (T) ComponentCache[componentType];
-
-            // Store the component in the cache if it hasn't been instantiated
-            T component =  new T() { Entity = this };
-            ComponentCache.Add(componentType, component);
-
-            return component;
-        }
-
-        /// <summary>
-        /// Adds the managed implementation of a desired component if it exists
-        /// Note: This does not add scripted components (in C#) yet...
-        /// </summary>
-        public void AddComponent<T>() where T: Component, new()
-        {
-            if (HasComponent<T>())
-                return;
-
-            Type componentType = typeof(T);
-
-            Internal.ECS.AddComponent(GUID, componentType);
-        }
-
-        /// <summary>
-        /// Calls the native implementation for 'RemoveComponent' on the desired component if it exists on the entity 
-        /// </summary>
-        public void RemoveComponent<T>() where T: Component, new()
-        {
-            if (!HasComponent<T>())
-                return;
-
-            // Remove the component from the cache 
-            Type componentType = typeof(T);
-            if (ComponentCache.ContainsKey(componentType))
-                ComponentCache.Remove(componentType);
-
-            Internal.ECS.RemoveComponent(GUID, componentType);
-        }
     }
 }

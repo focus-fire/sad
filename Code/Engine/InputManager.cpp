@@ -14,18 +14,11 @@ sad::InputManager& sad::InputManager::GetInstance()
     return instance;
 }
 
-bool sad::InputManager::CheckGameFocus()
-{
-    return m_currentActiveId == m_GameWindowID;
-}
-
 // Keyboard Events
 void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 {
-    if (ImGui::GetActiveID() != 0)
-    {
-        m_currentActiveId = ImGui::GetActiveID();
-    }
+    if (IsInputLocked())
+        return;
     
     if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && !event.key.repeat)
     {
@@ -37,7 +30,7 @@ void sad::InputManager::CatchKeyboardEvents(SDL_Event& event)
 
 bool sad::InputManager::GetKey(KeyCode key)
 {
-    if (!CheckGameFocus())
+    if (IsInputLocked())
         return false;
 
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
@@ -46,7 +39,7 @@ bool sad::InputManager::GetKey(KeyCode key)
 
 bool sad::InputManager::GetKeyPressed(KeyCode key)
 {
-    if (!CheckGameFocus())
+    if (IsInputLocked())
         return false;
 
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
@@ -55,7 +48,7 @@ bool sad::InputManager::GetKeyPressed(KeyCode key)
 
 bool sad::InputManager::GetKeyReleased(KeyCode key)
 {
-    if (!CheckGameFocus())
+    if (IsInputLocked())
         return false;
 
     SDL_Scancode keyScancode = static_cast<SDL_Scancode>(key);
@@ -66,6 +59,9 @@ bool sad::InputManager::GetKeyReleased(KeyCode key)
 
 void sad::InputManager::CatchMouseEvents(SDL_Event& event)
 {
+    if (IsInputLocked())
+        return;
+
     if (event.type == SDL_MOUSEBUTTONUP || event.type == SDL_MOUSEBUTTONDOWN)
     {
         m_ControllerBeingUsed = false;
@@ -76,16 +72,22 @@ void sad::InputManager::CatchMouseEvents(SDL_Event& event)
 
 bool sad::InputManager::GetMouseButton(int button)
 {
+    if (IsInputLocked())
+        return false;
     return (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(button));
 }
 
 bool sad::InputManager::GetMouseButtonPressed(int button)
 {
+    if (IsInputLocked())
+        return false;
     return m_MouseState[button] && (m_MouseUpdateFrames[button] == SDL_GetTicks64());
 }
 
 bool sad::InputManager::GetMouseButtonReleased(int button)
 {
+    if (IsInputLocked())
+        return false;
     return !m_MouseState[button] && (m_MouseUpdateFrames[button] == SDL_GetTicks64());
 }
 
@@ -124,6 +126,9 @@ void sad::InputManager::OnControllerDisconnected()
 
 void sad::InputManager::CatchControllerEvents(SDL_Event& event)
 {
+    if (IsInputLocked())
+        return;
+
     if (GetLeftAxis("Horizontal") > ControllerDeadZone || GetLeftAxis("Vertical") > ControllerDeadZone
         || GetRightAxis("Horizontal") > ControllerDeadZone || GetRightAxis("Vertical") > ControllerDeadZone)
     {
@@ -140,6 +145,8 @@ void sad::InputManager::CatchControllerEvents(SDL_Event& event)
 
 bool sad::InputManager::GetButton(ControllerButton button)
 {
+    if (IsInputLocked())
+        return false;
     if (m_Controller == nullptr)
         return false;
 
@@ -150,6 +157,8 @@ bool sad::InputManager::GetButton(ControllerButton button)
 
 bool sad::InputManager::GetButtonPressed(ControllerButton button)
 {
+    if (IsInputLocked())
+        return false;
     if (m_Controller == nullptr)
         return false;
 
@@ -160,6 +169,8 @@ bool sad::InputManager::GetButtonPressed(ControllerButton button)
 
 bool sad::InputManager::GetButtonReleased(ControllerButton button)
 {
+    if (IsInputLocked())
+        return false;
     if (m_Controller == nullptr)
         return false;
     SDL_GameControllerButton ctrlButton = static_cast<SDL_GameControllerButton>(button);
@@ -169,6 +180,8 @@ bool sad::InputManager::GetButtonReleased(ControllerButton button)
 
 float sad::InputManager::GetAxis(SDL_GameControllerAxis axis)
 {
+    if (IsInputLocked())
+        return 0.f;
     if (m_Controller == nullptr)
         return 0.f;
 

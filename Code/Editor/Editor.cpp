@@ -10,7 +10,6 @@
 #include <entt/entt.hpp>
 
 #include <Engine/Application.h>
-#include <Engine/InputManager.h>
 #include <Engine/Scripting/ScriptingEngine.h>
 #include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
@@ -85,10 +84,17 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImGui::Begin(m_GameWindowTitle.c_str(), &showGameWindow, m_GameWindowFlags);
 	ImGui::PopStyleColor();
 
-	sad::InputManager::GetInstance().SetGameWindowID(ImGui::GetItemID());
-
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
 	ImGui::SetWindowPos(ImVec2(50.0, 25.0), ImGuiCond_Once);
+
+	if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootWindow))
+	{
+		core::SignalEvent("OnInputUnlock");
+	}
+	else
+	{
+		core::SignalEvent("OnInputLock");
+	}
 
 	// Pass frameBuffer texture to be rendered in window
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();

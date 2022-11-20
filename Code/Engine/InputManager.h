@@ -78,6 +78,28 @@ namespace sad
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
 
+        /**
+         * @brief Locks Inputs
+        */
+        void LockInputs()
+        {
+            m_IsInputLocked = true;
+        }
+
+        /**
+         * @brief Unlocks Inputs
+         * @return 
+        */
+        void UnlockInputs()
+        {
+            m_IsInputLocked = false;
+        }
+
+        bool IsInputLocked()
+        {
+            return m_IsInputLocked;
+        }
+
         // Keyboard Events
 
         /**
@@ -223,24 +245,18 @@ namespace sad
         */
         float GetRightAxis(const std::string& orientation);
 
-        /**
-         * @brief Sets the ImGUIID of the game window, the window which recieves the inputs.
-         * @param id 
-        */
-        void SetGameWindowID(ImGuiID id)
-        {
-            m_GameWindowID = id;
-        };
-
-        /**
-         * @brief Checks if the game window is in focus.
-         * @return 
-        */
-        bool CheckGameFocus();
-
     private:
-        InputManager() {}
+        InputManager() 
+        {
+            m_IsInputLocked = false;
+            std::function<void(void)> inputLockFunction = std::bind(&sad::InputManager::LockInputs, this);
+            std::function<void(void)> inputUnlockFunction = std::bind(&sad::InputManager::UnlockInputs, this);
+            core::InitializeListener("OnInputLock", inputLockFunction);
+            core::InitializeListener("OnInputUnlock", inputUnlockFunction);
+        }
         static sad::InputManager s_InputManager;
+
+        bool m_IsInputLocked;
 
         ImGuiID m_GameWindowID;
         ImGuiID m_currentActiveId = 0;

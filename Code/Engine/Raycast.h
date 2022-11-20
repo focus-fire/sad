@@ -10,10 +10,7 @@ namespace sad
     class Raycast
     {
     public:
-        Raycast();
-        ~Raycast();
-
         static bool Intersects(glm::vec3 Origin, glm::vec3 Direction, sad::Bound bound);
-        static int coolFunction();
+    
     };
 }

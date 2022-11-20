@@ -73,7 +73,6 @@ void pog::Application::Update(float dt)
 			}
 		}
 	}
-	sad::Raycast::coolFunction();
 }
 
 void pog::Application::Teardown()

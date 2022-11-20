@@ -66,14 +66,14 @@ void sad::Application::EngineStart()
 	rad::RenderBuddy::Start();
 
 	// Initialize Scripting
-	//cs::ScriptingEngine::Start();
+	cs::ScriptingEngine::Start();
 	
 	// Import Level and GUIDs 
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
 
 	// Start the ScriptingRuntime in association with the current level
-	//cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
+	cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
 
 	// Game Start
 	this->Start();
@@ -173,7 +173,7 @@ void sad::Application::Update(float dt)
 
 void sad::Application::Teardown()
 { 
-	//sad::cs::ScriptingEngine::Teardown();
+	sad::cs::ScriptingEngine::Teardown();
 
 	LevelManager::ExportLevel();
 

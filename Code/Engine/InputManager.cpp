@@ -6,7 +6,6 @@
 
 #include <SDL2/SDL.h>
 #include <spdlog/spdlog.h>
-#include <imgui_internal.h>
 
 sad::InputManager& sad::InputManager::GetInstance()
 {

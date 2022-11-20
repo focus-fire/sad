@@ -2,7 +2,6 @@
 
 #include <SDL2/SDL.h>
 #include <map>
-#include <imgui.h>
 
 namespace sad
 {

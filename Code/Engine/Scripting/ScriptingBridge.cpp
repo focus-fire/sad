@@ -115,12 +115,12 @@ namespace sad::cs
 	/// Gizmos ///
 	//////////////
 
-	static void DrawLine(glm::vec3* from, glm::vec3* to, glm::vec3* color)
+	static void DrawLine(glm::vec3* from, glm::vec3* to, glm::vec4* color)
 	{
 		rad::RenderBuddy::DrawDebugLine(*from, *to, *color);
 	}
 
-	static void DrawBox(glm::vec3* min, glm::vec3* max, glm::vec3* color)
+	static void DrawBox(glm::vec3* min, glm::vec3* max, glm::vec4* color)
 	{
 		rad::RenderBuddy::DrawDebugBox(*min, *max, *color);
 	}

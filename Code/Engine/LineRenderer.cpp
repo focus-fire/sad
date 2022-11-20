@@ -4,10 +4,10 @@
 
 #include <Engine/ResourceManager.h>
 
-sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
+sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec4 color)
 	: VertexCount(2)
 {
-	float points[12];
+	float points[14];
 	
 	points[0] = from.x;
 	points[1] = from.y;
@@ -15,13 +15,15 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	points[3] = color.r;
 	points[4] = color.g;
 	points[5] = color.b;
+	points[6] = color.a;
 
-	points[6] = to.x;
-	points[7] = to.y;
-	points[8] = to.z;
-	points[9] = color.r;
-	points[10] = color.g;
-	points[11] = color.b;
+	points[7] = to.x;
+	points[8] = to.y;
+	points[9] = to.z;
+	points[10] = color.r;
+	points[11] = color.g;
+	points[12] = color.b;
+	points[13] = color.a;
 
 	Shader = ResourceManager::GetResource<rad::ShaderResource>("Line.glsl");
 
@@ -33,7 +35,7 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	
 	VertexAttributeContainer = new rad::VertexAttributeContainer();
 	VertexAttributeContainer->AddFloatAttribute(3);
-	VertexAttributeContainer->AddFloatAttribute(3);
+	VertexAttributeContainer->AddFloatAttribute(4);
 
 	VertexArray->AddBufferWithAttributes(*VertexBuffer, *VertexAttributeContainer);
 }

@@ -18,7 +18,7 @@
 
 sad::rad::Renderer sad::rad::RenderBuddy::s_Renderer = sad::rad::Renderer();
 
-void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color)
+void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec4 color)
 {
 	LineRenderer lineRenderer = LineRenderer(from, to, color);
 
@@ -30,7 +30,7 @@ void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec
 	rad::RenderBuddy::DrawLines(lineRenderer.VertexArray, lineRenderer.VertexCount);
 }
 
-void sad::rad::RenderBuddy::DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec3 color)
+void sad::rad::RenderBuddy::DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec4 color)
 {
     glm::vec3 points[8];
 

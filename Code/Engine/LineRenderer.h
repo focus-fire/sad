@@ -14,7 +14,7 @@ namespace sad
 	struct LineRenderer
 	{
 	public:
-		explicit LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color);
+		explicit LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec4 color);
 		~LineRenderer();
 
 		rad::VertexArray* VertexArray;

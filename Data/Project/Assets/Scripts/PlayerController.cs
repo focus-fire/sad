@@ -1,16 +1,10 @@
-﻿using Sad;
+using Sad;
 
-public class Player : SadBehaviour 
+public class PlayerController : SadBehaviour 
 {
     void Awake()
     {
         Log.Debug($"Player.Awake => {GUID}");
-
-        // 1. AddComponent
-        // 2. std::string m_ClassName -> std::list<std::string> m_ClassNames
-        // 3. AddScriptComponent
-        // 4. Instantiate / InstantiateWithResource
-        // 5. Hot Reloading
 
         bool hasTransform = HasComponent<Transform>();
         string yay = hasTransform ? "a transform" : "F";
@@ -36,21 +30,5 @@ public class Player : SadBehaviour
         Vector3 boxMax = bound.max;
         Color boxColor = Color.red;
         Gizmos.DrawBox(boxMin, boxMax, boxColor);
-    }
-}
-
-namespace SampleScripts
-{
-    public class PlayerController : SadBehaviour
-    {
-        void Awake()
-        {
-            Log.Debug($"PlayerController.Awake => {GUID}");
-        }
-
-        void Update()
-        {
-            Log.Debug("PlayerController.Update");
-        }
     }
 }

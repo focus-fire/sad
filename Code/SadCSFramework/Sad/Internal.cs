@@ -41,10 +41,10 @@ namespace Sad
         internal static class Gizmos
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            internal extern static void DrawLine(ref Vector3 from, ref Vector3 to, ref Vector3 color);
+            internal extern static void DrawLine(ref Vector3 from, ref Vector3 to, ref Color color);
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
-            internal extern static void DrawBox(ref Vector3 min, ref Vector3 max, ref Vector3 color);
+            internal extern static void DrawBox(ref Vector3 min, ref Vector3 max, ref Color color);
         }
 
         /// <summary>

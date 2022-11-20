@@ -19,7 +19,7 @@ void sad::cs::ScriptingEngine::Start()
 	StartMono();
 
 	// Load the SadCSFramework assembly and print it's corresponding type information
-	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
+	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/SadCSFramework/SadCSFramework.dll");
 	LoadSadCSFrameworkAssembly(sadCSFrameworkAssemblyPath);
 
 	// Register components in the engine API

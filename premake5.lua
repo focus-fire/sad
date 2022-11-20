@@ -61,7 +61,7 @@ workspace "sad"
     include "Code/Game.premake5.lua"
 
     -- Scripting Project
-    include "Data/Project/Resources/Project.premake5.lua"
+    include "Data/Project/Resources/SadProject.premake5.lua"
 
     -- Tests
     group "Tests"

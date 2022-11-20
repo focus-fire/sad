@@ -1,8 +1,7 @@
-project "Project"
+project "SadProject"
     kind "SharedLib"
     language "C#"
     dotnetframework "4.7.2"
-	dependson { "SadCSFramework" }
 
     -- Project bundles all the scripts required to run the game into an assembly
     -- Think of this as Unity's 'Scripts' folder
@@ -10,7 +9,10 @@ project "Project"
 	objdir "%{wks.location}/Data/Project/Resources/%{prj.name}/Obj"
 
     -- Any script located in the project's 'Assets' folder should be included
-    files { "%{wks.location}/Data/Project/Assets/**.cs" }
+    files {
+		"%{wks.location}/Data/Project/Assets/**.cs",
+		"%{wks.location}/Data/Project/Assets/Scripts/**.cs"
+	}
 
     vpaths {
         ["Source/*"] = { "%{wks.location}/Data/Project/Assets/**.cs" },

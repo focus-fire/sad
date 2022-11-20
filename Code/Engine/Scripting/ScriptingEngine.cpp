@@ -29,7 +29,7 @@ void sad::cs::ScriptingEngine::Start()
 	ScriptingBridge::SetupEngineAPIFunctions();
 
 	// Load the Project assembly with the game's scripts
-	std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/Project/Project.dll");
+	std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/SadProject/SadProject.dll");
 	LoadProjectAssembly(projectAssemblyPath);
 
 	// Cache classes in assembly

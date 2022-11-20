@@ -21,6 +21,8 @@
 #include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>
 #include <Engine/RenderableObject.h>
+#include <Engine/Raycast.h>
+#include <Engine/Bound.h>
 
 pog::Application::Application()
 	: sad::Application()
@@ -53,7 +55,7 @@ void pog::Application::Update(float dt)
 	// Sample 'Script' to rotate objects
 	auto view = sad::ecs::Registry::GetEntityWorld().view<const sad::ecs::TransformComponent, const sad::ecs::BoundComponent, const sad::ecs::RenderableObjectComponent>();
 	for (auto [entity, transformComponent, boundComponent, renderableComponent] : view.each())
-	{
+	{	
 		sad::Bound* bound = boundComponent.m_Bound.get();
 		sad::Transform* transform = transformComponent.m_Transform.get();
 		transform->Rotate(glm::vec3(10.0f * dt));
@@ -71,6 +73,7 @@ void pog::Application::Update(float dt)
 			}
 		}
 	}
+	sad::Raycast::coolFunction();
 }
 
 void pog::Application::Teardown()

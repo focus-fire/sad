@@ -14,7 +14,15 @@ namespace sad::cs
 	{
 	public:
 		ScriptClass() = default;
-		ScriptClass(const std::string& nameSpace, const std::string& className);
+
+		/**
+		 * @brief Constructs a representation for a script class for a script in a namespace
+		 * @param nameSpace The namespace the script belongs to, although most scripts will probably exist outside of one
+		 * @param className The name of the class being created
+		 * @param useSadCSFrameworkImage Set this to true if the ScriptClass exists in SadCSFramework
+		 * @default useSadCSFrameworkImage Defaults to false, indicating that the ScriptClass exists in the game's scrpting project
+		*/
+		ScriptClass(const std::string& nameSpace, const std::string& className, bool useSadCSFrameworkImage = false);
 
 		/**
 		 * @brief Instantiates an instance of this script's class in Mono
@@ -41,6 +49,17 @@ namespace sad::cs
 		 * @note Calling this method will assert if the C# runtime throws an exception
 		*/
 		MonoObject* CallMethod(MonoMethod* method, MonoObject* instance, void** params = nullptr);
+
+		/**
+		 * @brief Retrieves the fully qualified name for this script (ex: Namespace.Class)
+		*/
+		inline std::string GetQualifiedName() 
+		{ 
+			if (m_NameSpace.empty())
+				return m_ClassName;
+
+			return fmt::format("{}.{}", m_NameSpace, m_ClassName); 
+		}
 
 	private:
 		std::string m_NameSpace;

@@ -61,6 +61,8 @@ namespace sad
 		static Window* s_MainWindow;
 		static EngineStateManager* s_EngineState;
 
+		static float s_DeltaTime;
+
 	private:
 		cap::Editor* m_Editor = nullptr;
 		Level* m_CurrentLevel;

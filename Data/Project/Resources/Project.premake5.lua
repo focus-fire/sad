@@ -2,6 +2,7 @@ project "Project"
     kind "SharedLib"
     language "C#"
     dotnetframework "4.7.2"
+	dependson { "SadCSFramework" }
 
     -- Project bundles all the scripts required to run the game into an assembly
     -- Think of this as Unity's 'Scripts' folder

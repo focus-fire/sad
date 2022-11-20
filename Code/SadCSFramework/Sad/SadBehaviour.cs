@@ -55,6 +55,16 @@ namespace Sad
         }
 
         /// <summary>
+        /// Calls the native implementation for 'HasComponent' on the desired component
+        /// </summary>
+        public bool HasComponent<T>() where T: Component, new()
+        {
+            Type componentType = typeof(T);
+
+            return Internal.ECS.HasComponent(GUID, componentType);
+        }
+
+        /// <summary>
         /// Retrieves the managed implementation for desired component if it exists  
         /// </summary>
         public T GetComponent<T>() where T: Component, new()
@@ -74,13 +84,17 @@ namespace Sad
         }
 
         /// <summary>
-        /// Calls the native implementation for 'HasComponent' on the desired component
+        /// Adds the managed implementation of a desired component if it exists
+        /// Note: This does not add scripted components (in C#) yet...
         /// </summary>
-        public bool HasComponent<T>() where T: Component, new()
+        public void AddComponent<T>() where T: Component, new()
         {
+            if (HasComponent<T>())
+                return;
+
             Type componentType = typeof(T);
 
-            return Internal.ECS.HasComponent(GUID, componentType);
+            Internal.ECS.AddComponent(GUID, componentType);
         }
 
         /// <summary>

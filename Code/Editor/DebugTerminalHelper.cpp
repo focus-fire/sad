@@ -20,7 +20,7 @@ cap::DebugTerminalHelper::DebugTerminalHelper()
 	add_command_({ "unbind_script", "Unbinds a script to an entity in the level", UnbindScriptFromEntity, NoCompletion });
 }
 
-std::vector<std::string> cap::DebugTerminalHelper::NoCompletion(argument_type& arg) { return {}; }
+std::vector<std::string> cap::DebugTerminalHelper::NoCompletion(argument_type& arg) { return { " " }; }
 
 void cap::DebugTerminalHelper::Clear(argument_type& arg)
 {
@@ -113,6 +113,13 @@ void cap::DebugTerminalHelper::BindScriptToEntity(argument_type& arg)
 		return;
 	}
 
+	// Check if entity already has a script component
+	if (entity.HasComponent<sad::ecs::ScriptComponent>())
+	{
+		core::Log(ELogType::Warn, "[Terminal] {} already has a script component", entityName);
+		return;
+	}
+
 	entity.AddComponent<sad::ecs::ScriptComponent>(scriptName);
 	core::Log(ELogType::Info, "[Terminal] Succesfully added {} to {}", scriptName, entityName);
 }
@@ -137,9 +144,25 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 	}
 
 	// Check if script exists
-	if (!sad::cs::ScriptingEngine::SadBehaviourExists(scriptName))
+	bool scriptExistsInEngine = sad::cs::ScriptingEngine::SadBehaviourExists(scriptName);
+	if (!scriptExistsInEngine)
 	{
-		core::Log(ELogType::Error, "[Terminal] The script {} doesn't exist in the currently loaded project assembly!", scriptName);
+		core::Log(ELogType::Error, "[Terminal] The script {} doesn't exist in the currently loaded project assembly", scriptName);
+		return;
+	}
+
+	// Check if instance of this specific script is instantiated on the entity
+	bool instanceExistsOnEntity = sad::cs::ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid(), scriptName);
+	if (!instanceExistsOnEntity)
+	{
+		core::Log(ELogType::Error, "[Terminal] {} doesn't have an instance of {}", entityName, scriptName);
+		return;
+	}
+
+	// Check if entity doesn't have a script component to remove
+	if (!entity.HasComponent<sad::ecs::ScriptComponent>())
+	{
+		core::Log(ELogType::Warn, "[Terminal] {} doesn't have a script component to unbind", entityName);
 		return;
 	}
 	

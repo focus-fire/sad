@@ -77,6 +77,8 @@ namespace sad::cs
 
 			// Setup and retrieve the reflected type from the Mono runtime
 			std::string managedTypename = fmt::format("Sad.{}", componentName);
+			
+			// Native C# components should have a definition in the SadCSFramework project
 			MonoType* reflectedType = mono_reflection_type_from_name(managedTypename.data(), cs::ScriptingEngine::s_ScriptingData->SadCSFrameworkImage);
 			if (!reflectedType)
 			{

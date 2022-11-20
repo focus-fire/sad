@@ -4,11 +4,15 @@
 
 #include "ScriptingEngine.h"
 
-sad::cs::ScriptClass::ScriptClass(const std::string& nameSpace, const std::string& className)
+sad::cs::ScriptClass::ScriptClass(const std::string& nameSpace, const std::string& className, bool useSadCSFrameworkImage)
 	: m_NameSpace(nameSpace)
 	, m_ClassName(className)
 {
-	m_MonoClass = mono_class_from_name(ScriptingEngine::s_ScriptingData->SadCSFrameworkImage, nameSpace.c_str(), className.c_str());
+	if (useSadCSFrameworkImage)
+		m_MonoClass = mono_class_from_name(ScriptingEngine::s_ScriptingData->SadCSFrameworkImage, nameSpace.c_str(), className.c_str());
+	else
+		m_MonoClass = mono_class_from_name(ScriptingEngine::s_ScriptingData->ProjectImage, nameSpace.c_str(), className.c_str());
+
 	SAD_ASSERT(m_MonoClass, "Mono failed to allocate a new object-type for a class");
 }
 

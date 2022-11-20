@@ -32,6 +32,7 @@
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
+float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
 {
@@ -94,7 +95,7 @@ void sad::Application::EngineStart()
 	{
 		PollEvents(isWindowClosed);
 
-		float dt = pog::Time::GetDeltaTime();
+		s_DeltaTime = pog::Time::GetDeltaTime();
 
 		// Game Update
 		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
@@ -109,11 +110,11 @@ void sad::Application::EngineStart()
 
 			// Only start updating the game if `Start` has been called`
 			if (m_IsGameOn)
-				this->Update(dt);
+				this->Update(s_DeltaTime);
 		}
 
 		// Engine Update
-		sad::Application::Update(dt);
+		sad::Application::Update(s_DeltaTime);
 	}
 
 	// gameThread.join();

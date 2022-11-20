@@ -25,12 +25,13 @@ public class TestClass
 
     public void TestMethod()
     {
-        // IO Test
-        // System.IO.File.WriteAllLines($"SadCSFrameworkTest{m_Counter}.txt", new string[] { "pog!", $"Integer -> {m_Counter}", $"{m_TestString}" });
-    
         Log.Debug($"This is a test log from C# with a variable {m_Counter}");
         Log.Warn($"This is a warning message from C#");
         Log.Error($"This is an error message from C#");
 
+        // TODO: Playing SFX then Music doesn't work - needs fix
+        // Audio.PlaySFX("jump.wav");
+        Audio.PlayMusic("lol.mp3", 0);
+        Audio.SetVolume("lol.mp3", 1);
     }
 }

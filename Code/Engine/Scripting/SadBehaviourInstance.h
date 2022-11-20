@@ -34,6 +34,11 @@ namespace sad::cs
 		*/
 		void CallDrawGizmos();
 
+		/**
+		 * @brief Retrieves the script definiition for this SadBehaviour instance
+		*/
+		ScriptClass* GetScriptDefinition() { return m_SadBehaviourScript.get(); }
+
 	private:
 		core::Pointer<ScriptClass> m_SadBehaviourScript;
 

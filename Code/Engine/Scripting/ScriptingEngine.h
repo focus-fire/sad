@@ -67,8 +67,10 @@ namespace sad::cs
 		static void DestroySadBehaviourInstance(ecs::Entity entity);
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
+
 		static bool SadBehaviourExists(const std::string& qualifiedName);
 		static bool SadBehaviourInstanceExists(const core::Guid& guid);
+		static bool SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName);
 
 		static Level* GetCurrentLevelInstance() { return s_ScriptingData->CurrentLevelInstance; }
 

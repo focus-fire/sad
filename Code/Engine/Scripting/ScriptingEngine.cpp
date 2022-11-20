@@ -28,17 +28,15 @@ void sad::cs::ScriptingEngine::Start()
 	// Register functions in the engine API
 	ScriptingBridge::SetupEngineAPIFunctions();
 
+	// Load the Project assembly with the game's scripts
+	std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/Project/Project.dll");
+	LoadProjectAssembly(projectAssemblyPath);
+
 	// Cache classes in assembly
-	CacheAssemblySadBehaviours(s_ScriptingData->SadCSFrameworkAssembly);
+	CacheAssemblySadBehaviours(s_ScriptingData->ProjectAssembly);
 
-	// TODO: Create an assembly for the scripting project and mount it
-	// std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Assets/Scripts/Assembly/Project.dll");
-	// LoadProjectAssembly(projectAssemblyPath);
-
-	// Hold onto reference of SadBehaviour class
-	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour");
-
-	MonoSanityCheck();
+	// Hold onto reference of SadBehaviour class in the SadCSFramework image
+	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour", true);
 }
 
 void sad::cs::ScriptingEngine::Teardown()
@@ -193,7 +191,8 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAsse
 	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(monoImage, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
-	MonoClass* sadBehaviourClass = mono_class_from_name(monoImage, "Sad", "SadBehaviour");
+	// Retrieve Sad.SadBehaviour from the SadCSFramework internal API 
+	MonoClass* sadBehaviourClass = mono_class_from_name(s_ScriptingData->SadCSFrameworkImage, "Sad", "SadBehaviour");
 
 	for (int32_t i = 0; i < numberOfTypes; ++i)
 	{
@@ -214,15 +213,9 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAsse
 		// If a valid namespace exists, store it in the format 'NameSpace.ClassName'
 		std::string qualifiedName;
 		if (strlen(nameSpace) != 0)
-		{
-			qualifiedName = std::string(nameSpace);
-			qualifiedName.append(".");
-			qualifiedName.append(className);
-		}
+			qualifiedName = fmt::format("{}.{}", nameSpace, className);
 		else
-		{
 			qualifiedName = className;
-		}
 
 		s_ScriptingData->SadBehaviourScriptLookup[qualifiedName] = core::CreatePointer<ScriptClass>(nameSpace, className);
 		core::Log(ELogType::Info, "[ScriptingEngine] Cached new SadBehaviour with qualified name {}", qualifiedName);
@@ -253,6 +246,20 @@ bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid
 	return s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
 }
 
+bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName)
+{
+	bool exists = s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
+
+	if (!exists)
+		return false;
+
+	// Check if the passed script name and the script name on the SadBehaviour are the same
+	ScriptClass* sadBeaviourDefinition = s_ScriptingData->SadBehaviourInstanceLookup[guid]->GetScriptDefinition();
+	std::string retrievedQualifiedName = sadBeaviourDefinition->GetQualifiedName();
+
+	return core::StringUtils::Equals(qualifiedName, retrievedQualifiedName);
+}
+
 ///////////////
 /// Testing ///
 ///////////////
@@ -260,12 +267,12 @@ bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid
 void sad::cs::ScriptingEngine::MonoSanityCheck()
 {
 	// Create sample TestClass
-	ScriptClass testClass = ScriptClass("", "TestClass");
-	MonoObject* testObject = testClass.Instantiate();
+	//ScriptClass testClass = ScriptClass("", "TestClass", true);
+	//MonoObject* testObject = testClass.Instantiate();
 
 	// Test 1: Method with no parameters 
-	MonoMethod* testMethod = testClass.GetMethod("TestMethod", 0);
-	testClass.CallMethod(testMethod, testObject, nullptr);
+	//MonoMethod* testMethod = testClass.GetMethod("TestMethod", 0);
+	//testClass.CallMethod(testMethod, testObject, nullptr);
 
 	// Test 2: Method with one parameter
 	//int val = 5;

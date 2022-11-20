@@ -2,6 +2,8 @@
 
 #include "Level.h"
 
+#include "Application.h"
+
 #include "Scripting/ScriptingEngine.h"
 
 #include "ECS/Entity.h"
@@ -28,8 +30,9 @@ void sad::Level::Update(sad::ecs::EntityWorld& world)
 			cs::ScriptingEngine::CreateSadBehaviourInstance(entity);
 
 		// Since script instance exists, call DrawGizmos()
-		// This should be updated each frame 
-		cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(entity);
+		// This should be updated each frame and should only be enabled while in Editor mode
+		if (sad::Application::s_EngineState->GetEngineMode() == EEngineMode::Editor)
+			cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(entity);
 	}
 
 	// Update non-gameplay ECS systems

@@ -1,5 +1,12 @@
 #include "sadpch.h"
 
+// Import engines stuff
+#include <Game/Time.h>
+#include <Engine/Application.h>
+#include <Engine/AudioManager.h>
+#include <Engine/ResourceManager.h>
+#include <Engine/InputManager.h>
+
 #include "ScriptingBridge.h"
 
 #include <glm/glm.hpp>
@@ -125,10 +132,6 @@ namespace sad::cs
 		rad::RenderBuddy::DrawDebugBox(*min, *max, *color);
 	}
 
-	///////
-	///////
-	///////
-
 	/////////////////
 	/// Transform ///
 	/////////////////
@@ -208,21 +211,159 @@ namespace sad::cs
 		ecs::Entity entity = GetEntityInLevel(guid);
 		*outMax = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMax();
 	}
+
+	/////////////
+	/// Input ///
+	/////////////
+
+	static bool GetButton(sad::ControllerButton button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetButton(button);
+	}
+
+	static bool GetButtonPressed(sad::ControllerButton button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetButtonPressed(button);
+	}
+
+	static bool GetButtonReleased(sad::ControllerButton button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetButtonReleased(button);
+	}
+
+	static bool GetKey(sad::KeyCode key)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetKey(key);
+	}
+
+	static bool GetKeyPressed(sad::KeyCode key)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetKeyPressed(key);
+	}
+
+	static bool GetKeyReleased(sad::KeyCode key)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetKeyReleased(key);
+	}
+
+	static bool GetMouseButton(int button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetMouseButton(button);
+	}
+
+	static bool GetMouseButtonPressed(int button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetMouseButtonPressed(button);
+	}
+
+	static bool GetMouseButtonReleased(int button)
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetMouseButtonReleased(button);
+	}
+
+	static SDL_Point GetMousePosition()
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.GetMousePosition();
+	}
+
+	static bool IsControllerActive()
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.IsControllerActive();
+	}
+
+	static bool IsControllerConnected()
+	{
+		InputManager& input = InputManager::GetInstance();
+
+		return input.IsControllerConnected();
+	}
+
+	/////////////
+	/// Audio ///
+	/////////////
+
+	static void PlaySFX(MonoString* audioString)
+	{
+		char* cAudioString = mono_string_to_utf8(audioString);
+
+		sad::AudioResource* audio = sad::ResourceManager::GetResource<sad::AudioResource>(cAudioString);
+
+		sad::AudioManager::PlaySFX(audio);
+
+		mono_free(cAudioString);
+	}
+
+	static void PlayMusic(MonoString* audioString, int times)
+	{
+		char* cAudioString = mono_string_to_utf8(audioString);
+
+		sad::AudioResource* audio = sad::ResourceManager::GetResource<sad::AudioResource>(cAudioString);
+
+		sad::AudioManager::PlayMusic(audio, times);
+
+		mono_free(cAudioString);
+	}
+
+	static void SetVolume(MonoString* audioString, int volume)
+	{
+		char* cAudioString = mono_string_to_utf8(audioString);
+
+		sad::AudioResource* audio = sad::ResourceManager::GetResource<sad::AudioResource>(cAudioString);
+
+		sad::AudioManager::SetVolume(audio, volume);
+
+		mono_free(cAudioString);
+	}
+
+	////////////
+	/// Misc ///
+	////////////
+
+	static float Getdt()
+	{
+		return sad::Application::s_DeltaTime;
+	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 {
+	// ECS
 	SAD_CSF_ADD_INTERNAL("ECS", HasComponent);
 	SAD_CSF_ADD_INTERNAL("ECS", AddComponent);
 	SAD_CSF_ADD_INTERNAL("ECS", RemoveComponent);
 
+	// Log
 	SAD_CSF_ADD_INTERNAL("Log", Debug);
 	SAD_CSF_ADD_INTERNAL("Log", Warn);
 	SAD_CSF_ADD_INTERNAL("Log", Error);
 
+	// Gizmos
 	SAD_CSF_ADD_INTERNAL("Gizmos", DrawLine);
 	SAD_CSF_ADD_INTERNAL("Gizmos", DrawBox);
 
+	// Transform
 	SAD_CSF_ADD_INTERNAL("Transform", GetPosition);
 	SAD_CSF_ADD_INTERNAL("Transform", SetPosition);
 	SAD_CSF_ADD_INTERNAL("Transform", GetRotation);
@@ -234,8 +375,32 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
 	SAD_CSF_ADD_INTERNAL("Transform", Scale);
 
+	// Bound
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMin);
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMax);
+
+	// Inputs
+	SAD_CSF_ADD_INTERNAL("Input", GetButton);
+	SAD_CSF_ADD_INTERNAL("Input", GetButtonPressed);
+	SAD_CSF_ADD_INTERNAL("Input", GetButtonReleased);
+	SAD_CSF_ADD_INTERNAL("Input", GetKey);
+	SAD_CSF_ADD_INTERNAL("Input", GetKeyPressed);
+	SAD_CSF_ADD_INTERNAL("Input", GetKeyReleased);
+	SAD_CSF_ADD_INTERNAL("Input", GetMouseButton);
+	SAD_CSF_ADD_INTERNAL("Input", GetMouseButtonPressed);
+	SAD_CSF_ADD_INTERNAL("Input", GetMouseButtonReleased);
+	SAD_CSF_ADD_INTERNAL("Input", GetMousePosition);
+	SAD_CSF_ADD_INTERNAL("Input", IsControllerActive);
+	SAD_CSF_ADD_INTERNAL("Input", IsControllerConnected);
+
+	// Audio
+	SAD_CSF_ADD_INTERNAL("Audio", PlaySFX);
+	SAD_CSF_ADD_INTERNAL("Audio", PlayMusic);
+	SAD_CSF_ADD_INTERNAL("Audio", SetVolume);
+
+	// Misc
+	SAD_CSF_ADD_INTERNAL("Misc", Getdt);
+	// Add raycast intersection to "Misc"
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()

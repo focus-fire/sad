@@ -41,6 +41,9 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 	}
 	else
 	{
+		if (input.GetKey(sad::KeyCode::LCtrl) || input.GetKey(sad::KeyCode::RCtrl))
+			return;
+
 		// Handles forward/backward movement using W and S
 		if (input.GetKey(sad::KeyCode::W))
 		{

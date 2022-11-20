@@ -5,6 +5,9 @@ namespace Sad
 {
     namespace Internal
     {
+        /// <summary>
+        /// Internal methods for all native ECS operations 
+        /// </summary>
         internal static class ECS
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -17,6 +20,9 @@ namespace Sad
             internal extern static void RemoveComponent(Guid entityGuid, Type componentType);
         }
 
+        /// <summary>
+        /// Internal methods for all native Log operations
+        /// </summary>
         internal static class Log 
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -29,6 +35,21 @@ namespace Sad
             internal extern static void Error(string message);
         }
 
+        /// <summary>
+        /// Internal methods for all native Gizmo operations
+        /// </summary>
+        internal static class Gizmos
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void DrawLine(ref Vector3 from, ref Vector3 to, ref Vector3 color);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void DrawBox(ref Vector3 min, ref Vector3 max, ref Vector3 color);
+        }
+
+        /// <summary>
+        /// Internal methods for all native Transforms
+        /// </summary>
         internal static class Transform
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
@@ -60,6 +81,18 @@ namespace Sad
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void Scale(Guid entityGuid, ref Vector3 scale);
+        }
+
+        /// <summary>
+        /// Internal methods for all native Bounds
+        /// </summary>
+        internal static class Bound
+        {
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void GetBoundMax(Guid entityGuid, out Vector3 boundMax);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void GetBoundMin(Guid entityGuid, out Vector3 boundMin);
         }
     }
 }

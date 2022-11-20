@@ -143,7 +143,7 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 		return;
 	}
 	
-	// Remove active script instance
+	// Remove active script instance if script is detached from entity
 	sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
 	
 	// Remove script component

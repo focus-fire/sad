@@ -5,7 +5,7 @@
 #include <Engine/ResourceManager.h>
 
 sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
-	: m_VertexCount(2)
+	: VertexCount(2)
 {
 	float points[12];
 	
@@ -23,24 +23,24 @@ sad::LineRenderer::LineRenderer(glm::vec3 from, glm::vec3 to, glm::vec3 color)
 	points[10] = color.g;
 	points[11] = color.b;
 
-	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Line.glsl");
+	Shader = ResourceManager::GetResource<rad::ShaderResource>("Line.glsl");
 
-	m_VertexArray = new rad::VertexArray();
-	m_VertexArray->Bind();
+	VertexArray = new rad::VertexArray();
+	VertexArray->Bind();
 
-	m_VertexBuffer = new rad::VertexBuffer(points, sizeof(points));
-	m_VertexBuffer->Bind();
+	VertexBuffer = new rad::VertexBuffer(points, sizeof(points));
+	VertexBuffer->Bind();
 	
-	m_VertexAttributeContainer = new rad::VertexAttributeContainer();
-	m_VertexAttributeContainer->AddFloatAttribute(3);
-	m_VertexAttributeContainer->AddFloatAttribute(3);
+	VertexAttributeContainer = new rad::VertexAttributeContainer();
+	VertexAttributeContainer->AddFloatAttribute(3);
+	VertexAttributeContainer->AddFloatAttribute(3);
 
-	m_VertexArray->AddBufferWithAttributes(*m_VertexBuffer, *m_VertexAttributeContainer);
+	VertexArray->AddBufferWithAttributes(*VertexBuffer, *VertexAttributeContainer);
 }
 
 sad::LineRenderer::~LineRenderer()
 {
-	delete m_VertexArray;
-	delete m_VertexBuffer;
-	delete m_VertexAttributeContainer;
+	delete VertexArray;
+	delete VertexBuffer;
+	delete VertexAttributeContainer;
 }

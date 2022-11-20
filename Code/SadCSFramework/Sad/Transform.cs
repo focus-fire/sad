@@ -2,6 +2,9 @@
 {
     public class Transform : Component
     {
+        /// <summary>
+        /// Retrieves the current position for an entity's transform  
+        /// </summary>
         public Vector3 position
         {
             get
@@ -15,6 +18,9 @@
             }
         }
 
+        /// <summary>
+        /// Retrieves the current rotation for an entity's transform as a quaternion
+        /// </summary>
         public Quaternion rotation
         {
             get
@@ -28,6 +34,9 @@
             }
         }
 
+        /// <summary>
+        /// Retrieves the current scale for an entity's transform
+        /// </summary>
         public Vector3 scale
         {
             get

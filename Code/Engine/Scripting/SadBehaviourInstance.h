@@ -29,6 +29,11 @@ namespace sad::cs
 		*/
 		void CallUpdate();
 
+		/**
+		 * @brief Calls (or 'invokes') the DrawGizmos() method if it exists on a SadBehaviour
+		*/
+		void CallDrawGizmos();
+
 	private:
 		core::Pointer<ScriptClass> m_SadBehaviourScript;
 
@@ -36,5 +41,6 @@ namespace sad::cs
 		MonoMethod* m_Constructor = nullptr;
 		MonoMethod* m_Awake = nullptr;
 		MonoMethod* m_Update = nullptr;
+		MonoMethod* m_DrawGizmos = nullptr;
 	};
 }

@@ -6,6 +6,7 @@
 #include <mono/metadata/object.h>
 
 #include <Engine/ECS/Components/ComponentTypes.h>
+#include <Engine/Renderer/RenderBuddy.h>
 
 /// Refer to SadCSFramework.Internal.cs for a reference on currently implemented internal methods
 /// In order to add a new method to the scripting api, use this macro with the className (in the 'Sad.Internal' namespace) and the method name
@@ -21,7 +22,7 @@ namespace sad::cs
 	/// Util ///
 	////////////
 
-	static ecs::Entity GetEntityInLevel(core::NativeGuid guid)
+	static ecs::Entity GetEntityInLevel(const core::NativeGuid& guid)
 	{
 		Level* level = ScriptingEngine::GetCurrentLevelInstance();
 		SAD_ASSERT(level, "Failed to retrieve valid level instance");
@@ -42,7 +43,7 @@ namespace sad::cs
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& hasComponentFunctions = ScriptingBridge::s_EntityECSFunctions.HasComponents;
-		SAD_ASSERT(hasComponentFunctions.find(componentType) != hasComponentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+		SAD_ASSERT(hasComponentFunctions.find(componentType) != hasComponentFunctions.end(), "Trying to fetch a component from an enity that doesn't have a registered HasComponent function");
 
 		return hasComponentFunctions[componentType](entity);
 	}
@@ -53,7 +54,7 @@ namespace sad::cs
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& componentFunctions = ScriptingBridge::s_EntityECSFunctions.AddComponents;
-		SAD_ASSERT(componentFunctions.find(componentType) != componentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+		SAD_ASSERT(componentFunctions.find(componentType) != componentFunctions.end(), "Trying to add a component to an entity that doesn't have a registered AddComponent function");
 
 		std::function<void(ecs::Entity&)> addComponentFunction = componentFunctions[componentType];
 		addComponentFunction(entity);
@@ -65,7 +66,7 @@ namespace sad::cs
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& removeComponentFunctions = ScriptingBridge::s_EntityECSFunctions.RemoveComponents;
-		SAD_ASSERT(removeComponentFunctions.find(componentType) != removeComponentFunctions.end(), "Attempted to fetch component that doesn't exist!");
+		SAD_ASSERT(removeComponentFunctions.find(componentType) != removeComponentFunctions.end(), "Trying to remove a component from an entity that doesn't have a registered RemoveComponent function");
 
 		removeComponentFunctions[componentType](entity);
 	}
@@ -108,6 +109,20 @@ namespace sad::cs
 		core::Log(ELogType::Error, "{}", cString);
 
 		mono_free(cString);
+	}
+	
+	//////////////
+	/// Gizmos ///
+	//////////////
+
+	static void DrawLine(glm::vec3* from, glm::vec3* to, glm::vec3* color)
+	{
+		rad::RenderBuddy::DrawDebugLine(*from, *to, *color);
+	}
+
+	static void DrawBox(glm::vec3* min, glm::vec3* max, glm::vec3* color)
+	{
+		rad::RenderBuddy::DrawDebugBox(*min, *max, *color);
 	}
 
 	///////
@@ -177,6 +192,22 @@ namespace sad::cs
 		ecs::Entity entity = GetEntityInLevel(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Scale(*scale);
 	}
+
+	/////////////
+	/// Bound ///
+	/////////////
+
+	static void GetBoundMin(core::NativeGuid guid, glm::vec3* outMin)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		*outMin = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMin();
+	}
+
+	static void GetBoundMax(core::NativeGuid guid, glm::vec3* outMax)
+	{
+		ecs::Entity entity = GetEntityInLevel(guid);
+		*outMax = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMax();
+	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
@@ -189,6 +220,9 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Log", Warn);
 	SAD_CSF_ADD_INTERNAL("Log", Error);
 
+	SAD_CSF_ADD_INTERNAL("Gizmos", DrawLine);
+	SAD_CSF_ADD_INTERNAL("Gizmos", DrawBox);
+
 	SAD_CSF_ADD_INTERNAL("Transform", GetPosition);
 	SAD_CSF_ADD_INTERNAL("Transform", SetPosition);
 	SAD_CSF_ADD_INTERNAL("Transform", GetRotation);
@@ -199,9 +233,13 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Transform", Rotate);
 	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
 	SAD_CSF_ADD_INTERNAL("Transform", Scale);
+
+	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMin);
+	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMax);
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()
 {
 	RegisterManagedComponent<ecs::TransformComponent>(true);
+	RegisterManagedComponent<ecs::BoundComponent>(true);
 }

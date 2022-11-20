@@ -19,12 +19,17 @@ void sad::Level::Start()
 void sad::Level::Update(sad::ecs::EntityWorld& world)
 {
 	// Check if new scripts have been added and need to be instantiated
+	// Also check if 'DrawGizmos' needs to be called on a script
 	auto view = world.view<ecs::ScriptComponent>();
 	for (auto [handle, scriptComponent] : view.each())
 	{
 		ecs::Entity entity = ecs::Entity(handle);
 		if (!cs::ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid()))
 			cs::ScriptingEngine::CreateSadBehaviourInstance(entity);
+
+		// Since script instance exists, call DrawGizmos()
+		// This should be updated each frame 
+		cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(entity);
 	}
 
 	// Update non-gameplay ECS systems

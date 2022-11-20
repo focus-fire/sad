@@ -32,6 +32,24 @@ namespace sad::cs
 		*/
 		static void SetupEngineAPIComponents();
 
+		template<typename T>
+		static bool HasComponentCallback(ecs::Entity& entity)
+		{
+			return entity.HasComponent<T>();
+		}
+
+		template<typename T>
+		static void AddComponentCallback(ecs::Entity& entity)
+		{
+			entity.AddComponent<T>();
+		}
+
+		template<typename T>
+		static void RemoveComponentCallback(ecs::Entity& entity)
+		{
+			entity.RemoveComponent<T>();
+		}
+
 		/**
 		 * @brief Registers an unmanaged ECS component for use in C#
 		 * @tparam T Struct component to register in C#
@@ -66,10 +84,11 @@ namespace sad::cs
 				return;
 			}
 
-			// Register component functions in all three available lookups
-			s_EntityECSFunctions.HasComponents[reflectedType] = [](ecs::Entity& entity) { return entity.HasComponent<T>(); };
-			s_EntityECSFunctions.AddComponents[reflectedType] = [](ecs::Entity& entity) { entity.AddComponent<T>(); };
-			s_EntityECSFunctions.RemoveComponents[reflectedType] = [](ecs::Entity& entity) { entity.RemoveComponent<T>(); };
+			// Register component callback functions in all three available lookups
+			// This makes debugging component registration easier, as mono will callback into the functions above 
+			s_EntityECSFunctions.HasComponents[reflectedType] = &cs::ScriptingBridge::HasComponentCallback<T>;
+			s_EntityECSFunctions.AddComponents[reflectedType] = &cs::ScriptingBridge::AddComponentCallback<T>;
+			s_EntityECSFunctions.RemoveComponents[reflectedType] = &cs::ScriptingBridge::RemoveComponentCallback<T>;
 		}
 	};
 }

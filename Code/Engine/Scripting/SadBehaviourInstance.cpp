@@ -16,6 +16,7 @@ sad::cs::SadBehaviourInstance::SadBehaviourInstance(core::Pointer<ScriptClass> s
 	// Initialize lifecycle methods on script
 	m_Awake = sadBehaviourScript->GetMethod("Awake", 0);
 	m_Update = sadBehaviourScript->GetMethod("Update", 0);
+	m_DrawGizmos = sadBehaviourScript->GetMethod("DrawGizmos", 0);
 
 
 	// Initialize all SadBehaviours with their entity's guid
@@ -37,10 +38,19 @@ void sad::cs::SadBehaviourInstance::CallAwake()
 
 	m_SadBehaviourScript->CallMethod(m_Awake, m_Instance); 
 }
+
 void sad::cs::SadBehaviourInstance::CallUpdate() 
 { 
 	if (!m_Update)
 		return;
 
 	m_SadBehaviourScript->CallMethod(m_Update, m_Instance); 
+}
+
+void sad::cs::SadBehaviourInstance::CallDrawGizmos()
+{
+	if (!m_DrawGizmos)
+		return;
+
+	m_SadBehaviourScript->CallMethod(m_DrawGizmos, m_Instance);
 }

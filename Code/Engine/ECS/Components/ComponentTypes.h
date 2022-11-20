@@ -3,7 +3,6 @@
 /* Non-Serialized */
 
 #include "GuidComponent.h"
-#include "LineRendererComponent.h"
 #include "RenderableObjectComponent.h"
 #include "RenderableResourceComponent.h"
 

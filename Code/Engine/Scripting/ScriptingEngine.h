@@ -63,6 +63,7 @@ namespace sad::cs
 		static void CreateSadBehaviourInstance(ecs::Entity entity);
 		static void AwakeSadBehaviourInstance(ecs::Entity entity);
 		static void UpdateSadBehaviourInstance(ecs::Entity entity);
+		static void DrawGizmosForSadBehaviourInstance(ecs::Entity entity);
 		static void DestroySadBehaviourInstance(ecs::Entity entity);
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);

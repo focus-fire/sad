@@ -10,13 +10,17 @@ namespace Sad
         /// </summary>
         public readonly Guid GUID;
 
+        /// <summary>
+        /// Cache for local 'GetComponent' calls.
+        /// This is mainly used to reduce heap allocations.
+        /// ex: calling 'new T()' everytime we fetch a native component. 
+        /// </summary>
         internal Dictionary<Type, object> ComponentCache;
 
         protected SadBehaviour() => GUID = Guid.Empty;
         internal SadBehaviour(Guid guid)
         { 
             GUID = guid;
-
             ComponentCache = new Dictionary<Type, object>();
         }
 
@@ -35,6 +39,24 @@ namespace Sad
             }
         }
 
+        /// <summary>
+        /// Each SadBehaviour should have a bound by default
+        /// </summary>
+        private Bound m_Bound;
+        public Bound bound
+        {
+            get
+            {
+                if (m_Bound == null)
+                    m_Bound = GetComponent<Bound>();
+
+                return m_Bound;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the managed implementation for desired component if it exists  
+        /// </summary>
         public T GetComponent<T>() where T: Component, new()
         {
             if (!HasComponent<T>())
@@ -51,6 +73,9 @@ namespace Sad
             return component;
         }
 
+        /// <summary>
+        /// Calls the native implementation for 'HasComponent' on the desired component
+        /// </summary>
         public bool HasComponent<T>() where T: Component, new()
         {
             Type componentType = typeof(T);
@@ -58,6 +83,9 @@ namespace Sad
             return Internal.ECS.HasComponent(GUID, componentType);
         }
 
+        /// <summary>
+        /// Calls the native implementation for 'RemoveComponent' on the desired component if it exists on the entity 
+        /// </summary>
         public void RemoveComponent<T>() where T: Component, new()
         {
             if (!HasComponent<T>())

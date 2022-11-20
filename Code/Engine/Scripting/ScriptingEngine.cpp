@@ -158,10 +158,18 @@ void sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(ecs::Entity entity)
 {
 	const core::Guid& guid = entity.GetGuid();
 
-	// TODO: If an entity is destroyed in the level - make sure it is killed from this lookup 
-	SAD_ASSERT(SadBehaviourInstanceExists(guid), "Attempting to invoke an Update on an entity without a SadBehaviour instance!");
+	SAD_ASSERT(SadBehaviourInstanceExists(guid), "Attempting to invoke an Update on an entity without a SadBehaviour instance");
 
 	s_ScriptingData->SadBehaviourInstanceLookup[guid]->CallUpdate();
+}
+
+void sad::cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(ecs::Entity entity)
+{
+	const core::Guid& guid = entity.GetGuid();
+
+	SAD_ASSERT(SadBehaviourInstanceExists(guid), "Attempting to invoke an DrawGizmos on an entity without a SadBehaviour instance");
+
+	s_ScriptingData->SadBehaviourInstanceLookup[guid]->CallDrawGizmos();
 }
 
 void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)

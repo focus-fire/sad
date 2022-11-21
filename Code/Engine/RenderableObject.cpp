@@ -19,6 +19,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// Stripe the data in 'Vertices' appropriately
 	m_VertexAttributes->AddFloatAttribute(3);		// Points, Vec3 
 	m_VertexAttributes->AddFloatAttribute(2);		// TextureCoordinates, Vec2
+	m_VertexAttributes->AddFloatAttribute(3);		// Normals, Vec3
 	m_VertexArray->AddBufferWithAttributes(*m_VertexBuffer, *m_VertexAttributes);
 
 	// Create the index buffer for indices

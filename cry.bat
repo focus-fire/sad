@@ -28,7 +28,7 @@ CALL python3 %~f1\Scripts\bet.py --clean
 GOTO :eof
 
 :build
-CALL python3 %~f1\Scripts\bet.py --build
+CALL python3 %~f1\Scripts\bet.py --build vs2019
 GOTO :eof
 
 :make

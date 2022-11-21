@@ -17,18 +17,24 @@ namespace sad
 			const unsigned int* Indices;
 			const unsigned int IndexCount;
 
+			const float* Normals;
+
 			Geometry()
 				: Vertices(nullptr)
 				, VertexSize(0)
 				, Indices(nullptr)
 				, IndexCount(0)
+				, Normals(nullptr)
 			{ }
 
-			explicit Geometry(const float* vertices, const unsigned int vertexSize, const unsigned int* indices, const unsigned int indexCount)
+			explicit Geometry(const float* vertices, const unsigned int vertexSize, 
+				const unsigned int* indices, const unsigned int indexCount, 
+				const float* normals)
 				: Vertices(vertices)
 				, VertexSize(vertexSize)
 				, Indices(indices)
 				, IndexCount(indexCount)
+				, Normals(normals)
 			{ }
 		};
 

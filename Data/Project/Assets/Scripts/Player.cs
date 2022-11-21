@@ -1,10 +1,32 @@
 using Sad;
+using System.Collections.Generic;
 
-public class PlayerController : SadBehaviour
+public class Player : SadBehaviour
 {
+    public List<Enemy> Enemies;
+
     void Awake()
     {
         Log.Debug($"PlayerController.Awake => {GUID}");
+
+        // Testing Instantiation
+        Entity EnemyCube = Instantiate("EnemyCube");
+        Log.Debug($"Instantiated an entity with GUID => {EnemyCube?.GUID}");
+
+        // Testing Finds
+        Entity foundEnemyCube = FindEntityWithName("EnemyCube");
+        Log.Debug($"Found a component with GUID => {foundEnemyCube?.GUID}");
+
+        // Testing Script Adding/Getting
+        foundEnemyCube.AddScriptComponent<Enemy>();
+        Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
+        Log.Debug($"Found an enemy with {e?.Health} health");
+
+        // Testing Script Removal
+        foundEnemyCube.RemoveScriptComponent<Enemy>();
+
+        // Testing entity destruction
+        Destroy(foundEnemyCube);
     }
 
     void Update()
@@ -29,10 +51,16 @@ public class PlayerController : SadBehaviour
             Log.Warn("Space Key Released!!!");
         }
 
+        if (Input.GetMouseButton(MouseButton.Left))
+        {
+            // Shoot raycast forward
+            // Check for collisions with entities?
+        }
+
         if (Input.GetMouseButton(MouseButton.Right))
         {
             Log.Warn("Right Mouse Pressed!!!");
-            transform.Translate(new Vector3(moveSpeed, moveSpeed, moveSpeed));
+            transform.Translate(new Vector3(-moveSpeed, -moveSpeed, -moveSpeed));
         }
     }
 

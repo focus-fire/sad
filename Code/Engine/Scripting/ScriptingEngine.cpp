@@ -33,7 +33,7 @@ void sad::cs::ScriptingEngine::Start()
 	LoadProjectAssembly(projectAssemblyPath);
 
 	// Cache classes in assembly
-	CacheAssemblySadBehaviours(s_ScriptingData->ProjectAssembly);
+	CacheAssemblySadBehaviours();
 
 	// Hold onto reference of SadBehaviour class in the SadCSFramework image
 	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour", true);
@@ -118,38 +118,60 @@ void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
 /// Entity Ops ///
 //////////////////
 
-void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity)
+void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
-	{
-		// Retrieve the base class from the lookup
-		core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptComponent.m_ClassName];
+	if (!SadBehaviourExists(scriptName))
+		return;
 
-		// Instantiate the script using the class definition
-		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
+	// Retrieve the base class from the lookup
+	core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptName];
 
-		// Store the instantiated behaviour in the lookup
-		s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
-	}
+	// Instantiate the script using the class definition
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
+
+	// Store the instantiated behaviour in the lookup
+	s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
 }
 
-void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
+void sad::cs::ScriptingEngine::CreateNativeSadBehaviourInstance(ecs::Entity entity)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
-	{
-		// If the SadBehaviour hasn't been instantiated, instantiate it in the engine
-		core::Guid guid = entity.GetGuid();
-		if (!SadBehaviourInstanceExists(guid))
-			CreateSadBehaviourInstance(entity);
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
 
-		// Retrieve the SadBehaviour from the lookup
-		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
+	CreateSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
 
-		// Call awake on the script instance
-		sadBehaviourInstance->CallAwake();
-	}
+void sad::cs::ScriptingEngine::CreateRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	CreateSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Exit early if the requested script doesn't exist
+	if (!SadBehaviourExists(scriptName))
+		return;
+
+	// Retrieve the SadBehaviour from the lookup
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
+
+	// Call awake on the script instance
+	sadBehaviourInstance->CallAwake();
+}
+
+void sad::cs::ScriptingEngine::AwakeNativeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
 }
 
 void sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(ecs::Entity entity)
@@ -172,23 +194,82 @@ void sad::cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(ecs::Entity ent
 
 void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
+	bool hasNativeScriptComponent = entity.HasComponent<ecs::ScriptComponent>();
+	bool hasRuntimeScriptComponent = entity.HasComponent<ecs::RuntimeScriptComponent>();
+
+	// Entity passed doesn't have a script to destroy
+	if (!hasNativeScriptComponent && !hasRuntimeScriptComponent)
+		return;
+
+	if (hasNativeScriptComponent)
 	{
-		s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+		const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+		if (SadBehaviourExists(nativeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::ScriptComponent>();
 	}
+
+	if (hasRuntimeScriptComponent)
+	{
+		const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+		if (SadBehaviourExists(runtimeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::RuntimeScriptComponent>();
+	}
+}
+
+//////////////////////
+/// Exposed C# Ops ///
+//////////////////////
+
+MonoObject* sad::cs::ScriptingEngine::GetSadBehaviourInstance(const core::Guid& guid)
+{
+	if (!SadBehaviourInstanceExists(guid))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to get a script instance that doesn't exist");
+		return nullptr;
+	}
+
+	return s_ScriptingData->SadBehaviourInstanceLookup.at(guid)->GetManagedInstance();
+}
+
+void sad::cs::ScriptingEngine::AddRuntimeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Check if the entity already has an instantiated script attached to it
+	if (SadBehaviourInstanceExists(entity.GetGuid()))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity that already has one");
+		return;
+	}
+
+	// Check if script exists in the runtime
+	if (!SadBehaviourExists(scriptName))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity, but the script doesn't exist");
+		return;
+	}
+
+	// Add the component to the entity
+	entity.AddComponent<ecs::RuntimeScriptComponent>(scriptName);
+
+	// Create the runtime instance
+	CreateRuntimeSadBehaviourInstance(entity);
+
+	// Awaken the script since this is called from runtime
+	AwakeRuntimeSadBehaviourInstance(entity);
 }
 
 ////////////////////////////
 /// Scripting Engine Ops ///
 ////////////////////////////
 
-void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAssembly)
+void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
 {
 	s_ScriptingData->SadBehaviourScriptLookup.clear();
 
-	MonoImage* monoImage = mono_assembly_get_image(monoAssembly);
-	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(monoImage, MONO_TABLE_TYPEDEF);
+	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_ScriptingData->ProjectImage, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
 
 	// Retrieve Sad.SadBehaviour from the SadCSFramework internal API 
@@ -199,11 +280,11 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours(MonoAssembly* monoAsse
 		uint32_t columns[MONO_TYPEDEF_SIZE];
 		mono_metadata_decode_row(typeDefinitionsTable, i, columns, MONO_TYPEDEF_SIZE);
 
-		const char* nameSpace = mono_metadata_string_heap(monoImage, columns[MONO_TYPEDEF_NAMESPACE]);
-		const char* className = mono_metadata_string_heap(monoImage, columns[MONO_TYPEDEF_NAME]);
+		const char* nameSpace = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAMESPACE]);
+		const char* className = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAME]);
 
 		// Evaluate if class in the assembly is inheriting from SadBehaviour
-		MonoClass* monoClass = mono_class_from_name(monoImage, nameSpace, className);
+		MonoClass* monoClass = mono_class_from_name(s_ScriptingData->ProjectImage, nameSpace, className);
 		bool isSadBehaviour = mono_class_is_subclass_of(monoClass, sadBehaviourClass, false);
 
 		// Continue to next assembly type if it's not a SadBehaviour or the SadBehaviour class itself
@@ -258,31 +339,4 @@ bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid
 	std::string retrievedQualifiedName = sadBeaviourDefinition->GetQualifiedName();
 
 	return core::StringUtils::Equals(qualifiedName, retrievedQualifiedName);
-}
-
-///////////////
-/// Testing ///
-///////////////
-
-void sad::cs::ScriptingEngine::MonoSanityCheck()
-{
-	// Create sample TestClass
-	//ScriptClass testClass = ScriptClass("", "TestClass", true);
-	//MonoObject* testObject = testClass.Instantiate();
-
-	// Test 1: Method with no parameters 
-	//MonoMethod* testMethod = testClass.GetMethod("TestMethod", 0);
-	//testClass.CallMethod(testMethod, testObject, nullptr);
-
-	// Test 2: Method with one parameter
-	//int val = 5;
-	//void* param = &val;
-	//MonoMethod* incrementMethod = testClass.GetMethod("Increment", 1);
-	//testClass.CallMethod(incrementMethod, testObject, &param);
-
-	// Test 3: Method with two parameters
-	//int val2 = 10;
-	//void* params[2] = { &val, &val2 };
-	//MonoMethod* addNumbersMethod = testClass.GetMethod("AddNumbers", 2);
-	//testClass.CallMethod(addNumbersMethod, testObject, params);
 }

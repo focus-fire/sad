@@ -9,12 +9,12 @@
         {
             get
             {
-                Internal.Transform.GetPosition(Entity.GUID, out Vector3 position);
+                Internal.Transform.GetPosition(EntityGuid, out Vector3 position);
                 return position;
             }
             set
             {
-                Internal.Transform.SetPosition(Entity.GUID, ref value);
+                Internal.Transform.SetPosition(EntityGuid, ref value);
             }
         }
 
@@ -25,12 +25,12 @@
         {
             get
             {
-                Internal.Transform.GetRotation(Entity.GUID, out Quaternion rotation);
+                Internal.Transform.GetRotation(EntityGuid, out Quaternion rotation);
                 return rotation;
             }
             set
             {
-                Internal.Transform.SetRotation(Entity.GUID, ref value);
+                Internal.Transform.SetRotation(EntityGuid, ref value);
             }
         }
 
@@ -41,12 +41,12 @@
         {
             get
             { 
-                Internal.Transform.GetScale(Entity.GUID, out Vector3 scale);
+                Internal.Transform.GetScale(EntityGuid, out Vector3 scale);
                 return scale;
             }
             set
             {
-                Internal.Transform.SetScale(Entity.GUID, ref value);
+                Internal.Transform.SetScale(EntityGuid, ref value);
             }
         }
 
@@ -55,7 +55,7 @@
         /// </summary>
         public void Translate(Vector3 translation)
         {
-            Internal.Transform.Translate(Entity.GUID, ref translation);
+            Internal.Transform.Translate(EntityGuid, ref translation);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@
         /// </summary>
         public void Rotate(Vector3 rotation)
         {
-            Internal.Transform.Rotate(Entity.GUID, ref rotation);
+            Internal.Transform.Rotate(EntityGuid, ref rotation);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@
         /// </summary>
         public void RotateByQuaternion(Quaternion rotation)
         {
-            Internal.Transform.RotateByQuaternion(Entity.GUID, ref rotation);
+            Internal.Transform.RotateByQuaternion(EntityGuid, ref rotation);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@
         /// </summary>
         public void Scale(Vector3 scale)
         {
-            Internal.Transform.Scale(Entity.GUID, ref scale);
+            Internal.Transform.Scale(EntityGuid, ref scale);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace sad::cs
 	/// Util ///
 	////////////
 
-	static ecs::Entity GetEntityInLevel(const core::NativeGuid& guid)
+	static ecs::Entity GetEntityInLevelByGUID(const core::NativeGuid& guid)
 	{
 		Level* level = ScriptingEngine::GetCurrentLevelInstance();
 		SAD_ASSERT(level, "Failed to retrieve valid level instance");
@@ -40,13 +40,85 @@ namespace sad::cs
 		return entity;
 	}
 
+	static ecs::Entity GetEntityInLevelByName(const std::string& entityName)
+	{
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		SAD_ASSERT(level, "Failed to retrieve valid level instance");
+
+		ecs::Entity entity = level->GetEntityByName(entityName);
+		SAD_ASSERT(entity, "Failed to retrieve entity from level with passed name");
+
+		return entity;
+	}
+
 	///////////
 	/// ECS ///
 	///////////
 
+	static core::NativeGuid FindEntityByName(MonoString* entityName)
+	{
+		char* cString = mono_string_to_utf8(entityName);
+
+		ecs::Entity entity = GetEntityInLevelByName(cString);
+
+		mono_free(cString);
+
+		// TODO: What can be reliably returned here?
+		//		 This is currently a bit of a nuclear bomb...
+		if (!entity) 
+			return core::NativeGuid();
+
+		return entity.GetGuid().GetNativeGuid();
+	}
+
+	static core::NativeGuid Instantiate(MonoString* entityName)
+	{
+		char* cString = mono_string_to_utf8(entityName);
+
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		ecs::Entity newEntity = level->InstantiateEntity(cString);
+
+		mono_free(cString);
+
+		return newEntity.GetGuid().GetNativeGuid();
+	}
+
+	static core::NativeGuid InstantiateWithResource(MonoString* entityName, MonoString* resourceName)
+	{
+		char* entityString = mono_string_to_utf8(entityName);
+		char* resourceString = mono_string_to_utf8(resourceName);
+		
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		ecs::Entity newEntity = level->InstantiateEntity(entityString);
+
+		// TODO: Add resource component to entity once model loading is finished
+		// RenderableResource* resource = ResourceManager::GetResource<RenderableResource>(resourceString);
+		// newEntity.AddComponent<ecs::RenderableResourceComponent>(core::CreatePointer<RenderableResource>(resource));
+
+		mono_free(entityString);
+		mono_free(resourceString);
+
+		return newEntity.GetGuid().GetNativeGuid();
+	}
+
+	static void DestroyEntityByName(MonoString* entityName)
+	{
+		char* entityString = mono_string_to_utf8(entityName);
+
+		ScriptingEngine::GetCurrentLevelInstance()->DestroyEntityByName(entityString);
+
+		mono_free(entityString);
+	}
+
+	static void DestroyEntityByGuid(core::NativeGuid guid)
+	{
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+		ScriptingEngine::GetCurrentLevelInstance()->DestroyEntity(entity);
+	}
+
 	static bool HasComponent(core::NativeGuid guid, MonoReflectionType* type)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& hasComponentFunctions = ScriptingBridge::s_EntityECSFunctions.HasComponents;
@@ -57,7 +129,7 @@ namespace sad::cs
 
 	static void AddComponent(core::NativeGuid guid, MonoReflectionType* type)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& componentFunctions = ScriptingBridge::s_EntityECSFunctions.AddComponents;
@@ -69,13 +141,42 @@ namespace sad::cs
 
 	static void RemoveComponent(core::NativeGuid guid, MonoReflectionType* type)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		MonoType* componentType = mono_reflection_type_get_type(type);
 
 		auto& removeComponentFunctions = ScriptingBridge::s_EntityECSFunctions.RemoveComponents;
 		SAD_ASSERT(removeComponentFunctions.find(componentType) != removeComponentFunctions.end(), "Trying to remove a component from an entity that doesn't have a registered RemoveComponent function");
 
 		removeComponentFunctions[componentType](entity);
+	}
+
+	static bool HasScriptInstance(core::NativeGuid guid)
+	{
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+		return ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid());
+	}
+
+	static MonoObject* GetScriptInstance(core::NativeGuid guid)
+	{
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+		return ScriptingEngine::GetSadBehaviourInstance(entity.GetGuid());
+	}
+
+	static void AddScriptInstance(core::NativeGuid guid, MonoString* string)
+	{
+		char* cString = mono_string_to_utf8(string);
+
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+
+		ScriptingEngine::AddRuntimeSadBehaviourInstance(entity, cString);
+
+		mono_free(cString);
+	}
+
+	static void RemoveScriptInstance(core::NativeGuid guid)
+	{
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+		ScriptingEngine::DestroySadBehaviourInstance(entity);
 	}
 
 	///////////
@@ -138,61 +239,61 @@ namespace sad::cs
 
 	static void GetPosition(core::NativeGuid guid, glm::vec3* outPosition)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		*outPosition = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
 	}
 
 	static void SetPosition(core::NativeGuid guid, glm::vec3* position)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetPosition(*position);
 	} 
 
 	static void GetRotation(core::NativeGuid guid, glm::quat* outRotation)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		*outRotation = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
 	}
 
 	static void SetRotation(core::NativeGuid guid, glm::quat* rotation)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetRotation(*rotation);
 	}
 
 	static void GetScale(core::NativeGuid guid, glm::vec3* outScale)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		*outScale = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetScale();
 	}
 
 	static void SetScale(core::NativeGuid guid, glm::vec3* scale)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->SetScale(*scale);
 	}
 
 	static void Translate(core::NativeGuid guid, glm::vec3* translation)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Translate(*translation);
 	}
 
 	static void Rotate(core::NativeGuid guid, glm::vec3* rotation)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Rotate(*rotation);
 	}
 
 	static void RotateByQuaternion(core::NativeGuid guid, glm::quat* rotation)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Rotate(*rotation);
 	}
 
 	static void Scale(core::NativeGuid guid, glm::vec3* scale)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Scale(*scale);
 	}
 
@@ -202,13 +303,13 @@ namespace sad::cs
 
 	static void GetBoundMin(core::NativeGuid guid, glm::vec3* outMin)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		*outMin = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMin();
 	}
 
 	static void GetBoundMax(core::NativeGuid guid, glm::vec3* outMax)
 	{
-		ecs::Entity entity = GetEntityInLevel(guid);
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
 		*outMax = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMax();
 	}
 
@@ -350,9 +451,20 @@ namespace sad::cs
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 {
 	// ECS
+	SAD_CSF_ADD_INTERNAL("ECS", FindEntityByName);
+	SAD_CSF_ADD_INTERNAL("ECS", Instantiate);
+	//SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithResource);
+	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByName);
+	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByGuid);
+
 	SAD_CSF_ADD_INTERNAL("ECS", HasComponent);
 	SAD_CSF_ADD_INTERNAL("ECS", AddComponent);
 	SAD_CSF_ADD_INTERNAL("ECS", RemoveComponent);
+
+	SAD_CSF_ADD_INTERNAL("ECS", HasScriptInstance);
+	SAD_CSF_ADD_INTERNAL("ECS", GetScriptInstance);
+	SAD_CSF_ADD_INTERNAL("ECS", AddScriptInstance);
+	SAD_CSF_ADD_INTERNAL("ECS", RemoveScriptInstance);
 
 	// Log
 	SAD_CSF_ADD_INTERNAL("Log", Debug);

@@ -60,11 +60,23 @@ namespace sad::cs
 		static void RuntimeStart(Level* level);
 		static void RuntimeStop();
 
-		static void CreateSadBehaviourInstance(ecs::Entity entity);
-		static void AwakeSadBehaviourInstance(ecs::Entity entity);
+		static void CreateSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+		static void CreateNativeSadBehaviourInstance(ecs::Entity entity);
+		static void CreateRuntimeSadBehaviourInstance(ecs::Entity entity);
+		
+		static void AwakeSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+		static void AwakeNativeSadBehaviourInstance(ecs::Entity entity);
+		static void AwakeRuntimeSadBehaviourInstance(ecs::Entity entity);
+
 		static void UpdateSadBehaviourInstance(ecs::Entity entity);
+
 		static void DrawGizmosForSadBehaviourInstance(ecs::Entity entity);
+
 		static void DestroySadBehaviourInstance(ecs::Entity entity);
+
+		static void AddRuntimeSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+
+		static MonoObject* GetSadBehaviourInstance(const core::Guid& guid);
 
 		static MonoObject* InstantiateClass(MonoClass* monoClass);
 
@@ -95,11 +107,7 @@ namespace sad::cs
 
 		/**
 		 * @brief Caches all SadBehaviours detected in target asesmbly into the scripting engine's ScriptLookup 
-		 * @todo Add PrintAssemblySadBehaviours to the cli?
 		*/
-		static void CacheAssemblySadBehaviours(MonoAssembly* monoAssembly);
-
-		// TEMP
-		static void MonoSanityCheck();
+		static void CacheAssemblySadBehaviours();
 	};
 }

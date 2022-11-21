@@ -39,6 +39,11 @@ namespace sad::cs
 		*/
 		ScriptClass* GetScriptDefinition() { return m_SadBehaviourScript.get(); }
 
+		/**
+		 * @brief Retrieves the managed instance (object) for this SadBehaviour 
+		*/
+		MonoObject* GetManagedInstance() { return m_Instance; }
+
 	private:
 		core::Pointer<ScriptClass> m_SadBehaviourScript;
 

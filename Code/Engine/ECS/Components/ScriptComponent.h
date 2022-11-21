@@ -14,6 +14,14 @@ namespace sad::ecs
 		std::string m_ClassName;
 	};
 
+	/**
+	 * @brief Used for attaching custom C# scripts with a SadBehaviour at RUNTIME, this should NOT be serialized
+	*/
+	struct RuntimeScriptComponent
+	{
+		std::string m_ClassName;
+	};
+
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::ScriptComponent& scriptComponent)
 	{
 		std::string className = scriptComponent.m_ClassName;

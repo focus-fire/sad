@@ -67,16 +67,6 @@ void cap::Editor::Clear()
 
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
-	// Update game window title with current level name
-	// if (!m_CurrentLevelContext)
-	// {
-	// 	m_CurrentLevelContext = sad::cs::ScriptingEngine::GetCurrentLevelInstance();
-	// }
-	// else
-	// {
-	// 	m_GameWindowTitle = m_CurrentLevelContext->LevelName + " - sadEngine";
-	// }
-
 	bool showGameWindow = true;
 
 	// Set the window size once when the window opens

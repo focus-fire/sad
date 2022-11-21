@@ -4,50 +4,59 @@
 
 #include <mono/metadata/assembly.h>
 
+#include <Engine/ECS/Components/ComponentTypes.h>
+
 #include "ScriptingBridge.h"
 #include "ScriptingEngineUtils.h"
+#include "SadBehaviourInstance.h"
 
-sad::cs::ScriptingEngine::ScriptingEngineConfig* sad::cs::ScriptingEngine::s_ScriptingConfig = nullptr;
+sad::cs::ScriptingEngine::ScriptingEngineData* sad::cs::ScriptingEngine::s_ScriptingData = nullptr;
 
 void sad::cs::ScriptingEngine::Start()
 {
-	s_ScriptingConfig = new ScriptingEngineConfig();
+	s_ScriptingData = new ScriptingEngineData();
 	
 	StartMono();
+
+	// Load the SadCSFramework assembly and print it's corresponding type information
+	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/SadCSFramework/SadCSFramework.dll");
+	LoadSadCSFrameworkAssembly(sadCSFrameworkAssemblyPath);
+
+	// Register components in the engine API
+	ScriptingBridge::SetupEngineAPIComponents();
 
 	// Register functions in the engine API
 	ScriptingBridge::SetupEngineAPIFunctions();
 
-	// Load the SadCSFramework assembly
-	std::string sadCSFrameworkAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Resources/SadCSFramework/SadCSFramework.dll");
-	LoadSadCSFrameworkAssembly(sadCSFrameworkAssemblyPath);
+	// Load the Project assembly with the game's scripts
+	std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/SadProject/SadProject.dll");
+	LoadProjectAssembly(projectAssemblyPath);
 
-	// TODO: Create an assembly for the scripting project and mount it
-	// std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Assets/Scripts/Assembly/Project.dll");
-	// LoadProjectAssembly(projectAssemblyPath);
+	// Cache classes in assembly
+	CacheAssemblySadBehaviours();
 
-	// Testing, print the types that exist in the loaded assembly
-	ScriptingEngineUtils::PrintAssemblyTypes(s_ScriptingConfig->SadCSFrameworkAssembly);
-
-	// Testing, retrieve class from CS assembly and allocate it in memory
-	// MonoObject* testObject = InstantiateClass("", "HelloWorld");
+	// Hold onto reference of SadBehaviour class in the SadCSFramework image
+	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour", true);
 }
 
 void sad::cs::ScriptingEngine::Teardown()
 {
 	TeardownMono();
 
-	delete s_ScriptingConfig;
+	delete s_ScriptingData;
 }
 
 void sad::cs::ScriptingEngine::RuntimeStart(sad::Level* level)
 {
-	s_ScriptingConfig->CurrentLevelInstance = level;
+	s_ScriptingData->CurrentLevelInstance = level;
 }
 
 void sad::cs::ScriptingEngine::RuntimeStop()
 {
-	s_ScriptingConfig->CurrentLevelInstance = nullptr;
+	s_ScriptingData->CurrentLevelInstance = nullptr;
+
+	s_ScriptingData->SadBehaviourScriptLookup.clear();
+	s_ScriptingData->SadBehaviourInstanceLookup.clear();
 }
 
 void sad::cs::ScriptingEngine::StartMono()
@@ -60,18 +69,18 @@ void sad::cs::ScriptingEngine::StartMono()
 	// Create root domain for JIT runtime
 	MonoDomain* csRootDomain = mono_jit_init("sadJITRuntime");
 	SAD_ASSERT(csRootDomain, "Failed to initialize Mono JIT runtime");
-	s_ScriptingConfig->RootDomain = csRootDomain;
+	s_ScriptingData->RootDomain = csRootDomain;
 }
 
 void sad::cs::ScriptingEngine::TeardownMono()
 {
 	mono_domain_set(mono_get_root_domain(), false);
 
-	mono_domain_unload(s_ScriptingConfig->AppDomain);
-	s_ScriptingConfig->AppDomain = nullptr;
+	mono_domain_unload(s_ScriptingData->AppDomain);
+	s_ScriptingData->AppDomain = nullptr;
 
-	mono_jit_cleanup(s_ScriptingConfig->RootDomain);
-	s_ScriptingConfig->RootDomain = nullptr;
+	mono_jit_cleanup(s_ScriptingData->RootDomain);
+	s_ScriptingData->RootDomain = nullptr;
 }
 
 //////////////////////////////////
@@ -82,46 +91,221 @@ void sad::cs::ScriptingEngine::LoadSadCSFrameworkAssembly(const std::string& fil
 {
 	// Create domain for the SadCSFramework runtime
 	char appDomainName[] = "SadCSFrameworkScriptRuntime";
-	s_ScriptingConfig->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
-	mono_domain_set(s_ScriptingConfig->AppDomain, true);
+	s_ScriptingData->AppDomain = mono_domain_create_appdomain(appDomainName, nullptr);
+	mono_domain_set(s_ScriptingData->AppDomain, true);
 
 	// Save a reference to the assembly
-	s_ScriptingConfig->SadCSFrameworkAssemblyFilePath = filePath;
-	s_ScriptingConfig->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
-	SAD_ASSERT(s_ScriptingConfig->SadCSFrameworkAssembly, "Failed to load assembly for SadCSFramework");
+	s_ScriptingData->SadCSFrameworkAssemblyFilePath = filePath;
+	s_ScriptingData->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
+	SAD_ASSERT(s_ScriptingData->SadCSFrameworkAssembly, "Failed to load assembly for SadCSFramework");
 
 	// Save a reference to image for the assembly
-	s_ScriptingConfig->SadCSFrameworkImage = mono_assembly_get_image(s_ScriptingConfig->SadCSFrameworkAssembly);
-	SAD_ASSERT(s_ScriptingConfig->SadCSFrameworkImage, "Failed to mount image for the SadCSFramework assembly");
+	s_ScriptingData->SadCSFrameworkImage = mono_assembly_get_image(s_ScriptingData->SadCSFrameworkAssembly);
+	SAD_ASSERT(s_ScriptingData->SadCSFrameworkImage, "Failed to mount image for the SadCSFramework assembly");
 }
 
 void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
 {
-	s_ScriptingConfig->ProjectAssemblyFilePath = filePath;
-	s_ScriptingConfig->ProjectAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
-	SAD_ASSERT(s_ScriptingConfig->ProjectAssembly, "Failed to load project assembly");
+	s_ScriptingData->ProjectAssemblyFilePath = filePath;
+	s_ScriptingData->ProjectAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
+	SAD_ASSERT(s_ScriptingData->ProjectAssembly, "Failed to load project assembly");
 
-	s_ScriptingConfig->ProjectImage = mono_assembly_get_image(s_ScriptingConfig->ProjectAssembly);
-	SAD_ASSERT(s_ScriptingConfig->ProjectImage, "Failed to mount image for the requested project assembly");
+	s_ScriptingData->ProjectImage = mono_assembly_get_image(s_ScriptingData->ProjectAssembly);
+	SAD_ASSERT(s_ScriptingData->ProjectImage, "Failed to mount image for the requested project assembly");
 }
 
-///////////////
-/// Classes ///
-///////////////
+//////////////////
+/// Entity Ops ///
+//////////////////
 
-MonoClass* sad::cs::ScriptingEngine::GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)
+void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
 {
-	MonoImage* image = mono_assembly_get_image(assembly);
-	MonoClass* aClass = mono_class_from_name(image, namespaceName, className);
-	SAD_ASSERT(aClass, "Failed to retrieve class name from CSharp assembly");
+	if (!SadBehaviourExists(scriptName))
+		return;
 
-	return aClass;
+	// Retrieve the base class from the lookup
+	core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptName];
+
+	// Instantiate the script using the class definition
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
+
+	// Store the instantiated behaviour in the lookup
+	s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
 }
 
-MonoObject* sad::cs::ScriptingEngine::InstantiateClass(const char* namespaceName, const char* className)
+void sad::cs::ScriptingEngine::CreateNativeSadBehaviourInstance(ecs::Entity entity)
 {
-	MonoClass* testClass = GetClassInAssembly(s_ScriptingConfig->SadCSFrameworkAssembly, namespaceName, className);
-	MonoObject* classInstance = mono_object_new(s_ScriptingConfig->AppDomain, testClass);
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+
+	CreateSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::CreateRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	CreateSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Exit early if the requested script doesn't exist
+	if (!SadBehaviourExists(scriptName))
+		return;
+
+	// Retrieve the SadBehaviour from the lookup
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
+
+	// Call awake on the script instance
+	sadBehaviourInstance->CallAwake();
+}
+
+void sad::cs::ScriptingEngine::AwakeNativeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(ecs::Entity entity)
+{
+	const core::Guid& guid = entity.GetGuid();
+
+	SAD_ASSERT(SadBehaviourInstanceExists(guid), "Attempting to invoke an Update on an entity without a SadBehaviour instance");
+
+	s_ScriptingData->SadBehaviourInstanceLookup[guid]->CallUpdate();
+}
+
+void sad::cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(ecs::Entity entity)
+{
+	const core::Guid& guid = entity.GetGuid();
+
+	SAD_ASSERT(SadBehaviourInstanceExists(guid), "Attempting to invoke an DrawGizmos on an entity without a SadBehaviour instance");
+
+	s_ScriptingData->SadBehaviourInstanceLookup[guid]->CallDrawGizmos();
+}
+
+void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)
+{
+	bool hasNativeScriptComponent = entity.HasComponent<ecs::ScriptComponent>();
+	bool hasRuntimeScriptComponent = entity.HasComponent<ecs::RuntimeScriptComponent>();
+
+	// Entity passed doesn't have a script to destroy
+	if (!hasNativeScriptComponent && !hasRuntimeScriptComponent)
+		return;
+
+	if (hasNativeScriptComponent)
+	{
+		const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+		if (SadBehaviourExists(nativeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::ScriptComponent>();
+	}
+
+	if (hasRuntimeScriptComponent)
+	{
+		const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+		if (SadBehaviourExists(runtimeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::RuntimeScriptComponent>();
+	}
+}
+
+//////////////////////
+/// Exposed C# Ops ///
+//////////////////////
+
+MonoObject* sad::cs::ScriptingEngine::GetSadBehaviourInstance(const core::Guid& guid)
+{
+	if (!SadBehaviourInstanceExists(guid))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to get a script instance that doesn't exist");
+		return nullptr;
+	}
+
+	return s_ScriptingData->SadBehaviourInstanceLookup.at(guid)->GetManagedInstance();
+}
+
+void sad::cs::ScriptingEngine::AddRuntimeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Check if the entity already has an instantiated script attached to it
+	if (SadBehaviourInstanceExists(entity.GetGuid()))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity that already has one");
+		return;
+	}
+
+	// Check if script exists in the runtime
+	if (!SadBehaviourExists(scriptName))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity, but the script doesn't exist");
+		return;
+	}
+
+	// Add the component to the entity
+	entity.AddComponent<ecs::RuntimeScriptComponent>(scriptName);
+
+	// Create the runtime instance
+	CreateRuntimeSadBehaviourInstance(entity);
+
+	// Awaken the script since this is called from runtime
+	AwakeRuntimeSadBehaviourInstance(entity);
+}
+
+////////////////////////////
+/// Scripting Engine Ops ///
+////////////////////////////
+
+void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
+{
+	s_ScriptingData->SadBehaviourScriptLookup.clear();
+
+	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_ScriptingData->ProjectImage, MONO_TABLE_TYPEDEF);
+	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
+
+	// Retrieve Sad.SadBehaviour from the SadCSFramework internal API 
+	MonoClass* sadBehaviourClass = mono_class_from_name(s_ScriptingData->SadCSFrameworkImage, "Sad", "SadBehaviour");
+
+	for (int32_t i = 0; i < numberOfTypes; ++i)
+	{
+		uint32_t columns[MONO_TYPEDEF_SIZE];
+		mono_metadata_decode_row(typeDefinitionsTable, i, columns, MONO_TYPEDEF_SIZE);
+
+		const char* nameSpace = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAMESPACE]);
+		const char* className = mono_metadata_string_heap(s_ScriptingData->ProjectImage, columns[MONO_TYPEDEF_NAME]);
+
+		// Evaluate if class in the assembly is inheriting from SadBehaviour
+		MonoClass* monoClass = mono_class_from_name(s_ScriptingData->ProjectImage, nameSpace, className);
+		bool isSadBehaviour = mono_class_is_subclass_of(monoClass, sadBehaviourClass, false);
+
+		// Continue to next assembly type if it's not a SadBehaviour or the SadBehaviour class itself
+		if (!isSadBehaviour || monoClass == sadBehaviourClass)
+			continue;
+
+		// If a valid namespace exists, store it in the format 'NameSpace.ClassName'
+		std::string qualifiedName;
+		if (strlen(nameSpace) != 0)
+			qualifiedName = fmt::format("{}.{}", nameSpace, className);
+		else
+			qualifiedName = className;
+
+		s_ScriptingData->SadBehaviourScriptLookup[qualifiedName] = core::CreatePointer<ScriptClass>(nameSpace, className);
+		core::Log(ELogType::Info, "[ScriptingEngine] Cached new SadBehaviour with qualified name {}", qualifiedName);
+	}
+}
+
+MonoObject* sad::cs::ScriptingEngine::InstantiateClass(MonoClass* monoClass)
+{
+	MonoObject* classInstance = mono_object_new(s_ScriptingData->AppDomain, monoClass);
 	SAD_ASSERT(classInstance, "Mono failed to allocate a new object-type for a class");
 
 	// Actually calls the default constructor for HelloWorld
@@ -133,55 +317,26 @@ MonoObject* sad::cs::ScriptingEngine::InstantiateClass(const char* namespaceName
 	return classInstance;
 }
 
-///////////////
-/// Testing ///
-///////////////
-
-void sad::cs::ScriptingEngine::CallTestMethod(MonoObject* objectInstance)
+bool sad::cs::ScriptingEngine::SadBehaviourExists(const std::string& qualifiedName)
 {
-	// Get class and method references off of passed object...
-	MonoClass* classInstance = mono_object_get_class(objectInstance);
-
-	// Retrieve method with particular signature
-	// Third integer indicates the number of parameters the method has
-	// Despite this, Mono retrieves this method ambiguously 
-	// Thus, if a class has two methods with the same number of parameters, it has to be handled differently
-	MonoMethod* method = mono_class_get_method_from_name(classInstance, "PrintIntegerVariable", 0);
-	SAD_ASSERT(method, "Mono failed to retrieve symbol in CS assembly for requested method");
-
-	// Call the C# method on the object
-	MonoObject* exception = nullptr;
-	mono_runtime_invoke(method, objectInstance, nullptr, &exception);
-	SAD_ASSERT(!exception, "Unhandled exception occurred while executing method from CS assembly");
+	return s_ScriptingData->SadBehaviourScriptLookup.find(qualifiedName) != s_ScriptingData->SadBehaviourScriptLookup.end();
 }
 
-void sad::cs::ScriptingEngine::CallIncrementTestMethod(MonoObject* objectInstance, int value)
+bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid)
 {
-	MonoClass* classInstance = mono_object_get_class(objectInstance);
-	MonoMethod* method = mono_class_get_method_from_name(classInstance, "AddNumbers", 2);
-	SAD_ASSERT(method, "Mono failed to retrieve symbol in CS assembly for requested method");
-	
-	// Pass params by marshalling data to CSharp
-	// Can also be... void* param[] = { &value, &value2, ... , &valueN };
-	// void* param = &value;
-	void* param[] = { &value, &value };
-
-	MonoObject* exception = nullptr;
-	mono_runtime_invoke(method, objectInstance, param, &exception);
-	SAD_ASSERT(!exception, "Unhandled exception occurred while executing method from CS assembly");
+	return s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
 }
 
-void sad::cs::ScriptingEngine::CallStringTestMethod(MonoObject* objectInstance, const char* str)
+bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName)
 {
-	MonoClass* classInstance = mono_object_get_class(objectInstance);
-	MonoMethod* method = mono_class_get_method_from_name(classInstance, "AddStrings", 1);
-	SAD_ASSERT(method, "Mono failed to retrieve symbol in CS assembly for requested method");
-	
-	// When passing strings, 
-	MonoString* value = mono_string_new(s_ScriptingConfig->AppDomain, str);
-	void* param = value;
+	bool exists = s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
 
-	MonoObject* exception = nullptr;
-	mono_runtime_invoke(method, objectInstance, &param, &exception);
-	SAD_ASSERT(!exception, "Unhandled exception occurred while executing method from CS assembly");
+	if (!exists)
+		return false;
+
+	// Check if the passed script name and the script name on the SadBehaviour are the same
+	ScriptClass* sadBeaviourDefinition = s_ScriptingData->SadBehaviourInstanceLookup[guid]->GetScriptDefinition();
+	std::string retrievedQualifiedName = sadBeaviourDefinition->GetQualifiedName();
+
+	return core::StringUtils::Equals(qualifiedName, retrievedQualifiedName);
 }

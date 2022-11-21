@@ -11,7 +11,6 @@
 #include <Engine/LineRenderer.h>
 #include <Engine/ECS/Entity.h>
 #include <Engine/ECS/Registry.h>
-#include <Engine/ECS/Components/LineRendererComponent.h>
 
 #include "ShaderResource.h"
 #include "VertexArray.h"
@@ -19,14 +18,19 @@
 
 sad::rad::Renderer sad::rad::RenderBuddy::s_Renderer = sad::rad::Renderer();
 
-void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color)
+void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec4 color)
 {
-	core::Pointer<LineRenderer> lineRenderer = core::CreatePointer<LineRenderer>(from, to, color);
-	ecs::Entity lineEntity = ecs::Entity();
-	lineEntity.AddComponent<ecs::LineRendererComponent>({ lineRenderer });
+	LineRenderer lineRenderer = LineRenderer(from, to, color);
+
+	// TODO: Retrieve the view projection matrix from the Camera
+	glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();
+
+	lineRenderer.Shader->Bind();
+	lineRenderer.Shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(vpMatrix));
+	rad::RenderBuddy::DrawLines(lineRenderer.VertexArray, lineRenderer.VertexCount);
 }
 
-void sad::rad::RenderBuddy::DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec3 color)
+void sad::rad::RenderBuddy::DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec4 color)
 {
     glm::vec3 points[8];
 

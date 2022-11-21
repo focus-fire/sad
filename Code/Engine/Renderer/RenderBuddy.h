@@ -48,7 +48,7 @@ namespace sad::rad
 		 * @param to Position where the line finishes rendering
 		 * @param color Solid RGB color to render the line
 		*/
-		static void DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec3 color);
+		static void DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec4 color);
 
 		/**
 		 * @brief Renders a solid debug bounding box 
@@ -56,7 +56,7 @@ namespace sad::rad
 		 * @param max The maximum extent of the box/bound
 		 * @param color Solid RGB color to render the box
 		*/
-		static void DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec3 color);
+		static void DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec4 color);
 
 	private:
 		static Renderer s_Renderer;

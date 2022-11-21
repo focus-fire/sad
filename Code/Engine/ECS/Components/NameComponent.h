@@ -21,13 +21,13 @@ namespace sad::ecs
 		JSON =
 		{
 			{
-				"name", name
+				"Name", name
 			},
 		};
 	}
 
 	inline void from_json(const nlohmann::json& JSON, sad::ecs::NameComponent& nameComponent)
 	{
-		nameComponent.m_Name = JSON["name"];
+		nameComponent.m_Name = JSON["Name"];
 	}
 }

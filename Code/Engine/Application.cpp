@@ -32,6 +32,7 @@
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
+float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
 {
@@ -74,39 +75,52 @@ void sad::Application::EngineStart()
 	// Import Level and GUIDs 
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
-
-	// Start the ScriptingRuntime in association with the current level
-	cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
-
-	// Game Start
-	this->Start();
+	m_CurrentLevel->Start();
 
 	bool isWindowClosed = false;
 
 	// TODO: This is a nuclear bomb, make it safer
-	std::thread gameThread = std::thread([&]() 
-	{
-		while (!isWindowClosed)
-		{
-			if (s_EngineState->GetEngineMode() == EEngineMode::Game)
-			{
-				// Game Update
-				float dt = pog::Time::GetDeltaTime();
-				this->Update(dt);
-			}
-		}
-	});
+	//		 To update scripts offthread, mono has to be told where to invoke things...
+	//std::thread gameThread = std::thread([&]() 
+	//{
+	//	while (!isWindowClosed)
+	//	{
+	//		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
+	//		{
+	//			// Game Update
+	//			float dt = pog::Time::GetDeltaTime();
+	//			this->Update(dt);
+	//		}
+	//	}
+	//});
 
 	while (!isWindowClosed) 
 	{
 		PollEvents(isWindowClosed);
 
+		s_DeltaTime = pog::Time::GetDeltaTime();
+
+		// Game Update
+		if (s_EngineState->GetEngineMode() == EEngineMode::Game)
+		{
+			// TODO: When stop button is implemented, this should revert to 'false' on stop
+			//		 This way, entities with scripts can be 'Awakened' each time the game is actually started 
+			if (!m_IsGameOn)
+			{
+				this->Start();
+				m_IsGameOn = true;
+			}
+
+			// Only start updating the game if `Start` has been called`
+			if (m_IsGameOn)
+				this->Update(s_DeltaTime);
+		}
+
 		// Engine Update
-		float dt = pog::Time::GetDeltaTime();
-		sad::Application::Update(dt);
+		sad::Application::Update(s_DeltaTime);
 	}
 
-	gameThread.join();
+	// gameThread.join();
 
 	Teardown();
 }
@@ -187,6 +201,7 @@ void sad::Application::Update(float dt)
 
 void sad::Application::Teardown()
 { 
+	sad::cs::ScriptingEngine::RuntimeStop();
 	sad::cs::ScriptingEngine::Teardown();
 
 	m_Editor->Teardown();

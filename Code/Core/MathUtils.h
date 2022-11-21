@@ -8,7 +8,7 @@
 const double c_PI  = 3.1415926535897932385;
 
 /**
- * @brief The number people learn to recie for fun multiplied by two
+ * @brief The number people learn to recite for fun multiplied by two
 */
 const double c_2PI = (c_PI * 2);
 

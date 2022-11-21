@@ -16,18 +16,23 @@ glm::mat4 sad::Camera::GetProjectionMatrix()
 
 glm::mat4 sad::Camera::GetViewMatrix()
 {
+	// Get forward direction vector from rotation orientation
 	glm::vec3 forwards{
 		glm::sin(glm::radians(cameraEulers.y)) * glm::cos(glm::radians(cameraEulers.z)),
 		-glm::sin(glm::radians(cameraEulers.x)),
 		glm::cos(glm::radians(cameraEulers.y))
 	};
 
+	// Store the global up vector, this is used to ensure that up is always up
 	glm::vec3 globalUp{ 0.0f, 1.0f, 0.0f };
 
+	// Calculate the cross product to get the right direction vector (relative to forward and global up)
 	glm::vec3 right{ glm::cross(forwards, globalUp) };
 
+	// Calculate the new "up" vector by doing cross product of the right and forwards vectors
 	glm::vec3 up{ glm::cross(right, forwards) };
 
+	// Return the appropriate lookAt vector. (Camera position, Camera forward direction, Camera's "up" direction).
 	return glm::lookAt(cameraPosition, cameraPosition + forwards, up);
 }
 

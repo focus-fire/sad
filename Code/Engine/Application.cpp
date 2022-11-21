@@ -187,8 +187,8 @@ void sad::Application::Update(float dt)
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 	m_CurrentLevel->Update(world);
 
-	//  Update GameCamera
-	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
+	// Update GameCamera
+	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);  // Required for First-person camera movement
 	sad::rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass

@@ -6,6 +6,7 @@
 #include <Engine/AudioManager.h>
 #include <Engine/ResourceManager.h>
 #include <Engine/InputManager.h>
+#include <Engine/Raycast.h>
 
 #include "ScriptingBridge.h"
 
@@ -446,6 +447,12 @@ namespace sad::cs
 	{
 		return sad::Application::s_DeltaTime;
 	}
+
+	static bool RaycastIntersection(glm::vec3* origin, glm::vec3* direction, glm::vec3* position, glm::vec3* size)
+	{
+		Bound bound = Bound(*position, *size);
+		return sad::Raycast::Intersects(*origin, *direction, bound);
+	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
@@ -512,7 +519,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 	// Misc
 	SAD_CSF_ADD_INTERNAL("Misc", Getdt);
-	// Add raycast intersection to "Misc"
+	SAD_CSF_ADD_INTERNAL("Misc", RaycastIntersection);
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()

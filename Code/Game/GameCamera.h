@@ -6,36 +6,24 @@
 #include "Engine/ECS/Components/TransformComponent.h"
 #include "Engine/InputManager.h"
 #include "Engine/Window.h"
+#include "Engine/Camera.h"
 
 namespace sad
 {
-	static class GameCamera
+	static class GameCamera : public Camera
 	{
 	public:
 		explicit GameCamera();
 
 		~GameCamera();
 
-		static void Update();
+		void Update() override;
 
-		static glm::mat4 GetViewMatrix();
+		void CurrentCameraState();
 
-		static glm::mat4 GetProjectionMatrix();
+		static glm::vec3 gameCameraEulers;
 
-		static glm::mat4 GetViewProjectionMatrix();
-
-		static void ToggleActive();
-
-		static void CameraState();
-
-		static int wasdState;
-		static bool walking;
-		static float walkDirection;
-		static glm::vec3 cameraPosition;
-		static glm::vec3 cameraEulers;
 		static bool isActive;
-
-	private:
 
 	};
 }

@@ -9,8 +9,7 @@
 #include <Engine/Renderer/RenderBuddy.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
-#include <Game/GameCamera.h>
-#include <Game/EditorCamera.h>
+#include <Engine/Camera.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -19,7 +18,6 @@ void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 
 void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 {
-	//GameCamera camera = GameCamera();
 	auto view = world.view<const RenderableObjectComponent, const TransformComponent>();
 	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
 	{
@@ -28,27 +26,13 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		rad::ShaderResource* shader = renderable->GetShader();
 
-		if (sad::GameCamera::isActive)
-		{
-			glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
-			shader->Bind();
+		Camera* currentCamera = sad::rad::RenderBuddy::GetCameraInstance();
 
-			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-			rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
-		}
-		if (sad::EditorCamera::isActive)
-		{
-			glm::mat4 mvpMatrix = sad::EditorCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
-			shader->Bind();
-
-			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-			rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
-		}
-		/*glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		glm::mat4 mvpMatrix = currentCamera->GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);*/
+		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
 	}
 }

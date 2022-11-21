@@ -13,6 +13,9 @@
 #include "RenderableResource.h"
 #include "AudioResource.h"
 #include "EngineStateManager.h"
+#include "Engine/EditorCamera.h"
+#include "Game/GameCamera.h"
+
 
 struct SDL_Window;
 
@@ -62,6 +65,10 @@ namespace sad
 		static EngineStateManager* s_EngineState;
 
 		static float s_DeltaTime;
+
+		static EditorCamera* s_EditorCamera;
+
+		static GameCamera* s_GameCamera;
 
 	private:
 		cap::Editor* m_Editor = nullptr;

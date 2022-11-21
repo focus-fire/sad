@@ -11,6 +11,7 @@
 #include <Engine/LineRenderer.h>
 #include <Engine/ECS/Entity.h>
 #include <Engine/ECS/Registry.h>
+#include <Engine/Camera.h>
 
 #include "ShaderResource.h"
 #include "VertexArray.h"

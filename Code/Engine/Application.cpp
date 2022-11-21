@@ -13,7 +13,6 @@
 #include <Game/Time.h>
 #include <Game/Application.h>
 #include <Game/GameCamera.h>
-#include <Game/EditorCamera.h>
 
 #include "ECS/Registry.h"
 
@@ -31,10 +30,13 @@
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
+#include "Camera.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 float sad::Application::s_DeltaTime;
+sad::GameCamera* sad::Application::s_GameCamera;
+sad::EditorCamera* sad::Application::s_EditorCamera;
 
 sad::Application::Application()
 {
@@ -45,6 +47,12 @@ sad::Application::Application()
 	s_EngineState = new EngineStateManager();
 
 	m_Editor = new cap::Editor;
+
+	s_EditorCamera = new sad::EditorCamera();
+
+	s_GameCamera = new sad::GameCamera();
+
+	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
 }
 
 sad::Application::~Application()
@@ -55,6 +63,9 @@ sad::Application::~Application()
 	
 	// Allocated in LevelManager::ImportLevel()
 	delete m_CurrentLevel;
+
+	delete s_EditorCamera;
+	delete s_GameCamera;
 }
 
 void sad::Application::EngineStart()
@@ -67,10 +78,6 @@ void sad::Application::EngineStart()
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
-
-	// Start Editor Camera
-	sad::EditorCamera::isActive = true;
-	sad::GameCamera::isActive = false;
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
@@ -182,9 +189,8 @@ void sad::Application::Update(float dt)
 
 	//  Update GameCamera
 	SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
-	core::Log(ELogType::Info, "Editor Camera status: {}", sad::EditorCamera::isActive);
-	if (sad::GameCamera::isActive) sad::GameCamera::Update();
-	if (sad::EditorCamera::isActive) sad::EditorCamera::Update();
+	//core::Log(ELogType::Info, "Editor Camera status: {}", sad::EditorCamera::isActive);
+	sad::rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();

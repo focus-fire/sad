@@ -8,19 +8,14 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-glm::vec3 sad::EditorCamera::cameraPosition;
-glm::vec3 sad::EditorCamera::cameraEulers;
 float sad::EditorCamera::walkDirection;
 bool sad::EditorCamera::walking;
 int sad::EditorCamera::wasdState;
-bool sad::EditorCamera::isActive;
 
 
 sad::EditorCamera::EditorCamera()
 {
-	cameraPosition = { 0.0f, 0.0f, -5.0f };
 	cameraEulers = { 0.0f, 90.0f, 0.0f };
-	walkDirection = cameraEulers.z;
 	bool walking = false;
 }
 
@@ -29,56 +24,28 @@ sad::EditorCamera::~EditorCamera(){}
 
 void sad::EditorCamera::Update()
 {
-	if (sad::EditorCamera::isActive)
-	{
-		sad::EditorCamera::CameraState();
-		InputManager& input = InputManager::GetInstance();
+	sad::EditorCamera::CurrentCameraState();
+	InputManager& input = InputManager::GetInstance();
 
-		double mouse_x, mouse_y;
-		mouse_x = input.GetMousePosition().x;
-		mouse_y = input.GetMousePosition().y;
+	double mouse_x, mouse_y;
+	mouse_x = input.GetMousePosition().x;
+	mouse_y = input.GetMousePosition().y;
 
-		ImGui::SetCursorPos(ImVec2(800.0f, 450.0f));
-		input.SetMousePosition(800.0, 450.0);
+	ImGui::SetCursorPos(ImVec2(800.0f, 450.0f));
+	input.SetMousePosition(800.0, 450.0);
 
-		float delta_x{ static_cast<float>(mouse_x - 800.0) };
-		sad::EditorCamera::cameraEulers.y -= delta_x;
+	float delta_x{ static_cast<float>(mouse_x - 800.0) };
+	sad::Camera::cameraEulers.y -= delta_x * 0.06f;
 
-		float delta_y{ static_cast<float>(mouse_y - 450.0) };
-		sad::EditorCamera::cameraEulers.x = std::max(std::min(sad::EditorCamera::cameraEulers.x + delta_y, 180.0f), 0.0f);
-	}
+	float delta_y{ static_cast<float>(mouse_y - 450.0) };
+	//sad::Camera::cameraEulers.x = std::max(std::min(sad::Camera::cameraEulers.x + delta_y, 90.0f), -10.0f);
+	sad::Camera::cameraEulers.x = std::max(std::min(sad::Camera::cameraEulers.x + delta_y * 0.05f, 90.0f), -90.0f);
+	
 }
 
-glm::mat4 sad::EditorCamera::GetProjectionMatrix()
+void sad::EditorCamera::CurrentCameraState()
 {
-	return glm::perspective(glm::radians(60.0f), sad::Application::s_MainWindow->GetAspectRatio(), 0.1f, 20.0f);
-}
 
-glm::mat4 sad::EditorCamera::GetViewMatrix()
-{
-	glm::vec3 forwards{
-		glm::sin(glm::radians(cameraEulers.y)) * glm::cos(glm::radians(cameraEulers.z)),
-		glm::sin(glm::radians(cameraEulers.y)) * glm::sin(glm::radians(cameraEulers.z)),
-		glm::cos(glm::radians(cameraEulers.y))
-	};
-
-	glm::vec3 globalUp{ 0.0f, 1.0f, 0.0f };
-
-	glm::vec3 right{ glm::cross(forwards, globalUp) };
-
-	glm::vec3 up{ glm::cross(right, forwards) };
-	return glm::lookAt(cameraPosition, cameraPosition + forwards, up);
-}
-
-glm::mat4 sad::EditorCamera::GetViewProjectionMatrix()
-{
-	glm::mat4 projectionMatrix = GetProjectionMatrix();
-	glm::mat4 viewMatrix = GetViewMatrix();
-	return projectionMatrix * viewMatrix;
-}
-
-void sad::EditorCamera::CameraState()
-{
 	InputManager& input = InputManager::GetInstance();
 
 	// Capture player state
@@ -107,6 +74,7 @@ void sad::EditorCamera::CameraState()
 	{
 		sad::EditorCamera::wasdState += 8;
 	}
+
 
 	// Interpret wasd state
 	switch (sad::EditorCamera::wasdState)
@@ -157,25 +125,10 @@ void sad::EditorCamera::CameraState()
 
 	if (sad::EditorCamera::walking)
 	{
-		core::Log(ELogType::Info, "### Editor Camera Active ###");
-		sad::EditorCamera::cameraPosition += 0.01f * glm::vec3{
+		sad::Camera::cameraPosition += 0.01f * glm::vec3{
 			glm::cos(glm::radians(sad::EditorCamera::walkDirection)),
-			0.0f,
+			-glm::sin(glm::radians(sad::EditorCamera::cameraEulers.x)),
 			glm::sin(glm::radians(sad::EditorCamera::walkDirection))
 		};
-	}
-}
-
-void sad::EditorCamera::ToggleActive()
-{
-	if (sad::EditorCamera::isActive)
-	{
-		sad::EditorCamera::isActive = false;
-		sad::GameCamera::isActive = true;
-	}
-	else {
-		sad::GameCamera::isActive = true;
-		sad::EditorCamera::isActive = false;
-
 	}
 }

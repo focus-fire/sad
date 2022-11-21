@@ -2,6 +2,8 @@
 
 #include "Level.h"
 
+#include "Application.h"
+
 #include "Scripting/ScriptingEngine.h"
 
 #include "ECS/Entity.h"
@@ -11,8 +13,28 @@
 #include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/PlayerControllerSystem.h"
 
+void sad::Level::Start()
+{
+	cs::ScriptingEngine::RuntimeStart(this);
+}
+
 void sad::Level::Update(sad::ecs::EntityWorld& world)
 {
+	// Check if new scripts have been added and need to be instantiated
+	// Also check if 'DrawGizmos' needs to be called on a script
+	auto view = world.view<ecs::ScriptComponent>();
+	for (auto [handle, scriptComponent] : view.each())
+	{
+		ecs::Entity entity = ecs::Entity(handle);
+		if (!cs::ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid()))
+			cs::ScriptingEngine::CreateSadBehaviourInstance(entity);
+
+		// Since script instance exists, call DrawGizmos()
+		// This should be updated each frame and should only be enabled while in Editor mode
+		if (sad::Application::s_EngineState->GetEngineMode() == EEngineMode::Editor)
+			cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(entity);
+	}
+
 	// Update non-gameplay ECS systems
 	ecs::PlayerControllerSystem::Update(world);
 	ecs::BoundSystem::Update(world);
@@ -33,6 +55,44 @@ void sad::Level::PopulateLevelGuids()
 	});
 }
 
+sad::ecs::Entity sad::Level::GetEntityByGuid(const core::NativeGuid& guid)
+{
+	return GetEntityByGuid(core::Guid(guid));
+}
+
+sad::ecs::Entity sad::Level::GetEntityByGuid(const core::Guid& guid)
+{
+	if (m_EntityMap.find(guid) == m_EntityMap.end())
+		return ecs::Entity::Null();
+
+	return m_EntityMap[guid];
+}
+
+sad::ecs::Entity sad::Level::GetEntityByName(const std::string& name)
+{
+	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
+
+	bool isFound = false;
+	ecs::Entity target;
+
+	auto view = world.view<ecs::NameComponent>();
+	for (auto [entity, nameComponent] : view.each())
+	{
+		// Search all name components for the first entity with a matching name
+		if (core::StringUtils::Equals(name, nameComponent.m_Name))
+		{
+			isFound = true;
+			target = entity;
+			break;
+		}
+	}
+
+	if (!isFound)
+		return ecs::Entity::Null();
+
+	return target;
+}
+
 sad::ecs::Entity sad::Level::InstantiateEntity(const std::string& name)
 {
 	entt::entity handle = ecs::Registry::GenerateEntityHandle();
@@ -47,10 +107,10 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 	core::Pointer<sad::Bound> bound = core::CreatePointer<sad::Bound>(*transform.get());
 
 	// All entities should have a GUID, Transform, and Bound
-	entity.AddComponent<ecs::GuidComponent>({ guid });
-	entity.AddComponent<ecs::NameComponent>({ name });
-	entity.AddComponent<ecs::TransformComponent>({ transform });
-	entity.AddComponent<ecs::BoundComponent>({ bound });
+	entity.AddComponent<ecs::GuidComponent>(guid);
+	entity.AddComponent<ecs::NameComponent>(name);
+	entity.AddComponent<ecs::TransformComponent>(transform);
+	entity.AddComponent<ecs::BoundComponent>(bound);
 
 	m_EntityMap[guid] = entity;
 
@@ -71,30 +131,32 @@ sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle, core::G
 	return entity;
 }
 
-void sad::Level::DestroyEntity(sad::ecs::Entity entity)
+bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 {
+	if (m_EntityMap.find(entity.GetGuid()) == m_EntityMap.end())
+		return false;
+
+	// Check if the entity had a SadBehaviour script
+	// All SadBehaviours must be cleaned before entities are destroyed
+	if (entity.HasComponent<ecs::ScriptComponent>())
+		sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
+
+	// Unbind the entity from the level's entity map
 	m_EntityMap.erase(entity.GetGuid());
+
+	// Remove the entity from the registry
 	sad::ecs::Registry::EraseEntityHandle(entity);
+
+	return true;
 }
 
-void sad::Level::DestroyEntityByName(const std::string& name)
+bool sad::Level::DestroyEntityByName(const std::string& name)
 {
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
-	ecs::Entity target;
+	ecs::Entity target = GetEntityByName(name);
+	if (!target)
+		return false;
 
-	auto view = world.view<ecs::NameComponent>();
-	for (auto [entity, nameComponent] : view.each())
-	{
-		// Search all name components for an entity with a matching name
-		// Only remove first occurrence of the name
-		if (core::StringUtils::Equals(name, nameComponent.m_Name))
-		{
-			target = entity;
-			break;
-		}
-	}
-
-	if (target)
-		DestroyEntity(target);
+	return DestroyEntity(target);
 }

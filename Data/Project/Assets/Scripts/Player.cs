@@ -22,6 +22,12 @@ public class Player : SadBehaviour
         Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
         Log.Debug($"Found an enemy with {e?.Health} health");
 
+        // Test Raycast
+        Vector3 pos = new Vector3(-10, 0, 0);
+        Vector3 pos2 = new Vector3(SadMath.Infinity, 0, 0);
+        bool result = Raycast.Intersects(pos, pos2, this);
+        Log.Debug($"result of raycast: {result}");
+
         // Testing Script Removal
         foundEnemyCube.RemoveScriptComponent<Enemy>();
 

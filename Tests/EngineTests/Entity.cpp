@@ -43,7 +43,7 @@ TEST_CASE("Entities can add components")
 	SECTION("entity can add a component")
 	{
 		struct TestComponent { int Data = 0; };
-		entity.AddComponent<TestComponent>({});
+		entity.AddComponent<TestComponent>(5);
 
 		const TestComponent& testComponent = entity.GetComponent<TestComponent>();
 		REQUIRE(testComponent.Data == 5);
@@ -52,7 +52,7 @@ TEST_CASE("Entities can add components")
 	SECTION("entity can add an empty/tag component")
 	{
 		struct TagComponent { };
-		entity.AddEmptyComponent<TagComponent>({ });
+		entity.AddEmptyComponent<TagComponent>({});
 
 		bool addedTag = false;
 		auto view = world.view<const TagComponent>();

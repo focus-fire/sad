@@ -162,6 +162,23 @@ namespace sad::cs
 		return ScriptingEngine::GetSadBehaviourInstance(entity.GetGuid());
 	}
 
+	static void AddScriptInstance(core::NativeGuid guid, MonoString* string)
+	{
+		char* cString = mono_string_to_utf8(string);
+
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+
+		ScriptingEngine::AddRuntimeSadBehaviourInstance(entity, cString);
+
+		mono_free(cString);
+	}
+
+	static void RemoveScriptInstance(core::NativeGuid guid)
+	{
+		ecs::Entity entity = GetEntityInLevelByGUID(guid);
+		ScriptingEngine::DestroySadBehaviourInstance(entity);
+	}
+
 	///////////
 	/// Log ///
 	///////////
@@ -446,6 +463,8 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 	SAD_CSF_ADD_INTERNAL("ECS", HasScriptInstance);
 	SAD_CSF_ADD_INTERNAL("ECS", GetScriptInstance);
+	SAD_CSF_ADD_INTERNAL("ECS", AddScriptInstance);
+	SAD_CSF_ADD_INTERNAL("ECS", RemoveScriptInstance);
 
 	// Log
 	SAD_CSF_ADD_INTERNAL("Log", Debug);

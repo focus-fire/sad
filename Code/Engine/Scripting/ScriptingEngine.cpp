@@ -118,38 +118,60 @@ void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
 /// Entity Ops ///
 //////////////////
 
-void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity)
+void sad::cs::ScriptingEngine::CreateSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
-	{
-		// Retrieve the base class from the lookup
-		core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptComponent.m_ClassName];
+	if (!SadBehaviourExists(scriptName))
+		return;
 
-		// Instantiate the script using the class definition
-		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
+	// Retrieve the base class from the lookup
+	core::Pointer<ScriptClass> scriptClass = s_ScriptingData->SadBehaviourScriptLookup[scriptName];
 
-		// Store the instantiated behaviour in the lookup
-		s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
-	}
+	// Instantiate the script using the class definition
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = core::CreatePointer<SadBehaviourInstance>(scriptClass, entity);
+
+	// Store the instantiated behaviour in the lookup
+	s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()] = sadBehaviourInstance;
 }
 
-void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity)
+void sad::cs::ScriptingEngine::CreateNativeSadBehaviourInstance(ecs::Entity entity)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
-	{
-		// If the SadBehaviour hasn't been instantiated, instantiate it in the engine
-		core::Guid guid = entity.GetGuid();
-		if (!SadBehaviourInstanceExists(guid))
-			CreateSadBehaviourInstance(entity);
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
 
-		// Retrieve the SadBehaviour from the lookup
-		core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
+	CreateSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
 
-		// Call awake on the script instance
-		sadBehaviourInstance->CallAwake();
-	}
+void sad::cs::ScriptingEngine::CreateRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	CreateSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Exit early if the requested script doesn't exist
+	if (!SadBehaviourExists(scriptName))
+		return;
+
+	// Retrieve the SadBehaviour from the lookup
+	core::Pointer<SadBehaviourInstance> sadBehaviourInstance = s_ScriptingData->SadBehaviourInstanceLookup[entity.GetGuid()];
+
+	// Call awake on the script instance
+	sadBehaviourInstance->CallAwake();
+}
+
+void sad::cs::ScriptingEngine::AwakeNativeSadBehaviourInstance(ecs::Entity entity)
+{
+	const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, nativeScriptComponent.m_ClassName);
+}
+
+void sad::cs::ScriptingEngine::AwakeRuntimeSadBehaviourInstance(ecs::Entity entity)
+{
+	ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+
+	AwakeSadBehaviourInstance(entity, runtimeScriptComponent.m_ClassName);
 }
 
 void sad::cs::ScriptingEngine::UpdateSadBehaviourInstance(ecs::Entity entity)
@@ -172,11 +194,71 @@ void sad::cs::ScriptingEngine::DrawGizmosForSadBehaviourInstance(ecs::Entity ent
 
 void sad::cs::ScriptingEngine::DestroySadBehaviourInstance(ecs::Entity entity)
 {
-	const ecs::ScriptComponent& scriptComponent = entity.GetComponent<ecs::ScriptComponent>();
-	if (SadBehaviourExists(scriptComponent.m_ClassName))
+	bool hasNativeScriptComponent = entity.HasComponent<ecs::ScriptComponent>();
+	bool hasRuntimeScriptComponent = entity.HasComponent<ecs::RuntimeScriptComponent>();
+
+	// Entity passed doesn't have a script to destroy
+	if (!hasNativeScriptComponent && !hasRuntimeScriptComponent)
+		return;
+
+	if (hasNativeScriptComponent)
 	{
-		s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+		const ecs::ScriptComponent& nativeScriptComponent = entity.GetComponent<ecs::ScriptComponent>();
+		if (SadBehaviourExists(nativeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::ScriptComponent>();
 	}
+
+	if (hasRuntimeScriptComponent)
+	{
+		const ecs::RuntimeScriptComponent& runtimeScriptComponent = entity.GetComponent<ecs::RuntimeScriptComponent>();
+		if (SadBehaviourExists(runtimeScriptComponent.m_ClassName))
+			s_ScriptingData->SadBehaviourInstanceLookup.erase(entity.GetGuid());
+
+		entity.RemoveComponent<ecs::RuntimeScriptComponent>();
+	}
+}
+
+//////////////////////
+/// Exposed C# Ops ///
+//////////////////////
+
+MonoObject* sad::cs::ScriptingEngine::GetSadBehaviourInstance(const core::Guid& guid)
+{
+	if (!SadBehaviourInstanceExists(guid))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to get a script instance that doesn't exist");
+		return nullptr;
+	}
+
+	return s_ScriptingData->SadBehaviourInstanceLookup.at(guid)->GetManagedInstance();
+}
+
+void sad::cs::ScriptingEngine::AddRuntimeSadBehaviourInstance(ecs::Entity entity, std::string scriptName)
+{
+	// Check if the entity already has an instantiated script attached to it
+	if (SadBehaviourInstanceExists(entity.GetGuid()))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity that already has one");
+		return;
+	}
+
+	// Check if script exists in the runtime
+	if (!SadBehaviourExists(scriptName))
+	{
+		core::Log(ELogType::Warn, "[ScriptingEngine] A script is trying to add a script to an entity, but the script doesn't exist");
+		return;
+	}
+
+	// Add the component to the entity
+	entity.AddComponent<ecs::RuntimeScriptComponent>(scriptName);
+
+	// Create the runtime instance
+	CreateRuntimeSadBehaviourInstance(entity);
+
+	// Awaken the script since this is called from runtime
+	AwakeRuntimeSadBehaviourInstance(entity);
 }
 
 ////////////////////////////
@@ -257,12 +339,4 @@ bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid
 	std::string retrievedQualifiedName = sadBeaviourDefinition->GetQualifiedName();
 
 	return core::StringUtils::Equals(qualifiedName, retrievedQualifiedName);
-}
-
-MonoObject* sad::cs::ScriptingEngine::GetSadBehaviourInstance(const core::Guid& guid)
-{
-	bool exists = s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
-	SAD_ASSERT(exists, "Instance of SadBehaviour being retrieved doesn't exist")
-
-	return s_ScriptingData->SadBehaviourInstanceLookup.at(guid)->GetManagedInstance();
 }

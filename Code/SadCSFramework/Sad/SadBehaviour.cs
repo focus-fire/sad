@@ -38,6 +38,5 @@ namespace Sad
                 return m_Bound;
             }
         }
-
     }
 }

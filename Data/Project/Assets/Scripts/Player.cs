@@ -1,30 +1,32 @@
 using Sad;
+using System.Collections.Generic;
 
-public class Test : SadBehaviour
+public class Player : SadBehaviour
 {
-    public string test = "Test";
-}
-
-public class PlayerController : SadBehaviour
-{
-    private Entity AnotherCube;
-    private int Counter = 0;
+    public List<Enemy> Enemies;
 
     void Awake()
     {
         Log.Debug($"PlayerController.Awake => {GUID}");
 
         // Testing Instantiation
-        // AnotherCube = Instantiate("AnotherCube");
-        // Log.Debug($"Instantiated an entity with GUID => {AnotherCube?.GUID}");
+        Entity EnemyCube = Instantiate("EnemyCube");
+        Log.Debug($"Instantiated an entity with GUID => {EnemyCube?.GUID}");
 
         // Testing Finds
-        AnotherCube = FindEntityWithName("AnotherCube");
-        Log.Debug($"Found a component with GUID => {AnotherCube?.GUID}");
+        Entity foundEnemyCube = FindEntityWithName("EnemyCube");
+        Log.Debug($"Found a component with GUID => {foundEnemyCube?.GUID}");
 
-        // Testing Script Retrieval
-        //Test t = AnotherCube.GetScriptComponent<Test>();
-        //Log.Debug($"Found a test component with a string: {t?.test}");
+        // Testing Script Adding/Getting
+        foundEnemyCube.AddScriptComponent<Enemy>();
+        Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
+        Log.Debug($"Found an enemy with {e?.Health} health");
+
+        // Testing Script Removal
+        foundEnemyCube.RemoveScriptComponent<Enemy>();
+
+        // Testing entity destruction
+        Destroy(foundEnemyCube);
     }
 
     void Update()
@@ -47,6 +49,12 @@ public class PlayerController : SadBehaviour
         if (Input.GetKeyReleased(KeyCode.Space))
         {
             Log.Warn("Space Key Released!!!");
+        }
+
+        if (Input.GetMouseButton(MouseButton.Left))
+        {
+            // Shoot raycast forward
+            // Check for collisions with entities?
         }
 
         if (Input.GetMouseButton(MouseButton.Right))

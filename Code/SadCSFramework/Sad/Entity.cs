@@ -102,6 +102,19 @@ namespace Sad
         }
 
         /// <summary>
+        /// Adds a script component to the current entity in the mono runtime
+        /// </summary>
+        public void AddScriptComponent<T>() where T: SadBehaviour, new()
+        {
+            if (HasScriptComponent<T>())
+                return;
+
+            string scriptName = typeof(T).FullName;
+
+            Internal.ECS.AddScriptInstance(GUID, scriptName);
+        }
+
+        /// <summary>
         /// Calls the native implementation for 'RemoveComponent' on the desired component if it exists on the entity 
         /// </summary>
         public void RemoveComponent<T>() where T: Component, new()
@@ -115,6 +128,22 @@ namespace Sad
                 ComponentCache.Remove(componentType);
 
             Internal.ECS.RemoveComponent(GUID, componentType);
+        }
+
+        /// <summary>
+        /// Removes a script component from the current entity in the Mono runtime
+        /// </summary>
+        public void RemoveScriptComponent<T>() where T: SadBehaviour, new()
+        {
+            if (!HasScriptComponent<T>())
+                return;
+
+            // Remove the component from the cache
+            Type scriptType = typeof(T);
+            if (ComponentCache.ContainsKey(scriptType))
+                ComponentCache.Remove(scriptType);
+
+            Internal.ECS.RemoveScriptInstance(GUID);
         }
 
         /// <summary>
@@ -162,6 +191,10 @@ namespace Sad
             Internal.ECS.DestroyEntityByName(name);
         }
 
+        /// <summary>
+        /// Destroy an entity with a provided reference
+        /// </summary>
+        /// <param name="entity">Reference to the entity being destroyed</param>
         public void Destroy(Entity entity)
         {
             Internal.ECS.DestroyEntityByGuid(entity.GUID);

@@ -43,7 +43,7 @@ TEST_CASE("Entities can add components")
 	SECTION("entity can add a component")
 	{
 		struct TestComponent { int Data = 0; };
-		entity.AddComponent<TestComponent>({ 5 });
+		entity.AddComponent<TestComponent>({});
 
 		const TestComponent& testComponent = entity.GetComponent<TestComponent>();
 		REQUIRE(testComponent.Data == 5);

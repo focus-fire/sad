@@ -168,8 +168,5 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 	
 	// Remove active script instance if script is detached from entity
 	sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
-	
-	// Remove script component
-	entity.RemoveComponent<sad::ecs::ScriptComponent>();
 	core::Log(ELogType::Info, "[Terminal] Succesfully removed {} from {}", scriptName, entityName);
 }

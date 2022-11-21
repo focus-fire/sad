@@ -20,14 +20,14 @@ void sad::Level::Start()
 
 void sad::Level::Update(sad::ecs::EntityWorld& world)
 {
-	// Check if new scripts have been added and need to be instantiated
-	// Also check if 'DrawGizmos' needs to be called on a script
 	auto view = world.view<ecs::ScriptComponent>();
 	for (auto [handle, scriptComponent] : view.each())
 	{
+		// Check if new scripts have been added in the editor and need to be instantiated
+		// Also check if 'DrawGizmos' needs to be called on a script
 		ecs::Entity entity = ecs::Entity(handle);
 		if (!cs::ScriptingEngine::SadBehaviourInstanceExists(entity.GetGuid()))
-			cs::ScriptingEngine::CreateSadBehaviourInstance(entity);
+			cs::ScriptingEngine::CreateNativeSadBehaviourInstance(entity);
 
 		// Since script instance exists, call DrawGizmos()
 		// This should be updated each frame and should only be enabled while in Editor mode
@@ -138,7 +138,7 @@ bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 
 	// Check if the entity had a SadBehaviour script
 	// All SadBehaviours must be cleaned before entities are destroyed
-	if (entity.HasComponent<ecs::ScriptComponent>())
+	if (entity.HasComponent<ecs::ScriptComponent>() || entity.HasComponent<ecs::RuntimeScriptComponent>())
 		sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
 
 	// Unbind the entity from the level's entity map

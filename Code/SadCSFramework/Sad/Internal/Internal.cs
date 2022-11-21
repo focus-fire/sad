@@ -40,6 +40,12 @@ namespace Sad
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static bool HasScriptInstance(Guid entityGuid);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void AddScriptInstance(Guid entityGuid, string scriptName);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static void RemoveScriptInstance(Guid entityGuid);
         }
 
         /// <summary>

@@ -16,6 +16,7 @@
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 
 #include <Game/Time.h>
+#include <Game/EditorCamera.h>
 #include <Game/GameCamera.h>
 
 namespace 
@@ -98,6 +99,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	if (sad::Application::s_EngineState->GetEngineMode() == sad::EEngineMode::Editor)
 	{
 		int entityId = 0;
+		//sad::EditorCamera::ToggleActive();
 		auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::TransformComponent, const sad::ecs::RenderableObjectComponent>();
 		for (auto [entity, transformComponent, renderableObject] : view.each())
 		{
@@ -180,11 +182,27 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 	m_GameWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : ImGuiWindowFlags_None;
 
-	glm::mat4 viewMatrix = sad::GameCamera::GetViewMatrix();
-	glm::mat4 projectionMatrix = sad::GameCamera::GetProjectionMatrix();
-	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
-	ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), m_CurrentGizmoOperation, currentGizmoMode, modelMatrix, NULL, NULL, NULL, NULL);
-	ImGuizmo::ViewManipulate(glm::value_ptr(viewMatrix), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
+	if (sad::GameCamera::isActive)
+	{
+		glm::mat4 viewMatrix = sad::GameCamera::GetViewMatrix();
+		glm::mat4 projectionMatrix = sad::GameCamera::GetProjectionMatrix();
+		//glm::mat4 viewMatrix = sad::GameCamera::GetViewMatrix();
+		//glm::mat4 projectionMatrix = sad::GameCamera::GetProjectionMatrix();
+		ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
+		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), m_CurrentGizmoOperation, currentGizmoMode, modelMatrix, NULL, NULL, NULL, NULL);
+		ImGuizmo::ViewManipulate(glm::value_ptr(viewMatrix), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
+	}
+	else if (sad::EditorCamera::isActive)
+	{
+		glm::mat4 viewMatrix = sad::EditorCamera::GetViewMatrix();
+		glm::mat4 projectionMatrix = sad::EditorCamera::GetProjectionMatrix();
+		//glm::mat4 viewMatrix = sad::GameCamera::GetViewMatrix();
+		//glm::mat4 projectionMatrix = sad::GameCamera::GetProjectionMatrix();
+		ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
+		ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), m_CurrentGizmoOperation, currentGizmoMode, modelMatrix, NULL, NULL, NULL, NULL);
+		ImGuizmo::ViewManipulate(glm::value_ptr(viewMatrix), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
+	}
+
 
 	// Re-decompose new model matrix again once operation is complete
 	float finalTranslation[3], finalRotation[3], finalScale[3];
@@ -206,6 +224,7 @@ void cap::Editor::Render()
 	if (ButtonCenteredOnLine(currentMode))
 	{
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		sad::EditorCamera::ToggleActive();
 		core::SignalEvent("OnToggleEngineMode");
 	}
 	ImGui::End();

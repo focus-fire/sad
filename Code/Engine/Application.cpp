@@ -14,6 +14,7 @@
 #include <Game/Time.h>
 #include <Game/Application.h>
 #include <Game/GameCamera.h>
+#include <Game/EditorCamera.h>
 
 #include "ECS/Registry.h"
 
@@ -71,6 +72,10 @@ void sad::Application::EngineStart()
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
+
+	// Start Editor Camera
+	sad::EditorCamera::isActive = true;
+	sad::GameCamera::isActive = false;
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
@@ -166,6 +171,12 @@ void sad::Application::Update(float dt)
 	// Rendering and ecs systems
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 	m_CurrentLevel->Update(world);
+
+	//  Update GameCamera
+	SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
+	core::Log(ELogType::Info, "Editor Camera status: {}", sad::EditorCamera::isActive);
+	if (sad::GameCamera::isActive) sad::GameCamera::Update();
+	if (sad::EditorCamera::isActive) sad::EditorCamera::Update();
 
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();

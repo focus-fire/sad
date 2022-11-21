@@ -76,6 +76,7 @@ void cap::DebugTerminalHelper::Instantiate(argument_type& arg)
 	// TODO: Is there a less scuffed way to retrieve the current level?
 	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
 	entity.AddComponent<sad::ecs::RenderableResourceComponent>(renderableResourceComponent);
+	entity.AddEmptyComponent<sad::ecs::PlayerControllerComponent>({});
 }
 
 void cap::DebugTerminalHelper::Destroy(argument_type& arg)

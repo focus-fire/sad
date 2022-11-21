@@ -9,13 +9,15 @@
 
 namespace sad
 {
-	static class GameCamera
+	static class EditorCamera
 	{
 	public:
-		explicit GameCamera();
+		explicit EditorCamera();
 
-		~GameCamera();
+		~EditorCamera();
 
+		sad::EditorCamera& GetInstance() { return *this; };
+		const sad::EditorCamera& GetInstance() const { return *this; };
 		static void Update();
 
 		static glm::mat4 GetViewMatrix();
@@ -34,7 +36,6 @@ namespace sad
 		static glm::vec3 cameraPosition;
 		static glm::vec3 cameraEulers;
 		static bool isActive;
-
 	private:
 
 	};

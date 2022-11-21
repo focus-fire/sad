@@ -11,6 +11,7 @@
 #include <Engine/ECS/Components/LineRendererComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Game/GameCamera.h>
+#include <Game/EditorCamera.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -30,15 +31,28 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		rad::ShaderResource* shader = renderable->GetShader();
 
-		// TODO: Retrieve the view projection matrix from the Camera 
-		//glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		if (sad::GameCamera::isActive)
+		{
+			glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+			shader->Bind();
 
-		glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+			rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
+		}
+		if (sad::EditorCamera::isActive)
+		{
+			glm::mat4 mvpMatrix = sad::EditorCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+			shader->Bind();
+
+			shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+			rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
+		}
+		/*glm::mat4 mvpMatrix = sad::GameCamera::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
-		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
+		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);*/
 	}
 }
 

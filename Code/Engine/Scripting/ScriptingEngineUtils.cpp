@@ -4,6 +4,8 @@
 
 #include <mono/jit/jit.h>
 
+#include "ScriptingEngine.h"
+
 MonoAssembly* sad::cs::ScriptingEngineUtils::LoadCSharpAssembly(const std::string& assemblyPath)
 {
 	uint32_t size = 0;
@@ -29,9 +31,15 @@ MonoAssembly* sad::cs::ScriptingEngineUtils::LoadCSharpAssembly(const std::strin
 	return assembly;
 }
 
-void sad::cs::ScriptingEngineUtils::PrintAssemblyTypes(MonoAssembly* assembly)
+void sad::cs::ScriptingEngineUtils::PrintAllAssemblyTypes(MonoAssembly* monoAssembly)
 {
-	MonoImage* image = mono_assembly_get_image(assembly);
+	// Get name for monoAssembly being printed
+	MonoAssemblyName* assemblyName = mono_assembly_get_name(monoAssembly);
+	const char* cStrAssemblyName = mono_assembly_name_get_name(assemblyName);
+	core::Log(ELogType::Info, "[ScriptingUtils] Printing all assembly types from {}", cStrAssemblyName);
+
+	// Setup type definitions table for monoAssembly image
+	MonoImage* image = mono_assembly_get_image(monoAssembly);
 	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
 

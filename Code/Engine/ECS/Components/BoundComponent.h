@@ -14,25 +14,25 @@ namespace sad::ecs
 
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::BoundComponent& boundComponent)
 	{
-		glm::vec3 pos = boundComponent.m_Bound->GetPosition();
-		glm::vec3 scl = boundComponent.m_Bound->GetScale();
+		glm::vec3 center = boundComponent.m_Bound->GetCenter();
+		glm::vec3 size = boundComponent.m_Bound->GetSize();
 
 		JSON =
 		{
 			{
-				"boundPosition",
+				"BoundCenter",
 				{
-					{"x", pos.x},
-					{"y", pos.y},
-					{"z", pos.z}
+					{"x", center.x},
+					{"y", center.y},
+					{"z", center.z}
 				}
 			},
 			{
-				"boundScale",
+				"BoundSize",
 				{
-					{"x", scl.x},
-					{"y", scl.y},
-					{"z", scl.z}
+					{"x", size.x},
+					{"y", size.y},
+					{"z", size.z}
 				}
 			}
 		};
@@ -40,12 +40,12 @@ namespace sad::ecs
 
 	inline void from_json(const nlohmann::json& JSON, sad::ecs::BoundComponent& boundComponent)
 	{
-		glm::vec3 pos = glm::vec3();
-		glm::vec3 scl = glm::vec3();
+		glm::vec3 center = glm::vec3();
+		glm::vec3 size = glm::vec3();
 
-		pos = glm::vec3(JSON["boundPosition"]["x"], JSON["boundPosition"]["y"], JSON["boundPosition"]["z"]);
-		scl = glm::vec3(JSON["boundScale"]["x"], JSON["boundScale"]["y"], JSON["boundScale"]["z"]);
+		center = glm::vec3(JSON["BoundCenter"]["x"], JSON["BoundCenter"]["y"], JSON["BoundCenter"]["z"]);
+		size = glm::vec3(JSON["BoundSize"]["x"], JSON["BoundSize"]["y"], JSON["BoundSize"]["z"]);
 
-		boundComponent.m_Bound = core::CreatePointer<Bound>(pos, scl);
+		boundComponent.m_Bound = core::CreatePointer<Bound>(center, size);
 	}
 }

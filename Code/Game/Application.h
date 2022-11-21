@@ -23,10 +23,5 @@ namespace pog
 
 	private:
 		std::mutex m_GameMutex;
-
-		float m_CubeTranslate;
-		std::chrono::time_point<std::chrono::steady_clock> m_LastTime;
-
-		sad::AudioResource* m_CollisionSoundEffect;
 	};
 }

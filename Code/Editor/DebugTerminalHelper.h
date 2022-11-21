@@ -20,7 +20,7 @@ namespace cap
 	class DebugTerminalHelper : public ImTerm::basic_spdlog_terminal_helper<DebugTerminalHelper, DebugTerminalCommandItems, misc::no_mutex>
 	{
 	public:
-		explicit DebugTerminalHelper();
+		DebugTerminalHelper();
 
 		/**
 		 * @brief Specifies action taken by terminal for autocompleting user results
@@ -29,33 +29,52 @@ namespace cap
 
 		/**
 		 * @brief Clears the terminal output
+		 *
+		 * @usage clear 
 		*/
 		static void Clear(argument_type& arg);
 
 		/**
-		 * @brief Echoes the entered text into the terminal
-		*/
-		static void Echo(argument_type& arg);
-
-		/**
 		 * @brief Prints to the terminal through the debug logging sinks 
+		 *
+		 * @usage debug <message>
 		*/
 		static void Debug(argument_type& arg);
 
 		/**
 		 * @brief Closes the currently focused terminal
+		 *
+		 * @usage close
 		*/
 		static void Close(argument_type& arg);
 
 		/**
 		 * @brief Instantiates an entity in the level with a provided name
+		 *
+		 * @usage instantiate <entity_name>
 		*/
 		static void Instantiate(argument_type& arg);
 		
 		/**
 		 * @brief Destroys an entity in the level with a particular name 
+		 *
+		 * @usage destroy <entity_name>
 		*/
 		static void Destroy(argument_type& arg);
+
+		/**
+		 * @brief Binds a script to an entity in the level with a particular name
+		 *
+		 * @usage bind_script <entity_name> <script_name>
+		*/
+		static void BindScriptToEntity(argument_type& arg);
+
+		/**
+		 * @brief Unbinds a script from an entity in the level with a particular name
+		 *
+		 * @usage unbind_script <entity_name> <script_name>
+		*/
+		static void UnbindScriptFromEntity(argument_type& arg);
 	};
 
 	/**

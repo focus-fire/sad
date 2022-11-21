@@ -257,9 +257,6 @@ namespace sad
 
         bool m_IsInputLocked;
 
-        ImGuiID m_GameWindowID;
-        ImGuiID m_currentActiveId = 0;
-
         std::unordered_map<SDL_Scancode, bool> m_KeyboardState;
         std::unordered_map<SDL_Scancode, Uint64>  m_KeyboardUpdateFrames;
 

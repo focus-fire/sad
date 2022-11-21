@@ -55,11 +55,6 @@ namespace sad
 		*/
 		virtual void Teardown();
 
-		// TODO: Abstract view projection matrix into camera
-		static glm::mat4 GetViewProjectionMatrix();
-		static glm::mat4 GetViewMatrix();
-		static glm::mat4 GetProjectionMatrix();
-
 	public:
 		static Window* s_MainWindow;
 		static EngineStateManager* s_EngineState;

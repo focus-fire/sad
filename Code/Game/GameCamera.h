@@ -13,17 +13,12 @@ namespace sad
 	static class GameCamera : public Camera
 	{
 	public:
-		explicit GameCamera();
-
-		~GameCamera();
 
 		void Update() override;
 
 		void CurrentCameraState();
 
-		static glm::vec3 gameCameraEulers;
-
-		static bool isActive;
+	private:
 
 	};
 }

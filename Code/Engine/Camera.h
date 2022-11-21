@@ -1,6 +1,6 @@
 #pragma once
+
 #include<glm/glm.hpp>
-#include "Engine/InputManager.h"
 
 namespace sad
 {

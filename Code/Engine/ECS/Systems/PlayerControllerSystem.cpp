@@ -124,18 +124,6 @@ void sad::ecs::PlayerControllerSystem::Update(EntityWorld& world)
 {
 	InputManager& input = InputManager::GetInstance();
 
-	// Test mouse position
-	if (input.GetMouseButtonPressed(SDL_BUTTON_MIDDLE))
-	{
-		std::string mousePosition = "Mouse Pos: (";
-		mousePosition += std::to_string(input.GetMousePosition().x);
-		mousePosition += ", ";
-		mousePosition += std::to_string(input.GetMousePosition().y);
-		mousePosition += ")";
-
-		core::Log(ELogType::Info, mousePosition.c_str());
-	}
-
 	float moveSpeedMultiplier = 0.005f;
 
 	auto playerView = world.view<const sad::ecs::PlayerControllerComponent, const sad::ecs::TransformComponent>(entt::exclude<EditorControllerComponent>);

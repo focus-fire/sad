@@ -2,8 +2,6 @@
 
 #include "Engine/Application.h"
 #include "Engine/Camera.h"
-#include "glm/gtx/string_cast.hpp"
-#include "backends/imgui_impl_glfw.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 

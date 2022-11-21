@@ -188,8 +188,7 @@ void sad::Application::Update(float dt)
 	m_CurrentLevel->Update(world);
 
 	//  Update GameCamera
-	SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
-	//core::Log(ELogType::Info, "Editor Camera status: {}", sad::EditorCamera::isActive);
+	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);
 	sad::rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass
@@ -213,23 +212,4 @@ void sad::Application::Teardown()
 	m_Editor->Teardown();
 
 	s_MainWindow->Teardown();
-}
-
-glm::mat4 sad::Application::GetViewProjectionMatrix()
-{
-	return GetProjectionMatrix() * GetViewMatrix();
-}
-
-glm::mat4 sad::Application::GetViewMatrix()
-{
-	return glm::lookAt(
-		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-}
-
-glm::mat4 sad::Application::GetProjectionMatrix()
-{
-	return glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 }

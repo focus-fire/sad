@@ -20,8 +20,9 @@ namespace sad::ecs
 	class Entity 
 	{
 	public:
-		Entity();
+		Entity() = default;
 		Entity(entt::entity entityHandle);
+		Entity(entt::null_t null);
 		Entity(const Entity& entity) = default;
 
 		/**
@@ -35,10 +36,10 @@ namespace sad::ecs
 		 * @param component Component to add to the entity
 		 * @return Reference to the added component
 		*/
-		template<typename T>
-		T& AddComponent(T component)
+		template<typename T, typename... Args>
+		T& AddComponent(Args&&... args)
 		{
-			return Registry::GetEntityWorld().emplace<T>(m_EntityHandle, component);
+			return Registry::GetEntityWorld().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
 		}
 
 		/**
@@ -123,6 +124,8 @@ namespace sad::ecs
 		{
 			return !(*this == other);
 		}
+
+		static ecs::Entity Null() { return ecs::Entity(entt::null); }
 
 	private:
 		entt::entity m_EntityHandle;

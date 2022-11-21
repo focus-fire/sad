@@ -243,6 +243,7 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 		return EResourceType::Level;
 
 	if (String::Equals(ext, ".cs") 
+		|| String::Equals(ext, ".lua")
 		|| String::Equals(ext, ".pdb") 
 		|| String::Equals(ext, ".dll") 
 		|| String::Equals(ext, ".csproj")

@@ -20,6 +20,15 @@ extern "C"
 namespace core
 {
 	/**
+	 * @brief NativeGuid is a shortcut for using a GUID (Win32) or a uuid_t (Unix)
+	*/
+#ifdef _SAD_WINDOWS
+	using NativeGuid = GUID;
+#else 
+	using NativeGuid = uuid_t;
+#endif
+
+	/**
 	 * @brief Globally Unique Identifier, often used to identify things
 	*/
 	class Guid
@@ -32,6 +41,13 @@ namespace core
 		Guid(const Guid& other) = default;
 
 		/**
+		 * @brief Reconstruct a GUID by receiving a native GUID
+		 *
+		 * @note Used in the ScriptingBridge to recreate System.Guids 
+		*/
+		explicit Guid(NativeGuid guid);
+
+		/**
 		 * @brief Factory method to generate platform-specific GUIDs
 		 * @return Properly constructed engine GUID
 		*/
@@ -42,6 +58,12 @@ namespace core
 		 * @return Properly constructed engine GUID
 		*/
 		static Guid RecreateGuid(const std::string& stringGuid);
+
+		/**
+		 * @brief Retrieves the GUID object native to the OS
+		 * @return Representation of the GUID native to the OS (GUID -> Win32 or uuid_t -> Unix)
+		*/
+		NativeGuid GetNativeGuid() { return m_Guid; }
 
 		/**
 		 * @brief Retrieves string representation for the GUID 
@@ -93,6 +115,7 @@ namespace core
 		}
 
 	private:
+		NativeGuid m_Guid;
 		std::string m_StringGuid;
 
 		/**
@@ -105,14 +128,6 @@ namespace core
 		 *		    1 if a is greater than b
 		*/
 		static int CompareGuid(const Guid& a, const Guid& b);
-
-#ifdef _SAD_WINDOWS
-		explicit Guid(GUID guid);
-		GUID m_Guid;
-#else
-		explicit Guid(uuid_t uuid);
-		uuid_t m_Guid;
-#endif
 	};
 }
 

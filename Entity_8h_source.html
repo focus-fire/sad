@@ -88,87 +88,90 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html">   20</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a> </div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(entt::entity entityHandle);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; entity) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">   30</a></span>&#160;        <span class="keyword">const</span> entt::entity <a class="code" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_EntityHandle; }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">   39</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">AddComponent</a>(T component)</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        {</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        }</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">   51</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">OverwriteComponent</a>(T component)</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace_or_replace&lt;T&gt;(m_EntityHandle, component);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">   62</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a>(T component)</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        {</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        };</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">   73</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">RemoveComponent</a>()</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        {</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            SAD_ASSERT(HasComponent&lt;T&gt;(), <span class="stringliteral">&quot;Attempting to remove a component that does not exist on the entity&quot;</span>);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            Registry::GetEntityWorld().remove&lt;T&gt;(m_EntityHandle);</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">   85</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a>()</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        {</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().get&lt;T&gt;(m_EntityHandle);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">   96</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">HasComponent</a>()</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        {</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().all_of&lt;T&gt;(m_EntityHandle);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        }</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">  105</a></span>&#160;        <a class="code" href="classcore_1_1Guid.html">core::Guid</a> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">GetGuid</a>() { <span class="keywordflow">return</span> this-&gt;GetComponent&lt;ecs::GuidComponent&gt;().m_GUID; }</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">operator</span> bool()<span class="keyword"> const </span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">        </span>{ </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle != entt::null; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        <span class="keyword">operator</span> entt::entity()<span class="keyword"> const </span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">        </span>{ </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        }</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">        </span>{ </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle == other.m_EntityHandle;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        }</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;            <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        }</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        entt::entity m_EntityHandle;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    };</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;}</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(entt::null_t <span class="keyword">null</span>);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>(<span class="keyword">const</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html">Entity</a>&amp; entity) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">   31</a></span>&#160;        <span class="keyword">const</span> entt::entity <a class="code" href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">GetHandle</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_EntityHandle; }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a6c13c189aee40fff9e1ae804c5b86183">   40</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#a6c13c189aee40fff9e1ae804c5b86183">AddComponent</a>(Args&amp;&amp;... args)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        {</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, std::forward&lt;Args&gt;(args)...);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        }</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">   52</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">OverwriteComponent</a>(T component)</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().emplace_or_replace&lt;T&gt;(m_EntityHandle, component);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        }</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">   63</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">AddEmptyComponent</a>(T component)</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            Registry::GetEntityWorld().emplace&lt;T&gt;(m_EntityHandle, component);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        };</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">   74</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">RemoveComponent</a>()</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        {</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            SAD_ASSERT(HasComponent&lt;T&gt;(), <span class="stringliteral">&quot;Attempting to remove a component that does not exist on the entity&quot;</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            Registry::GetEntityWorld().remove&lt;T&gt;(m_EntityHandle);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">   86</a></span>&#160;        T&amp; <a class="code" href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">GetComponent</a>()</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().get&lt;T&gt;(m_EntityHandle);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">   97</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">HasComponent</a>()</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keywordflow">return</span> Registry::GetEntityWorld().all_of&lt;T&gt;(m_EntityHandle);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">  106</a></span>&#160;        <a class="code" href="classcore_1_1Guid.html">core::Guid</a> <a class="code" href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">GetGuid</a>() { <span class="keywordflow">return</span> this-&gt;GetComponent&lt;ecs::GuidComponent&gt;().m_GUID; }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keyword">operator</span> bool()<span class="keyword"> const </span></div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">        </span>{ </div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle != entt::null; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">operator</span> entt::entity()<span class="keyword"> const </span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keyword">        </span>{ </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle; </div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keyword">        </span>{ </div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordflow">return</span> m_EntityHandle == other.m_EntityHandle;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;        <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> Entity&amp; other)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;            <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        }</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keyword">static</span> ecs::Entity Null() { <span class="keywordflow">return</span> ecs::Entity(entt::null); }</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        entt::entity m_EntityHandle;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    };</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aed324b7f2b751b527e3bef89b454502d"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aed324b7f2b751b527e3bef89b454502d">sad::ecs::Entity::AddComponent</a></div><div class="ttdeci">T &amp; AddComponent(T component)</div><div class="ttdoc">Adds a component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:39</div></div>
 <div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html">sad::ecs::Entity</a></div><div class="ttdoc">Wrapper class for an entt::entity, contains utility methods to update the entities components in the ...</div><div class="ttdef"><b>Definition:</b> Entity.h:20</div></div>
 <div class="ttc" id="anamespacesad_1_1ecs_html"><div class="ttname"><a href="namespacesad_1_1ecs.html">sad::ecs</a></div><div class="ttdoc">Contains entt ecs wrappers, systems, and components.</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aafcf08b8cf54e9baffadd1e1afb06756"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">sad::ecs::Entity::GetHandle</a></div><div class="ttdeci">const entt::entity GetHandle() const</div><div class="ttdoc">Retrieves the entt::entity handle created for the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:30</div></div>
-<div class="ttc" id="aclasscore_1_1Guid_html"><div class="ttname"><a href="classcore_1_1Guid.html">core::Guid</a></div><div class="ttdoc">Globally Unique Identifier, often used to identify things.</div><div class="ttdef"><b>Definition:</b> Guid.h:25</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a788c83f1fad57d84cf1d824ea97f96df"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">sad::ecs::Entity::RemoveComponent</a></div><div class="ttdeci">void RemoveComponent()</div><div class="ttdoc">Removes a component from the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:73</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_ab445fe3c0805955a20fdc8c8110c66cc"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">sad::ecs::Entity::GetComponent</a></div><div class="ttdeci">T &amp; GetComponent()</div><div class="ttdoc">Retrieves a specified component from the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:85</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af64edcb63ab792b2af6412dde8b6c375"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">sad::ecs::Entity::GetGuid</a></div><div class="ttdeci">core::Guid GetGuid()</div><div class="ttdoc">Retrieves native GUID attached to the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:105</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af17e9c8da23f44584711aa0d84abc470"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">sad::ecs::Entity::AddEmptyComponent</a></div><div class="ttdeci">void AddEmptyComponent(T component)</div><div class="ttdoc">Adds an empty 'tag' component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:62</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a617776b7c0d89561c9462fad5f26510f"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">sad::ecs::Entity::HasComponent</a></div><div class="ttdeci">bool HasComponent()</div><div class="ttdoc">Checks if a particular component exists on an entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:96</div></div>
-<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a415f24c9f7ff3dc1fb71d8d1d4313563"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">sad::ecs::Entity::OverwriteComponent</a></div><div class="ttdeci">T &amp; OverwriteComponent(T component)</div><div class="ttdoc">Potentially overwrites a component on the entity with the component passed.</div><div class="ttdef"><b>Definition:</b> Entity.h:51</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_aafcf08b8cf54e9baffadd1e1afb06756"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756">sad::ecs::Entity::GetHandle</a></div><div class="ttdeci">const entt::entity GetHandle() const</div><div class="ttdoc">Retrieves the entt::entity handle created for the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:31</div></div>
+<div class="ttc" id="aclasscore_1_1Guid_html"><div class="ttname"><a href="classcore_1_1Guid.html">core::Guid</a></div><div class="ttdoc">Globally Unique Identifier, often used to identify things.</div><div class="ttdef"><b>Definition:</b> Guid.h:34</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a788c83f1fad57d84cf1d824ea97f96df"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a788c83f1fad57d84cf1d824ea97f96df">sad::ecs::Entity::RemoveComponent</a></div><div class="ttdeci">void RemoveComponent()</div><div class="ttdoc">Removes a component from the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:74</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_ab445fe3c0805955a20fdc8c8110c66cc"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#ab445fe3c0805955a20fdc8c8110c66cc">sad::ecs::Entity::GetComponent</a></div><div class="ttdeci">T &amp; GetComponent()</div><div class="ttdoc">Retrieves a specified component from the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:86</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a6c13c189aee40fff9e1ae804c5b86183"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a6c13c189aee40fff9e1ae804c5b86183">sad::ecs::Entity::AddComponent</a></div><div class="ttdeci">T &amp; AddComponent(Args &amp;&amp;... args)</div><div class="ttdoc">Adds a component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:40</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af64edcb63ab792b2af6412dde8b6c375"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375">sad::ecs::Entity::GetGuid</a></div><div class="ttdeci">core::Guid GetGuid()</div><div class="ttdoc">Retrieves native GUID attached to the entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:106</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_af17e9c8da23f44584711aa0d84abc470"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#af17e9c8da23f44584711aa0d84abc470">sad::ecs::Entity::AddEmptyComponent</a></div><div class="ttdeci">void AddEmptyComponent(T component)</div><div class="ttdoc">Adds an empty 'tag' component to the current entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:63</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a617776b7c0d89561c9462fad5f26510f"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a617776b7c0d89561c9462fad5f26510f">sad::ecs::Entity::HasComponent</a></div><div class="ttdeci">bool HasComponent()</div><div class="ttdoc">Checks if a particular component exists on an entity.</div><div class="ttdef"><b>Definition:</b> Entity.h:97</div></div>
+<div class="ttc" id="aclasssad_1_1ecs_1_1Entity_html_a415f24c9f7ff3dc1fb71d8d1d4313563"><div class="ttname"><a href="classsad_1_1ecs_1_1Entity.html#a415f24c9f7ff3dc1fb71d8d1d4313563">sad::ecs::Entity::OverwriteComponent</a></div><div class="ttdeci">T &amp; OverwriteComponent(T component)</div><div class="ttdoc">Potentially overwrites a component on the entity with the component passed.</div><div class="ttdef"><b>Definition:</b> Entity.h:52</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -79,68 +79,40 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a> </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="classsad_1_1Bound.html">   10</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1Bound.html">Bound</a> </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">        * Find entity and use transform data </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">        * to get position to create bounds.</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Bound.html">Bound</a>(glm::vec3 position, glm::vec3 scale);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Bound.html">Bound</a>(<a class="code" href="classsad_1_1Transform.html">Transform</a> transform);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">        * Value should be auto set to the transform position.</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> SetPosition(glm::vec3 position) { m_Position = position; }</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> SetScale(glm::vec3 scale) { m_Scale = scale; }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">        * Bound Max and Min calculations.</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> CalculateBound();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">        * Checks for bound intersection with </span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="comment">        * another pair of MaxMin vectors.</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">bool</span> Intersects(glm::vec3 otherMax, glm::vec3 otherMin);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment">/* </span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">        * Checks for bound Intersection after </span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">        * pulling MaxMin vectors from compoenent..</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">bool</span> Intersects(<a class="code" href="classsad_1_1Bound.html">Bound</a> otherBound);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="comment">        * Get position and scale values.</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        glm::vec3 GetPosition() { <span class="keywordflow">return</span> m_Position; }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        glm::vec3 GetScale() { <span class="keywordflow">return</span> m_Scale; }</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        glm::vec3 GetBoundMax() { <span class="keywordflow">return</span> m_Max; }</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        glm::vec3 GetBoundMin() { <span class="keywordflow">return</span> m_Min; }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        glm::vec3 m_Position;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        glm::vec3 m_Scale;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">        Max and Min vectors for a bounds box.</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        glm::vec3 m_Max;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        glm::vec3 m_Min;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="comment">/*</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="comment">        * Checks another bound&#39;s max and min vectors to check for overlap or intersection.</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">        */</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">bool</span> IntersectionMaxMin(glm::vec3 otherMax, glm::vec3 otherMin);</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classsad_1_1Bound.html">   13</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1Bound.html">Bound</a> </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Bound.html">Bound</a>(glm::vec3 center, glm::vec3 size);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Bound.html">Bound</a>(<a class="code" href="classsad_1_1Transform.html">Transform</a> transform);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1Bound.html#a447cd3c78400f1f429d982d5e8244ad3">Intersects</a>(glm::vec3 otherMax, glm::vec3 otherMin);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classsad_1_1Bound.html#a447cd3c78400f1f429d982d5e8244ad3">Intersects</a>(<a class="code" href="classsad_1_1Bound.html">Bound</a> otherBound);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        glm::vec3 GetCenter() { <span class="keywordflow">return</span> m_Center; }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">void</span> SetCenter(glm::vec3 center) { m_Center = center; }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        glm::vec3 GetSize() { <span class="keywordflow">return</span> m_Extents * 2.0f; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">void</span> SetSize(glm::vec3 size) { m_Extents = size * 0.5f; }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> SetMinMax(glm::vec3 min, glm::vec3 max);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        glm::vec3 GetBoundMax() { <span class="keywordflow">return</span> m_Center + m_Extents; }</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        glm::vec3 GetBoundMin() { <span class="keywordflow">return</span> m_Center - m_Extents; }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">bool</span> IntersectionMaxMin(glm::vec3 otherMax, glm::vec3 otherMin);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        glm::vec3 m_Center;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        glm::vec3 m_Extents;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        glm::vec3 m_Size;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    };</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasssad_1_1Transform_html"><div class="ttname"><a href="classsad_1_1Transform.html">sad::Transform</a></div><div class="ttdef"><b>Definition:</b> Transform.h:8</div></div>
 <div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
-<div class="ttc" id="aclasssad_1_1Bound_html"><div class="ttname"><a href="classsad_1_1Bound.html">sad::Bound</a></div><div class="ttdef"><b>Definition:</b> Bound.h:10</div></div>
+<div class="ttc" id="aclasssad_1_1Bound_html"><div class="ttname"><a href="classsad_1_1Bound.html">sad::Bound</a></div><div class="ttdoc">Basic AABB Bound, attached to most objects as a simple reference-point for collision detection.</div><div class="ttdef"><b>Definition:</b> Bound.h:13</div></div>
+<div class="ttc" id="aclasssad_1_1Bound_html_a447cd3c78400f1f429d982d5e8244ad3"><div class="ttname"><a href="classsad_1_1Bound.html#a447cd3c78400f1f429d982d5e8244ad3">sad::Bound::Intersects</a></div><div class="ttdeci">bool Intersects(glm::vec3 otherMax, glm::vec3 otherMin)</div><div class="ttdoc">Checks for bound intersection with another pair of max and min vectors.</div><div class="ttdef"><b>Definition:</b> Bound.cpp:29</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

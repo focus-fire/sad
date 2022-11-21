@@ -153,15 +153,15 @@ $(function() {
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a ShaderResource with name {}&quot;</span>, data.Name);</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        }</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;LevelResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            core::Pointer&lt;LevelResource&gt; levelResource = core::CreatePointer&lt;LevelResource&gt;(data);</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            ResourceManager::AddResource&lt;LevelResource&gt;(levelResource);</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a LevelResource with name {}&quot;</span>, data.Name);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        }</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    };</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keyword">template</span>&lt;&gt;</div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb">  108</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> CreateResource&lt;LevelResource&gt;(<span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; data)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            core::Pointer&lt;LevelResource&gt; levelResource = core::CreatePointer&lt;LevelResource&gt;(data);</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            ResourceManager::AddResource&lt;LevelResource&gt;(levelResource);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceFactory] Created a LevelResource with name {}&quot;</span>, data.Name);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    };</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasssad_1_1ResourceFactory_html"><div class="ttname"><a href="classsad_1_1ResourceFactory.html">sad::ResourceFactory</a></div><div class="ttdoc">Factory class used by the ResourceManager to provision the creation of specific resources.</div><div class="ttdef"><b>Definition:</b> ResourceFactory.h:22</div></div>
 <div class="ttc" id="aclasscore_1_1StringUtils_html_ac4816d66982d1938afa67255711c08e9"><div class="ttname"><a href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a></div><div class="ttdeci">static bool Equals(const std::string &amp;a, const std::string &amp;b)</div><div class="ttdoc">Compares two strings for equality.</div><div class="ttdef"><b>Definition:</b> StringUtils.cpp:5</div></div>

@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['debug_232',['Debug',['../classcap_1_1DebugTerminalHelper.html#ad39d03aee0eea648614d3185cfa71805',1,'cap::DebugTerminalHelper']]],
-  ['degtorad_233',['DegToRad',['../classcore_1_1MathUtils.html#a72f334fd972762eb557ccdc1e33517a7',1,'core::MathUtils']]],
-  ['destroy_234',['Destroy',['../classcap_1_1DebugTerminalHelper.html#a9ef76771ea09896668d4aa66fb6ae3ad',1,'cap::DebugTerminalHelper']]],
-  ['destroyentity_235',['DestroyEntity',['../classsad_1_1Level.html#a1983e365cb5f89acc2f7b99c7b73ddd8',1,'sad::Level']]],
-  ['destroyentitybyname_236',['DestroyEntityByName',['../classsad_1_1Level.html#abfb463be767768f2078c8ce46947bc2a',1,'sad::Level']]],
-  ['drawdebugbox_237',['DrawDebugBox',['../classsad_1_1rad_1_1RenderBuddy.html#a5257797713f2d8a8dae4341f4c89dc78',1,'sad::rad::RenderBuddy']]],
-  ['drawdebugline_238',['DrawDebugLine',['../classsad_1_1rad_1_1RenderBuddy.html#a6d6baf001453dd442efe8e49e93685f2',1,'sad::rad::RenderBuddy']]],
-  ['drawindexed_239',['DrawIndexed',['../classsad_1_1rad_1_1RenderBuddy.html#aed89001c77082b99d3ec13101c35314c',1,'sad::rad::RenderBuddy::DrawIndexed()'],['../classsad_1_1rad_1_1Renderer.html#a2fc59fc7637a8809204a5049581d2b49',1,'sad::rad::Renderer::DrawIndexed()']]],
-  ['drawlines_240',['DrawLines',['../classsad_1_1rad_1_1RenderBuddy.html#a9aafb6ae5ba4366ef39c1f6a1d5aa436',1,'sad::rad::RenderBuddy::DrawLines()'],['../classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367',1,'sad::rad::Renderer::DrawLines()']]]
+  ['catchcontrollerevents_227',['CatchControllerEvents',['../classsad_1_1InputManager.html#a0188b9a1fc0c00e6139d8c207fc20625',1,'sad::InputManager']]],
+  ['catchkeyboardevents_228',['CatchKeyboardEvents',['../classsad_1_1InputManager.html#a068cf8b93d62eb34207c3c48c0e21871',1,'sad::InputManager']]],
+  ['catchmouseevents_229',['CatchMouseEvents',['../classsad_1_1InputManager.html#abd008b80d36a930ff4b7fc9a50ed97d1',1,'sad::InputManager']]],
+  ['clamp_230',['Clamp',['../classcore_1_1MathUtils.html#aa2f0c4229e7d3b5f26e4f25040de43aa',1,'core::MathUtils']]],
+  ['clear_231',['Clear',['../classcap_1_1DebugTerminalHelper.html#adc5ea32288ef969cd2870227850a8d8a',1,'cap::DebugTerminalHelper']]],
+  ['close_232',['Close',['../classcap_1_1DebugTerminalHelper.html#a2735fc4a8ca1d5ee16b7adeb5f17113d',1,'cap::DebugTerminalHelper']]],
+  ['comparefloatingpoints_233',['CompareFloatingPoints',['../classcore_1_1MathUtils.html#a6e0f897978d365b78ce0ba68b89c40df',1,'core::MathUtils']]],
+  ['contains_234',['Contains',['../classcore_1_1StringUtils.html#a278fa58065d0e99140114cd5ee35e3d8',1,'core::StringUtils']]],
+  ['createguid_235',['CreateGuid',['../classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8',1,'core::Guid']]],
+  ['createresource_236',['CreateResource',['../classsad_1_1ResourceFactory.html#aa11743d0880e3198cf17d47054f9d759',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)=delete'],['../classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)'],['../classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)'],['../classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)'],['../classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)'],['../classsad_1_1ResourceFactory.html#ac66033dbd22963c598dff425a04a1ddb',1,'sad::ResourceFactory::CreateResource(const Resource::ResourceData &amp;data)']]]
 ];

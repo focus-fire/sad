@@ -73,36 +73,43 @@ $(function() {
 <div class="title">sad::Bound Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Basic AABB <a class="el" href="classsad_1_1Bound.html" title="Basic AABB Bound, attached to most objects as a simple reference-point for collision detection.">Bound</a>, attached to most objects as a simple reference-point for collision detection.  
+ <a href="classsad_1_1Bound.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Bound_8h_source.html">Bound.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afa40eacd01c2d7b9257726ccc4e3eaa4"><td class="memItemLeft" align="right" valign="top"><a id="afa40eacd01c2d7b9257726ccc4e3eaa4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Bound</b> (glm::vec3 position, glm::vec3 scale)</td></tr>
-<tr class="separator:afa40eacd01c2d7b9257726ccc4e3eaa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61238c0e9900c0bef0834bc5da4bf43f"><td class="memItemLeft" align="right" valign="top"><a id="a61238c0e9900c0bef0834bc5da4bf43f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Bound</b> (glm::vec3 center, glm::vec3 size)</td></tr>
+<tr class="separator:a61238c0e9900c0bef0834bc5da4bf43f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ef2d3db1753699f3c181abd1dbf3612"><td class="memItemLeft" align="right" valign="top"><a id="a2ef2d3db1753699f3c181abd1dbf3612"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Bound</b> (<a class="el" href="classsad_1_1Transform.html">Transform</a> transform)</td></tr>
 <tr class="separator:a2ef2d3db1753699f3c181abd1dbf3612"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1ff2f41963e60e737f9e18d264b92b5"><td class="memItemLeft" align="right" valign="top"><a id="af1ff2f41963e60e737f9e18d264b92b5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetPosition</b> (glm::vec3 position)</td></tr>
-<tr class="separator:af1ff2f41963e60e737f9e18d264b92b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc5ad13093d08db8052f680b8e1e6000"><td class="memItemLeft" align="right" valign="top"><a id="afc5ad13093d08db8052f680b8e1e6000"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetScale</b> (glm::vec3 scale)</td></tr>
-<tr class="separator:afc5ad13093d08db8052f680b8e1e6000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53d9bd3b1377b957c4489b287812155a"><td class="memItemLeft" align="right" valign="top"><a id="a53d9bd3b1377b957c4489b287812155a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CalculateBound</b> ()</td></tr>
-<tr class="separator:a53d9bd3b1377b957c4489b287812155a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a447cd3c78400f1f429d982d5e8244ad3"><td class="memItemLeft" align="right" valign="top"><a id="a447cd3c78400f1f429d982d5e8244ad3"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Intersects</b> (glm::vec3 otherMax, glm::vec3 otherMin)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Bound.html#a447cd3c78400f1f429d982d5e8244ad3">Intersects</a> (glm::vec3 otherMax, glm::vec3 otherMin)</td></tr>
+<tr class="memdesc:a447cd3c78400f1f429d982d5e8244ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for bound intersection with another pair of max and min vectors. <br /></td></tr>
 <tr class="separator:a447cd3c78400f1f429d982d5e8244ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29a5faec0dab0a0bbbd087e266211d73"><td class="memItemLeft" align="right" valign="top"><a id="a29a5faec0dab0a0bbbd087e266211d73"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Intersects</b> (<a class="el" href="classsad_1_1Bound.html">Bound</a> otherBound)</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Bound.html#a29a5faec0dab0a0bbbd087e266211d73">Intersects</a> (<a class="el" href="classsad_1_1Bound.html">Bound</a> otherBound)</td></tr>
+<tr class="memdesc:a29a5faec0dab0a0bbbd087e266211d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for bound Intersection after pulling max and min vectors from bound. <br /></td></tr>
 <tr class="separator:a29a5faec0dab0a0bbbd087e266211d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a527b3f62f788b2bd7dcf51c4468fcde2"><td class="memItemLeft" align="right" valign="top"><a id="a527b3f62f788b2bd7dcf51c4468fcde2"></a>
-glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetPosition</b> ()</td></tr>
-<tr class="separator:a527b3f62f788b2bd7dcf51c4468fcde2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26316f537217afcc50b0c5fbea6ad1e3"><td class="memItemLeft" align="right" valign="top"><a id="a26316f537217afcc50b0c5fbea6ad1e3"></a>
-glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetScale</b> ()</td></tr>
-<tr class="separator:a26316f537217afcc50b0c5fbea6ad1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4083db8c01ce1dde49a09ad23d8a62eb"><td class="memItemLeft" align="right" valign="top"><a id="a4083db8c01ce1dde49a09ad23d8a62eb"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetCenter</b> ()</td></tr>
+<tr class="separator:a4083db8c01ce1dde49a09ad23d8a62eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a0fb203777ff52b422e163d0b394413"><td class="memItemLeft" align="right" valign="top"><a id="a2a0fb203777ff52b422e163d0b394413"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetCenter</b> (glm::vec3 center)</td></tr>
+<tr class="separator:a2a0fb203777ff52b422e163d0b394413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad820e0dfa5ea8295cfc5bcb1280df83e"><td class="memItemLeft" align="right" valign="top"><a id="ad820e0dfa5ea8295cfc5bcb1280df83e"></a>
+glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetSize</b> ()</td></tr>
+<tr class="separator:ad820e0dfa5ea8295cfc5bcb1280df83e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf85edc0f30db3b964426a09e0586eda"><td class="memItemLeft" align="right" valign="top"><a id="adf85edc0f30db3b964426a09e0586eda"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSize</b> (glm::vec3 size)</td></tr>
+<tr class="separator:adf85edc0f30db3b964426a09e0586eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad4a8a31ec22cbef9e37c2203ce7aea"><td class="memItemLeft" align="right" valign="top"><a id="a9ad4a8a31ec22cbef9e37c2203ce7aea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMinMax</b> (glm::vec3 min, glm::vec3 max)</td></tr>
+<tr class="separator:a9ad4a8a31ec22cbef9e37c2203ce7aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a85852ca06e4c1b970f2b7fcdd80e6562"><td class="memItemLeft" align="right" valign="top"><a id="a85852ca06e4c1b970f2b7fcdd80e6562"></a>
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetBoundMax</b> ()</td></tr>
 <tr class="separator:a85852ca06e4c1b970f2b7fcdd80e6562"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,7 +117,9 @@ glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetBoundMax</b> 
 glm::vec3&#160;</td><td class="memItemRight" valign="bottom"><b>GetBoundMin</b> ()</td></tr>
 <tr class="separator:a24cb323d3116429317d11a33888a4136"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Basic AABB <a class="el" href="classsad_1_1Bound.html" title="Basic AABB Bound, attached to most objects as a simple reference-point for collision detection.">Bound</a>, attached to most objects as a simple reference-point for collision detection. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>Code/Engine/<a class="el" href="Bound_8h_source.html">Bound.h</a></li>
 <li>Code/Engine/Bound.cpp</li>
 </ul>

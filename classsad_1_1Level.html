@@ -77,24 +77,39 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a4e6d0b661b96b16eaa99c79f84e2c357"><td class="memItemLeft" align="right" valign="top"><a id="a4e6d0b661b96b16eaa99c79f84e2c357"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
+<tr class="separator:a4e6d0b661b96b16eaa99c79f84e2c357"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05e4223ef650db2f9779b8603ad76288"><td class="memItemLeft" align="right" valign="top"><a id="a05e4223ef650db2f9779b8603ad76288"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> (ecs::EntityWorld &amp;world)</td></tr>
 <tr class="separator:a05e4223ef650db2f9779b8603ad76288"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2df4ead6062fe8f7c90421e14b0ef6dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a2df4ead6062fe8f7c90421e14b0ef6dd">PopulateLevelGuids</a> ()</td></tr>
 <tr class="memdesc:a2df4ead6062fe8f7c90421e14b0ef6dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycles through all entities and performs an import on the entity.  <a href="classsad_1_1Level.html#a2df4ead6062fe8f7c90421e14b0ef6dd">More...</a><br /></td></tr>
 <tr class="separator:a2df4ead6062fe8f7c90421e14b0ef6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eb008d9a8389093f6ea82f2380b95f3"><td class="memItemLeft" align="right" valign="top"><a id="a6eb008d9a8389093f6ea82f2380b95f3"></a>
+<a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a6eb008d9a8389093f6ea82f2380b95f3">GetEntityByGuid</a> (const core::NativeGuid &amp;guid)</td></tr>
+<tr class="memdesc:a6eb008d9a8389093f6ea82f2380b95f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an entity by reconstructing a <a class="el" href="classcore_1_1Guid.html" title="Globally Unique Identifier, often used to identify things.">core::Guid</a> with a core::NativeGuid. <br /></td></tr>
+<tr class="separator:a6eb008d9a8389093f6ea82f2380b95f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24cf5dff87704da954fab080edd5911f"><td class="memItemLeft" align="right" valign="top"><a id="a24cf5dff87704da954fab080edd5911f"></a>
+<a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a24cf5dff87704da954fab080edd5911f">GetEntityByGuid</a> (const <a class="el" href="classcore_1_1Guid.html">core::Guid</a> &amp;guid)</td></tr>
+<tr class="memdesc:a24cf5dff87704da954fab080edd5911f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an entity in the level by GUID. <br /></td></tr>
+<tr class="separator:a24cf5dff87704da954fab080edd5911f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a798f6ed8e2b7870084e48a027cf78f69"><td class="memItemLeft" align="right" valign="top"><a id="a798f6ed8e2b7870084e48a027cf78f69"></a>
+<a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a798f6ed8e2b7870084e48a027cf78f69">GetEntityByName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a798f6ed8e2b7870084e48a027cf78f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves an entity in the level by name. <br /></td></tr>
+<tr class="separator:a798f6ed8e2b7870084e48a027cf78f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74fee38fd918c3d19df73453b1af771d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a74fee38fd918c3d19df73453b1af771d">InstantiateEntity</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:a74fee38fd918c3d19df73453b1af771d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an entity in the level from scratch with a new GUID, an empty transform, and a fresh bound.  <a href="classsad_1_1Level.html#a74fee38fd918c3d19df73453b1af771d">More...</a><br /></td></tr>
 <tr class="separator:a74fee38fd918c3d19df73453b1af771d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47033dc0dbe775b25eec184facb4eaf7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a47033dc0dbe775b25eec184facb4eaf7">InstantiateEntityFromHandle</a> (entt::entity handle, const std::string &amp;name, <a class="el" href="classcore_1_1Guid.html">core::Guid</a> guid=<a class="el" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a>())</td></tr>
 <tr class="memdesc:a47033dc0dbe775b25eec184facb4eaf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an entity in the level from a provided entt handle and/or a guid.  <a href="classsad_1_1Level.html#a47033dc0dbe775b25eec184facb4eaf7">More...</a><br /></td></tr>
 <tr class="separator:a47033dc0dbe775b25eec184facb4eaf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1983e365cb5f89acc2f7b99c7b73ddd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a1983e365cb5f89acc2f7b99c7b73ddd8">DestroyEntity</a> (<a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a> entity)</td></tr>
-<tr class="memdesc:a1983e365cb5f89acc2f7b99c7b73ddd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an entity from the registry and from the level cache.  <a href="classsad_1_1Level.html#a1983e365cb5f89acc2f7b99c7b73ddd8">More...</a><br /></td></tr>
-<tr class="separator:a1983e365cb5f89acc2f7b99c7b73ddd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfb463be767768f2078c8ce46947bc2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#abfb463be767768f2078c8ce46947bc2a">DestroyEntityByName</a> (const std::string &amp;name)</td></tr>
-<tr class="memdesc:abfb463be767768f2078c8ce46947bc2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an entity from the registry and from the level cache with a particular name.  <a href="classsad_1_1Level.html#abfb463be767768f2078c8ce46947bc2a">More...</a><br /></td></tr>
-<tr class="separator:abfb463be767768f2078c8ce46947bc2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39b58438b9a7eeca0793462ac4e9e796"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a39b58438b9a7eeca0793462ac4e9e796">DestroyEntity</a> (<a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a> entity)</td></tr>
+<tr class="memdesc:a39b58438b9a7eeca0793462ac4e9e796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an entity from the registry and from the level cache.  <a href="classsad_1_1Level.html#a39b58438b9a7eeca0793462ac4e9e796">More...</a><br /></td></tr>
+<tr class="separator:a39b58438b9a7eeca0793462ac4e9e796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a785ce1dba6fdd3b6edc20e1172fd6a69">DestroyEntityByName</a> (const std::string &amp;name)</td></tr>
+<tr class="memdesc:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an entity from the registry and from the level cache with a particular name.  <a href="classsad_1_1Level.html#a785ce1dba6fdd3b6edc20e1172fd6a69">More...</a><br /></td></tr>
+<tr class="separator:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a247bdc06187bcaaa5fa062ae563c67be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a247bdc06187bcaaa5fa062ae563c67be">ImportEntityFromHandle</a> (entt::entity handle, <a class="el" href="classcore_1_1Guid.html">core::Guid</a> guid=<a class="el" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a>())</td></tr>
 <tr class="memdesc:a247bdc06187bcaaa5fa062ae563c67be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports an enitity handle into the level cache with a GUIDComponent.  <a href="classsad_1_1Level.html#a247bdc06187bcaaa5fa062ae563c67be">More...</a><br /></td></tr>
 <tr class="separator:a247bdc06187bcaaa5fa062ae563c67be"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,14 +122,14 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="separator:a357c231994d6647f34873bb551e934e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1983e365cb5f89acc2f7b99c7b73ddd8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1983e365cb5f89acc2f7b99c7b73ddd8">&#9670;&nbsp;</a></span>DestroyEntity()</h2>
+<a id="a39b58438b9a7eeca0793462ac4e9e796"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b58438b9a7eeca0793462ac4e9e796">&#9670;&nbsp;</a></span>DestroyEntity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sad::Level::DestroyEntity </td>
+          <td class="memname">bool sad::Level::DestroyEntity </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td>
           <td class="paramname"><em>entity</em></td><td>)</td>
@@ -130,17 +145,18 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the entity was successfully destroyed, false if it was not </dd></dl>
 
 </div>
 </div>
-<a id="abfb463be767768f2078c8ce46947bc2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfb463be767768f2078c8ce46947bc2a">&#9670;&nbsp;</a></span>DestroyEntityByName()</h2>
+<a id="a785ce1dba6fdd3b6edc20e1172fd6a69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a785ce1dba6fdd3b6edc20e1172fd6a69">&#9670;&nbsp;</a></span>DestroyEntityByName()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sad::Level::DestroyEntityByName </td>
+          <td class="memname">bool sad::Level::DestroyEntityByName </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>name</em></td><td>)</td>
@@ -156,6 +172,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the entity was successfully destroyed, false if it was not </dd></dl>
 
 </div>
 </div>

@@ -89,6 +89,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64e0d13b55495f45a7c3e7f75bb77cc5"><td class="memItemLeft" align="right" valign="top"><a id="a64e0d13b55495f45a7c3e7f75bb77cc5"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Guid</b> (const <a class="el" href="classcore_1_1Guid.html">Guid</a> &amp;other)=default</td></tr>
 <tr class="separator:a64e0d13b55495f45a7c3e7f75bb77cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e8bef830287972b6068ec8d97c589fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1Guid.html#a9e8bef830287972b6068ec8d97c589fb">Guid</a> (NativeGuid guid)</td></tr>
+<tr class="memdesc:a9e8bef830287972b6068ec8d97c589fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reconstruct a GUID by receiving a native GUID.  <a href="classcore_1_1Guid.html#a9e8bef830287972b6068ec8d97c589fb">More...</a><br /></td></tr>
+<tr class="separator:a9e8bef830287972b6068ec8d97c589fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3bcefe17a9115720f073ffb5934625d"><td class="memItemLeft" align="right" valign="top">NativeGuid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1Guid.html#ae3bcefe17a9115720f073ffb5934625d">GetNativeGuid</a> ()</td></tr>
+<tr class="memdesc:ae3bcefe17a9115720f073ffb5934625d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the GUID object native to the OS.  <a href="classcore_1_1Guid.html#ae3bcefe17a9115720f073ffb5934625d">More...</a><br /></td></tr>
+<tr class="separator:ae3bcefe17a9115720f073ffb5934625d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7bc2448963b45bc6c4c04f715e960d8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">ToString</a> () const</td></tr>
 <tr class="memdesc:af7bc2448963b45bc6c4c04f715e960d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves string representation for the GUID.  <a href="classcore_1_1Guid.html#af7bc2448963b45bc6c4c04f715e960d8">More...</a><br /></td></tr>
 <tr class="separator:af7bc2448963b45bc6c4c04f715e960d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,7 +134,37 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Globally Unique Identifier, often used to identify things. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9e8bef830287972b6068ec8d97c589fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e8bef830287972b6068ec8d97c589fb">&#9670;&nbsp;</a></span>Guid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">core::Guid::Guid </td>
+          <td>(</td>
+          <td class="paramtype">NativeGuid&#160;</td>
+          <td class="paramname"><em>guid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reconstruct a GUID by receiving a native GUID. </p>
+<dl class="section note"><dt>Note</dt><dd>Used in the ScriptingBridge to recreate System.Guids </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a15965f9af8e7ebcf466e98b74d97c1c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a15965f9af8e7ebcf466e98b74d97c1c8">&#9670;&nbsp;</a></span>CreateGuid()</h2>
 
@@ -189,6 +225,34 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bool True if the Guids match, false if they do not </dd></dl>
+
+</div>
+</div>
+<a id="ae3bcefe17a9115720f073ffb5934625d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3bcefe17a9115720f073ffb5934625d">&#9670;&nbsp;</a></span>GetNativeGuid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">NativeGuid core::Guid::GetNativeGuid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the GUID object native to the OS. </p>
+<dl class="section return"><dt>Returns</dt><dd>Representation of the GUID native to the OS (GUID -&gt; Win32 or uuid_t -&gt; Unix) </dd></dl>
 
 </div>
 </div>

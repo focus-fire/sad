@@ -54,7 +54,7 @@ void cap::DebugTerminalHelper::Instantiate(argument_type& arg)
 	// TODO: Remove once models are implemented
 	//		 Once models are implemented, we might want to make an 'add_comp' command that adds a component matching a string
 	//		 ex: add_comp EntityA RenderableResource Cowboy.fbx
-	sad::RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount, CubeNormals);
+	sad::RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);// , CubeNormals);
 	sad::ecs::RenderableResourceComponent renderableResourceComponent;
 	sad::Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};
 	renderableResourceComponent.m_RenderableResource = core::CreatePointer<sad::RenderableResource>(cubeData, std::move(CubeGeometry));

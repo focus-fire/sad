@@ -31,7 +31,7 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 
 		shader->Bind();
 
-		shader->SetUniformMatrix4fv("u_ModelMatrix", glm::value_ptr(transformMatrix));
+		// shader->SetUniformMatrix4fv("u_ModelMatrix", glm::value_ptr(transformMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
 	}

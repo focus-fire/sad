@@ -3,10 +3,14 @@ using System.Collections.Generic;
 
 public class Player : SadBehaviour
 {
-    public List<Enemy> Enemies;
+    public static List<Enemy> Enemies;
+
+    private int m_PrimaryAttackDamage = 100;
 
     void Awake()
     {
+        Enemies = new List<Enemy>();
+
         Log.Debug($"PlayerController.Awake => {GUID}");
 
         // Testing Instantiation
@@ -22,17 +26,7 @@ public class Player : SadBehaviour
         Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
         Log.Debug($"Found an enemy with {e?.Health} health");
 
-        // Test Raycast
-        Vector3 pos = new Vector3(-10, 0, 0);
-        Vector3 pos2 = new Vector3(SadMath.Infinity, 0, 0);
-        bool result = Raycast.Intersects(pos, pos2, this);
-        Log.Debug($"result of raycast: {result}");
-
-        // Testing Script Removal
-        foundEnemyCube.RemoveScriptComponent<Enemy>();
-
-        // Testing entity destruction
-        Destroy(foundEnemyCube);
+        Enemies.Add(e);
     }
 
     void Update()
@@ -60,7 +54,8 @@ public class Player : SadBehaviour
         if (Input.GetMouseButton(MouseButton.Left))
         {
             // Shoot raycast forward
-            // Check for collisions with entities?
+            Log.Warn("LMB Clicked!!!");
+            PrimaryAttack();
         }
 
         if (Input.GetMouseButton(MouseButton.Right))
@@ -70,12 +65,44 @@ public class Player : SadBehaviour
         }
     }
 
+    /// <summary>
+    /// Primary attack that is performed on Left Mouse Button click.
+    /// </summary>
+    void PrimaryAttack()
+    {
+        // Fire Raycast from current position to infinity (and beyond!), where the player is aiming
+        Vector3 initialFiringPos = this.transform.position;
+        Vector3 firingDirection = Vector3.forward * SadMath.Infinity;
+        bool hit;
+
+        // Check if any enemies are hit by the player's attack
+        for (int i = 0; i < Enemies.Count; ++i)
+        {
+            hit = Raycast.Intersects(initialFiringPos, firingDirection, Enemies[i]);
+
+            if (hit)
+                Enemies[i].TakeDamage(m_PrimaryAttackDamage);
+        }
+    }
+
+    /// <summary>
+    /// Offhand attack that is performed on (?) input.
+    /// </summary>
+    void OffhandAttack()
+    {
+    }
+
     void DrawGizmos()
     {
         Vector3 lineStart = transform.position;
         Vector3 lineEnd = Vector3.up * 2.0f;
         Color lineColor = Color.magenta;
         Gizmos.DrawLine(lineStart, lineEnd, lineColor);
+
+        Vector3 rayStart = transform.position;
+        Vector3 rayEnd = Vector3.forward * SadMath.Infinity;
+        Color rayColour = Color.green;
+        Gizmos.DrawLine(rayStart, rayEnd, rayColour);
 
         Vector3 boxMin = bound.min;
         Vector3 boxMax = bound.max;

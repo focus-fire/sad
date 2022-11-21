@@ -23,10 +23,10 @@ namespace sad::cs
 		static MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath);
 		
 		/**
-		 * @brief Prints assembly types to the log
-		 * @param assembly Raw pointer to assembly in Mono
+		 * @brief Prints assembly name and its associated types to the core logger 
+		 * @param monoAssembly Raw pointer to assembly in Mono
 		*/
-		static void PrintAssemblyTypes(MonoAssembly* assembly);
+		static void PrintAllAssemblyTypes(MonoAssembly* monoAssembly);
 
 		/**
 		 * @brief Converts from a mono type to a pre-defined scriptable type

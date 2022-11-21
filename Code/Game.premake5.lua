@@ -12,7 +12,7 @@ project "Game"
 
     vpaths {
         ["Headers"] = { "Game/**.h", "Game/**.hpp" },
-        ["Sources/*"] = { "Game/**.c", "Game/**.cpp" },
+        ["Sources/**"] = { "Game/**.c", "Game/**.cpp" },
         ["Docs"] = { "Game/**.md", "Game/**.txt" },
         ["Resources"] = { "**pch.cpp" },
     }
@@ -37,11 +37,14 @@ project "Game"
         "Core",
         "Engine",
         "Editor",
-        "SadCSFramework",
         "glad",
         "stb_image",
         "imgui",
 		"ImGuizmo",
+
+		-- CS Projects
+		"SadProject",
+		"SadCSFramework",
     }
 
     if os.target() == "windows" then

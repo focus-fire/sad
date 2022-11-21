@@ -5,8 +5,8 @@ project "SadCSFramework"
 
     -- SadCSFramework has all of the utilities exposed by the engine into scripting
     -- This is why it's exposed like an asset or unit of data in the data directory
-	targetdir "%{wks.location}/Data/Resources/%{prj.name}"
-	objdir "%{wks.location}/Data/Resources/%{prj.name}/Obj"
+	targetdir "%{wks.location}/Data/Project/Resources/%{prj.name}"
+	objdir "%{wks.location}/Data/Project/Resources/%{prj.name}/Obj"
 
     files { "Sad/**.cs" }
 

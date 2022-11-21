@@ -46,7 +46,6 @@ namespace core
 		 * @param filePath Path indicating the file to read
 		 * @param outputSize Pointer to an unsigned int that will contain the size of the buffer allocated
 		 * @return Allocated buffer containing the file's byte data
-		 * @todo Move into core::FileUtils when appropriate (or when it could be multi-purposed)
 		 * @note Warning: This performs allocation, remember to `delete` returned data
 		*/
 		static char* ReadBytes(const std::string& filePath, uint32_t* outputSize);

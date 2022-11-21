@@ -5,24 +5,33 @@
 
 #pragma optimize("", off)
 
-TEST_CASE("Entity handles are contstructed and behave properly")
+TEST_CASE("Entity handles are contstructed and wrap properly")
 {
-	sad::ecs::Entity entity = sad::ecs::Entity();
-	
 	SECTION("entity has a valid handle")
 	{
-		const entt::entity handle = entity.GetHandle();
+		const entt::entity handle = sad::ecs::Registry::GenerateEntityHandle();
+		sad::ecs::Entity entity = sad::ecs::Entity(handle);
 
-		bool isValidHandle = handle != entt::null;
-		REQUIRE(isValidHandle);
+		bool isValidHandle = entity.GetHandle() != entt::null;
+		REQUIRE(entity.GetHandle() != sad::ecs::Entity::Null().GetHandle());
+	}
+
+	SECTION("entity has a null handle")
+	{
+		sad::ecs::Entity entity = sad::ecs::Entity::Null();
+		REQUIRE(!entity);
+		REQUIRE_FALSE(entity);
 	}
 
 	SECTION("entity handles can be compared successfully")
 	{
-		sad::ecs::Entity secondEntity = sad::ecs::Entity();
+		const entt::entity firstHandle = sad::ecs::Registry::GenerateEntityHandle();
+		sad::ecs::Entity firstEntity = sad::ecs::Entity(firstHandle);
+		REQUIRE(firstEntity.GetHandle() == firstHandle);
 
-		REQUIRE(secondEntity == secondEntity);
-		REQUIRE(entity != secondEntity);
+		const entt::entity secondHandle = sad::ecs::Registry::GenerateEntityHandle();
+		sad::ecs::Entity secondEntity = sad::ecs::Entity(secondHandle);
+		REQUIRE(secondEntity.GetHandle() == secondHandle);
 	}
 }
 
@@ -34,7 +43,7 @@ TEST_CASE("Entities can add components")
 	SECTION("entity can add a component")
 	{
 		struct TestComponent { int Data = 0; };
-		entity.AddComponent<TestComponent>({ 5 });
+		entity.AddComponent<TestComponent>(5);
 
 		const TestComponent& testComponent = entity.GetComponent<TestComponent>();
 		REQUIRE(testComponent.Data == 5);
@@ -43,7 +52,7 @@ TEST_CASE("Entities can add components")
 	SECTION("entity can add an empty/tag component")
 	{
 		struct TagComponent { };
-		entity.AddEmptyComponent<TagComponent>({ });
+		entity.AddEmptyComponent<TagComponent>({});
 
 		bool addedTag = false;
 		auto view = world.view<const TagComponent>();

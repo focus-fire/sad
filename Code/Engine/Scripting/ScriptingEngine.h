@@ -1,11 +1,18 @@
 #pragma once
 
+#include <unordered_map>
+
 #include <mono/jit/jit.h>
 
+#include <Core/Memory.h>
 #include <Engine/Level.h>
+
+#include "ScriptClass.h"
 
 namespace sad::cs
 {
+	class SadBehaviourInstance;
+
 	/**
 	 * @brief Handles the initialization, loading/unloading, and teardown of scripting assemblies
 	*/
@@ -15,11 +22,15 @@ namespace sad::cs
 		/**
 		 * @brief Struct containing data required to perform mono operations throughout the scripting engine
 		*/
-		struct ScriptingEngineConfig
+		struct ScriptingEngineData
 		{
+			/// Mono Domains
+
 			MonoDomain* RootDomain = nullptr;
 			MonoDomain* AppDomain = nullptr;
 			
+			/// Assembly Information
+
 			std::string SadCSFrameworkAssemblyFilePath;
 			MonoAssembly* SadCSFrameworkAssembly = nullptr;
 			MonoImage* SadCSFrameworkImage = nullptr;
@@ -27,6 +38,17 @@ namespace sad::cs
 			std::string ProjectAssemblyFilePath;
 			MonoAssembly* ProjectAssembly = nullptr;
 			MonoImage* ProjectImage = nullptr;
+
+			/// Script Lookups
+
+			std::unordered_map<std::string, core::Pointer<ScriptClass>> SadBehaviourScriptLookup;
+			std::unordered_map<core::Guid, core::Pointer<SadBehaviourInstance>> SadBehaviourInstanceLookup;
+
+			/// Default Classes
+
+			ScriptClass SadBehaviourClass;
+
+			/// Level Data
 
 			Level* CurrentLevelInstance = nullptr;
 		};
@@ -38,7 +60,34 @@ namespace sad::cs
 		static void RuntimeStart(Level* level);
 		static void RuntimeStop();
 
-		static Level* GetCurrentLevelInstance() { return s_ScriptingConfig->CurrentLevelInstance; }
+		static void CreateSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+		static void CreateNativeSadBehaviourInstance(ecs::Entity entity);
+		static void CreateRuntimeSadBehaviourInstance(ecs::Entity entity);
+		
+		static void AwakeSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+		static void AwakeNativeSadBehaviourInstance(ecs::Entity entity);
+		static void AwakeRuntimeSadBehaviourInstance(ecs::Entity entity);
+
+		static void UpdateSadBehaviourInstance(ecs::Entity entity);
+
+		static void DrawGizmosForSadBehaviourInstance(ecs::Entity entity);
+
+		static void DestroySadBehaviourInstance(ecs::Entity entity);
+
+		static void AddRuntimeSadBehaviourInstance(ecs::Entity entity, std::string scriptName);
+
+		static MonoObject* GetSadBehaviourInstance(const core::Guid& guid);
+
+		static MonoObject* InstantiateClass(MonoClass* monoClass);
+
+		static bool SadBehaviourExists(const std::string& qualifiedName);
+		static bool SadBehaviourInstanceExists(const core::Guid& guid);
+		static bool SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName);
+
+		static Level* GetCurrentLevelInstance() { return s_ScriptingData->CurrentLevelInstance; }
+
+	public:
+		static ScriptingEngineData* s_ScriptingData;
 
 	private:
 		static void StartMono();
@@ -56,15 +105,9 @@ namespace sad::cs
 		*/
 		static void LoadProjectAssembly(const std::string& filePath);
 
-		// UTIL
-		static MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className);
-		static MonoObject* InstantiateClass(const char* namespaceName, const char* className);
-
-		// TEMP
-		static void CallTestMethod(MonoObject* objectInstance);
-		static void CallIncrementTestMethod(MonoObject* objectInstance, int value);
-		static void CallStringTestMethod(MonoObject* objectInstance, const char* str);
-
-		static ScriptingEngineConfig* s_ScriptingConfig;
+		/**
+		 * @brief Caches all SadBehaviours detected in target asesmbly into the scripting engine's ScriptLookup 
+		*/
+		static void CacheAssemblySadBehaviours();
 	};
 }

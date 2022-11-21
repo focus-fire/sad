@@ -14,4 +14,12 @@ namespace sad::ecs
 	{
 		core::Pointer<RenderableObject> m_RenderableObject;
 	};
+
+	/**
+	 * @brief Contains a pointer for a RenderableModel
+	*/
+	struct RenderableModelComponent
+	{
+		Model m_RenderableModel;
+	};
 }

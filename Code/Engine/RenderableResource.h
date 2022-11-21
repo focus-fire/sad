@@ -1,8 +1,15 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
+
+#include <Engine/Renderer/Mesh.h>
+#include <Engine/Renderer/ShaderResource.h>
 
 #include "Resource.h"
+#include "Model.h"
 
 namespace sad
 {
@@ -36,11 +43,7 @@ namespace sad
 		~RenderableResource();
 
 		explicit RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry);
-
-		// TODO: Remove this constructor when 3D models can be parsed - the AddResource for RenderableResource will have to change as well.
-		explicit RenderableResource(const Resource::ResourceData& resourceData)
-			: Resource(resourceData)
-		{ }
+		explicit RenderableResource(const Resource::ResourceData& resourceData);
 
 		const Geometry GetGeometry() const { return m_Geometry; }
 

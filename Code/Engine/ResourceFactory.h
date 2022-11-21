@@ -6,13 +6,14 @@
 #include <Core/Memory.h>
 #include <Core/FileUtils.h>
 
+#include "Renderer/TextureResource.h"
+#include "Renderer/ShaderResource.h"
+
 #include "Resource.h"
 #include "ResourceManager.h"
 #include "LevelResource.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
-#include "Renderer/TextureResource.h"
-#include "Renderer/ShaderResource.h"
 
 namespace sad
 {

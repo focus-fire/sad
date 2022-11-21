@@ -86,12 +86,12 @@ typedef struct SDL_RendererInfo
 } SDL_RendererInfo;
 
 /**
- *  Vertex structure
+ *  MeshVertex structure
  */
 typedef struct SDL_Vertex
 {
-    SDL_FPoint position;        /**< Vertex position, in SDL_Renderer coordinates  */
-    SDL_Color  color;           /**< Vertex color */
+    SDL_FPoint position;        /**< MeshVertex position, in SDL_Renderer coordinates  */
+    SDL_Color  color;           /**< MeshVertex color */
     SDL_FPoint tex_coord;       /**< Normalized texture coordinates, if needed */
 } SDL_Vertex;
 
@@ -112,7 +112,7 @@ typedef enum
 {
     SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
     SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
-    SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
+    SDL_TEXTUREACCESS_TARGET     /**< MeshTexture can be used as a render target */
 } SDL_TextureAccess;
 
 /**
@@ -1653,11 +1653,11 @@ extern DECLSPEC int SDLCALL SDL_RenderGeometry(SDL_Renderer *renderer,
  *
  * \param renderer The rendering context.
  * \param texture (optional) The SDL texture to use.
- * \param xy Vertex positions
+ * \param xy MeshVertex positions
  * \param xy_stride Byte size to move from one element to the next element
- * \param color Vertex colors (as SDL_Color)
+ * \param color MeshVertex colors (as SDL_Color)
  * \param color_stride Byte size to move from one element to the next element
- * \param uv Vertex normalized texture coordinates
+ * \param uv MeshVertex normalized texture coordinates
  * \param uv_stride Byte size to move from one element to the next element
  * \param num_vertices Number of vertices.
  * \param indices (optional) An array of indices into the 'vertices' arrays,

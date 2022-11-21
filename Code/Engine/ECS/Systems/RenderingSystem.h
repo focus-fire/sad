@@ -14,13 +14,13 @@ namespace sad::ecs
 
 	private:
 		/**
-		 * @brief Performs drawing on entities containing a RenderableObjects
+		 * @brief Performs drawing on entities containing a RenderableObject
 		*/
-		static void RenderIndexables(EntityWorld& world);
+		static void RenderPrimitives(EntityWorld& world);
 
 		/**
-		 * @brief Performs drawing on entities containing a LineRenderer 
+		 * @brief Performs drawing on entities containing a Model
 		*/
-		static void RenderLines(EntityWorld& world);
+		static void RenderModels(EntityWorld& world);
 	};
 }

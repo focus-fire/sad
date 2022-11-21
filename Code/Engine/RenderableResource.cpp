@@ -6,7 +6,10 @@
 
 sad::RenderableResource::RenderableResource()
 	: Resource(Resource::Null())
-	, m_Geometry()
+{ }
+
+sad::RenderableResource::RenderableResource(const Resource::ResourceData& resourceData)
+	: Resource(resourceData)
 { }
 
 sad::RenderableResource::~RenderableResource()

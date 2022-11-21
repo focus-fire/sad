@@ -29,7 +29,7 @@ namespace cap
 
 		/**
 		 * @brief Renders a panel with the game's current render embedded into it 
-		 * @param frameBufferTextureId Texture Id in OpenGL for the attached framebuffer that the game is being rendered to
+		 * @param frameBufferTextureId MeshTexture Id in OpenGL for the attached framebuffer that the game is being rendered to
 		*/
 		void RenderGameWindow(unsigned int frameBufferTextureId);
 		std::vector<glm::vec3> RenderGizmos(float* modelMatrix, bool transformDecomposition);

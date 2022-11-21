@@ -57,6 +57,33 @@ void sad::rad::Renderer::DrawIndexed(VertexArray* vertexArray, IndexBuffer* inde
 	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
 
+void sad::rad::Renderer::DrawMesh(rad::Mesh* mesh) const
+{
+	for (unsigned int i = 0; i < mesh->Textures.size(); i++)
+	{
+		//GL_CALL(glActiveTexture(GL_TEXTURE0 + i));
+
+		//std::string number;
+		//std::string name = mesh->Textures[i].Type;
+
+		//if (name == "texture_diffuse")
+		//	number = std::to_string(diffuseNr++);
+		//else if (name == "texture_specular")
+		//	number = std::to_string(specularNr++);
+		//shader.SetUniform1i(("material" + name + number).c_str(), i);
+
+		//GL_CALL(glBindTexture(GL_TEXTURE_2D, mesh->Textures[i].Id));
+	}
+	//GL_CALL(glActiveTexture(GL_TEXTURE0));
+
+	mesh->GetVertexArray()->Bind();
+	mesh->GetIndexBuffer()->Bind();
+
+	GL_CALL(glDrawElements(GL_TRIANGLES, mesh->Indices.size(), GL_UNSIGNED_INT, 0));
+	GL_CALL(glBindVertexArray(0));
+
+}
+
 void sad::rad::Renderer::DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const
 {
 	vertexArray->Bind();

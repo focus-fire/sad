@@ -54,15 +54,17 @@ void cap::DebugTerminalHelper::Instantiate(argument_type& arg)
 	// TODO: Remove once models are implemented
 	//		 Once models are implemented, we might want to make an 'add_comp' command that adds a component matching a string
 	//		 ex: add_comp EntityA RenderableResource Cowboy.fbx
-	sad::RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
-	sad::ecs::RenderableResourceComponent renderableResourceComponent;
-	sad::Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};
-	renderableResourceComponent.m_RenderableResource = core::CreatePointer<sad::RenderableResource>(cubeData, std::move(CubeGeometry));
-	renderableResourceComponent.m_IsResourceDirty = true;
+	//sad::RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+	//sad::Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};
+
+	sad::ecs::ModelResourceComponent modelResourceComponent;
+	sad::RenderableResource* resource = sad::ResourceManager::GetResource<sad::RenderableResource>("Character.fbx");
+	modelResourceComponent.m_ModelResource = resource;
+	modelResourceComponent.m_IsResourceDirty = true;
 
 	// TODO: Is there a less scuffed way to retrieve the current level?
 	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
-	entity.AddComponent<sad::ecs::RenderableResourceComponent>(renderableResourceComponent);
+	entity.AddComponent<sad::ecs::ModelResourceComponent>(modelResourceComponent);
 }
 
 void cap::DebugTerminalHelper::Destroy(argument_type& arg)

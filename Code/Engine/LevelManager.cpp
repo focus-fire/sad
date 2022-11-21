@@ -27,8 +27,16 @@ sad::Level* sad::LevelManager::ImportLevel(int saveFileId)
 
 	if (!levelResource)
 	{
-		core::Log(ELogType::Error, "Save file doesn't exist");
-		return nullptr;
+		core::Log(ELogType::Warn, "Save file doesn't exist, creating a new one");
+
+		// Create a new save file
+		const std::string newSaveFile = core::FileUtils::GetPathInsideDataDirectory("Save/" + levelFileName);
+		core::FileUtils::WriteFile(newSaveFile, "");
+		
+		// TODO: Add a file watcher so the resource manager can detect file changes
+		ResourceManager::Import();
+		
+		return new sad::Level();
 	}
 
 	// Read level file contents into JSON string
@@ -51,7 +59,7 @@ sad::Level* sad::LevelManager::ImportLevel(int saveFileId)
 
 bool sad::LevelManager::ExportLevel(int saveFileId)
 {
-	//prevent default save file from changing
+	// Prevent default save file from changing
 	if (saveFileId == 0)
 	{
 		core::Log(ELogType::Error, "SaveFile00.json is the default save file, don't change this");

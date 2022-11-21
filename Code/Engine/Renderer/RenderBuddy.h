@@ -43,6 +43,12 @@ namespace sad::rad
 		static void DrawLines(VertexArray* vertexArray, unsigned int vertexCount) { s_Renderer.DrawLines(vertexArray, vertexCount); }
 
 		/**
+		 * @brief Draws a mesh bound by an index buffer
+		 * @param mesh Mesh wrapper for the geometry of a Model
+		*/
+		static void DrawMesh(rad::Mesh* mesh) { s_Renderer.DrawMesh(mesh); }
+
+		/**
 		 * @brief Renders a flat debug line
 		 * @param from Position where the line starts rendering
 		 * @param to Position where the line finishes rendering

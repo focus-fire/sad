@@ -38,18 +38,13 @@ namespace sad::rad
 	class VertexAttributeContainer
 	{
 	public:
-		VertexAttributeContainer()
-			: m_Stride(0)
-		{ }
+		VertexAttributeContainer();
+
+		void AddFloatAttribute(unsigned int count);
+		void AddMeshVertexAttribute(unsigned int count);
 
 		std::vector<VertexAttribute> GetVertexAttributes() const { return m_VertexAttributes; }
 		unsigned int GetStride() const { return m_Stride; }
-
-		void AddFloatAttribute(unsigned int count)
-		{
-			m_VertexAttributes.push_back({ count, GL_FLOAT, GL_FALSE });
-			m_Stride += count * VertexAttribute::GetSizeOfType(GL_FLOAT);
-		}
 
 	private:
 		std::vector<VertexAttribute> m_VertexAttributes;

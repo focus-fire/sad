@@ -186,10 +186,16 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
-
-	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+	PanelAndButton();
+	EditorControls();
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
+void cap::Editor::PanelAndButton()
+{
+	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	ImGui::Begin("Action Panel");
 	ImGui::SetWindowPos(ImVec2(1150.0f, 35.0f), ImGuiCond_Once);
 	ImGui::SetWindowSize(ImVec2(125.0f, 65.0f), ImGuiCond_Once);
@@ -203,50 +209,29 @@ void cap::Editor::Render()
 	// Really scuffed way to list entities, included mainly for debugging
 	// Cycles through available names and lists them in the editor
 	ImGui::Begin("Scuffed Entity List");
-	ImGui::SetWindowPos(ImVec2(1150.0f, 265.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(200.0f, 225.0f), ImGuiCond_Once);
-	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
-	for (auto [entity, name] : view.each())
-		ImGui::Text(name.m_Name.c_str());
+		ImGui::SetWindowPos(ImVec2(1150.0f, 265.0f), ImGuiCond_Once);
+		ImGui::SetWindowSize(ImVec2(200.0f, 225.0f), ImGuiCond_Once);
+		auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
+		for (auto [entity, name] : view.each())
+			ImGui::Text(name.m_Name.c_str());
 	ImGui::End();
 
 	ImGui::Begin("Tools");
-	ImGui::SetWindowPos(ImVec2(1150.0f, 500.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(100.0f, 100.0f), ImGuiCond_Once);
-	// Saves current game if paused
-	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
-	{
-		sad::LevelManager::ExportLevel();
-	}
-	// Reloads to the last saved instance
-	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
-	{
-		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
-		core::SignalEvent("OnToggleEngineMode");
-		core::SignalEvent("ResetLevel");
-	}
-	ImGui::End();
-
-
-	// Save current game state if paused with ctrl+s
-	if (!m_IsEditorInPlayMode)
-	{
-		if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl) && ImGui::IsKeyDown(ImGuiKey_S))
+		ImGui::SetWindowPos(ImVec2(1150.0f, 500.0f), ImGuiCond_Once);
+		ImGui::SetWindowSize(ImVec2(100.0f, 100.0f), ImGuiCond_Once);
+		// Saves current game if paused
+		if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
 		{
-			if (!saved)
-			{
-				sad::LevelManager::ExportLevel();
-				core::Log(ELogType::Debug, "Saved");
-				saved = true;
-			}
+			sad::LevelManager::ExportLevel();
 		}
-		else {
-			saved = false;
+		// Reloads to the last saved instance
+		if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+		{
+			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+			core::SignalEvent("OnToggleEngineMode");
+			core::SignalEvent("ResetLevel");
 		}
-	}
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui::End();
 }
 
 bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0.5f */)
@@ -261,6 +246,32 @@ bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
 
 	return ImGui::Button(label);
+}
+
+/**
+ * @brief 
+ * Controls
+ * ctrl+s : Save state
+ * ctrl+b : Switch editor mode
+*/
+void cap::Editor::EditorControls()
+{
+	
+	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!m_IsEditorInPlayMode && ImGui::IsKeyPressed(ImGuiKey_S))
+		{
+			sad::LevelManager::ExportLevel();
+			m_IsEditorInPlayMode = false;
+			core::Log(ELogType::Debug, "Saved");
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_P))
+		{
+			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+			core::SignalEvent("OnToggleEngineMode");
+		}
+	}
 }
 
 void cap::Editor::Teardown()

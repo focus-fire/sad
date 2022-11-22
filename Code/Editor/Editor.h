@@ -34,9 +34,11 @@ namespace cap
 		void RenderGameWindow(unsigned int frameBufferTextureId);
 		std::vector<glm::vec3> RenderGizmos(float* modelMatrix, bool transformDecomposition);
 		void Render();
+		void PanelAndButton();
 
 		// TODO: Maybe make an ImGuiHelpers class with static returns for things like this? 
 		bool ButtonCenteredOnLine(const char* label, float alignment = 0.5f);
+		void EditorControls();
 
 		void Teardown();
 
@@ -53,6 +55,5 @@ namespace cap
 		std::string m_GameWindowTitle;
 
 		bool m_IsEditorInPlayMode;
-		bool saved = false;
 	};
 }

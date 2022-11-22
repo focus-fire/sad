@@ -58,7 +58,7 @@ void main()
     vec4 ambient = u_Model.Ambient * texture(u_Texture, v_TexCoord) * ambientStrength;
 
     // Diffuse
-    float diffuseStrength = 1.0f;
+    float diffuseStrength = 3.0f;
     vec3 norm = normalize(v_Normals);
     vec3 lightDir = normalize(u_LightPosition - vec3(v_FragPos));
     float diff = max(dot(norm, lightDir), 0.0);

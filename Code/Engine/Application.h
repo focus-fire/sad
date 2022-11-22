@@ -13,6 +13,9 @@
 #include "RenderableResource.h"
 #include "AudioResource.h"
 #include "EngineStateManager.h"
+#include "Engine/EditorCamera.h"
+#include "Game/GameCamera.h"
+
 
 struct SDL_Window;
 
@@ -31,6 +34,11 @@ namespace sad
 		 * @brief Entrypoint for the engine application that initializes systems
 		*/
 		void EngineStart();
+
+		/**
+		 * @brief Resets the level back to the last saved instance
+		*/
+		void LevelReset();
 
 		/**
 		 * @brief Starting point for applications aside from the engine
@@ -52,16 +60,15 @@ namespace sad
 		*/
 		virtual void Teardown();
 
-		// TODO: Abstract view projection matrix into camera
-		static glm::mat4 GetViewProjectionMatrix();
-		static glm::mat4 GetViewMatrix();
-		static glm::mat4 GetProjectionMatrix();
-
 	public:
 		static Window* s_MainWindow;
 		static EngineStateManager* s_EngineState;
 
 		static float s_DeltaTime;
+
+		static EditorCamera* s_EditorCamera;
+
+		static GameCamera* s_GameCamera;
 
 	private:
 		cap::Editor* m_Editor = nullptr;

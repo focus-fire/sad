@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProjectGuid>{E111CEEA-CDDF-C1F0-B673-3217A2E09D55}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SadCSFramework</RootNamespace>
+    <AssemblyName>SadCSFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Debug\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>_SAD_WINDOWS;_SAD_DEBUG;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Release\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>_SAD_WINDOWS;_SAD_RELEASE;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Test\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+    <DefineConstants>_SAD_WINDOWS;_SAD_TEST;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|x64' ">
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sad\Audio.cs" />
+    <Compile Include="Sad\Components\Bound.cs" />
+    <Compile Include="Sad\Components\Component.cs" />
+    <Compile Include="Sad\Components\Transform.cs" />
+    <Compile Include="Sad\Entity.cs" />
+    <Compile Include="Sad\Input.cs" />
+    <Compile Include="Sad\InputCodes.cs" />
+    <Compile Include="Sad\Internal\Internal.cs" />
+    <Compile Include="Sad\Log.cs" />
+    <Compile Include="Sad\SadBehaviour.cs" />
+    <Compile Include="Sad\Utilities\Color.cs" />
+    <Compile Include="Sad\Utilities\Gizmos.cs" />
+    <Compile Include="Sad\Utilities\Quaternion.cs" />
+    <Compile Include="Sad\Utilities\Raycast.cs" />
+    <Compile Include="Sad\Utilities\SadMath.cs" />
+    <Compile Include="Sad\Utilities\Time.cs" />
+    <Compile Include="Sad\Utilities\Vector3.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

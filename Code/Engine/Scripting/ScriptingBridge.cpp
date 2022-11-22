@@ -6,6 +6,7 @@
 #include <Engine/AudioManager.h>
 #include <Engine/ResourceManager.h>
 #include <Engine/InputManager.h>
+#include <Engine/Raycast.h>
 
 #include "ScriptingBridge.h"
 
@@ -329,6 +330,16 @@ namespace sad::cs
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Scale(*scale);
 	}
 
+	static glm::quat Slerp(glm::quat quatStart, glm::quat quatEnd, float interpFactor)
+	{
+		return glm::slerp(quatStart, quatEnd, interpFactor);
+	}
+
+	static glm::quat LookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up)
+	{
+		return glm::lookAt(eye, center, up);
+	}
+
 	/////////////
 	/// Bound ///
 	/////////////
@@ -478,6 +489,12 @@ namespace sad::cs
 	{
 		return sad::Application::s_DeltaTime;
 	}
+
+	static bool RaycastIntersection(glm::vec3* origin, glm::vec3* direction, glm::vec3* position, glm::vec3* size)
+	{
+		Bound bound = Bound(*position, *size);
+		return sad::Raycast::Intersects(*origin, *direction, bound);
+	}
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
@@ -519,6 +536,8 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Transform", Rotate);
 	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
 	SAD_CSF_ADD_INTERNAL("Transform", Scale);
+	SAD_CSF_ADD_INTERNAL("Transform", Slerp);
+	SAD_CSF_ADD_INTERNAL("Transform", LookAt);
 
 	// Bound
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMin);
@@ -537,6 +556,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Input", GetMousePosition);
 	SAD_CSF_ADD_INTERNAL("Input", IsControllerActive);
 	SAD_CSF_ADD_INTERNAL("Input", IsControllerConnected);
+	SAD_CSF_ADD_INTERNAL("Input", IsControllerConnected);
 
 	// Audio
 	SAD_CSF_ADD_INTERNAL("Audio", PlaySFX);
@@ -545,7 +565,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 	// Misc
 	SAD_CSF_ADD_INTERNAL("Misc", Getdt);
-	// Add raycast intersection to "Misc"
+	SAD_CSF_ADD_INTERNAL("Misc", RaycastIntersection);
 }
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()

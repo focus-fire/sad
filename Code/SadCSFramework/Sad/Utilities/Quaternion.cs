@@ -121,10 +121,22 @@ namespace Sad
             return res;
         }
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Quaternion Slerp(Quaternion quatStart, Quaternion quatEnd, float interpFactor)
+        {
+            return Internal.Transform.Slerp(quatStart, quatEnd, interpFactor);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Quaternion LookAt(Vector3 eye, Vector3 center, Vector3 up)
+        {
+            return Internal.Transform.LookAt(eye, center, up);
+        }
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
         {
             return "Quaternion(" + w + ", " + x + ", " + y + ", " + z + ")" ;
         }
-    }
+	}
 }

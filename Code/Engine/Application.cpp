@@ -12,6 +12,7 @@
 
 #include <Game/Time.h>
 #include <Game/Application.h>
+#include <Game/GameCamera.h>
 
 #include "ECS/Registry.h"
 
@@ -22,16 +23,20 @@
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
+#include "ResourceManager.h"
 #include "AudioManager.h"
 #include "InputManager.h"
 #include "Transform.h"
 #include "InputManager.h"
-#include "RenderablePrimitive.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
+#include "Camera.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
+sad::GameCamera* sad::Application::s_GameCamera;
+sad::EditorCamera* sad::Application::s_EditorCamera;
+
 float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
@@ -43,6 +48,15 @@ sad::Application::Application()
 	s_EngineState = new EngineStateManager();
 
 	m_Editor = new cap::Editor;
+
+	s_EditorCamera = new sad::EditorCamera();
+
+	s_GameCamera = new sad::GameCamera();
+
+	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
+
+	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
+	core::InitializeListener("ResetLevel", resetLevel);
 }
 
 sad::Application::~Application()
@@ -53,6 +67,9 @@ sad::Application::~Application()
 	
 	// Allocated in LevelManager::ImportLevel()
 	delete m_CurrentLevel;
+
+	delete s_EditorCamera;
+	delete s_GameCamera;
 }
 
 void sad::Application::EngineStart()
@@ -68,7 +85,10 @@ void sad::Application::EngineStart()
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
-	
+
+	// Initialize Camera
+	rad::RenderBuddy::GetCameraInstance()->Start();
+
 	// Import Level and GUIDs 
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
@@ -122,6 +142,21 @@ void sad::Application::EngineStart()
 	Teardown();
 }
 
+void sad::Application::LevelReset()
+{
+	// Stop the game
+	m_IsGameOn = false;
+
+	// Clear the registry
+	sad::ecs::Registry::GetEntityWorld().clear();
+
+	// Import Level and GUIDs 
+	delete m_CurrentLevel;
+	m_CurrentLevel = LevelManager::ImportLevel();
+	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
+	m_CurrentLevel->Start();
+}
+
 void sad::Application::PollEvents(bool& isWindowClosed)
 {
 	InputManager& input = InputManager::GetInstance();
@@ -129,6 +164,7 @@ void sad::Application::PollEvents(bool& isWindowClosed)
 
 	while (SDL_PollEvent(&event)) 
 	{
+        input.UpdateTicks();
 		m_Editor->CatchSDLEvents(event);
 		input.CatchMouseEvents(event);
 		input.CatchKeyboardEvents(event);
@@ -174,6 +210,9 @@ void sad::Application::Update(float dt)
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 	m_CurrentLevel->Update(world);
 
+	// Update GameCamera
+	sad::rad::RenderBuddy::GetCameraInstance()->Update();
+
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();
 
@@ -190,28 +229,7 @@ void sad::Application::Teardown()
 	sad::cs::ScriptingEngine::RuntimeStop();
 	sad::cs::ScriptingEngine::Teardown();
 
-	LevelManager::ExportLevel();
-
 	m_Editor->Teardown();
 
 	s_MainWindow->Teardown();
-}
-
-glm::mat4 sad::Application::GetViewProjectionMatrix()
-{
-	return GetProjectionMatrix() * GetViewMatrix();
-}
-
-glm::mat4 sad::Application::GetViewMatrix()
-{
-	return glm::lookAt(
-		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
-		glm::vec3(0.0f, 1.0f, 2.0f),  // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-}
-
-glm::mat4 sad::Application::GetProjectionMatrix()
-{
-	return glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 }

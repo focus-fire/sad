@@ -34,9 +34,11 @@ namespace cap
 		*/
 		void RenderGameWindow(unsigned int frameBufferTextureId);
 		void Render();
+		void PanelAndButton();
 
 		// TODO: Maybe make an ImGuiHelpers class with static returns for things like this? 
 		bool ButtonCenteredOnLine(const char* label, float alignment = 0.5f);
+		void EditorControls();
 
 		void Teardown();
 

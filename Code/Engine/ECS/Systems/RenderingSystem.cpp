@@ -9,8 +9,8 @@
 #include <Engine/RenderableModel.h>
 
 #include <Engine/Renderer/RenderBuddy.h>
-
 #include <Engine/ECS/Components/ComponentTypes.h>
+#include <Engine/Camera.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -29,8 +29,9 @@ void sad::ecs::RenderingSystem::RenderPrimitives(EntityWorld& world)
 		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		rad::ShaderResource* shader = renderable->GetShader();
 
-		// TODO: Retrieve the view projection matrix from the Camera 
-		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		Camera* currentCamera = sad::rad::RenderBuddy::GetCameraInstance();
+
+		glm::mat4 mvpMatrix = currentCamera->GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
@@ -49,11 +50,12 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		RenderableModel model = modelComponent.m_RenderableModel;
 		Transform* transform = transformComponent.m_Transform.get();
 
-		// TODO: Retrieve the view projection matrix from the Camera 
+		Camera* currentCamera = sad::rad::RenderBuddy::GetCameraInstance();
+
 		glm::mat4 modelMatrix = transform->GetTransformMatrix();
 		glm::mat3 normalMatrix = transform->GetNormalMatrix();
-		glm::mat4 modelViewMatrix = sad::Application::GetViewMatrix() * modelMatrix;
-		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * modelMatrix;
+		glm::mat4 modelViewMatrix = currentCamera->GetViewMatrix() * modelMatrix;
+		glm::mat4 mvpMatrix = currentCamera->GetViewProjectionMatrix() * modelMatrix;
 
 		// Set shader uniforms
 		rad::ShaderResource* shader = model.GetShader();
@@ -64,11 +66,11 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		shader->SetUniformMatrix4fv("u_ModelViewMatrix", glm::value_ptr(modelViewMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 
-		glm::vec3 lightPosition = glm::vec3(0.0f, 1.0f, -3.0f);
+		glm::vec3 lightPosition = glm::vec3(0.0f, 5.0f, -3.0f);
 		shader->SetUniform3fv("u_LightPosition", glm::value_ptr(lightPosition));
 
-		glm::vec3 cameraPosition = glm::vec3(0.5f, 2.5f, -3.0f);
-		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(lightPosition));
+		//glm::vec3 cameraPosition = glm::vec3(0.5f, 2.5f, -3.0f);
+		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(currentCamera->cameraPosition));
 
 		std::vector<core::Pointer<rad::Mesh>> modelMeshes = model.GetMeshes();
 		for (unsigned int i = 0; i < modelMeshes.size(); i++)

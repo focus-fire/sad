@@ -8,13 +8,20 @@
 #include <backends/imgui_impl_sdl.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <Engine/Camera.h>
 #include <Engine/Application.h>
+#include <Engine/Renderer/RenderBuddy.h>
 #include <Engine/ECS/Registry.h>
 #include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 
 ImGuiWindowFlags cap::GizmoSystem::s_GameWindowFlags; 
+
+const float transformWindowX = 1025.0f;
+const float transformWindowY = 65.0f + 390.0f;
+const float transformWindowHeight = 125.0f;
+const float rightColumnWidth = 250.0f;
 
 namespace 
 {
@@ -68,8 +75,8 @@ std::vector<glm::vec3> cap::GizmoSystem::UpdateGizmos(float* modelMatrix, bool t
 	float viewManipulateTop = windowPos.y;
 
 	ImGui::Begin("Transform", 0);
-	ImGui::SetWindowPos(ImVec2(1150.0f, 115.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(250.0f, 125.0f), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(transformWindowX, transformWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, transformWindowHeight), ImGuiCond_Once);
 
 	// Check for hotkey to update gizmo operation for particular object
 	if (transformDecomposition)
@@ -106,8 +113,9 @@ std::vector<glm::vec3> cap::GizmoSystem::UpdateGizmos(float* modelMatrix, bool t
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 	s_GameWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : ImGuiWindowFlags_None;
 
-	glm::mat4 viewMatrix = sad::Application::GetViewMatrix();
-	glm::mat4 projectionMatrix = sad::Application::GetProjectionMatrix();
+	sad::Camera* currentCamera = sad::rad::RenderBuddy::GetCameraInstance();
+	glm::mat4 viewMatrix = currentCamera->GetViewMatrix();
+	glm::mat4 projectionMatrix = currentCamera->GetProjectionMatrix();
 	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
 	ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), m_CurrentGizmoOperation, currentGizmoMode, modelMatrix, NULL, NULL, NULL, NULL);
 	ImGuizmo::ViewManipulate(glm::value_ptr(viewMatrix), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);

@@ -298,6 +298,16 @@ namespace sad::cs
 		entity.GetComponent<ecs::TransformComponent>().m_Transform->Scale(*scale);
 	}
 
+	static glm::quat Slerp(glm::quat quatStart, glm::quat quatEnd, float interpFactor)
+	{
+		return glm::slerp(quatStart, quatEnd, interpFactor);
+	}
+
+	static glm::quat LookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up)
+	{
+		return glm::lookAt(eye, center, up);
+	}
+
 	/////////////
 	/// Bound ///
 	/////////////
@@ -493,6 +503,8 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Transform", Rotate);
 	SAD_CSF_ADD_INTERNAL("Transform", RotateByQuaternion);
 	SAD_CSF_ADD_INTERNAL("Transform", Scale);
+	SAD_CSF_ADD_INTERNAL("Transform", Slerp);
+	SAD_CSF_ADD_INTERNAL("Transform", LookAt);
 
 	// Bound
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMin);
@@ -510,6 +522,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	SAD_CSF_ADD_INTERNAL("Input", GetMouseButtonReleased);
 	SAD_CSF_ADD_INTERNAL("Input", GetMousePosition);
 	SAD_CSF_ADD_INTERNAL("Input", IsControllerActive);
+	SAD_CSF_ADD_INTERNAL("Input", IsControllerConnected);
 	SAD_CSF_ADD_INTERNAL("Input", IsControllerConnected);
 
 	// Audio

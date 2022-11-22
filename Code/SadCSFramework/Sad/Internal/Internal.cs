@@ -109,7 +109,13 @@ namespace Sad
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void Scale(Guid entityGuid, ref Vector3 scale);
-        }
+            
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static Quaternion Slerp(Quaternion quatStart, Quaternion quatEnd, float interpFactor);
+
+			[MethodImplAttribute(MethodImplOptions.InternalCall)]
+			internal extern static Quaternion LookAt(Vector3 eye, Vector3 center, Vector3 up);
+		}
 
         /// <summary>
         /// Internal methods for all native Bounds

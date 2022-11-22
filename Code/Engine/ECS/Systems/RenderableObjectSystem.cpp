@@ -2,12 +2,14 @@
 
 #include "RenderableObjectSystem.h"
 
+#include <glm/gtx/matrix_decompose.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <Engine/RenderableModel.h>
 #include <Engine/RenderableResource.h>
 
 #include <Engine/ECS/Entity.h>
-#include <Engine/ECS/Components/RenderableObjectComponent.h>
-#include <Engine/ECS/Components/RenderableResourceComponent.h>
+#include <Engine/ECS/Components/ComponentTypes.h>
 
 void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
 { 
@@ -18,8 +20,8 @@ void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
 
 void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world)
 {
-	auto view = world.view<ModelResourceComponent>();
-	for (auto [handle, modelResourceComponent] : view.each())
+	auto view = world.view<ModelResourceComponent, TransformComponent>();
+	for (auto [handle, modelResourceComponent, transformComponent] : view.each())
 	{
 		if (!modelResourceComponent.m_IsResourceDirty)
 			continue;
@@ -29,8 +31,16 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 		// Import the model and its geometry, attach it to the entity and mark it as a renderable
 		std::string modelFilePath = modelResourceComponent.m_Model->GetResourceAbsolutePath();
 		RenderableModel model = RenderableModel(modelFilePath);
-		entity.AddComponent<RenderableModelComponent>(std::move(model));
+		entity.AddComponent<RenderableModelComponent>(model);
 		entity.AddEmptyComponent<RenderableObjectComponent>({});
+
+		// Retrieve the bound from the model and apply it to the entity
+		// Something has to happen in the Bound for this to be applied correctly
+		aiAABB aabb = model.GetBound();
+		glm::vec3 min = glm::vec3(aabb.mMin[0], aabb.mMin[1], aabb.mMin[2]);
+		glm::vec3 max = glm::vec3(aabb.mMax[0], aabb.mMax[1], aabb.mMax[2]);
+		BoundComponent bound = entity.GetComponent<BoundComponent>();
+		bound.m_Bound->SetMinMax(min, max);
 
 		// Mark the RenderablePrimitive as clean 
 		modelResourceComponent.m_IsResourceDirty = false;

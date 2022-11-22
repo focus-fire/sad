@@ -68,6 +68,13 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		{
 			rad::Mesh* currentMesh = modelMeshes[i].get();
 
+			rad::MeshColor meshColors = currentMesh->Colors;
+
+			shader->SetUniform4f("u_Model.Ambient", meshColors.Ambient.r, meshColors.Ambient.g, meshColors.Ambient.b, meshColors.Ambient.a);
+			shader->SetUniform4f("u_Model.Diffuse", meshColors.Diffuse.r, meshColors.Diffuse.g, meshColors.Diffuse.b, meshColors.Diffuse.a);
+			shader->SetUniform4f("u_Model.Specular", meshColors.Specular.r, meshColors.Specular.g, meshColors.Specular.b, meshColors.Specular.a);
+			shader->SetUniform4f("u_Model.Emissive", meshColors.Emissive.r, meshColors.Emissive.g, meshColors.Emissive.b, meshColors.Emissive.a);
+
 			rad::RenderBuddy::DrawMesh(currentMesh);
 		}
 

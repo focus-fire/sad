@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 
 sad::RenderableModel::RenderableModel(const std::string& modelFilePath)
+	: m_ModelMatrix()
 {
 	// Store the correct directory based on the OS
 #ifdef _SAD_WINDOWS
@@ -26,19 +27,26 @@ sad::RenderableModel::RenderableModel(const std::string& modelFilePath)
 void sad::RenderableModel::MLoadModel(const std::string& modelFilePath)
 {
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenBoundingBoxes);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		core::Log(ELogType::Error, "[RenderableModel] ERROR::ASSIMP:: {}", importer.GetErrorString());
+		core::Log(ELogType::Error, "[RenderableModel] Error importing model: {}", importer.GetErrorString());
 		return;
 	}
 
 	MProcessNode(scene->mRootNode, scene);
+
+	m_Bound = scene->mMeshes[0]->mAABB;
 }
 
 void sad::RenderableModel::MProcessNode(aiNode* node, const aiScene* scene)
 {
+	if (!node->mParent)
+		m_ModelMatrix = node->mTransformation;
+	else
+		m_ModelMatrix *= node->mTransformation * node->mParent->mTransformation;
+
 	// Process all of the node's meshes
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -106,8 +114,44 @@ sad::rad::Mesh::MeshData sad::RenderableModel::MProcessMesh(aiMesh* mesh, const 
 			indices.push_back(face.mIndices[j]);
 	}
 
-	// Process materials
+	// Process mesh materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+	core::Log(ELogType::Debug, "[RenderableModel] Retrieved mesh material {}", material->GetName().C_Str());
+
+	rad::MeshColor color;
+	aiColor4D materialColor;
+
+	if (aiGetMaterialColor(material, AI_MATKEY_COLOR_AMBIENT, &materialColor) == AI_SUCCESS) 
+	{
+		color.Ambient.r = materialColor.r;
+		color.Ambient.g = materialColor.g;
+		color.Ambient.b = materialColor.b;
+		color.Ambient.a = materialColor.a;
+	}
+
+	if (aiGetMaterialColor(material, AI_MATKEY_COLOR_DIFFUSE, &materialColor) == AI_SUCCESS) 
+	{
+		color.Diffuse.r = materialColor.r;
+		color.Diffuse.g = materialColor.g;
+		color.Diffuse.b = materialColor.b;
+		color.Diffuse.a = materialColor.a;
+	}
+
+	if (aiGetMaterialColor(material, AI_MATKEY_COLOR_SPECULAR, &materialColor) == AI_SUCCESS) 
+	{
+		color.Specular.r = materialColor.r;
+		color.Specular.g = materialColor.g;
+		color.Specular.b = materialColor.b;
+		color.Specular.a = materialColor.a;
+	}
+
+	if (aiGetMaterialColor(material, AI_MATKEY_COLOR_EMISSIVE, &materialColor) == AI_SUCCESS) 
+	{
+		color.Emissive.r = materialColor.r;
+		color.Emissive.g = materialColor.g;
+		color.Emissive.b = materialColor.b;
+		color.Emissive.a = materialColor.a;
+	}
 
 	// Diffuse maps
 	std::vector<rad::MeshTexture> diffuseMaps = MLoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
@@ -125,7 +169,7 @@ sad::rad::Mesh::MeshData sad::RenderableModel::MProcessMesh(aiMesh* mesh, const 
 	std::vector<rad::MeshTexture> heightMaps = MLoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-	return rad::Mesh::MeshData(vertices, indices, textures);
+	return rad::Mesh::MeshData(vertices, indices, textures, color);
 }
 
 std::vector<sad::rad::MeshTexture> sad::RenderableModel::MLoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)

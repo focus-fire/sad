@@ -165,11 +165,11 @@ namespace Sad
         /// Instantiates an entity with the provided name into the level
         /// All newly instantiated entities have a GUID, Name, Transform, and Bound by default
         /// </summary>
-        /// <param name="name">Name of the entity being instantiated</param>
+        /// <param name="entityName">Name of the entity being instantiated</param>
         /// <returns>Reference to the entity instantiated in the level</returns>
-        public Entity Instantiate(string name)
+        public Entity Instantiate(string entityName)
         { 
-            Guid entityId = Internal.ECS.Instantiate(name);
+            Guid entityId = Internal.ECS.Instantiate(entityName);
 
             return new Entity(entityId);
         }
@@ -177,18 +177,23 @@ namespace Sad
         /// <summary>
         /// Instantiates an entity with the provided name into the level with a RenderableResource attached
         /// </summary>
-        public void InstantiateWithResource()
+        /// <param name="entityName">Name of the entity being instantiated</param>
+        /// <param name="modelFileName">Name of the model file to put on the entity</param>
+        /// <returns>Reference to the entity instantiated in the level</returns>
+        public Entity InstantiateWithModel(string entityName, string modelFileName)
         { 
-            // TODO: Finish once model loading is complete
+            Guid entityId = Internal.ECS.InstantiateWithModel(entityName, modelFileName);
+
+            return new Entity(entityId);
         }
 
         /// <summary>
         /// Destroy an entity with the provided name in the level
         /// </summary>
-        /// <param name="name">Name of the entity being destroyed</param>
-        public void Destroy(string name)
+        /// <param name="entityName">Name of the entity being destroyed</param>
+        public void Destroy(string entityName)
         {
-            Internal.ECS.DestroyEntityByName(name);
+            Internal.ECS.DestroyEntityByName(entityName);
         }
 
         /// <summary>

@@ -22,6 +22,7 @@ namespace sad
 		*/
 		glm::mat4 GetTransformMatrix();
 		glm::mat4& GetMutableTransformMatrix();
+
 		glm::mat3 GetNormalMatrix();
 
 		void SetPosition(glm::vec3 position) { m_Position = position; }

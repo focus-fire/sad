@@ -8,6 +8,7 @@ sad::rad::Mesh::Mesh(const MeshData& meshData)
 	: Vertices(meshData.Vertices)
 	, Indices(meshData.Indices)
 	, Textures(meshData.Textures)
+	, Colors(meshData.Colors)
 {
 	MSetupMesh();
 }

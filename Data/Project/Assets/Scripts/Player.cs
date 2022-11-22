@@ -60,7 +60,7 @@ public class Player : SadBehaviour
         if (Input.GetMouseButton(MouseButton.Right))
         {
             Log.Warn("Right Mouse Pressed!!!");
-            transform.Translate(new Vector3(-moveSpeed, -moveSpeed, -moveSpeed));
+            transform.Translate(new Vector3(moveSpeed, moveSpeed, moveSpeed));
         }
     }
 

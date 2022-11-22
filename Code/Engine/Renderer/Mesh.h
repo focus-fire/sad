@@ -24,6 +24,14 @@ namespace sad::rad
 		std::string Path;
 	};
 
+	struct MeshColor
+	{
+		glm::vec4 Ambient;
+		glm::vec4 Diffuse;
+		glm::vec4 Specular;
+		glm::vec4 Emissive;
+	};
+
 	class Mesh
 	{
 	public:
@@ -32,6 +40,7 @@ namespace sad::rad
 			std::vector<MeshVertex> Vertices;
 			std::vector<unsigned int> Indices;
 			std::vector<MeshTexture> Textures;
+			MeshColor Colors;
 		};
 
 		Mesh(const MeshData& meshData);
@@ -44,6 +53,7 @@ namespace sad::rad
 		std::vector<MeshVertex> Vertices;
 		std::vector<unsigned int> Indices;
 		std::vector<MeshTexture> Textures;
+		MeshColor Colors;
 
 	private:
 		VertexArray* m_VertexArray;

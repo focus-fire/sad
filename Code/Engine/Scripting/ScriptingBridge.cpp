@@ -83,7 +83,7 @@ namespace sad::cs
 		return newEntity.GetGuid().GetNativeGuid();
 	}
 
-	static core::NativeGuid InstantiateWithResource(MonoString* entityName, MonoString* resourceName)
+	static core::NativeGuid InstantiateWithModel(MonoString* entityName, MonoString* resourceName)
 	{
 		char* entityString = mono_string_to_utf8(entityName);
 		char* resourceString = mono_string_to_utf8(resourceName);
@@ -91,9 +91,14 @@ namespace sad::cs
 		Level* level = ScriptingEngine::GetCurrentLevelInstance();
 		ecs::Entity newEntity = level->InstantiateEntity(entityString);
 
-		// TODO: Add resource component to entity once model loading is finished
-		// ModelResource* resource = ResourceManager::GetResource<ModelResource>(resourceString);
-		// newEntity.AddComponent<ecs::PrimitiveResourceComponent>(core::CreatePointer<ModelResource>(resource));
+		ModelResource* modelResource = ResourceManager::GetResource<ModelResource>(resourceString);
+		SAD_ASSERT(modelResource, "Attempting to instantiate an entity with a model that hasn't been cached by the ResourceManager");
+
+		// Create the model resource and mark it as dirty
+		ecs::ModelResourceComponent modelResourceComponent;
+		modelResourceComponent.m_Model = modelResource;
+		modelResourceComponent.m_IsResourceDirty = true;
+		newEntity.AddComponent<ecs::ModelResourceComponent>(modelResourceComponent);
 
 		mono_free(entityString);
 		mono_free(resourceString);
@@ -453,7 +458,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	// ECS
 	SAD_CSF_ADD_INTERNAL("ECS", FindEntityByName);
 	SAD_CSF_ADD_INTERNAL("ECS", Instantiate);
-	//SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithResource);
+	SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithModel);
 	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByName);
 	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByGuid);
 

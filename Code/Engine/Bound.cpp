@@ -5,7 +5,6 @@
 sad::Bound::Bound(glm::vec3 center, glm::vec3 size)
 	: m_Center()
 	, m_Extents()
-	, m_Size()
 {
 	SetCenter(center);
 	SetSize(size);
@@ -14,7 +13,6 @@ sad::Bound::Bound(glm::vec3 center, glm::vec3 size)
 sad::Bound::Bound(Transform transform)
 	: m_Center()
 	, m_Extents()
-	, m_Size()
 {
 	SetCenter(transform.GetPosition());
 	SetSize(transform.GetScale());
@@ -22,8 +20,13 @@ sad::Bound::Bound(Transform transform)
 
 void sad::Bound::SetMinMax(glm::vec3 min, glm::vec3 max)
 {
+	m_Center = (min + max) * 0.5f;
 	m_Extents = (max - min) * 0.5f;
-	m_Center = min + m_Extents;
+}
+
+void sad::Bound::SetSizeRatio(glm::vec3 scale)
+{
+	m_SizeDifference = scale / (m_Extents * 2.0f);
 }
 
 bool sad::Bound::Intersects(glm::vec3 otherMax, glm::vec3 otherMin) 

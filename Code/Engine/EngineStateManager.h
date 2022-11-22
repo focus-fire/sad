@@ -28,6 +28,8 @@ namespace sad
 		*/
 		void ToggleEngineMode();
 
+		void OnToggleCamera();
+
 	private:
 		EEngineMode m_EngineMode;
 	};

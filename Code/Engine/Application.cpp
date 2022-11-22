@@ -85,7 +85,10 @@ void sad::Application::EngineStart()
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
-	
+
+	// Initialize Camera
+	rad::RenderBuddy::GetCameraInstance()->Start();
+
 	// Import Level and GUIDs 
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
@@ -208,7 +211,6 @@ void sad::Application::Update(float dt)
 	m_CurrentLevel->Update(world);
 
 	// Update GameCamera
-	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);  // Required for First-person camera movement
 	sad::rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass

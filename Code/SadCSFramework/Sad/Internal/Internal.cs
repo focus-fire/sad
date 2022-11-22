@@ -193,6 +193,9 @@ namespace Sad
         {
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static float Getdt();
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static bool RaycastIntersection(ref Vector3 origin, ref Vector3 direction, ref Vector3 position, ref Vector3 size);
         }
     }
 }

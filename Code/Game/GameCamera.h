@@ -18,6 +18,8 @@ namespace sad
 	{
 	public:
 
+		GameCamera();
+
 		/*
 		* @brief Updates game camera every frame in the game loop
 		*/
@@ -28,5 +30,7 @@ namespace sad
 		*/
 		void CurrentCameraState() override;
 
+	private:
+		sad::InputManager& input;
 	};
 }

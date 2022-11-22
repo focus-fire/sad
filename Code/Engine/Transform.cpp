@@ -3,6 +3,7 @@
 #include "Transform.h"
 
 #include <glm/gtc/type_ptr.hpp> 
+#include <glm/gtc/matrix_inverse.hpp>
 
 sad::Transform::Transform(glm::vec3 position, glm::quat rotation, glm::vec3 scale)
 	: m_Position(position)
@@ -24,12 +25,17 @@ glm::mat4 sad::Transform::GetTransformMatrix()
 
 	m_TransformMatrix = translateMatrix * rotationMatrix * scaleMatrix;
 
-	return translateMatrix * rotationMatrix * scaleMatrix;
+	return m_TransformMatrix;
 }
 
 glm::mat4& sad::Transform::GetMutableTransformMatrix()
 {
 	return m_TransformMatrix;
+}
+
+glm::mat3 sad::Transform::GetNormalMatrix()
+{
+	return glm::inverseTranspose(glm::mat3(m_TransformMatrix));
 }
 
 void sad::Transform::Translate(glm::vec3 translation)

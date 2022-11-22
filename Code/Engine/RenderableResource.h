@@ -1,12 +1,33 @@
 #pragma once
 
 #include <entt/entt.hpp>
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
+
+#include <Engine/Renderer/Mesh.h>
+#include <Engine/Renderer/ShaderResource.h>
 
 #include "Resource.h"
 
 namespace sad
 {
-	class RenderableResource final : public Resource
+	/**
+	 * @brief Holds resource data for models 
+	*/
+	class ModelResource final : public Resource
+	{
+	public:
+		ModelResource();
+		~ModelResource();
+
+		explicit ModelResource(const Resource::ResourceData& resourceData);
+	};
+
+	/**
+	 * @brief Holds resource data for primitives (ie: Cubes, Spheres, etc.) that have vertices hard-coded in the engine 
+	*/
+	class PrimitiveResource
 	{
 	public:
 		struct Geometry
@@ -32,19 +53,11 @@ namespace sad
 			{ }
 		};
 
-		RenderableResource();
-		~RenderableResource();
-
-		explicit RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry);
-
-		// TODO: Remove this constructor when 3D models can be parsed - the AddResource for RenderableResource will have to change as well.
-		explicit RenderableResource(const Resource::ResourceData& resourceData)
-			: Resource(resourceData)
-		{ }
+		explicit PrimitiveResource(const Geometry& geometry);
 
 		const Geometry GetGeometry() const { return m_Geometry; }
 
-	private:
-		Geometry m_Geometry;
+		private:
+			Geometry m_Geometry;
 	};
 }

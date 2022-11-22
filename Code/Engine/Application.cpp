@@ -23,20 +23,21 @@
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
+#include "ResourceManager.h"
 #include "AudioManager.h"
 #include "InputManager.h"
 #include "Transform.h"
 #include "InputManager.h"
-#include "RenderableObject.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
 #include "Camera.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
-float sad::Application::s_DeltaTime;
 sad::GameCamera* sad::Application::s_GameCamera;
 sad::EditorCamera* sad::Application::s_EditorCamera;
+
+float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
 {
@@ -53,6 +54,9 @@ sad::Application::Application()
 	s_GameCamera = new sad::GameCamera();
 
 	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
+
+	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
+	core::InitializeListener("ResetLevel", resetLevel);
 }
 
 sad::Application::~Application()
@@ -81,7 +85,10 @@ void sad::Application::EngineStart()
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
-	
+
+	// Initialize Camera
+	rad::RenderBuddy::GetCameraInstance()->Start();
+
 	// Import Level and GUIDs 
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
@@ -133,6 +140,21 @@ void sad::Application::EngineStart()
 	// gameThread.join();
 
 	Teardown();
+}
+
+void sad::Application::LevelReset()
+{
+	// Stop the game
+	m_IsGameOn = false;
+
+	// Clear the registry
+	sad::ecs::Registry::GetEntityWorld().clear();
+
+	// Import Level and GUIDs 
+	delete m_CurrentLevel;
+	m_CurrentLevel = LevelManager::ImportLevel();
+	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
+	m_CurrentLevel->Start();
 }
 
 void sad::Application::PollEvents(bool& isWindowClosed)
@@ -189,7 +211,6 @@ void sad::Application::Update(float dt)
 	m_CurrentLevel->Update(world);
 
 	// Update GameCamera
-	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);  // Required for First-person camera movement
 	sad::rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass
@@ -207,8 +228,6 @@ void sad::Application::Teardown()
 { 
 	sad::cs::ScriptingEngine::RuntimeStop();
 	sad::cs::ScriptingEngine::Teardown();
-
-	LevelManager::ExportLevel();
 
 	m_Editor->Teardown();
 

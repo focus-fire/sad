@@ -25,7 +25,7 @@ namespace core
 #ifdef _SAD_WINDOWS
 	using NativeGuid = GUID;
 #else 
-	using NativeGuid = uuid_t;
+	using NativeGuid = unsigned char*;
 #endif
 
 	/**

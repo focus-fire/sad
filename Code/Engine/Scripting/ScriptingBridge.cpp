@@ -84,7 +84,7 @@ namespace sad::cs
 		return newEntity.GetGuid().GetNativeGuid();
 	}
 
-	static core::NativeGuid InstantiateWithResource(MonoString* entityName, MonoString* resourceName)
+	static core::NativeGuid InstantiateWithModel(MonoString* entityName, MonoString* resourceName)
 	{
 		char* entityString = mono_string_to_utf8(entityName);
 		char* resourceString = mono_string_to_utf8(resourceName);
@@ -92,9 +92,41 @@ namespace sad::cs
 		Level* level = ScriptingEngine::GetCurrentLevelInstance();
 		ecs::Entity newEntity = level->InstantiateEntity(entityString);
 
-		// TODO: Add resource component to entity once model loading is finished
-		// RenderableResource* resource = ResourceManager::GetResource<RenderableResource>(resourceString);
-		// newEntity.AddComponent<ecs::RenderableResourceComponent>(core::CreatePointer<RenderableResource>(resource));
+		ModelResource* modelResource = ResourceManager::GetResource<ModelResource>(resourceString);
+		SAD_ASSERT(modelResource, "Attempting to instantiate an entity with a model that hasn't been cached by the ResourceManager");
+
+		// Create the model resource and mark it as dirty
+		ecs::ModelResourceComponent modelResourceComponent;
+		modelResourceComponent.m_Model = modelResource;
+		modelResourceComponent.m_IsResourceDirty = true;
+		newEntity.AddComponent<ecs::ModelResourceComponent>(modelResourceComponent);
+
+		mono_free(entityString);
+		mono_free(resourceString);
+
+		return newEntity.GetGuid().GetNativeGuid();
+	}
+
+	static core::NativeGuid InstantiateWithModelAndPosition(MonoString* entityName, MonoString* resourceName, glm::vec3* position)
+	{
+		char* entityString = mono_string_to_utf8(entityName);
+		char* resourceString = mono_string_to_utf8(resourceName);
+		
+		Level* level = ScriptingEngine::GetCurrentLevelInstance();
+		ecs::Entity newEntity = level->InstantiateEntity(entityString);
+
+		ModelResource* modelResource = ResourceManager::GetResource<ModelResource>(resourceString);
+		SAD_ASSERT(modelResource, "Attempting to instantiate an entity with a model that hasn't been cached by the ResourceManager");
+
+		// Move the entity to the specified position
+		Transform* transform = newEntity.GetComponent<ecs::TransformComponent>().m_Transform.get();
+		transform->SetPosition(*position);
+
+		// Create the model resource and mark it as dirty
+		ecs::ModelResourceComponent modelResourceComponent;
+		modelResourceComponent.m_Model = modelResource;
+		modelResourceComponent.m_IsResourceDirty = true;
+		newEntity.AddComponent<ecs::ModelResourceComponent>(modelResourceComponent);
 
 		mono_free(entityString);
 		mono_free(resourceString);
@@ -470,7 +502,8 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	// ECS
 	SAD_CSF_ADD_INTERNAL("ECS", FindEntityByName);
 	SAD_CSF_ADD_INTERNAL("ECS", Instantiate);
-	//SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithResource);
+	SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithModel);
+	SAD_CSF_ADD_INTERNAL("ECS", InstantiateWithModelAndPosition);
 	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByName);
 	SAD_CSF_ADD_INTERNAL("ECS", DestroyEntityByGuid);
 

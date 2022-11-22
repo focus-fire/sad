@@ -23,6 +23,8 @@ namespace sad
 		glm::mat4 GetTransformMatrix();
 		glm::mat4& GetMutableTransformMatrix();
 
+		glm::mat3 GetNormalMatrix();
+
 		void SetPosition(glm::vec3 position) { m_Position = position; }
 		void SetRotation(glm::quat rotation) { m_Rotation = rotation; }
 		void SetScale(glm::vec3 scale) { m_Scale = scale; }

@@ -7,7 +7,13 @@
 
 glm::vec3 sad::Camera::cameraPosition;
 glm::vec3 sad::Camera::cameraEulers;
+bool sad::Camera::isActive;
 
+void sad::Camera::Start()
+{
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	isActive = true;
+}
 
 glm::mat4 sad::Camera::GetProjectionMatrix()
 {
@@ -41,4 +47,17 @@ glm::mat4 sad::Camera::GetViewProjectionMatrix()
 	glm::mat4 projectionMatrix = GetProjectionMatrix();
 	glm::mat4 viewMatrix = GetViewMatrix();
 	return projectionMatrix * viewMatrix;
+}
+
+void sad::Camera::ToggleMouseState()
+{
+	isActive = !isActive;
+	if (isActive == false)
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+	}
+	else
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
 }

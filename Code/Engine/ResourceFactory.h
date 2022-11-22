@@ -6,13 +6,14 @@
 #include <Core/Memory.h>
 #include <Core/FileUtils.h>
 
+#include "Renderer/TextureResource.h"
+#include "Renderer/ShaderResource.h"
+
 #include "Resource.h"
 #include "ResourceManager.h"
 #include "LevelResource.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
-#include "Renderer/TextureResource.h"
-#include "Renderer/ShaderResource.h"
 
 namespace sad
 {
@@ -34,11 +35,11 @@ namespace sad
 		 * @brief Factory construction for RenderableResources 
 		*/
 		template<>
-		static void CreateResource<RenderableResource>(const Resource::ResourceData& data)
+		static void CreateResource<ModelResource>(const Resource::ResourceData& data)
 		{
-			core::Pointer<RenderableResource> renderableResource = core::CreatePointer<RenderableResource>(data);
-			ResourceManager::AddResource<RenderableResource>(renderableResource);
-			core::Log(ELogType::Trace, "[ResourceFactory] Created a RenderableResource with name {}", data.Name);
+			core::Pointer<ModelResource> renderableResource = core::CreatePointer<ModelResource>(data);
+			ResourceManager::AddResource<ModelResource>(renderableResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a ModelResource with name {}", data.Name);
 		}
 
 		/**

@@ -299,7 +299,7 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
 			qualifiedName = className;
 
 		s_ScriptingData->SadBehaviourScriptLookup[qualifiedName] = core::CreatePointer<ScriptClass>(nameSpace, className);
-		core::Log(ELogType::Info, "[ScriptingEngine] Cached new SadBehaviour with qualified name {}", qualifiedName);
+		core::Log(ELogType::Trace, "[ScriptingEngine] Cached new SadBehaviour with qualified name {}", qualifiedName);
 	}
 }
 

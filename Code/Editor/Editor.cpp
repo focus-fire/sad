@@ -75,6 +75,15 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImGui::Begin(m_GameWindowTitle.c_str(), &showGameWindow, m_GameWindowFlags);
 	ImGui::PopStyleColor();
 
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootWindow))
+	{
+		core::SignalEvent("OnInputUnlock");
+	}
+	else
+	{
+		core::SignalEvent("OnInputLock");
+	}
+
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
 	ImGui::SetWindowPos(ImVec2(50.0, 25.0), ImGuiCond_Once);
 

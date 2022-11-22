@@ -12,6 +12,7 @@
 
 #include <Game/Time.h>
 #include <Game/Application.h>
+#include <Game/GameCamera.h>
 
 #include "ECS/Registry.h"
 
@@ -29,10 +30,13 @@
 #include "RenderableObject.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
+#include "Camera.h"
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 float sad::Application::s_DeltaTime;
+sad::GameCamera* sad::Application::s_GameCamera;
+sad::EditorCamera* sad::Application::s_EditorCamera;
 
 sad::Application::Application()
 {
@@ -43,6 +47,12 @@ sad::Application::Application()
 	s_EngineState = new EngineStateManager();
 
 	m_Editor = new cap::Editor;
+
+	s_EditorCamera = new sad::EditorCamera();
+
+	s_GameCamera = new sad::GameCamera();
+
+	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
 }
 
 sad::Application::~Application()
@@ -53,6 +63,9 @@ sad::Application::~Application()
 	
 	// Allocated in LevelManager::ImportLevel()
 	delete m_CurrentLevel;
+
+	delete s_EditorCamera;
+	delete s_GameCamera;
 }
 
 void sad::Application::EngineStart()
@@ -129,7 +142,7 @@ void sad::Application::PollEvents(bool& isWindowClosed)
 
 	while (SDL_PollEvent(&event)) 
 	{
-		input.UpdateTicks();
+        input.UpdateTicks();
 		m_Editor->CatchSDLEvents(event);
 		input.CatchMouseEvents(event);
 		input.CatchKeyboardEvents(event);
@@ -175,6 +188,10 @@ void sad::Application::Update(float dt)
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 	m_CurrentLevel->Update(world);
 
+	// Update GameCamera
+	//SDL_WarpMouseInWindow(s_MainWindow->GetSDLWindow(), 800, 450);  // Required for First-person camera movement
+	sad::rad::RenderBuddy::GetCameraInstance()->Update();
+
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();
 
@@ -196,23 +213,4 @@ void sad::Application::Teardown()
 	m_Editor->Teardown();
 
 	s_MainWindow->Teardown();
-}
-
-glm::mat4 sad::Application::GetViewProjectionMatrix()
-{
-	return GetProjectionMatrix() * GetViewMatrix();
-}
-
-glm::mat4 sad::Application::GetViewMatrix()
-{
-	return glm::lookAt(
-		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
-		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
-	);
-}
-
-glm::mat4 sad::Application::GetProjectionMatrix()
-{
-	return glm::perspective(glm::radians(60.0f), s_MainWindow->GetAspectRatio(), 1.0f, 20.0f);
 }

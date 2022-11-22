@@ -45,6 +45,9 @@ void sad::Window::Start()
 
 	SDL_SetWindowMaximumSize(m_Window, m_Properties.MaxDimensions.first, m_Properties.MaxDimensions.second);
 	SDL_SetWindowMinimumSize(m_Window, m_Properties.MinDimensions.first, m_Properties.MinDimensions.second);
+
+	// Required for First-person camera movement
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
 }
 
 void sad::Window::CreateGLContext()

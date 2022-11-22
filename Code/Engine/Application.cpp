@@ -34,9 +34,10 @@
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
-float sad::Application::s_DeltaTime;
 sad::GameCamera* sad::Application::s_GameCamera;
 sad::EditorCamera* sad::Application::s_EditorCamera;
+
+float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
 {
@@ -140,13 +141,17 @@ void sad::Application::EngineStart()
 
 void sad::Application::LevelReset()
 {
+	// Stop the game
+	m_IsGameOn = false;
+
+	// Clear the registry
 	sad::ecs::Registry::GetEntityWorld().clear();
+
 	// Import Level and GUIDs 
+	delete m_CurrentLevel;
 	m_CurrentLevel = LevelManager::ImportLevel();
 	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
-
-	// Start the ScriptingRuntime in association with the current level
-	cs::ScriptingEngine::RuntimeStart(m_CurrentLevel);
+	m_CurrentLevel->Start();
 }
 
 void sad::Application::PollEvents(bool& isWindowClosed)

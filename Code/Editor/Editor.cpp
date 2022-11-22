@@ -215,6 +215,16 @@ void cap::Editor::PanelAndButton()
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
 		core::SignalEvent("OnToggleEngineMode");
 	}
+	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	{
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
+		core::SignalEvent("ResetLevel");
+	}
+	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+	{
+		sad::LevelManager::ExportLevel();
+	}
 	ImGui::End();
 
 	// Really scuffed way to list entities, included mainly for debugging
@@ -225,23 +235,6 @@ void cap::Editor::PanelAndButton()
 		auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
 		for (auto [entity, name] : view.each())
 			ImGui::Text(name.m_Name.c_str());
-	ImGui::End();
-
-	ImGui::Begin("Tools");
-		ImGui::SetWindowPos(ImVec2(1150.0f, 500.0f), ImGuiCond_Once);
-		ImGui::SetWindowSize(ImVec2(100.0f, 100.0f), ImGuiCond_Once);
-		// Saves current game if paused
-		if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
-		{
-			sad::LevelManager::ExportLevel();
-		}
-		// Reloads to the last saved instance
-		if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
-		{
-			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
-			core::SignalEvent("OnToggleEngineMode");
-			core::SignalEvent("ResetLevel");
-		}
 	ImGui::End();
 }
 
@@ -267,14 +260,13 @@ bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0
 */
 void cap::Editor::EditorControls()
 {
-	
 	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
 		if (!m_IsEditorInPlayMode && ImGui::IsKeyPressed(ImGuiKey_S))
 		{
 			sad::LevelManager::ExportLevel();
 			m_IsEditorInPlayMode = false;
-			core::Log(ELogType::Debug, "Saved");
+			core::Log(ELogType::Trace, "Saved");
 		}
 
 		if (ImGui::IsKeyPressed(ImGuiKey_P))

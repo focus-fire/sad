@@ -75,13 +75,13 @@ void cap::DebugTerminalHelper::InstantiateModel(argument_type& arg)
 	}
 
 	// Initialize component data
-	sad::ecs::RenderableResourceComponent resourceComponent;
-	resourceComponent.m_Renderable = resource;
+	sad::ecs::ModelResourceComponent resourceComponent;
+	resourceComponent.m_Model = resource;
 	resourceComponent.m_IsResourceDirty = true;
 
 	// Instantiate an entity and provide it the resource component
 	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
-	entity.AddComponent<sad::ecs::RenderableResourceComponent>(resourceComponent);
+	entity.AddComponent<sad::ecs::ModelResourceComponent>(resourceComponent);
 }
 
 void cap::DebugTerminalHelper::InstantiateShape(argument_type& arg)

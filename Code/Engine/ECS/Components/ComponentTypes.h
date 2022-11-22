@@ -21,5 +21,6 @@
 	sad::ecs::TransformComponent,\
 	sad::ecs::BoundComponent,\
 	sad::ecs::PrimitiveResourceComponent,\
+	sad::ecs::ModelResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\
 	sad::ecs::EditorControllerComponent

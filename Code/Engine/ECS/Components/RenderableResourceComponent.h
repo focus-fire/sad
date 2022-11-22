@@ -2,18 +2,19 @@
 
 #include <nlohmann/json.hpp>
 
+#include <Engine/Resource.h>
+#include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>
 #include <Engine/Renderer/Sample/Cube.h>
-#include <Engine/Resource.h>
 
 namespace sad::ecs
 {
 	/**
-	 * @brief Contains a reference for a particular RenderableResourceComponent 
+	 * @brief Contains a reference for a particular ModelResourceComponent 
 	*/
-	struct RenderableResourceComponent
+	struct ModelResourceComponent
 	{
-		ModelResource* m_Renderable;
+		ModelResource* m_Model;
 		bool m_IsResourceDirty;
 	};
 
@@ -29,6 +30,23 @@ namespace sad::ecs
 		bool m_IsResourceDirty;
 	};
 
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::ModelResourceComponent& renderableResource)
+	{
+		JSON =
+		{
+			{ "ModelFileName", renderableResource.m_Model->GetResourceFileName()},
+		};
+	}
+
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::ModelResourceComponent& renderableResource)
+	{
+		std::string modelFileName = JSON["ModelFileName"];
+
+		ModelResource* modelResource = ResourceManager::GetResource<ModelResource>(std::move(modelFileName));
+		renderableResource.m_Model = modelResource;
+		renderableResource.m_IsResourceDirty = true;
+	}
+
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::PrimitiveResourceComponent& primitiveResource)
 	{
 		JSON =
@@ -39,8 +57,14 @@ namespace sad::ecs
 
 	inline void from_json(const nlohmann::json& JSON, sad::ecs::PrimitiveResourceComponent& primitiveResource)
 	{
-		PrimitiveResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
-		primitiveResource.m_Primitive = core::CreatePointer<PrimitiveResource>(std::move(CubeGeometry));
-		primitiveResource.m_IsResourceDirty = true;
+		std::string primitiveType = JSON["PrimitiveType"];
+
+		// Only cube is implemented as a primtive type at the moment
+		if (core::StringUtils::Equals(primitiveType, "Cube"))
+		{
+			PrimitiveResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+			primitiveResource.m_Primitive = core::CreatePointer<PrimitiveResource>(std::move(CubeGeometry));
+			primitiveResource.m_IsResourceDirty = true;
+		}
 	}
 }

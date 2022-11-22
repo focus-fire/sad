@@ -37,8 +37,6 @@ namespace sad::rad
 		Mesh(const MeshData& meshData);
 		~Mesh();
 
-		void Draw(sad::rad::ShaderResource& shader);
-
 		VertexArray* GetVertexArray() { return m_VertexArray; }
 		IndexBuffer* GetIndexBuffer() { return m_IndexBuffer; }
 
@@ -51,7 +49,6 @@ namespace sad::rad
 		VertexArray* m_VertexArray;
 		VertexBuffer* m_VertexBuffer;
 		IndexBuffer* m_IndexBuffer;
-		//MeshVertexAttributeContainer* m_VertexAttributes;
 
 		void MSetupMesh();
 	};

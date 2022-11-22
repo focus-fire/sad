@@ -19,34 +19,6 @@ sad::rad::Mesh::~Mesh()
 	delete m_IndexBuffer;
 }
 
-void sad::rad::Mesh::Draw(sad::rad::ShaderResource& shader)
-{
-	unsigned int diffuseNr = 1;
-	unsigned int specularNr = 1;
-
-	for (unsigned int i = 0; i < Textures.size(); i++)
-	{
-		GL_CALL(glActiveTexture(GL_TEXTURE0 + i));
-
-		std::string number;
-		std::string name = Textures[i].Type;
-
-		if (name == "texture_diffuse")
-			number = std::to_string(diffuseNr++);
-		else if (name == "texture_specular")
-			number = std::to_string(specularNr++);
-
-		shader.SetUniform1i(("material" + name + number).c_str(), i);
-		GL_CALL(glBindTexture(GL_TEXTURE_2D, Textures[i].Id));
-	}
-
-	GL_CALL(glActiveTexture(GL_TEXTURE0));
-
-	//GL_CALL(glBindVertexArray(m_Vao));
-	GL_CALL(glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0));
-	GL_CALL(glBindVertexArray(0));
-}
-
 void sad::rad::Mesh::MSetupMesh()
 {
 	constexpr auto stride { sizeof(MeshVertex) };

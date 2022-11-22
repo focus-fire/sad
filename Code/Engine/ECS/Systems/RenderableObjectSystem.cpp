@@ -18,21 +18,22 @@ void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
 
 void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world)
 {
-	auto view = world.view<RenderableResourceComponent>();
-	for (auto [handle, renderableResourceComponent] : view.each())
+	auto view = world.view<ModelResourceComponent>();
+	for (auto [handle, modelResourceComponent] : view.each())
 	{
-		if (!renderableResourceComponent.m_IsResourceDirty)
+		if (!modelResourceComponent.m_IsResourceDirty)
 			continue;
 
 		ecs::Entity entity = ecs::Entity(handle);
 
 		// Import the model and its geometry, attach it to the entity and mark it as a renderable
-		RenderableModel model = RenderableModel(renderableResourceComponent.m_Renderable->GetResourceAbsolutePath());
+		std::string modelFilePath = modelResourceComponent.m_Model->GetResourceAbsolutePath();
+		RenderableModel model = RenderableModel(modelFilePath);
 		entity.AddComponent<RenderableModelComponent>(std::move(model));
 		entity.AddEmptyComponent<RenderableObjectComponent>({});
 
 		// Mark the RenderablePrimitive as clean 
-		renderableResourceComponent.m_IsResourceDirty = false;
+		modelResourceComponent.m_IsResourceDirty = false;
 	}
 }
 

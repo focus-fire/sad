@@ -3,31 +3,11 @@ using System.Collections.Generic;
 
 public class Player : SadBehaviour
 {
-    public static List<Enemy> Enemies;
-
     private int m_PrimaryAttackDamage = 100;
     private float m_MoveSpeed = 0.5f;
 
     void Awake()
     {
-        Enemies = new List<Enemy>();
-
-        Log.Debug($"PlayerController.Awake => {GUID}");
-
-        // Testing Instantiation
-        Entity EnemyCube = Instantiate("EnemyCube");
-        Log.Debug($"Instantiated an entity with GUID => {EnemyCube?.GUID}");
-
-        // Testing Finds
-        Entity foundEnemyCube = FindEntityWithName("EnemyCube");
-        Log.Debug($"Found a component with GUID => {foundEnemyCube?.GUID}");
-
-        // Testing Script Adding/Getting
-        foundEnemyCube.AddScriptComponent<Enemy>();
-        Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
-        Log.Debug($"Found an enemy with {e?.Health} health");
-
-        Enemies.Add(e);
     }
 
     void Update()
@@ -78,12 +58,12 @@ public class Player : SadBehaviour
         bool hit;
 
         // Check if any enemies are hit by the player's attack
-        for (int i = 0; i < Enemies.Count; ++i)
+        for (int i = 0; i < GameManager.Instance.Enemies.Count; ++i)
         {
-            hit = Raycast.Intersects(initialFiringPos, firingDirection, Enemies[i]);
+            hit = Raycast.Intersects(initialFiringPos, firingDirection, GameManager.Instance.Enemies[i]);
 
             if (hit)
-                Enemies[i].TakeDamage(m_PrimaryAttackDamage);
+                GameManager.Instance.Enemies[i].TakeDamage(m_PrimaryAttackDamage);
         }
     }
 
@@ -96,32 +76,30 @@ public class Player : SadBehaviour
 
     void Move()
     {
+        // TODO: Integrate camera rotations
+
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += Vector3.forward * Time.dt * m_MoveSpeed;
-            Log.Debug($"W - pos: {transform.position}");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
             transform.position += Vector3.right * Time.dt * m_MoveSpeed;
-            Log.Debug($"A - pos: {transform.position}");
         }
 
         // Move Right
         if (Input.GetKey(KeyCode.S))
         {
             transform.position += Vector3.backward * Time.dt * m_MoveSpeed;
-            Log.Debug($"S - pos: {transform.position}");
         }
 
         // Move Backward
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += Vector3.left * Time.dt * m_MoveSpeed;
-            Log.Debug($"D - pos: {transform.position}");
         }
     }
 

@@ -18,6 +18,8 @@ namespace sad
 	{
 	public:
 
+		EditorCamera();
+
 		/*
 		* @brief Updates editor camera every frame in the game loop
 		*/
@@ -28,11 +30,10 @@ namespace sad
 		*/
 		void CurrentCameraState() override;
 
-		void ToggleMouseState();
-
 	private:
 		static int wasdState;
 		static bool walking;
 		static float walkDirection;
+		sad::InputManager& input;
 	};
 }

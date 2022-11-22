@@ -4,6 +4,7 @@
 
 namespace sad
 {
+
 	/*
 	* @brief Handles matrix math for the Camera
 	*/
@@ -35,7 +36,7 @@ namespace sad
 		/*
 		* @brief Unbind mouse from screen
 		*/
-		static void UnbindMouse();
+		static void ToggleMouseState();
 
 		/*
 		* @brief Stores the Camera position

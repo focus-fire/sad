@@ -3,8 +3,6 @@
 #include "backends/imgui_impl_glfw.h"
 
 #include "Engine/Application.h"
-#include "Game/GameCamera.h"
-
 #include "EditorCamera.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -13,19 +11,15 @@ float sad::EditorCamera::walkDirection;
 bool sad::EditorCamera::walking;
 int sad::EditorCamera::wasdState;
 
+sad::EditorCamera::EditorCamera() : input(InputManager::GetInstance()) {}
+
 void sad::EditorCamera::Update()
 {
-	// Get the input manager instance to track mouse position
-	// Probably don't need to grab the instance every update
-	InputManager& input = InputManager::GetInstance();
-
 	// Change mouse/camera state
-	if (input.GetKeyPressed(sad::KeyCode::Escape))
+	if (input.GetKey(sad::KeyCode::Escape))
 	{
 		ToggleMouseState();
 	}
-
-	core::Log(ELogType::Info, "Active state: {}", isActive);
 
 	if (isActive)
 	{
@@ -36,20 +30,15 @@ void sad::EditorCamera::Update()
 		mouse_x = input.GetMousePosition().x;
 		mouse_y = input.GetMousePosition().y;
 
-		// TODO: Probably don't need this since SDL handles repositioning the cursor. Camera keeps rotating without this
 		ImGui::SetCursorPos(ImVec2(800.0f, 450.0f));
 		input.SetMousePosition(800.0, 450.0);
 
 		// Application shouldnt be accessed in here :/
 		SDL_WarpMouseInWindow(sad::Application::s_MainWindow->GetSDLWindow(), 800, 450);
 
-		// TODO: Remove tempSensitivityHandle declaration and calls below after mouse pointer handling is in place
-		// Temporary sensitivity constant for assisting with troubleshooting and testing game
-		float tempSensitivityHandle = 1.0f;
-
 		// Calculate and update camera yaw (horizontal rotation) for the camera and keep rotation between 0 <=> 360
 		float delta_x{ static_cast<float>(mouse_x - 800.0) };
-		cameraEulers.y -= delta_x * 0.05f * tempSensitivityHandle;
+		cameraEulers.y -= delta_x * 0.05f;
 		if (cameraEulers.y <= 0)
 		{
 			cameraEulers.y = 360.0f;
@@ -61,17 +50,13 @@ void sad::EditorCamera::Update()
 
 		// Calculate and update camera pitch (vertical rotation), keeps it between 90 <=> -90
 		float delta_y{ static_cast<float>(mouse_y - 450.0) };
-		cameraEulers.x = std::max(std::min(cameraEulers.x + delta_y * 0.05f * tempSensitivityHandle, 90.0f), -90.0f);
+		cameraEulers.x = std::max(std::min(cameraEulers.x + delta_y * 0.05f, 90.0f), -90.0f);
 	}
 	
 }
 
 void sad::EditorCamera::CurrentCameraState()
 {
-
-	// Probably don't need to grab the instance every update
-	InputManager& input = InputManager::GetInstance();
-
 	// Capture player state
 	walkDirection = -cameraEulers.y;
 	wasdState = 0;
@@ -154,19 +139,5 @@ void sad::EditorCamera::CurrentCameraState()
 			-glm::sin(glm::radians(cameraEulers.x)),
 			glm::sin(glm::radians(walkDirection))
 		};
-	}
-}
-
-void sad::EditorCamera::ToggleMouseState()
-{
-	isActive = !isActive;
-	if (isActive == false)
-	{
-		SDL_SetRelativeMouseMode(SDL_FALSE);
-		cameraEulers.x = 0.0f;
-	}
-	else
-	{
-		SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
 }

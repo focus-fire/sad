@@ -11,6 +11,8 @@
 #include <Engine/ECS/Components/ControllerComponent.h>
 #include <Engine/AudioManager.h>
 #include <Engine/ResourceManager.h>
+#include <imgui.h>
+#include <SDL2/SDL.h>
 
 void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const ecs::TransformComponent& transformComponent, float moveSpeedMultiplier)
 {
@@ -41,6 +43,8 @@ void sad::ecs::PlayerControllerSystem::PlayerControls(InputManager& input, const
 	}
 	else
 	{
+		// Capture player state
+
 		// Handles forward/backward movement using W and S
 		if (input.GetKey(sad::KeyCode::W))
 		{
@@ -119,18 +123,6 @@ void sad::ecs::PlayerControllerSystem::EditorControls(InputManager& input, const
 void sad::ecs::PlayerControllerSystem::Update(EntityWorld& world)
 {
 	InputManager& input = InputManager::GetInstance();
-
-	// Test mouse position
-	if (input.GetMouseButtonPressed(SDL_BUTTON_MIDDLE))
-	{
-		std::string mousePosition = "Mouse Pos: (";
-		mousePosition += std::to_string(input.GetMousePosition().x);
-		mousePosition += ", ";
-		mousePosition += std::to_string(input.GetMousePosition().y);
-		mousePosition += ")";
-
-		core::Log(ELogType::Info, mousePosition.c_str());
-	}
 
 	float moveSpeedMultiplier = 0.005f;
 

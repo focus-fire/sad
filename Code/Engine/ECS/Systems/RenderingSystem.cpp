@@ -9,6 +9,7 @@
 #include <Engine/Renderer/RenderBuddy.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
+#include <Engine/Camera.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -25,8 +26,9 @@ void sad::ecs::RenderingSystem::RenderIndexables(EntityWorld& world)
 		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		rad::ShaderResource* shader = renderable->GetShader();
 
-		// TODO: Retrieve the view projection matrix from the Camera 
-		glm::mat4 mvpMatrix = sad::Application::GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
+		Camera* currentCamera = sad::rad::RenderBuddy::GetCameraInstance();
+
+		glm::mat4 mvpMatrix = currentCamera->GetViewProjectionMatrix() * transformComponent.m_Transform->GetTransformMatrix();
 
 		shader->Bind();
 

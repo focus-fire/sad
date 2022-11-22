@@ -11,6 +11,7 @@
 #include <Engine/LineRenderer.h>
 #include <Engine/ECS/Entity.h>
 #include <Engine/ECS/Registry.h>
+#include <Engine/Camera.h>
 
 #include "ShaderResource.h"
 #include "VertexArray.h"
@@ -23,7 +24,7 @@ void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec
 	LineRenderer lineRenderer = LineRenderer(from, to, color);
 
 	// TODO: Retrieve the view projection matrix from the Camera
-	glm::mat4 vpMatrix = sad::Application::GetViewProjectionMatrix();
+	glm::mat4 vpMatrix = sad::Camera::GetViewProjectionMatrix();
 
 	lineRenderer.Shader->Bind();
 	lineRenderer.Shader->SetUniformMatrix4fv("u_VpMatrix", glm::value_ptr(vpMatrix));

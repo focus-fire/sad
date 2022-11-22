@@ -28,7 +28,7 @@ void cap::DebugTerminal::Start()
 	core::AddLoggingSink(m_TerminalSinkPtr);
 	core::Log(ELogType::Info, "Welcome to the sadEngine!");
 
-	m_Terminal.set_size(ImVec2(650.0f, 300.0f));
+	m_Terminal.set_size(ImVec2(1025.0f, 320.0f));
 }
 
 void cap::DebugTerminal::Render()

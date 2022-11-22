@@ -24,7 +24,8 @@ void main()
     gl_Position = u_MvpMatrix * in_Position;
 
     FragPos = vec3(u_ModelMatrix * in_Position); // df
-    Normal = aNormal; // df
+    // Normal = aNormal; // df
+    Normal = mat3(transpose(inverse(u_ModelMatrix))) * aNormal;
 }
 
 #shader fragment
@@ -50,7 +51,7 @@ void main()
     float ambientStrength = 0.2;
     vec3 ambient = ambientStrength * u_Color;
 
-    vec3 norm = Normal; // normalize(Normal);
+    vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * u_Color;
@@ -58,7 +59,7 @@ void main()
     vec3 ambdiff = ambient + diffuse;
 
     // vec4 result = vec4(ambient, 1.0) * texColor;
-    vec4 result = vec4(ambdiff, 1.0) * texColor;
-    color = result;
+    vec3 result = ambdiff * vec3(texColor);
+    color = vec4(result, 1.0);
     // color = result;
 }

@@ -32,8 +32,8 @@ namespace sad::ecs
 
 	inline void from_json(const nlohmann::json& JSON, sad::ecs::RenderableResourceComponent& renderableResource) {
 	
-		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
-		// RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount, CubeNormals);
+		// RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount, CubeNormals);
 
 		// TODO: Remove IReource requirement... 
 		Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};

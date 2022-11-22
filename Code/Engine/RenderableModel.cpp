@@ -1,6 +1,6 @@
 #include "sadpch.h"
 
-#include "Model.h"
+#include "RenderableModel.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -8,31 +8,36 @@
 
 #include "ResourceManager.h"
 
-sad::Model::Model(const std::string& modelFilePath)
+sad::RenderableModel::RenderableModel(const std::string& modelFilePath)
 {
-	m_Meshes.reserve(4);
+	// Store the correct directory based on the OS
+#ifdef _SAD_WINDOWS
 	m_ModelDirectory = modelFilePath.substr(0, modelFilePath.find_last_of('\\'));
+#else
+	m_ModelDirectory = modelFilePath.substr(0, modelFilePath.find_last_of('/'));
+#endif
 
+	// Default model shader
 	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Model.glsl");
 
 	MLoadModel(modelFilePath);
 }
 
-void sad::Model::MLoadModel(const std::string& modelFilePath)
+void sad::RenderableModel::MLoadModel(const std::string& modelFilePath)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(modelFilePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
-		core::Log(ELogType::Error, "[Model] ERROR::ASSIMP:: {}", importer.GetErrorString());
+		core::Log(ELogType::Error, "[RenderableModel] ERROR::ASSIMP:: {}", importer.GetErrorString());
 		return;
 	}
 
 	MProcessNode(scene->mRootNode, scene);
 }
 
-void sad::Model::MProcessNode(aiNode* node, const aiScene* scene)
+void sad::RenderableModel::MProcessNode(aiNode* node, const aiScene* scene)
 {
 	// Process all of the node's meshes
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -49,7 +54,7 @@ void sad::Model::MProcessNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-sad::rad::Mesh::MeshData sad::Model::MProcessMesh(aiMesh* mesh, const aiScene* scene)
+sad::rad::Mesh::MeshData sad::RenderableModel::MProcessMesh(aiMesh* mesh, const aiScene* scene)
 {
 	std::vector<rad::MeshVertex> vertices;
 	std::vector<unsigned int> indices;
@@ -123,7 +128,7 @@ sad::rad::Mesh::MeshData sad::Model::MProcessMesh(aiMesh* mesh, const aiScene* s
 	return rad::Mesh::MeshData(vertices, indices, textures);
 }
 
-std::vector<sad::rad::MeshTexture> sad::Model::MLoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
+std::vector<sad::rad::MeshTexture> sad::RenderableModel::MLoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<sad::rad::MeshTexture> textures;
 
@@ -158,23 +163,24 @@ std::vector<sad::rad::MeshTexture> sad::Model::MLoadMaterialTextures(aiMaterial*
 	return textures;
 }
 
-unsigned int sad::Model::MRetrieveTextureFromFile(const char* path, const std::string& directory, bool gamma)
+unsigned int sad::RenderableModel::MRetrieveTextureFromFile(const char* path, const std::string& directory, bool gamma)
 {
-	std::string fileName = std::string(path);
-	fileName = directory + '/' + fileName;
+	std::string texturePath = std::string(path);
+	texturePath = directory + '/' + texturePath;
+	core::FileUtils::ConvertOSPathString(texturePath);
 
-	core::Log(ELogType::Info, "[Model] ----------- Retrieving Texture from file: {}", fileName);
+	core::Log(ELogType::Info, "[RenderableModel] Retrieving Texture from file: {}", texturePath);
 
 	unsigned int textureId;
 
 	GL_CALL(glGenTextures(1, &textureId));
 
 	int width, height, numComponents;
-	unsigned char* data = stbi_load(fileName.c_str(), &width, &height, &numComponents, 0);
+	unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &numComponents, 0);
 
 	if (data)
 	{
-		GLenum format;
+		GLenum format = GL_RGBA;
 
 		switch (numComponents)
 		{
@@ -199,7 +205,7 @@ unsigned int sad::Model::MRetrieveTextureFromFile(const char* path, const std::s
 	}
 	else
 	{
-		core::Log(ELogType::Error, "[Model] Texture failed to load at path: {}", path);
+		core::Log(ELogType::Error, "[RenderableModel] Texture failed to load at path: {}", path);
 		stbi_image_free(data);
 	}
 

@@ -54,6 +54,20 @@ namespace cap
 		 * @usage instantiate <entity_name>
 		*/
 		static void Instantiate(argument_type& arg);
+
+		/**
+		 * @brief Instantiates an entity in the level with a provided mdoel name 
+		 *
+		 * @usage instantiate_model <entity_name> <model_name>
+		*/
+		static void InstantiateModel(argument_type& arg);
+
+		/**
+		 * @brief Instantiates an entity in the level with a PrimitiveResource attached to it
+		 *
+		 * @usage instantiate_shape <entity_name> <shape>
+		*/
+		static void InstantiateShape(argument_type& arg);
 		
 		/**
 		 * @brief Destroys an entity in the level with a particular name 

@@ -20,6 +20,6 @@
 	sad::ecs::ScriptComponent,\
 	sad::ecs::TransformComponent,\
 	sad::ecs::BoundComponent,\
-	sad::ecs::RenderableResourceComponent,\
+	sad::ecs::PrimitiveResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\
 	sad::ecs::EditorControllerComponent

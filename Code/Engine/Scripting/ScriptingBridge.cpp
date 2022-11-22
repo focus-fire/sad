@@ -92,8 +92,8 @@ namespace sad::cs
 		ecs::Entity newEntity = level->InstantiateEntity(entityString);
 
 		// TODO: Add resource component to entity once model loading is finished
-		// RenderableResource* resource = ResourceManager::GetResource<RenderableResource>(resourceString);
-		// newEntity.AddComponent<ecs::RenderableResourceComponent>(core::CreatePointer<RenderableResource>(resource));
+		// ModelResource* resource = ResourceManager::GetResource<ModelResource>(resourceString);
+		// newEntity.AddComponent<ecs::PrimitiveResourceComponent>(core::CreatePointer<ModelResource>(resource));
 
 		mono_free(entityString);
 		mono_free(resourceString);

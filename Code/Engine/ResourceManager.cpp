@@ -198,7 +198,7 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 	switch (resourceType)
 	{
 	case EResourceType::Model:
-		ResourceFactory::CreateResource<RenderableResource>(resourceData);
+		ResourceFactory::CreateResource<ModelResource>(resourceData);
 		break;
 	case EResourceType::Audio:
 		ResourceFactory::CreateResource<AudioResource>(resourceData);

@@ -1,15 +1,15 @@
 #include "sadpch.h"
 
-#include "RenderableObject.h"
+#include "RenderablePrimitive.h"
 
 #include <filesystem>
 
 #include <Engine/ResourceManager.h>
 
-sad::RenderableObject::RenderableObject(RenderableResource* resource)
-	: m_RenderableResource(resource)
+sad::RenderablePrimitive::RenderablePrimitive(PrimitiveResource* resource)
+	: m_PrimitiveResource(resource)
 {
-	const RenderableResource::Geometry& geometry = m_RenderableResource->GetGeometry();
+	const PrimitiveResource::Geometry& geometry = m_PrimitiveResource->GetGeometry();
 
 	// Create vertex array and buffer  
 	m_VertexArray = new rad::VertexArray();
@@ -24,7 +24,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	// Create the index buffer for indices
 	m_IndexBuffer = new rad::IndexBuffer(geometry.Indices, geometry.IndexCount);
 
-	// All RenderableObjects start with this 'Material' by default
+	// All RenderablePRimitives start with this 'Material' by default
 	m_Shader = ResourceManager::GetResource<rad::ShaderResource>("Default.glsl");
 	m_Shader->Bind();
 
@@ -35,7 +35,7 @@ sad::RenderableObject::RenderableObject(RenderableResource* resource)
 	m_Shader->SetUniform1i("u_Texture", 1);
 }
 
-sad::RenderableObject::~RenderableObject()
+sad::RenderablePrimitive::~RenderablePrimitive()
 {
 	delete m_VertexArray;
 	delete m_VertexBuffer;

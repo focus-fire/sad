@@ -26,7 +26,7 @@
 #include "InputManager.h"
 #include "Transform.h"
 #include "InputManager.h"
-#include "RenderableObject.h"
+#include "RenderablePrimitive.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
 

@@ -5,7 +5,8 @@
 #include "Mesh.h"
 
 sad::rad::VertexAttributeContainer::VertexAttributeContainer()
-	: m_Stride(0)
+	: m_VertexAttributes()
+	, m_Stride(0)
 { }
 
 void sad::rad::VertexAttributeContainer::AddFloatAttribute(unsigned int count)
@@ -14,8 +15,11 @@ void sad::rad::VertexAttributeContainer::AddFloatAttribute(unsigned int count)
 	m_Stride += count * VertexAttribute::GetSizeOfType(GL_FLOAT);
 }
 
-void sad::rad::VertexAttributeContainer::AddMeshVertexAttribute(unsigned int count)
+sad::rad::MeshVertexAttributeContainer::MeshVertexAttributeContainer()
+	: m_VertexAttributes()
+{ }
+
+void sad::rad::MeshVertexAttributeContainer::AddMeshVertexAttribute(unsigned int count, void* offset)
 {
-	m_VertexAttributes.push_back({ count, GL_FLOAT, GL_FALSE });
-	m_Stride += sizeof(MeshVertex);
+	m_VertexAttributes.push_back({ count, GL_FLOAT, GL_FALSE, offset });
 }

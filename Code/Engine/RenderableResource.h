@@ -9,11 +9,25 @@
 #include <Engine/Renderer/ShaderResource.h>
 
 #include "Resource.h"
-#include "Model.h"
 
 namespace sad
 {
-	class RenderableResource final : public Resource
+	/**
+	 * @brief Holds resource data for models 
+	*/
+	class ModelResource final : public Resource
+	{
+	public:
+		ModelResource();
+		~ModelResource();
+
+		explicit ModelResource(const Resource::ResourceData& resourceData);
+	};
+
+	/**
+	 * @brief Holds resource data for primitives (ie: Cubes, Spheres, etc.) that have vertices hard-coded in the engine 
+	*/
+	class PrimitiveResource
 	{
 	public:
 		struct Geometry
@@ -39,15 +53,11 @@ namespace sad
 			{ }
 		};
 
-		RenderableResource();
-		~RenderableResource();
-
-		explicit RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry);
-		explicit RenderableResource(const Resource::ResourceData& resourceData);
+		explicit PrimitiveResource(const Geometry& geometry);
 
 		const Geometry GetGeometry() const { return m_Geometry; }
 
-	private:
-		Geometry m_Geometry;
+		private:
+			Geometry m_Geometry;
 	};
 }

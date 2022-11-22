@@ -11,7 +11,20 @@ namespace sad::rad
 		VertexArray();
 		~VertexArray();
 
-		void AddBufferWithAttributes(const VertexBuffer& vertexBuffer, const VertexAttributeContainer& vertexAttribContainer, bool isMesh = false);
+		/**
+		 * @brief 
+		 * @param vertexBuffer 
+		 * @param vertexAttribContainer 
+		*/
+		void AddBufferWithAttributes(const VertexBuffer& vertexBuffer, const VertexAttributeContainer& vertexAttribContainer);
+
+		/**
+		 * @brief 
+		 * @param vertexBuffer 
+		 * @param vertexAttribContainer 
+		 * @param meshStride 
+		*/
+		void AddBufferWithMeshAttributes(const VertexBuffer& vertexBuffer, const MeshVertexAttributeContainer& vertexAttribContainer, unsigned int meshStride);
 
 		void Bind() const;
 		void Unbind() const;

@@ -3,20 +3,7 @@
 #include "Application.h"
 
 #include <Engine/ECS/Registry.h>
-#include <Engine/ECS/Systems/RenderableObjectSystem.h>
 #include <Engine/ECS/Components/ComponentTypes.h>
-
-#include <Engine/Renderer/Sample/Cube.h>
-#include <Engine/Renderer/VertexArray.h>
-#include <Engine/Renderer/IndexBuffer.h>
-#include <Engine/Renderer/FrameBuffer.h>
-#include <Engine/Renderer/ShaderResource.h>
-#include <Engine/Renderer/RenderBuddy.h>
-
-#include <Engine/AudioManager.h>
-#include <Engine/ResourceManager.h>
-#include <Engine/RenderableResource.h>
-#include <Engine/RenderableObject.h>
 
 #include "ECS/Systems/ScriptingSystem.h"
 

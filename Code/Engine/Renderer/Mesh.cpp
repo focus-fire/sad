@@ -49,14 +49,18 @@ void sad::rad::Mesh::Draw(sad::rad::ShaderResource& shader)
 
 void sad::rad::Mesh::MSetupMesh()
 {
-	m_VertexArray = new VertexArray();
-	m_VertexBuffer = new VertexBuffer(&Vertices[0], Vertices.size() * sizeof(MeshVertex));
+	constexpr auto stride { sizeof(MeshVertex) };
 
-	m_VertexAttributes = new rad::VertexAttributeContainer();
-	m_VertexAttributes->AddMeshVertexAttribute(3); // Position - vec3
-	m_VertexAttributes->AddMeshVertexAttribute(3); // Normal - vec3
-	m_VertexAttributes->AddMeshVertexAttribute(2); // TexCoord - vec2
-	m_VertexArray->AddBufferWithAttributes(*m_VertexBuffer, *m_VertexAttributes, true);
+	m_VertexArray = new VertexArray();
+	m_VertexBuffer = new VertexBuffer(&Vertices[0], Vertices.size() * stride);
+
+	MeshVertexAttributeContainer m_VertexAttributes = rad::MeshVertexAttributeContainer();
+	m_VertexAttributes.AddMeshVertexAttribute(3, (void*) 0); // Position - vec3
+	m_VertexAttributes.AddMeshVertexAttribute(3, (void*) offsetof(MeshVertex, Normal)); // Normal - vec3
+	m_VertexAttributes.AddMeshVertexAttribute(2, (void*) offsetof(MeshVertex, TexCoords)); // TexCoord - vec2
+	m_VertexArray->AddBufferWithMeshAttributes(*m_VertexBuffer, m_VertexAttributes, stride);
 
 	m_IndexBuffer = new IndexBuffer(&Indices[0], Indices.size());
+
+	m_VertexArray->Unbind();
 }

@@ -13,16 +13,16 @@
 namespace sad
 {
 	/**
-	 * @brief Container for geometric data used by OpenGL to render an object.
-	 *		  Each RenderableObject must be created with a corresponding RenderableResource.
+	 * @brief Container for basic shape/geometric data used by OpenGL to render an object.
+	 *		  Each RenderablePrimitive must be created with a corresponding PrimitiveResource.
 	*/
-	class RenderableObject
+	class RenderablePrimitive
 	{
 	public:
-		explicit RenderableObject(RenderableResource* resource);
-		~RenderableObject();
+		explicit RenderablePrimitive(PrimitiveResource* resource);
+		~RenderablePrimitive();
 
-		RenderableResource* GetRenderableResource() { return m_RenderableResource; }
+		PrimitiveResource* GetPrimitiveResource() { return m_PrimitiveResource; }
 
 		rad::VertexArray* GetVertexArray() { return m_VertexArray; }
 		rad::VertexBuffer* GetVertexBuffer() { return m_VertexBuffer; }
@@ -31,7 +31,7 @@ namespace sad
 		rad::ShaderResource* GetShader() const { return m_Shader; }
 
 	private:
-		RenderableResource* m_RenderableResource;
+		PrimitiveResource* m_PrimitiveResource;
 
 		rad::VertexArray* m_VertexArray;
 		rad::VertexBuffer* m_VertexBuffer;

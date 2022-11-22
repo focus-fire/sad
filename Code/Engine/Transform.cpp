@@ -25,7 +25,7 @@ glm::mat4 sad::Transform::GetTransformMatrix()
 
 	m_TransformMatrix = translateMatrix * rotationMatrix * scaleMatrix;
 
-	return translateMatrix * rotationMatrix * scaleMatrix;
+	return m_TransformMatrix;
 }
 
 glm::mat4& sad::Transform::GetMutableTransformMatrix()

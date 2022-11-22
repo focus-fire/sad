@@ -4,19 +4,18 @@
 
 #include "ECS/Registry.h"
 
-sad::RenderableResource::RenderableResource()
+sad::ModelResource::ModelResource()
 	: Resource(Resource::Null())
 { }
 
-sad::RenderableResource::RenderableResource(const Resource::ResourceData& resourceData)
+sad::ModelResource::ModelResource(const Resource::ResourceData& resourceData)
 	: Resource(resourceData)
 { }
 
-sad::RenderableResource::~RenderableResource()
+sad::ModelResource::~ModelResource()
 { }
 
-sad::RenderableResource::RenderableResource(const Resource::ResourceData& resourceData, const Geometry& geometry)
-	: Resource(resourceData)
-	, m_Geometry(geometry)
+sad::PrimitiveResource::PrimitiveResource(const Geometry& geometry)
+	: m_Geometry(geometry)
 { }
 

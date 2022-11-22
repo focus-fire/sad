@@ -6,7 +6,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <Engine/Application.h>
+#include <Engine/RenderableModel.h>
+
 #include <Engine/Renderer/RenderBuddy.h>
+
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 
@@ -19,10 +22,10 @@ void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 
 void sad::ecs::RenderingSystem::RenderPrimitives(EntityWorld& world)
 {
-	auto view = world.view<const RenderableObjectComponent, const TransformComponent>();
-	for (auto [entity, renderableObjectComponent, transformComponent] : view.each())
+	auto view = world.view<const RenderablePrimitiveComponent, const TransformComponent>();
+	for (auto [handle, primitiveComponent, transformComponent] : view.each())
 	{
-		core::Pointer<RenderableObject> renderable = renderableObjectComponent.m_RenderableObject;
+		core::Pointer<RenderablePrimitive> renderable = primitiveComponent.m_Primitive;
 		rad::VertexArray* vertexArray = renderable->GetVertexArray();
 		rad::IndexBuffer* indexBuffer = renderable->GetIndexBuffer();
 		rad::ShaderResource* shader = renderable->GetShader();
@@ -32,7 +35,9 @@ void sad::ecs::RenderingSystem::RenderPrimitives(EntityWorld& world)
 
 		shader->Bind();
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+
 		rad::RenderBuddy::DrawIndexed(vertexArray, indexBuffer);
+
 		shader->Unbind();
 	}
 }
@@ -40,9 +45,9 @@ void sad::ecs::RenderingSystem::RenderPrimitives(EntityWorld& world)
 void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 {
 	auto view = world.view<const RenderableModelComponent, const TransformComponent>();
-	for (auto [entity, renderableModelComponent, transformComponent] : view.each())
+	for (auto [handle, modelComponent, transformComponent] : view.each())
 	{
-		Model model = renderableModelComponent.m_RenderableModel;
+		RenderableModel model = modelComponent.m_RenderableModel;
 		Transform* transform = transformComponent.m_Transform.get();
 
 		// TODO: Retrieve the view projection matrix from the Camera 
@@ -65,6 +70,7 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 
 			rad::RenderBuddy::DrawMesh(currentMesh);
 		}
+
 		shader->Unbind();
 	}
 }

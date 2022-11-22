@@ -13,13 +13,13 @@
 
 namespace sad
 {
-	class Model
+	class RenderableModel
 	{
 	public:
-		Model() = default;
-		~Model() = default;
+		RenderableModel() = default;
+		~RenderableModel() = default;
 
-		explicit Model(const std::string& modelFilePath);
+		explicit RenderableModel(const std::string& modelFilePath);
 
 		std::vector<core::Pointer<rad::Mesh>> GetMeshes() { return m_Meshes; }
 		rad::ShaderResource* GetShader() { return m_Shader; }

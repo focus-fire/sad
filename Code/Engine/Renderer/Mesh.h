@@ -51,7 +51,7 @@ namespace sad::rad
 		VertexArray* m_VertexArray;
 		VertexBuffer* m_VertexBuffer;
 		IndexBuffer* m_IndexBuffer;
-		VertexAttributeContainer* m_VertexAttributes;
+		//MeshVertexAttributeContainer* m_VertexAttributes;
 
 		void MSetupMesh();
 	};

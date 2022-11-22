@@ -16,6 +16,7 @@ namespace sad::rad
 		unsigned int Count;
 		unsigned int Type;
 		unsigned char Normalized;
+		void* Offset;
 
 		static unsigned int GetSizeOfType(unsigned int type)
 		{
@@ -40,15 +41,43 @@ namespace sad::rad
 	public:
 		VertexAttributeContainer();
 
+		/**
+		 * @brief Appends a float attribute to the container and incremements the stride
+		*/
 		void AddFloatAttribute(unsigned int count);
-		void AddMeshVertexAttribute(unsigned int count);
 
+		/**
+		 * @brief Retrieves a list of the vertex attributes accumulated in the container
+		*/
 		std::vector<VertexAttribute> GetVertexAttributes() const { return m_VertexAttributes; }
+
+		/**
+		 * @brief Retrieves the accumulated stride amongst all vertex attributes
+		*/
 		unsigned int GetStride() const { return m_Stride; }
 
 	private:
 		std::vector<VertexAttribute> m_VertexAttributes;
 		unsigned int m_Stride;
+	};
+
+	class MeshVertexAttributeContainer
+	{
+	public:
+		MeshVertexAttributeContainer();
+
+		/**
+		 * @brief Appends a MeshVertex attribute to the container, these types specify an offset
+		*/
+		void AddMeshVertexAttribute(unsigned int count, void* offset);
+
+		/**
+		 * @brief Retrieves a list of the vertex attributes accumulated in the container
+		*/
+		std::vector<VertexAttribute> GetVertexAttributes() const { return m_VertexAttributes; }
+
+	private:
+		std::vector<VertexAttribute> m_VertexAttributes;
 	};
 
 }

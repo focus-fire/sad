@@ -35,7 +35,7 @@ namespace sad::rad
 
 		/**
 		 * @brief Draws a mesh bound by an index buffer
-		 * @param mesh Mesh wrapper for the geometry of a Model
+		 * @param mesh Mesh wrapper for the geometry of a RenderableModel
 		*/
 		void DrawMesh(rad::Mesh* mesh) const;
 

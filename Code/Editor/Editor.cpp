@@ -14,6 +14,7 @@
 #include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
+#include <Engine/Camera.h>
 #include <Engine/LevelManager.h>
 
 #include <Game/Time.h>
@@ -74,6 +75,15 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 
 	ImGui::Begin(m_GameWindowTitle.c_str(), &showGameWindow, m_GameWindowFlags);
 	ImGui::PopStyleColor();
+
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootWindow))
+	{
+		core::SignalEvent("OnInputUnlock");
+	}
+	else
+	{
+		core::SignalEvent("OnInputLock");
+	}
 
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
 	ImGui::SetWindowPos(ImVec2(50.0, 25.0), ImGuiCond_Once);
@@ -170,11 +180,12 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 	ImGuiWindow* window = ImGui::GetCurrentWindow();
 	m_GameWindowFlags = ImGui::IsWindowHovered() && ImGui::IsMouseHoveringRect(window->InnerRect.Min, window->InnerRect.Max) ? ImGuiWindowFlags_NoMove : ImGuiWindowFlags_None;
 
-	glm::mat4 viewMatrix = sad::Application::GetViewMatrix();
-	glm::mat4 projectionMatrix = sad::Application::GetProjectionMatrix();
+	glm::mat4 viewMatrix = sad::Camera::GetViewMatrix();
+	glm::mat4 projectionMatrix = sad::Camera::GetProjectionMatrix();
 	ImGuizmo::DrawGrid(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), glm::value_ptr(glm::mat4(1.0f)), 100.0f);
 	ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix), m_CurrentGizmoOperation, currentGizmoMode, modelMatrix, NULL, NULL, NULL, NULL);
 	ImGuizmo::ViewManipulate(glm::value_ptr(viewMatrix), 8.0f, ImVec2(viewManipulateRight - 128, viewManipulateTop), ImVec2(128, 128), 0x10101010);
+
 
 	// Re-decompose new model matrix again once operation is complete
 	float finalTranslation[3], finalRotation[3], finalScale[3];

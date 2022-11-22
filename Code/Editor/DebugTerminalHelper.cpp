@@ -56,7 +56,7 @@ void cap::DebugTerminalHelper::Instantiate(argument_type& arg)
 	//		 ex: add_comp EntityA RenderableResource Cowboy.fbx
 	sad::RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
 	sad::ecs::RenderableResourceComponent renderableResourceComponent;
-	sad::Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test" };
+	sad::Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};
 	renderableResourceComponent.m_RenderableResource = core::CreatePointer<sad::RenderableResource>(cubeData, std::move(CubeGeometry));
 	renderableResourceComponent.m_IsResourceDirty = true;
 
@@ -72,11 +72,11 @@ void cap::DebugTerminalHelper::Destroy(argument_type& arg)
 		core::Log(ELogType::Error, "[Terminal] usage: destroy <entity_name>");
 		return;
 	}
-
+	
 	std::string entityName = std::move(arg.command_line[1]);
 
 	bool result = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->DestroyEntityByName(entityName);
-
+	
 	if (result)
 	{
 		core::Log(ELogType::Info, "[Terminal] Successfully destroyed entity {}", entityName);
@@ -165,7 +165,7 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 		core::Log(ELogType::Warn, "[Terminal] {} doesn't have a script component to unbind", entityName);
 		return;
 	}
-
+	
 	// Remove active script instance if script is detached from entity
 	sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
 	core::Log(ELogType::Info, "[Terminal] Succesfully removed {} from {}", scriptName, entityName);

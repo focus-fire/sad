@@ -77,6 +77,30 @@ namespace sad
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
 
+        void UpdateTicks();
+
+        /**
+         * @brief Locks Inputs
+        */
+        void LockInputs()
+        {
+            m_IsInputLocked = true;
+        }
+
+        /**
+         * @brief Unlocks Inputs
+         * @return 
+        */
+        void UnlockInputs()
+        {
+            m_IsInputLocked = false;
+        }
+
+        bool IsInputLocked()
+        {
+            return m_IsInputLocked;
+        }
+
         // Keyboard Events
 
         /**
@@ -223,8 +247,17 @@ namespace sad
         float GetRightAxis(const std::string& orientation);
 
     private:
-        InputManager() {}
+        InputManager() 
+        {
+            m_IsInputLocked = false;
+            std::function<void(void)> inputLockFunction = std::bind(&sad::InputManager::LockInputs, this);
+            std::function<void(void)> inputUnlockFunction = std::bind(&sad::InputManager::UnlockInputs, this);
+            core::InitializeListener("OnInputLock", inputLockFunction);
+            core::InitializeListener("OnInputUnlock", inputUnlockFunction);
+        }
         static sad::InputManager s_InputManager;
+
+        bool m_IsInputLocked;
 
         std::unordered_map<SDL_Scancode, bool> m_KeyboardState;
         std::unordered_map<SDL_Scancode, Uint64>  m_KeyboardUpdateFrames;

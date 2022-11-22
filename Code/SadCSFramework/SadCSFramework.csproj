@@ -18,8 +18,8 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Data\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Resources\SadCSFramework\Obj\Debug\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Debug\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>_SAD_WINDOWS;_SAD_DEBUG;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -30,8 +30,8 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Data\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Resources\SadCSFramework\Obj\Release\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Release\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>_SAD_WINDOWS;_SAD_RELEASE;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -42,8 +42,8 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Data\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Resources\SadCSFramework\Obj\Test\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Test\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
     <DefineConstants>_SAD_WINDOWS;_SAD_TEST;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -56,8 +56,23 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|x64' ">
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sad\Core.cs" />
-    <Compile Include="Sad\HelloWorld.cs" />
+    <Compile Include="Sad\Audio.cs" />
+    <Compile Include="Sad\Components\Bound.cs" />
+    <Compile Include="Sad\Components\Component.cs" />
+    <Compile Include="Sad\Components\Transform.cs" />
+    <Compile Include="Sad\Entity.cs" />
+    <Compile Include="Sad\Input.cs" />
+    <Compile Include="Sad\InputCodes.cs" />
+    <Compile Include="Sad\Internal\Internal.cs" />
+    <Compile Include="Sad\Log.cs" />
+    <Compile Include="Sad\SadBehaviour.cs" />
+    <Compile Include="Sad\Utilities\Color.cs" />
+    <Compile Include="Sad\Utilities\Gizmos.cs" />
+    <Compile Include="Sad\Utilities\Quaternion.cs" />
+    <Compile Include="Sad\Utilities\Raycast.cs" />
+    <Compile Include="Sad\Utilities\SadMath.cs" />
+    <Compile Include="Sad\Utilities\Time.cs" />
+    <Compile Include="Sad\Utilities\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

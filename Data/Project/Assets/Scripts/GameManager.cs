@@ -6,6 +6,7 @@ public class GameManager : SadBehaviour
     public static GameManager Instance { get; private set; }
 
     public List<Enemy> Enemies;
+    public Player Player;
 
     private int m_CurrentWave;
 
@@ -18,6 +19,11 @@ public class GameManager : SadBehaviour
             Instance = this;
 
         // Instantiate member variables
+        Entity e = FindEntityWithName("TestCube");
+        Player = e.GetScriptComponent<Player>();
+
+        Log.Debug($"Player info: {Player.GUID}");
+
         Enemies = new List<Enemy>();
         m_CurrentWave = 0;
 

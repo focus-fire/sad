@@ -28,6 +28,8 @@ namespace sad
 		*/
 		void CurrentCameraState() override;
 
+		void ToggleMouseState();
+
 	private:
 		static int wasdState;
 		static bool walking;

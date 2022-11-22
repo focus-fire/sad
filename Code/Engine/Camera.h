@@ -15,6 +15,8 @@ namespace sad
 
 		virtual void CurrentCameraState() = 0;
 
+		static void Start();
+
 		/*
 		* @brief Returns the view matrix (lookAt matrix) after calculating forward vector
 		*/
@@ -31,6 +33,11 @@ namespace sad
 		static glm::mat4 GetViewProjectionMatrix();
 
 		/*
+		* @brief Unbind mouse from screen
+		*/
+		static void UnbindMouse();
+
+		/*
 		* @brief Stores the Camera position
 		*/
 		static glm::vec3 cameraPosition;
@@ -39,6 +46,8 @@ namespace sad
 		* @brief Stores the camera's pitch (vertical rotation) and yaw (horizontal rotation)
 		*/
 		static glm::vec3 cameraEulers;
+
+		static bool isActive;
 
 	};
 }

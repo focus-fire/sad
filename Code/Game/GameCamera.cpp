@@ -33,7 +33,7 @@ void sad::GameCamera::Update()
 
 	// TODO: Remove tempSensitivityHandle declaration and calls below after mouse pointer handling is in place
 	// Temporary sensitivity constant for assisting with troubleshooting and testing game
-	float tempSensitivityHandle = 0.005f;
+	float tempSensitivityHandle = 1.0f;
 
 	// Calculate and update camera yaw (horizontal rotation) for the camera and keep rotation between 0 <=> 360
 	float delta_x{ static_cast<float>(mouse_x - 800.0) };

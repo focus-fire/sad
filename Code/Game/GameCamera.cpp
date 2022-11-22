@@ -20,7 +20,7 @@ void sad::GameCamera::Update()
 {
 
 	// Change mouse/camera state
-	if (input.GetKey(sad::KeyCode::Escape))
+	if (input.GetKeyReleased(sad::KeyCode::Escape))
 	{
 		ToggleMouseState();
 	}

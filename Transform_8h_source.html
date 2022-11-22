@@ -91,38 +91,40 @@ $(function() {
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        glm::mat4 <a class="code" href="classsad_1_1Transform.html#a5789c04250a733e9ccf2547a73d9ecf9">GetTransformMatrix</a>();</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        glm::mat4&amp; GetMutableTransformMatrix();</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> SetPosition(glm::vec3 position) { m_Position = position; }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">void</span> SetRotation(glm::quat rotation) { m_Rotation = rotation; }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> SetScale(glm::vec3 scale) { m_Scale = scale; }</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        glm::vec3 GetPosition() { <span class="keywordflow">return</span> m_Position; }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        glm::quat GetRotation() { <span class="keywordflow">return</span> m_Rotation; }</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        glm::vec3 GetScale() { <span class="keywordflow">return</span> m_Scale; }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764">Translate</a>(glm::vec3 translation);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::quat rotation);</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::vec3 rotation);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::vec3 axis, <span class="keywordtype">float</span> angle);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1">Scale</a>(glm::vec3 scale);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        glm::vec3 m_Position;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        glm::quat m_Rotation;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        glm::vec3 m_Scale;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        glm::mat4 m_TransformMatrix;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    };</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        glm::mat3 GetNormalMatrix();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordtype">void</span> SetPosition(glm::vec3 position) { m_Position = position; }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">void</span> SetRotation(glm::quat rotation) { m_Rotation = rotation; }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordtype">void</span> SetScale(glm::vec3 scale) { m_Scale = scale; }</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        glm::vec3 GetPosition() { <span class="keywordflow">return</span> m_Position; }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        glm::quat GetRotation() { <span class="keywordflow">return</span> m_Rotation; }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        glm::vec3 GetScale() { <span class="keywordflow">return</span> m_Scale; }</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764">Translate</a>(glm::vec3 translation);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::quat rotation);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::vec3 rotation);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">Rotate</a>(glm::vec3 axis, <span class="keywordtype">float</span> angle);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1">Scale</a>(glm::vec3 scale);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        glm::vec3 m_Position;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        glm::quat m_Rotation;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        glm::vec3 m_Scale;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        glm::mat4 m_TransformMatrix;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    };</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1Transform_html_a02e0b36f154c25edca7c7a3c9b7f98e1"><div class="ttname"><a href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">sad::Transform::Rotate</a></div><div class="ttdeci">void Rotate(glm::quat rotation)</div><div class="ttdoc">Performs a rotation on the current transform by a quaternion.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:40</div></div>
+<div class="ttc" id="aclasssad_1_1Transform_html_a02e0b36f154c25edca7c7a3c9b7f98e1"><div class="ttname"><a href="classsad_1_1Transform.html#a02e0b36f154c25edca7c7a3c9b7f98e1">sad::Transform::Rotate</a></div><div class="ttdeci">void Rotate(glm::quat rotation)</div><div class="ttdoc">Performs a rotation on the current transform by a quaternion.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:46</div></div>
 <div class="ttc" id="aclasssad_1_1Transform_html"><div class="ttname"><a href="classsad_1_1Transform.html">sad::Transform</a></div><div class="ttdef"><b>Definition:</b> Transform.h:8</div></div>
-<div class="ttc" id="aclasssad_1_1Transform_html_af1cd6aa09fbe3eb0f105de3461527ce1"><div class="ttname"><a href="classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1">sad::Transform::Scale</a></div><div class="ttdeci">void Scale(glm::vec3 scale)</div><div class="ttdoc">Scales the transform by a provided Vector3.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:57</div></div>
-<div class="ttc" id="aclasssad_1_1Transform_html_a5789c04250a733e9ccf2547a73d9ecf9"><div class="ttname"><a href="classsad_1_1Transform.html#a5789c04250a733e9ccf2547a73d9ecf9">sad::Transform::GetTransformMatrix</a></div><div class="ttdeci">glm::mat4 GetTransformMatrix()</div><div class="ttdoc">Retrieves a matrix representing the current transform</div><div class="ttdef"><b>Definition:</b> Transform.cpp:19</div></div>
-<div class="ttc" id="aclasssad_1_1Transform_html_a65c59a0eee330eb28bd84aa7b3a36764"><div class="ttname"><a href="classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764">sad::Transform::Translate</a></div><div class="ttdeci">void Translate(glm::vec3 translation)</div><div class="ttdoc">Performs a translation on the transform by a given vector.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:35</div></div>
+<div class="ttc" id="aclasssad_1_1Transform_html_af1cd6aa09fbe3eb0f105de3461527ce1"><div class="ttname"><a href="classsad_1_1Transform.html#af1cd6aa09fbe3eb0f105de3461527ce1">sad::Transform::Scale</a></div><div class="ttdeci">void Scale(glm::vec3 scale)</div><div class="ttdoc">Scales the transform by a provided Vector3.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:63</div></div>
+<div class="ttc" id="aclasssad_1_1Transform_html_a5789c04250a733e9ccf2547a73d9ecf9"><div class="ttname"><a href="classsad_1_1Transform.html#a5789c04250a733e9ccf2547a73d9ecf9">sad::Transform::GetTransformMatrix</a></div><div class="ttdeci">glm::mat4 GetTransformMatrix()</div><div class="ttdoc">Retrieves a matrix representing the current transform</div><div class="ttdef"><b>Definition:</b> Transform.cpp:20</div></div>
+<div class="ttc" id="aclasssad_1_1Transform_html_a65c59a0eee330eb28bd84aa7b3a36764"><div class="ttname"><a href="classsad_1_1Transform.html#a65c59a0eee330eb28bd84aa7b3a36764">sad::Transform::Translate</a></div><div class="ttdeci">void Translate(glm::vec3 translation)</div><div class="ttdoc">Performs a translation on the transform by a given vector.</div><div class="ttdef"><b>Definition:</b> Transform.cpp:41</div></div>
 <div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

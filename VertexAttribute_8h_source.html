@@ -85,47 +85,62 @@ $(function() {
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Count;</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Type;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> Normalized;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> GetSizeOfType(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> type)</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        {</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;            <span class="keywordflow">switch</span> (type)</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            {</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            <span class="keywordflow">case</span> GL_FLOAT: <span class="keywordflow">return</span> 4;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">case</span> GL_UNSIGNED_INT: <span class="keywordflow">return</span> 4;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">case</span> GL_UNSIGNED_BYTE: <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            SAD_ASSERT(<span class="keyword">false</span>, <span class="stringliteral">&quot;Type passed to vertex attribute hasn&#39;t been added yet, add it to GetSizeOfType&quot;</span>);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    };</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1VertexAttributeContainer.html">   38</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html">VertexAttributeContainer</a></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html">VertexAttributeContainer</a>()</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            : m_Stride(0)</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        { }</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::vector&lt;VertexAttribute&gt; GetVertexAttributes()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_VertexAttributes; }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> GetStride()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Stride; }</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keywordtype">void</span> AddFloatAttribute(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count)</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            m_VertexAttributes.push_back({ count, GL_FLOAT, GL_FALSE });</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            m_Stride += count * VertexAttribute::GetSizeOfType(GL_FLOAT);</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        }</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordtype">void</span>* Offset;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> GetSizeOfType(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> type)</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        {</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="keywordflow">switch</span> (type)</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <span class="keywordflow">case</span> GL_FLOAT: <span class="keywordflow">return</span> 4;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            <span class="keywordflow">case</span> GL_UNSIGNED_INT: <span class="keywordflow">return</span> 4;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            <span class="keywordflow">case</span> GL_UNSIGNED_BYTE: <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            SAD_ASSERT(<span class="keyword">false</span>, <span class="stringliteral">&quot;Type passed to vertex attribute hasn&#39;t been added yet, add it to GetSizeOfType&quot;</span>);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1VertexAttributeContainer.html">   39</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html">VertexAttributeContainer</a></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    {</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html">VertexAttributeContainer</a>();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html#ad567a7f61f8ca0da228ba46f2ea791dd">AddFloatAttribute</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1VertexAttributeContainer.html#a60b276031a0878228e3fe5371b7243ca">   52</a></span>&#160;        std::vector&lt;VertexAttribute&gt; <a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html#a60b276031a0878228e3fe5371b7243ca">GetVertexAttributes</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_VertexAttributes; }</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::vector&lt;VertexAttribute&gt; m_VertexAttributes;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_Stride;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    };</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1VertexAttributeContainer.html#ac56ce72cc6ceb6ac052c089dddb9749b">   57</a></span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classsad_1_1rad_1_1VertexAttributeContainer.html#ac56ce72cc6ceb6ac052c089dddb9749b">GetStride</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_Stride; }</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::vector&lt;VertexAttribute&gt; m_VertexAttributes;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_Stride;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html">   64</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html">MeshVertexAttributeContainer</a></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html">MeshVertexAttributeContainer</a>();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html#af371cd36374800a1e295290c269070ac">AddMeshVertexAttribute</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> count, <span class="keywordtype">void</span>* offset);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html#a32f8ec136f47fb41552cb901afc8b2be">   77</a></span>&#160;        std::vector&lt;VertexAttribute&gt; <a class="code" href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html#a32f8ec136f47fb41552cb901afc8b2be">GetVertexAttributes</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> m_VertexAttributes; }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        std::vector&lt;VertexAttribute&gt; m_VertexAttributes;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    };</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasssad_1_1rad_1_1VertexAttributeContainer_html"><div class="ttname"><a href="classsad_1_1rad_1_1VertexAttributeContainer.html">sad::rad::VertexAttributeContainer</a></div><div class="ttdoc">Container for holding the various attributes and current stride for a set of VertexAttributes.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:38</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1MeshVertexAttributeContainer_html_af371cd36374800a1e295290c269070ac"><div class="ttname"><a href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html#af371cd36374800a1e295290c269070ac">sad::rad::MeshVertexAttributeContainer::AddMeshVertexAttribute</a></div><div class="ttdeci">void AddMeshVertexAttribute(unsigned int count, void *offset)</div><div class="ttdoc">Appends a MeshVertex attribute to the container, these types specify an offset.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.cpp:22</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1VertexAttributeContainer_html"><div class="ttname"><a href="classsad_1_1rad_1_1VertexAttributeContainer.html">sad::rad::VertexAttributeContainer</a></div><div class="ttdoc">Container for holding the various attributes and current stride for a set of VertexAttributes.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:39</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1MeshVertexAttributeContainer_html_a32f8ec136f47fb41552cb901afc8b2be"><div class="ttname"><a href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html#a32f8ec136f47fb41552cb901afc8b2be">sad::rad::MeshVertexAttributeContainer::GetVertexAttributes</a></div><div class="ttdeci">std::vector&lt; VertexAttribute &gt; GetVertexAttributes() const</div><div class="ttdoc">Retrieves a list of the vertex attributes accumulated in the container.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:77</div></div>
 <div class="ttc" id="anamespacesad_1_1rad_html"><div class="ttname"><a href="namespacesad_1_1rad.html">sad::rad</a></div><div class="ttdoc">Rendering and drawing, draws pretty things to the screen.</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1VertexAttributeContainer_html_a60b276031a0878228e3fe5371b7243ca"><div class="ttname"><a href="classsad_1_1rad_1_1VertexAttributeContainer.html#a60b276031a0878228e3fe5371b7243ca">sad::rad::VertexAttributeContainer::GetVertexAttributes</a></div><div class="ttdeci">std::vector&lt; VertexAttribute &gt; GetVertexAttributes() const</div><div class="ttdoc">Retrieves a list of the vertex attributes accumulated in the container.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:52</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1VertexAttributeContainer_html_ac56ce72cc6ceb6ac052c089dddb9749b"><div class="ttname"><a href="classsad_1_1rad_1_1VertexAttributeContainer.html#ac56ce72cc6ceb6ac052c089dddb9749b">sad::rad::VertexAttributeContainer::GetStride</a></div><div class="ttdeci">unsigned int GetStride() const</div><div class="ttdoc">Retrieves the accumulated stride amongst all vertex attributes.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:57</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1MeshVertexAttributeContainer_html"><div class="ttname"><a href="classsad_1_1rad_1_1MeshVertexAttributeContainer.html">sad::rad::MeshVertexAttributeContainer</a></div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:64</div></div>
+<div class="ttc" id="aclasssad_1_1rad_1_1VertexAttributeContainer_html_ad567a7f61f8ca0da228ba46f2ea791dd"><div class="ttname"><a href="classsad_1_1rad_1_1VertexAttributeContainer.html#ad567a7f61f8ca0da228ba46f2ea791dd">sad::rad::VertexAttributeContainer::AddFloatAttribute</a></div><div class="ttdeci">void AddFloatAttribute(unsigned int count)</div><div class="ttdoc">Appends a float attribute to the container and incremements the stride.</div><div class="ttdef"><b>Definition:</b> VertexAttribute.cpp:12</div></div>
 <div class="ttc" id="astructsad_1_1rad_1_1VertexAttribute_html"><div class="ttname"><a href="structsad_1_1rad_1_1VertexAttribute.html">sad::rad::VertexAttribute</a></div><div class="ttdoc">Layout for a VertexAttribute that can be bound using glVertexAttribArray()</div><div class="ttdef"><b>Definition:</b> VertexAttribute.h:14</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

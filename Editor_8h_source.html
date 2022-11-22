@@ -79,28 +79,28 @@ $(function() {
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;Engine/Level.h&gt;</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;DebugTerminal.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">/*</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * &quot;That editor is cap!&quot;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecap.html">cap</a> </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="classcap_1_1Editor.html">   17</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classcap_1_1Editor.html">Editor</a></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    {</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <a class="code" href="classcap_1_1Editor.html">Editor</a>();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        ~<a class="code" href="classcap_1_1Editor.html">Editor</a>();</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">void</span> Start();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> CatchSDLEvents(<span class="keyword">const</span> SDL_Event&amp; event);</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> Clear();</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="comment">// TODO: Ideally abstract these parameters out or modify the logic with events</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">//       OR abstract this into it&#39;s own GameWindowPanel</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">RenderGameWindow</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> frameBufferTextureId);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        std::vector&lt;glm::vec3&gt; RenderGizmos(<span class="keywordtype">float</span>* modelMatrix, <span class="keywordtype">bool</span> transformDecomposition);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;GizmoSystem.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * &quot;That editor is cap!&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecap.html">cap</a> </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classcap_1_1Editor.html">   18</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classcap_1_1Editor.html">Editor</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <a class="code" href="classcap_1_1Editor.html">Editor</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        ~<a class="code" href="classcap_1_1Editor.html">Editor</a>();</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordtype">void</span> Start();</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">void</span> CatchSDLEvents(<span class="keyword">const</span> SDL_Event&amp; event);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keywordtype">void</span> Clear();</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="comment">// TODO: Ideally abstract these parameters out or modify the logic with events</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="comment">//       OR abstract this into it&#39;s own GameWindowPanel</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">RenderGameWindow</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> frameBufferTextureId);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">void</span> Render();</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">void</span> PanelAndButton();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
@@ -113,25 +113,24 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classsad_1_1Level.html">sad::Level</a>* m_CurrentLevelContext;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classcap_1_1DebugTerminal.html">DebugTerminal</a>* m_DebugTerminal;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        ImGuiWindowFlags m_GameWindowFlags;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">int</span> m_LastGizmoUsed = 0;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">bool</span> m_ShowGameWindow;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">float</span> m_GameWindowWidth;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">float</span> m_GameWindowHeight;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::string m_GameWindowTitle;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="keywordtype">bool</span> m_IsEditorInPlayMode;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    };</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classcap_1_1GizmoSystem.html">GizmoSystem</a>* m_GizmoSystem;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">bool</span> m_ShowGameWindow;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">float</span> m_GameWindowWidth;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">float</span> m_GameWindowHeight;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::string m_GameWindowTitle;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">bool</span> m_IsEditorInPlayMode;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    };</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasscap_1_1Editor_html_a5f086c3fdda59e6c05af4af301b0c904"><div class="ttname"><a href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">cap::Editor::EditorControls</a></div><div class="ttdeci">void EditorControls()</div><div class="ttdoc">Controls ctrl+s : Save state ctrl+b : Switch editor mode.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:278</div></div>
-<div class="ttc" id="aclasscap_1_1Editor_html_a14c93bf45ceb93d5854f211d7f6a41d1"><div class="ttname"><a href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">cap::Editor::RenderGameWindow</a></div><div class="ttdeci">void RenderGameWindow(unsigned int frameBufferTextureId)</div><div class="ttdoc">Renders a panel with the game's current render embedded into it.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:86</div></div>
+<div class="ttc" id="aclasscap_1_1Editor_html_a5f086c3fdda59e6c05af4af301b0c904"><div class="ttname"><a href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">cap::Editor::EditorControls</a></div><div class="ttdeci">void EditorControls()</div><div class="ttdoc">Controls ctrl+s : Save state ctrl+b : Switch editor mode.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:184</div></div>
+<div class="ttc" id="aclasscap_1_1Editor_html_a14c93bf45ceb93d5854f211d7f6a41d1"><div class="ttname"><a href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">cap::Editor::RenderGameWindow</a></div><div class="ttdeci">void RenderGameWindow(unsigned int frameBufferTextureId)</div><div class="ttdoc">Renders a panel with the game's current render embedded into it.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:82</div></div>
 <div class="ttc" id="aclasssad_1_1Level_html"><div class="ttname"><a href="classsad_1_1Level.html">sad::Level</a></div><div class="ttdef"><b>Definition:</b> Level.h:14</div></div>
+<div class="ttc" id="aclasscap_1_1GizmoSystem_html"><div class="ttname"><a href="classcap_1_1GizmoSystem.html">cap::GizmoSystem</a></div><div class="ttdef"><b>Definition:</b> GizmoSystem.h:10</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminal_html"><div class="ttname"><a href="classcap_1_1DebugTerminal.html">cap::DebugTerminal</a></div><div class="ttdoc">ImTerm terminal used to debug the engine, game, and editor.</div><div class="ttdef"><b>Definition:</b> DebugTerminal.h:10</div></div>
 <div class="ttc" id="anamespacecap_html"><div class="ttname"><a href="namespacecap.html">cap</a></div><div class="ttdoc">&quot;Yo, that editor is cap!&quot; - sadEngine dev team 2022</div></div>
-<div class="ttc" id="aclasscap_1_1Editor_html"><div class="ttname"><a href="classcap_1_1Editor.html">cap::Editor</a></div><div class="ttdef"><b>Definition:</b> Editor.h:17</div></div>
+<div class="ttc" id="aclasscap_1_1Editor_html"><div class="ttname"><a href="classcap_1_1Editor.html">cap::Editor</a></div><div class="ttdef"><b>Definition:</b> Editor.h:18</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

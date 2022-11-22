@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: sad::RenderableObject Class Reference</title>
+<title>sad: sad::RenderablePrimitive Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,52 +62,52 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1RenderableObject.html">RenderableObject</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1RenderablePrimitive.html">RenderablePrimitive</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="classsad_1_1RenderableObject-members.html">List of all members</a>  </div>
+<a href="classsad_1_1RenderablePrimitive-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sad::RenderableObject Class Reference</div>  </div>
+<div class="title">sad::RenderablePrimitive Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Container for geometric data used by OpenGL to render an object. Each <a class="el" href="classsad_1_1RenderableObject.html" title="Container for geometric data used by OpenGL to render an object. Each RenderableObject must be create...">RenderableObject</a> must be created with a corresponding <a class="el" href="classsad_1_1RenderableResource.html">RenderableResource</a>.  
- <a href="classsad_1_1RenderableObject.html#details">More...</a></p>
+<p>Container for basic shape/geometric data used by OpenGL to render an object. Each <a class="el" href="classsad_1_1RenderablePrimitive.html" title="Container for basic shape/geometric data used by OpenGL to render an object. Each RenderablePrimitive...">RenderablePrimitive</a> must be created with a corresponding <a class="el" href="classsad_1_1PrimitiveResource.html" title="Holds resource data for primitives (ie: Cubes, Spheres, etc.) that have vertices hard-coded in the en...">PrimitiveResource</a>.  
+ <a href="classsad_1_1RenderablePrimitive.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="RenderableObject_8h_source.html">RenderableObject.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="RenderablePrimitive_8h_source.html">RenderablePrimitive.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5266567d8928841aebc64f6112673064"><td class="memItemLeft" align="right" valign="top"><a id="a5266567d8928841aebc64f6112673064"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>RenderableObject</b> (<a class="el" href="classsad_1_1RenderableResource.html">RenderableResource</a> *resource)</td></tr>
-<tr class="separator:a5266567d8928841aebc64f6112673064"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9706903dcff0b51695e07411dca826e5"><td class="memItemLeft" align="right" valign="top"><a id="a9706903dcff0b51695e07411dca826e5"></a>
-<a class="el" href="classsad_1_1RenderableResource.html">RenderableResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetRenderableResource</b> ()</td></tr>
-<tr class="separator:a9706903dcff0b51695e07411dca826e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ced3a66fd20afb0ef3f4d18ce909d74"><td class="memItemLeft" align="right" valign="top"><a id="a4ced3a66fd20afb0ef3f4d18ce909d74"></a>
+<tr class="memitem:a159d3ec28027d740aa89ad648c7678a1"><td class="memItemLeft" align="right" valign="top"><a id="a159d3ec28027d740aa89ad648c7678a1"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RenderablePrimitive</b> (<a class="el" href="classsad_1_1PrimitiveResource.html">PrimitiveResource</a> *resource)</td></tr>
+<tr class="separator:a159d3ec28027d740aa89ad648c7678a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3d86e0aba88c8b586314bd8f35692f"><td class="memItemLeft" align="right" valign="top"><a id="a4f3d86e0aba88c8b586314bd8f35692f"></a>
+<a class="el" href="classsad_1_1PrimitiveResource.html">PrimitiveResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetPrimitiveResource</b> ()</td></tr>
+<tr class="separator:a4f3d86e0aba88c8b586314bd8f35692f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6e7f8ba722a9d50298174e6295a4f76"><td class="memItemLeft" align="right" valign="top"><a id="ae6e7f8ba722a9d50298174e6295a4f76"></a>
 <a class="el" href="classsad_1_1rad_1_1VertexArray.html">rad::VertexArray</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetVertexArray</b> ()</td></tr>
-<tr class="separator:a4ced3a66fd20afb0ef3f4d18ce909d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7947bd7b3a9884116e919a94cbfe2f3e"><td class="memItemLeft" align="right" valign="top"><a id="a7947bd7b3a9884116e919a94cbfe2f3e"></a>
+<tr class="separator:ae6e7f8ba722a9d50298174e6295a4f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af57e32cd7be252e391156e02853c444c"><td class="memItemLeft" align="right" valign="top"><a id="af57e32cd7be252e391156e02853c444c"></a>
 <a class="el" href="classsad_1_1rad_1_1VertexBuffer.html">rad::VertexBuffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetVertexBuffer</b> ()</td></tr>
-<tr class="separator:a7947bd7b3a9884116e919a94cbfe2f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50e2d2f0dd0952a235a56594ada1785c"><td class="memItemLeft" align="right" valign="top"><a id="a50e2d2f0dd0952a235a56594ada1785c"></a>
+<tr class="separator:af57e32cd7be252e391156e02853c444c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0cddec0eef80249d2403db07acebbe7"><td class="memItemLeft" align="right" valign="top"><a id="af0cddec0eef80249d2403db07acebbe7"></a>
 <a class="el" href="classsad_1_1rad_1_1IndexBuffer.html">rad::IndexBuffer</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetIndexBuffer</b> ()</td></tr>
-<tr class="separator:a50e2d2f0dd0952a235a56594ada1785c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add933c45d28151376b92c9c01ce7ce06"><td class="memItemLeft" align="right" valign="top"><a id="add933c45d28151376b92c9c01ce7ce06"></a>
+<tr class="separator:af0cddec0eef80249d2403db07acebbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8144489e3a9988bb3c3663ee17775e"><td class="memItemLeft" align="right" valign="top"><a id="aeb8144489e3a9988bb3c3663ee17775e"></a>
 <a class="el" href="classsad_1_1rad_1_1TextureResource.html">rad::TextureResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetTexture</b> () const</td></tr>
-<tr class="separator:add933c45d28151376b92c9c01ce7ce06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af57b899e4da28010c81fbbcf12e8c9f4"><td class="memItemLeft" align="right" valign="top"><a id="af57b899e4da28010c81fbbcf12e8c9f4"></a>
+<tr class="separator:aeb8144489e3a9988bb3c3663ee17775e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafcb2d2dc111f4d313561044c486ecc"><td class="memItemLeft" align="right" valign="top"><a id="acafcb2d2dc111f4d313561044c486ecc"></a>
 <a class="el" href="classsad_1_1rad_1_1ShaderResource.html">rad::ShaderResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetShader</b> () const</td></tr>
-<tr class="separator:af57b899e4da28010c81fbbcf12e8c9f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:acafcb2d2dc111f4d313561044c486ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Container for geometric data used by OpenGL to render an object. Each <a class="el" href="classsad_1_1RenderableObject.html" title="Container for geometric data used by OpenGL to render an object. Each RenderableObject must be create...">RenderableObject</a> must be created with a corresponding <a class="el" href="classsad_1_1RenderableResource.html">RenderableResource</a>. </p>
+<div class="textblock"><p>Container for basic shape/geometric data used by OpenGL to render an object. Each <a class="el" href="classsad_1_1RenderablePrimitive.html" title="Container for basic shape/geometric data used by OpenGL to render an object. Each RenderablePrimitive...">RenderablePrimitive</a> must be created with a corresponding <a class="el" href="classsad_1_1PrimitiveResource.html" title="Holds resource data for primitives (ie: Cubes, Spheres, etc.) that have vertices hard-coded in the en...">PrimitiveResource</a>. </p>
 </div><hr/>The documentation for this class was generated from the following files:<ul>
-<li>Code/Engine/<a class="el" href="RenderableObject_8h_source.html">RenderableObject.h</a></li>
-<li>Code/Engine/RenderableObject.cpp</li>
+<li>Code/Engine/<a class="el" href="RenderablePrimitive_8h_source.html">RenderablePrimitive.h</a></li>
+<li>Code/Engine/RenderablePrimitive.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

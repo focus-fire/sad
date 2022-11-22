@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sad: sad::RenderableResource::Geometry Struct Reference</title>
+<title>sad: sad::RenderableModel Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,42 +62,46 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1RenderableResource.html">RenderableResource</a></li><li class="navelem"><a class="el" href="structsad_1_1RenderableResource_1_1Geometry.html">Geometry</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacesad.html">sad</a></li><li class="navelem"><a class="el" href="classsad_1_1RenderableModel.html">RenderableModel</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structsad_1_1RenderableResource_1_1Geometry-members.html">List of all members</a>  </div>
+<a href="classsad_1_1RenderableModel-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">sad::RenderableResource::Geometry Struct Reference</div>  </div>
+<div class="title">sad::RenderableModel Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac7f41eca78240f3da71fdfdbfaf0c7b0"><td class="memItemLeft" align="right" valign="top"><a id="ac7f41eca78240f3da71fdfdbfaf0c7b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Geometry</b> (const float *vertices, const unsigned int vertexSize, const unsigned int *indices, const unsigned int indexCount)</td></tr>
-<tr class="separator:ac7f41eca78240f3da71fdfdbfaf0c7b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae45860909a582900d44db1ffb5096354"><td class="memItemLeft" align="right" valign="top"><a id="ae45860909a582900d44db1ffb5096354"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RenderableModel</b> (const std::string &amp;modelFilePath)</td></tr>
+<tr class="separator:ae45860909a582900d44db1ffb5096354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcc06eaced69d545eed639fd8e3293d7"><td class="memItemLeft" align="right" valign="top"><a id="afcc06eaced69d545eed639fd8e3293d7"></a>
+std::vector&lt; core::Pointer&lt; <a class="el" href="classsad_1_1rad_1_1Mesh.html">rad::Mesh</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetMeshes</b> ()</td></tr>
+<tr class="separator:afcc06eaced69d545eed639fd8e3293d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ffdbff4ee88aacf49d94a89f5db2b6d"><td class="memItemLeft" align="right" valign="top"><a id="a1ffdbff4ee88aacf49d94a89f5db2b6d"></a>
+<a class="el" href="classsad_1_1rad_1_1ShaderResource.html">rad::ShaderResource</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>GetShader</b> ()</td></tr>
+<tr class="separator:a1ffdbff4ee88aacf49d94a89f5db2b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e924db96f823df62786667e3b928a2c"><td class="memItemLeft" align="right" valign="top"><a id="a1e924db96f823df62786667e3b928a2c"></a>
+aiAABB&#160;</td><td class="memItemRight" valign="bottom"><b>GetBound</b> ()</td></tr>
+<tr class="separator:a1e924db96f823df62786667e3b928a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a930fd63c09f6df1ee08a4502c29d4860"><td class="memItemLeft" align="right" valign="top"><a id="a930fd63c09f6df1ee08a4502c29d4860"></a>
+glm::mat4&#160;</td><td class="memItemRight" valign="bottom"><b>GetModelMatrix</b> ()</td></tr>
+<tr class="separator:a930fd63c09f6df1ee08a4502c29d4860"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a70c3704abe6af3a7d876e13b70edfeeb"><td class="memItemLeft" align="right" valign="top"><a id="a70c3704abe6af3a7d876e13b70edfeeb"></a>
-const float *&#160;</td><td class="memItemRight" valign="bottom"><b>Vertices</b></td></tr>
-<tr class="separator:a70c3704abe6af3a7d876e13b70edfeeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a0deda57c02688bed073563f344a3ea"><td class="memItemLeft" align="right" valign="top"><a id="a4a0deda57c02688bed073563f344a3ea"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>VertexSize</b></td></tr>
-<tr class="separator:a4a0deda57c02688bed073563f344a3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4e724627aaed9b09a8975b92e92d6ff"><td class="memItemLeft" align="right" valign="top"><a id="ac4e724627aaed9b09a8975b92e92d6ff"></a>
-const unsigned int *&#160;</td><td class="memItemRight" valign="bottom"><b>Indices</b></td></tr>
-<tr class="separator:ac4e724627aaed9b09a8975b92e92d6ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abda2d3b4b6bcea8f651e0a49437e5168"><td class="memItemLeft" align="right" valign="top"><a id="abda2d3b4b6bcea8f651e0a49437e5168"></a>
-const unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>IndexCount</b></td></tr>
-<tr class="separator:abda2d3b4b6bcea8f651e0a49437e5168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a0c1002fc6ec0b5abbe2cdf4581b9cc"><td class="memItemLeft" align="right" valign="top"><a id="a9a0c1002fc6ec0b5abbe2cdf4581b9cc"></a>
+std::vector&lt; <a class="el" href="structsad_1_1rad_1_1MeshTexture.html">rad::MeshTexture</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>LoadedTextures</b></td></tr>
+<tr class="separator:a9a0c1002fc6ec0b5abbe2cdf4581b9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>Code/Engine/<a class="el" href="RenderableResource_8h_source.html">RenderableResource.h</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>Code/Engine/<a class="el" href="RenderableModel_8h_source.html">RenderableModel.h</a></li>
+<li>Code/Engine/RenderableModel.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

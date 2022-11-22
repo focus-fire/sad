@@ -27,8 +27,6 @@ public class Enemy : SadBehaviour
 		m_SpeedUpDown = 3.0f;
 		m_DistanceUpDown = 1.0f;
 		m_StartingHeight = transform.position.y;
-
-		Quaternion quatStart = Quaternion.LookAt(Vector3.zero, Vector3.zero, Vector3.zero);
     }
 
     void Update() 
@@ -65,20 +63,19 @@ public class Enemy : SadBehaviour
 			new Vector3(0.0f, (float)Math.Sin(Time.dt * m_SpeedUpDown) * m_DistanceUpDown, 0);
 	}
 
+    /// <summary>
+    /// Move towards the player
+    /// </summary>
     void Move()
     {
-		/* look at player*/
+		// Look at player
 		transform.rotation = Quaternion.Slerp(transform.rotation
 			, Quaternion.LookAt(GameManager.Instance.Player.transform.position - transform.position, transform.position, Vector3.up)
 			, m_RotSpeed * Time.dt);
 
-        /* move at player*/
-        //transform.position += Vector3.forward * m_MoveSpeed * Time.dt;
+        // Move at player
         transform.Translate(Vector3.Normalize(GameManager.Instance.Player.transform.position - transform.position) * m_MoveSpeed);
 
 		EnemyBobbing();
-
-        Log.Debug($"position of enemy: {transform.position}");
-        //Log.Debug($"rotation of enemy: {transform.rotation}");
 	}
 }

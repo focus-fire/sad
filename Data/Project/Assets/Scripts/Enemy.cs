@@ -10,6 +10,9 @@ public class Enemy : SadBehaviour
         // Testing updates to enemy public variables
         Health = 50;
         Damage = 5;
+
+        Quaternion quatStart = Quaternion.LookAt(Vector3.zero, Vector3.zero, Vector3.zero);
+
     }
 
     void Update() 

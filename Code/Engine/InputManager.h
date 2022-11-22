@@ -77,6 +77,8 @@ namespace sad
         static sad::InputManager& GetInstance();
         InputManager(const InputManager&) = delete;
 
+        void UpdateTicks();
+
         /**
          * @brief Locks Inputs
         */

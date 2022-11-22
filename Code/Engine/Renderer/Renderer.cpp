@@ -57,6 +57,16 @@ void sad::rad::Renderer::DrawIndexed(VertexArray* vertexArray, IndexBuffer* inde
 	GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->GetIndexCount(), GL_UNSIGNED_INT, nullptr));
 }
 
+void sad::rad::Renderer::DrawMesh(rad::Mesh* mesh) const
+{
+	mesh->GetVertexArray()->Bind();
+	mesh->GetIndexBuffer()->Bind();
+
+	GL_CALL(glDrawElements(GL_TRIANGLES, mesh->Indices.size(), GL_UNSIGNED_INT, 0));
+	GL_CALL(glBindVertexArray(0));
+
+}
+
 void sad::rad::Renderer::DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const
 {
 	vertexArray->Bind();

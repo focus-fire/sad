@@ -112,7 +112,7 @@ enum aiTextureMapMode {
      */
     aiTextureMapMode_Wrap = 0x0,
 
-    /** Texture coordinates outside [0...1]
+    /** MeshTexture coordinates outside [0...1]
      *  are clamped to the nearest valid value.
      */
     aiTextureMapMode_Clamp = 0x1,
@@ -765,7 +765,7 @@ public:
 
     // -------------------------------------------------------------------
     /** Get the number of textures for a particular texture type.
-     *  @param type Texture type to check for
+     *  @param type MeshTexture type to check for
      *  @return Number of textures for this type.
      *  @note A texture can be easily queried using #GetTexture() */
     unsigned int GetTextureCount(aiTextureType type) const;
@@ -1027,7 +1027,7 @@ extern "C" {
 // https://github.com/KhronosGroup/glTF/tree/master/extensions/2.0/Khronos/KHR_materials_transmission
 // Base percentage of light transmitted through the surface. 0.0 = Opaque, 1.0 = Fully transparent
 #define AI_MATKEY_TRANSMISSION_FACTOR "$mat.transmission.factor", 0, 0
-// Texture defining percentage of light transmitted through the surface.
+// MeshTexture defining percentage of light transmitted through the surface.
 // Multiplied by AI_MATKEY_TRANSMISSION_FACTOR
 #define AI_MATKEY_TRANSMISSION_TEXTURE aiTextureType_TRANSMISSION, 0
 
@@ -1036,7 +1036,7 @@ extern "C" {
 // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume
 // The thickness of the volume beneath the surface. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary.
 #define AI_MATKEY_VOLUME_THICKNESS_FACTOR "$mat.volume.thicknessFactor", 0, 0
-// Texture that defines the thickness.
+// MeshTexture that defines the thickness.
 // Multiplied by AI_MATKEY_THICKNESS_FACTOR
 #define AI_MATKEY_VOLUME_THICKNESS_TEXTURE aiTextureType_TRANSMISSION, 1
 // Density of the medium given as the average distance that light travels in the medium before interacting with a particle.
@@ -1603,7 +1603,7 @@ ASSIMP_API C_ENUM aiReturn aiGetMaterialString(const C_STRUCT aiMaterial *pMat,
 // ---------------------------------------------------------------------------
 /** Get the number of textures for a particular texture type.
  *  @param[in] pMat Pointer to the input material. May not be NULL
- *  @param type Texture type to check for
+ *  @param type MeshTexture type to check for
  *  @return Number of textures for this type.
  *  @note A texture can be easily queried using #aiGetMaterialTexture() */
 // ---------------------------------------------------------------------------

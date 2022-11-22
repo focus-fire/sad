@@ -23,11 +23,11 @@
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
 
+#include "ResourceManager.h"
 #include "AudioManager.h"
 #include "InputManager.h"
 #include "Transform.h"
 #include "InputManager.h"
-#include "RenderableObject.h"
 #include "EngineStateManager.h"
 #include "LevelManager.h"
 #include "Camera.h"

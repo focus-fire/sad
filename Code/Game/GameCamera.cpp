@@ -63,8 +63,8 @@ void sad::GameCamera::CurrentCameraState()
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
 	// Get all entities with renderableObject, transform and scripting Components
-	auto view = world.view<const ecs::RenderableObjectComponent, const ecs::TransformComponent, const ecs::ScriptComponent>();
-	for (auto [entity, renderableObjectComponent, transformComponent, scriptingComponent] : view.each())
+	auto view = world.view<const ecs::TransformComponent, const ecs::ScriptComponent>();
+	for (auto [entity, transformComponent, scriptingComponent] : view.each())
 	{
 		std::string entityScriptClassName = scriptingComponent.m_ClassName;
 

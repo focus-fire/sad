@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
+#include "Mesh.h"
 #include "VertexArray.h"
 #include "IndexBuffer.h"
 #include "FrameBuffer.h"
@@ -31,6 +32,12 @@ namespace sad::rad
 		 * @param indexBuffer IBO wrapper for the geometry in GL
 		*/
 		void DrawIndexed(VertexArray* vertexArray, IndexBuffer* ib) const;
+
+		/**
+		 * @brief Draws a mesh bound by an index buffer
+		 * @param mesh Mesh wrapper for the geometry of a RenderableModel
+		*/
+		void DrawMesh(rad::Mesh* mesh) const;
 
 		/**
 		 * @brief Draws lines bound to the passed index array

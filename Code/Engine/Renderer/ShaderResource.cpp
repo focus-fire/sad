@@ -68,6 +68,11 @@ void sad::rad::ShaderResource::SetUniform4f(const std::string& name, float f0, f
     GL_CALL(glUniform4f(GetUniformLocation(name), f0, f1, f2, f3));
 }
 
+void sad::rad::ShaderResource::SetUniform3fv(const std::string& name, const float* vector)
+{
+    GL_CALL(glUniform3fv(GetUniformLocation(name), 1, vector));
+}
+
 void sad::rad::ShaderResource::SetUniformMatrix3fv(const std::string& name, const float* matrix)
 {
     GL_CALL(glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, matrix));

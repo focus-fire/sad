@@ -4,6 +4,8 @@
 
 #include <glad/glad.h>
 
+#include "Mesh.h"
+
 sad::rad::VertexArray::VertexArray()
 {
 	GL_CALL(glGenVertexArrays(1, &m_RendererId));
@@ -31,9 +33,30 @@ void sad::rad::VertexArray::AddBufferWithAttributes(const VertexBuffer& vertexBu
 		// Set the current vertex attribute
 		GL_CALL(glEnableVertexAttribArray(i));
 		GL_CALL(glVertexAttribPointer(i, attribute.Count, attribute.Type, attribute.Normalized, vertexAttribContainer.GetStride(), INT_TO_VOIDP(stripedOffset)));
-		
+
 		// Increment offset for next attribute to stripe properly
 		stripedOffset += attribute.Count * VertexAttribute::GetSizeOfType(attribute.Type);
+	}
+}
+
+void sad::rad::VertexArray::AddBufferWithMeshAttributes(const VertexBuffer& vertexBuffer, 
+	const MeshVertexAttributeContainer& vertexAttribContainer,
+	unsigned int meshStride)
+{
+	Bind();
+	vertexBuffer.Bind();
+
+	// Get set of vertex attributes from container
+	const std::vector<VertexAttribute>& attributes = vertexAttribContainer.GetVertexAttributes();
+
+	// Iterate through them
+	for (unsigned int i = 0; i < attributes.size(); i++)
+	{
+		const VertexAttribute attribute = attributes[i];
+
+		// Set the current vertex attribute
+		GL_CALL(glEnableVertexAttribArray(i));
+		GL_CALL(glVertexAttribPointer(i, attribute.Count, attribute.Type, attribute.Normalized, meshStride, attribute.Offset));
 	}
 }
 

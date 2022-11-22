@@ -39,7 +39,7 @@ void sad::ResourceManager::MImport()
 	// Resources that exist in the file but don't exist in the filesystem will be ignored
 	// These resources will be marked as 'orphans' and will require a full export in order to remove them
 	bool isCleanImport = ImportResources();
-	
+
 	// Recurse through the './Data' directory to search for new resources
 	// Resources that were cached during the import step are skipped
 	FindResourcesInDataDirectory();
@@ -180,7 +180,9 @@ void sad::ResourceManager::ExportAllResources()
 	if (m_ResourceLookup.empty())
 		return;
 
+	// Remove the resource file from the directory and rewrite the header
 	core::FileUtils::RemoveFile(c_ResourceFilePath);
+	core::FileUtils::WriteFile(c_ResourceFilePath, c_ResourceFileHeader);
 	core::Log(ELogType::Info, "[ResourceManager] Performing a full export of all resources to Resources.sad.meta");
 
 	for (auto& it : m_ResourceLookup)
@@ -196,7 +198,7 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 	switch (resourceType)
 	{
 	case EResourceType::Model:
-		ResourceFactory::CreateResource<RenderableResource>(resourceData);
+		ResourceFactory::CreateResource<ModelResource>(resourceData);
 		break;
 	case EResourceType::Audio:
 		ResourceFactory::CreateResource<AudioResource>(resourceData);

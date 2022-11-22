@@ -2,41 +2,71 @@
 
 #include <nlohmann/json.hpp>
 
+#include <Core/StringUtils.h>
+
+#include <Engine/Resource.h>
+#include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>
 #include <Engine/Renderer/Sample/Cube.h>
-#include <Engine/Resource.h>
 
 namespace sad::ecs
 {
 	/**
-	 * @brief Component containing a reference for a particular RenderableResource
-	 *
-	 * @note Most RenderableResourceComponent's should be initialized with an m_IsResourceDirty of 'true'.
-	 *		 This ensures that they get absolved into a RenderableObject in the next frame.
+	 * @brief Contains a reference for a particular ModelResourceComponent 
 	*/
-	struct RenderableResourceComponent
+	struct ModelResourceComponent
 	{
-		core::Pointer<RenderableResource> m_RenderableResource;
+		ModelResource* m_Model;
 		bool m_IsResourceDirty;
 	};
 
-	//TODO: Temporary Filler for serialization, fill in when 3d modelling is done
-	inline void to_json(nlohmann::json& JSON, const sad::ecs::RenderableResourceComponent& renderableResource)
+	/**
+	 * @brief Component containing a reference for a particular PrimitiveResource 
+	 *
+	 * @note Most PrimitiveResourceComponent's should be initialized with an m_IsResourceDirty of 'true'.
+	 *		 This ensures that they get absolved into a RenderablePrimitive in the next frame.
+	*/
+	struct PrimitiveResourceComponent
+	{
+		core::Pointer<PrimitiveResource> m_Primitive;
+		bool m_IsResourceDirty;
+	};
+
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::ModelResourceComponent& renderableResource)
 	{
 		JSON =
 		{
-			{ "GUID", renderableResource.m_RenderableResource->GetResourceGuid().ToString() },
-			{ "FileName", renderableResource.m_RenderableResource->GetResourceFileName() },
+			{ "ModelFileName", renderableResource.m_Model->GetResourceFileName()},
 		};
 	}
 
-	inline void from_json(const nlohmann::json& JSON, sad::ecs::RenderableResourceComponent& renderableResource)
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::ModelResourceComponent& renderableResource)
 	{
-		RenderableResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+		std::string modelFileName = JSON["ModelFileName"];
 
-		// TODO: Remove IReource requirement... 
-		Resource::ResourceData cubeData = { "FakeCube.test", "FakeCube.test", "FakeCube.test"};
-		renderableResource.m_RenderableResource = core::CreatePointer<RenderableResource>(cubeData, std::move(CubeGeometry));
+		ModelResource* modelResource = ResourceManager::GetResource<ModelResource>(std::move(modelFileName));
+		renderableResource.m_Model = modelResource;
 		renderableResource.m_IsResourceDirty = true;
+	}
+
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::PrimitiveResourceComponent& primitiveResource)
+	{
+		JSON =
+		{
+			{ "PrimitiveType", "Cube" },
+		};
+	}
+
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::PrimitiveResourceComponent& primitiveResource)
+	{
+		std::string primitiveType = JSON["PrimitiveType"];
+
+		// Only cube is implemented as a primtive type at the moment
+		if (core::StringUtils::Equals(primitiveType, "Cube"))
+		{
+			PrimitiveResource::Geometry CubeGeometry(CubePoints, sizeof(CubePoints), CubeIndices, CubeIndexCount);
+			primitiveResource.m_Primitive = core::CreatePointer<PrimitiveResource>(std::move(CubeGeometry));
+			primitiveResource.m_IsResourceDirty = true;
+		}
 	}
 }

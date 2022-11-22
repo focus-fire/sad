@@ -15,6 +15,7 @@
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/Camera.h>
+#include <Engine/LevelManager.h>
 
 #include <Game/Time.h>
 
@@ -213,10 +214,16 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
-
-	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+	PanelAndButton();
+	EditorControls();
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
+void cap::Editor::PanelAndButton()
+{
+	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	ImGui::Begin("Action Panel");
 	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Once);
 	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Once);
@@ -224,6 +231,16 @@ void cap::Editor::Render()
 	{
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
 		core::SignalEvent("OnToggleEngineMode");
+	}
+	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	{
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
+		core::SignalEvent("ResetLevel");
+	}
+	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+	{
+		sad::LevelManager::ExportLevel();
 	}
 	ImGui::End();
 
@@ -236,9 +253,6 @@ void cap::Editor::Render()
 	for (auto [entity, name] : view.each())
 		ImGui::Text(name.m_Name.c_str());
 	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0.5f */)
@@ -253,6 +267,31 @@ bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
 
 	return ImGui::Button(label);
+}
+
+/**
+ * @brief 
+ * Controls
+ * ctrl+s : Save state
+ * ctrl+b : Switch editor mode
+*/
+void cap::Editor::EditorControls()
+{
+	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!m_IsEditorInPlayMode && ImGui::IsKeyPressed(ImGuiKey_S))
+		{
+			sad::LevelManager::ExportLevel();
+			m_IsEditorInPlayMode = false;
+			core::Log(ELogType::Trace, "Saved");
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_P))
+		{
+			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+			core::SignalEvent("OnToggleEngineMode");
+		}
+	}
 }
 
 void cap::Editor::Teardown()

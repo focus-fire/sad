@@ -30,5 +30,4 @@ void sad::EngineStateManager::OnToggleCamera()
 	{
 		sad::rad::RenderBuddy::SetCameraInstance(sad::Application::s_GameCamera);
 	}
-
 }

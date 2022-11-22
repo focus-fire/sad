@@ -4,7 +4,6 @@
 
 #include "GuidComponent.h"
 #include "RenderableObjectComponent.h"
-#include "RenderableResourceComponent.h"
 
 /* Serialized */
 

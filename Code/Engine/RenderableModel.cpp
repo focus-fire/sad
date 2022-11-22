@@ -116,7 +116,7 @@ sad::rad::Mesh::MeshData sad::RenderableModel::MProcessMesh(aiMesh* mesh, const 
 
 	// Process mesh materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	core::Log(ELogType::Debug, "[RenderableModel] Retrieved mesh material {}", material->GetName().C_Str());
+	core::Log(ELogType::Trace, "[RenderableModel] Retrieved mesh material {}", material->GetName().C_Str());
 
 	rad::MeshColor color;
 	aiColor4D materialColor;

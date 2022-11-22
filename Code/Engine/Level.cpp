@@ -10,6 +10,7 @@
 #include "ECS/Components/ComponentTypes.h"
 #include "ECS/Systems/RenderingSystem.h"
 #include "ECS/Systems/BoundSystem.h"
+#include "ECS/Systems/LightSystem.h"
 #include "ECS/Systems/RenderableObjectSystem.h"
 #include "ECS/Systems/PlayerControllerSystem.h"
 
@@ -40,6 +41,7 @@ void sad::Level::Update(sad::ecs::EntityWorld& world)
 	ecs::BoundSystem::Update(world);
 
 	// Drawing 
+	// ecs::LightSystem::Update(world);
 	ecs::RenderableObjectSystem::Update(world);
 	ecs::RenderingSystem::Draw(world);
 }

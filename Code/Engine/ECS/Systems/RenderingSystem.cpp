@@ -10,8 +10,7 @@
 
 #include <Engine/Renderer/RenderBuddy.h>
 
-#include <Engine/ECS/Components/RenderableObjectComponent.h>
-#include <Engine/ECS/Components/TransformComponent.h>
+#include <Engine/ECS/Components/ComponentTypes.h>
 
 void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 {
@@ -59,15 +58,22 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		// Set shader uniforms
 		rad::ShaderResource* shader = model.GetShader();
 		shader->Bind();
+
+		// Matrices
 		shader->SetUniformMatrix3fv("u_NormalMatrix", glm::value_ptr(normalMatrix));
 		shader->SetUniformMatrix4fv("u_ModelViewMatrix", glm::value_ptr(modelViewMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
+
+		glm::vec3 lightPosition = glm::vec3(0.0f, 1.0f, -3.0f);
+		shader->SetUniform3fv("u_LightPosition", glm::value_ptr(lightPosition));
+
+		glm::vec3 cameraPosition = glm::vec3(0.5f, 2.5f, -3.0f);
+		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(lightPosition));
 
 		std::vector<core::Pointer<rad::Mesh>> modelMeshes = model.GetMeshes();
 		for (unsigned int i = 0; i < modelMeshes.size(); i++)
 		{
 			rad::Mesh* currentMesh = modelMeshes[i].get();
-
 			rad::MeshColor meshColors = currentMesh->Colors;
 
 			shader->SetUniform4f("u_Model.Ambient", meshColors.Ambient.r, meshColors.Ambient.g, meshColors.Ambient.b, meshColors.Ambient.a);

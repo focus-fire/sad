@@ -59,23 +59,6 @@ void sad::rad::Renderer::DrawIndexed(VertexArray* vertexArray, IndexBuffer* inde
 
 void sad::rad::Renderer::DrawMesh(rad::Mesh* mesh) const
 {
-	for (unsigned int i = 0; i < mesh->Textures.size(); i++)
-	{
-		//GL_CALL(glActiveTexture(GL_TEXTURE0 + i));
-
-		//std::string number;
-		//std::string name = mesh->Textures[i].Type;
-
-		//if (name == "texture_diffuse")
-		//	number = std::to_string(diffuseNr++);
-		//else if (name == "texture_specular")
-		//	number = std::to_string(specularNr++);
-		//shader.SetUniform1i(("material" + name + number).c_str(), i);
-
-		//GL_CALL(glBindTexture(GL_TEXTURE_2D, mesh->Textures[i].Id));
-	}
-	//GL_CALL(glActiveTexture(GL_TEXTURE0));
-
 	mesh->GetVertexArray()->Bind();
 	mesh->GetIndexBuffer()->Bind();
 

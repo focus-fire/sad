@@ -14,6 +14,7 @@
 #include "BoundComponent.h"
 #include "RenderableResourceComponent.h"
 #include "ControllerComponent.h"
+#include "PointLightComponent.h"
 
 #define SERIALIZED_COMPONENT_TYPES \
 	sad::ecs::NameComponent,\
@@ -23,4 +24,5 @@
 	sad::ecs::PrimitiveResourceComponent,\
 	sad::ecs::ModelResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\
-	sad::ecs::EditorControllerComponent
+	sad::ecs::EditorControllerComponent,\
+	sad::ecs::PointLightComponent

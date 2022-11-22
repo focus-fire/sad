@@ -89,6 +89,13 @@ namespace cap
 		 * @usage unbind_script <entity_name> <script_name>
 		*/
 		static void UnbindScriptFromEntity(argument_type& arg);
+
+		/**
+		 * @brief Adds a light into the scene
+		 *
+		 * @usage add_light <entity_name> 
+		*/
+		static void AddLight(argument_type& arg);
 	};
 
 	/**

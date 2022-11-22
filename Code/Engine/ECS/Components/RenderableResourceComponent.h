@@ -2,6 +2,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include <Core/StringUtils.h>
+
 #include <Engine/Resource.h>
 #include <Engine/ResourceManager.h>
 #include <Engine/RenderableResource.h>

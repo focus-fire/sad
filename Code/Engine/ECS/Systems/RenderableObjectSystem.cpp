@@ -32,7 +32,6 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 		std::string modelFilePath = modelResourceComponent.m_Model->GetResourceAbsolutePath();
 		RenderableModel model = RenderableModel(modelFilePath);
 		entity.AddComponent<RenderableModelComponent>(model);
-		entity.AddEmptyComponent<RenderableObjectComponent>({});
 
 		// Retrieve the bound from the model and apply it to the entity
 		// Something has to happen in the Bound for this to be applied correctly
@@ -61,7 +60,6 @@ void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& w
 		core::Pointer<RenderablePrimitive> renderable = core::CreatePointer<RenderablePrimitive>(primitiveResourceComponent.m_Primitive.get());
 		SAD_ASSERT(renderable, "Failed to create RenderablePrimitive from ModelResource");
 		entity.AddComponent<RenderablePrimitiveComponent>(renderable);
-		entity.AddEmptyComponent<RenderableObjectComponent>({});
 
 		// Mark the RenderablePrimitive as clean 
 		primitiveResourceComponent.m_IsResourceDirty = false;

@@ -25,10 +25,10 @@ void cap::GizmoSystem::Render()
 {
 	int entityId = 0;
 
-	// All renderable objects are tagged with a 'RenderableObjectComponent'
+	// All renderable objects are tagged with a 'GuidComponent'
 	// This means that gizmos will attach to all primitives and models in the level 
-	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::TransformComponent, const sad::ecs::RenderableObjectComponent>();
-	for (auto [entity, transformComponent] : view.each())
+	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::TransformComponent, const sad::ecs::GuidComponent>();
+	for (auto [entity, transformComponent, guid] : view.each())
 	{
 		ImGuizmo::SetID(entityId);
 

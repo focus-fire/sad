@@ -206,7 +206,7 @@ glm::mat4 sad::Application::GetViewMatrix()
 {
 	return glm::lookAt(
 		glm::vec3(0.5f, 2.5f, -3.0f), // Camera position
-		glm::vec3(0.0f, -0.5f, 2.0f), // 'Looks At' this point
+		glm::vec3(0.0f, 1.0f, 2.0f),  // 'Looks At' this point
 		glm::vec3(0.0f, 1.0f, 0.0f)   // Indicates that positive y is 'Up' 
 	);
 }

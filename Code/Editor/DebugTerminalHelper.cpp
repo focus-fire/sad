@@ -5,6 +5,7 @@
 #include <Engine/Level.h>
 #include <Engine/ResourceManager.h>
 #include <Engine/RenderableModel.h>
+#include <Engine/PointLight.h>
 #include <Engine/Scripting/ScriptingEngine.h>
 #include <Engine/ECS/Components/ComponentTypes.h>
 
@@ -21,6 +22,7 @@ cap::DebugTerminalHelper::DebugTerminalHelper()
 	add_command_({ "destroy", "Destroys an entity in the level with a name", Destroy, NoCompletion });
 	add_command_({ "bind_script", "Binds a script to an entity in the level", BindScriptToEntity, NoCompletion });
 	add_command_({ "unbind_script", "Unbinds a script to an entity in the level", UnbindScriptFromEntity, NoCompletion });
+	// add_command_({ "add_light", "Adds a light into the scene", AddLight, NoCompletion });
 }
 
 std::vector<std::string> cap::DebugTerminalHelper::NoCompletion(argument_type& arg) { return { " " }; }
@@ -218,4 +220,19 @@ void cap::DebugTerminalHelper::UnbindScriptFromEntity(argument_type& arg)
 	// Remove active script instance if script is detached from entity
 	sad::cs::ScriptingEngine::DestroySadBehaviourInstance(entity);
 	core::Log(ELogType::Info, "[Terminal] Succesfully removed {} from {}", scriptName, entityName);
+}
+
+void cap::DebugTerminalHelper::AddLight(argument_type& arg)
+{
+	if (arg.command_line.size() < 2)
+	{
+		core::Log(ELogType::Error, "[Terminal] usage: add_light <entity_name>");
+		return;
+	}
+
+	std::string entityName = std::move(arg.command_line[1]);
+
+	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(entityName);
+	sad::PointLight light = sad::PointLight();
+	entity.AddComponent<sad::ecs::PointLightComponent>(light);
 }

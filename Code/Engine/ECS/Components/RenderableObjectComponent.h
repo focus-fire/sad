@@ -8,12 +8,6 @@
 namespace sad::ecs
 {
 	/**
-	 * @brief Tag component that marks all renderable objects
-	*/
-	struct RenderableObjectComponent
-	{ };
-
-	/**
 	 * @brief Contains a pointer for a RenderableModel
 	*/
 	struct RenderableModelComponent

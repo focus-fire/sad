@@ -81,24 +81,28 @@ public class Player : SadBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += Vector3.forward * Time.dt * m_MoveSpeed;
+            Audio.PlaySFX("step.wav");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
             transform.position += Vector3.right * Time.dt * m_MoveSpeed;
+            Audio.PlaySFX("step.wav");
         }
 
         // Move Right
         if (Input.GetKey(KeyCode.S))
         {
             transform.position += Vector3.backward * Time.dt * m_MoveSpeed;
+            Audio.PlaySFX("step.wav");
         }
 
         // Move Backward
         if (Input.GetKey(KeyCode.D))
         {
             transform.position += Vector3.left * Time.dt * m_MoveSpeed;
+            Audio.PlaySFX("step.wav");
         }
     }
 

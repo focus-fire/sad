@@ -13,39 +13,49 @@ float sad::EditorCamera::walkDirection;
 bool sad::EditorCamera::walking;
 int sad::EditorCamera::wasdState;
 
-
-sad::EditorCamera::EditorCamera()
-{
-	cameraEulers = { 0.0f, 90.0f, 0.0f };
-	bool walking = false;
-}
-
-sad::EditorCamera::~EditorCamera(){}
-
-
 void sad::EditorCamera::Update()
 {
+	// Get current camera state from input
 	sad::EditorCamera::CurrentCameraState();
+
+	// Get the input manager instance to track mouse position
+	// Probably don't need to grab the instance every update
 	InputManager& input = InputManager::GetInstance();
 
 	double mouse_x, mouse_y;
 	mouse_x = input.GetMousePosition().x;
 	mouse_y = input.GetMousePosition().y;
 
+	// TODO: Probably don't need this since SDL handles repositioning the cursor. Camera keeps rotating without this
 	ImGui::SetCursorPos(ImVec2(800.0f, 450.0f));
 	input.SetMousePosition(800.0, 450.0);
 
-	float delta_x{ static_cast<float>(mouse_x - 800.0) };
-	cameraEulers.y -= delta_x * 0.06f;
+	// TODO: Remove tempSensitivityHandle declaration and calls below after mouse pointer handling is in place
+	// Temporary sensitivity constant for assisting with troubleshooting and testing game
+	float tempSensitivityHandle = 0.005f;
 
+	// Calculate and update camera yaw (horizontal rotation) for the camera and keep rotation between 0 <=> 360
+	float delta_x{ static_cast<float>(mouse_x - 800.0) };
+	cameraEulers.y -= delta_x * 0.05f * tempSensitivityHandle;
+	if (cameraEulers.y <= 0)
+	{
+		cameraEulers.y = 360.0f;
+	}
+	else if (cameraEulers.y >= 360.0f)
+	{
+		cameraEulers.y = 0.0f;
+	}
+
+	// Calculate and update camera pitch (vertical rotation), keeps it between 90 <=> -90
 	float delta_y{ static_cast<float>(mouse_y - 450.0) };
-	cameraEulers.x = std::max(std::min(cameraEulers.x + delta_y * 0.05f, 90.0f), -90.0f);
+	cameraEulers.x = std::max(std::min(cameraEulers.x + delta_y * 0.05f * tempSensitivityHandle, 90.0f), -90.0f);
 	
 }
 
 void sad::EditorCamera::CurrentCameraState()
 {
 
+	// Probably don't need to grab the instance every update
 	InputManager& input = InputManager::GetInstance();
 
 	// Capture player state
@@ -75,13 +85,14 @@ void sad::EditorCamera::CurrentCameraState()
 		wasdState += 8;
 	}
 
+	// TODO: Have to move this somwhere else to handle pointer position and visibility
 	if (input.GetKey(sad::KeyCode::Escape))
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 		SDL_WarpMouseInWindow(NULL, NULL, NULL);
 	}
 
-	// Interpret wasd state
+	// Interpret WASD state
 	switch (wasdState)
 	{
 	case 1:
@@ -91,45 +102,46 @@ void sad::EditorCamera::CurrentCameraState()
 		walkDirection += 90;
 		break;
 	case 3:
-		//left-forwards
+		// Left-forwards
 		walking = true;
 		walkDirection += 45;
 		break;
 	case 2:
 	case 7:
-		//left
+		// Left
 		walking = true;
 		break;
 	case 6:
-		//left-backwards
+		// Left-backwards
 		walking = true;
 		walkDirection += 315;
 		break;
 	case 4:
 	case 14:
-		//backwards
+		// Backwards
 		walking = true;
 		walkDirection += 270;
 		break;
 	case 12:
-		//right-backwards
+		// Right-backwards
 		walking = true;
 		walkDirection += 225;
 		break;
 	case 8:
 	case 13:
-		//right
+		// Right
 		walking = true;
 		walkDirection += 180;
 		break;
 	case 9:
-		//right-forwards
+		// Right-forwards
 		walking = true;
 		walkDirection += 135;
 	}
 
 	if (walking)
 	{
+		// Update the camera position based on direction vector. 0.01f is the constant movespeed
 		cameraPosition += 0.01f * glm::vec3{
 			glm::cos(glm::radians(walkDirection)),
 			-glm::sin(glm::radians(cameraEulers.x)),

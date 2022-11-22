@@ -17,18 +17,16 @@ namespace sad
 	static class EditorCamera : public Camera
 	{
 	public:
-		explicit EditorCamera();
 
-		~EditorCamera();
-
-		sad::EditorCamera& GetInstance() { return *this; };
-		const sad::EditorCamera& GetInstance() const { return *this; };
+		/*
+		* @brief Updates editor camera every frame in the game loop
+		*/
 		void Update() override;
-
-		static bool isActive;
 		
-		void CurrentCameraState();
-
+		/*
+		* @brief Handles WASD input and state for the Editor Camera to update the camera's position
+		*/
+		void CurrentCameraState() override;
 
 	private:
 		static int wasdState;

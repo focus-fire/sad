@@ -13,6 +13,8 @@ namespace sad
 	public:
 		virtual void Update() = 0;
 
+		virtual void CurrentCameraState() = 0;
+
 		/*
 		* @brief Returns the view matrix (lookAt matrix) after calculating forward vector
 		*/

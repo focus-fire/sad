@@ -10,15 +10,23 @@
 
 namespace sad
 {
+	/*
+	* @brief Handles Game Camera rotation and position.
+	*/
+
 	static class GameCamera : public Camera
 	{
 	public:
 
+		/*
+		* @brief Updates game camera every frame in the game loop
+		*/
 		void Update() override;
 
-		void CurrentCameraState();
-
-	private:
+		/*
+		* @brief Handles camera position based on Player object and also applies rotation to player object
+		*/
+		void CurrentCameraState() override;
 
 	};
 }

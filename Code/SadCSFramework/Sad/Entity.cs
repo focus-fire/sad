@@ -188,6 +188,20 @@ namespace Sad
         }
 
         /// <summary>
+        /// Instantiates an entity with the provided name into the level with a RenderableResource and a specified position
+        /// </summary>
+        /// <param name="entityName">Name of the entity being instantiated</param>
+        /// <param name="modelFileName">Name of the model file to put on the entity</param>
+        /// <param name="position">Reference to the entity instantiated in the level</param>
+        /// <returns></returns>
+        public Entity InstantiateWithModelWithPosition(string entityName, string modelFileName, Vector3 position)
+        { 
+            Guid entityId = Internal.ECS.InstantiateWithModelAndPosition(entityName, modelFileName, ref position);
+
+            return new Entity(entityId);
+        }
+
+        /// <summary>
         /// Destroy an entity with the provided name in the level
         /// </summary>
         /// <param name="entityName">Name of the entity being destroyed</param>

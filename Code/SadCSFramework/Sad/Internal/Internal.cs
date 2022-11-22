@@ -22,6 +22,9 @@ namespace Sad
             internal extern static Guid InstantiateWithModel(string entityName, string modelResourceName);
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static Guid InstantiateWithModelAndPosition(string entityName, string modelResourceName, ref Vector3 position);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void DestroyEntityByName(string entityName);
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]

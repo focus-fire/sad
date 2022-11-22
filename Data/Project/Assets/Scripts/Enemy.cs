@@ -1,19 +1,38 @@
 ﻿using Sad;
+using System;
+using System.Diagnostics;
 
 public class Enemy : SadBehaviour
 {
     public int Health = 100; 
     public int Damage = 10;
 
-    void Awake() 
+    private float m_RotSpeed;
+    private float m_MoveSpeed;
+
+	// enemy bob stats
+	private float m_StartingHeight;
+	private float m_SpeedUpDown;
+	private float m_DistanceUpDown;
+
+	void Awake() 
     { 
         // Testing updates to enemy public variables
         Health = 50;
         Damage = 5;
+
+        m_RotSpeed = 3.0f;
+	    m_MoveSpeed = 0.1f;
+
+		m_SpeedUpDown = 3.0f;
+		m_DistanceUpDown = 1.0f;
+		m_StartingHeight = transform.position.y;
     }
 
     void Update() 
-    { }
+    {
+        Move();
+    }
 
     /// <summary>
     /// Take damage from another entity's attack. Die when Health reaches 0.
@@ -27,14 +46,36 @@ public class Enemy : SadBehaviour
 
         if (Health <= 0)
             Die();
-    }
+	}
 
     void Die()
     {
         // Enemy kills itself after removing itself from list of existing Enemies
         Log.Debug($"Enemy#{this?.GUID} got dead.");
         this.RemoveScriptComponent<Enemy>();
-        Player.Enemies.Remove(this);
+        GameManager.Instance.Enemies.Remove(this);
         Destroy(this);
     }
+
+	void EnemyBobbing() 
+    {
+		transform.position = new Vector3(transform.position.x, m_StartingHeight, transform.position.z) +
+			new Vector3(0.0f, (float)Math.Sin(Time.dt * m_SpeedUpDown) * m_DistanceUpDown, 0);
+	}
+
+    /// <summary>
+    /// Move towards the player
+    /// </summary>
+    void Move()
+    {
+		// Look at player
+		transform.rotation = Quaternion.Slerp(transform.rotation
+			, Quaternion.LookAt(GameManager.Instance.Player.transform.position - transform.position, transform.position, Vector3.up)
+			, m_RotSpeed * Time.dt);
+
+        // Move at player
+        transform.Translate(Vector3.Normalize(GameManager.Instance.Player.transform.position - transform.position) * m_MoveSpeed);
+
+		EnemyBobbing();
+	}
 }

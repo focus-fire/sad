@@ -11,7 +11,7 @@ glm::vec3 sad::Camera::cameraEulers;
 
 glm::mat4 sad::Camera::GetProjectionMatrix()
 {
-	return glm::perspective(glm::radians(60.0f), sad::Application::s_MainWindow->GetAspectRatio(), 0.1f, 20.0f);
+	return glm::perspective(glm::radians(60.0f), sad::Application::s_MainWindow->GetAspectRatio(), 0.01f, 20.0f);
 }
 
 glm::mat4 sad::Camera::GetViewMatrix()

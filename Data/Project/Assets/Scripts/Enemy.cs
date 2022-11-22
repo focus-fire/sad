@@ -21,11 +21,11 @@ public class Enemy : SadBehaviour
         Health = 50;
         Damage = 5;
 
-        m_RotSpeed = 3.0f;
-	    m_MoveSpeed = 0.1f;
+        m_RotSpeed = 0.5f;
+	    m_MoveSpeed = 0.5f;
 
-		m_SpeedUpDown = 3.0f;
-		m_DistanceUpDown = 1.0f;
+		m_SpeedUpDown = 0.5f;
+		m_DistanceUpDown = 0.5f;
 		m_StartingHeight = transform.position.y;
     }
 
@@ -74,8 +74,16 @@ public class Enemy : SadBehaviour
 			, m_RotSpeed * Time.dt);
 
         // Move at player
-        transform.Translate(Vector3.Normalize(GameManager.Instance.Player.transform.position - transform.position) * m_MoveSpeed);
+        transform.Translate(Vector3.Normalize(GameManager.Instance.Player.transform.position - transform.position) * m_MoveSpeed * Time.dt);
 
 		EnemyBobbing();
 	}
+
+    void DrawGizmos()
+    {
+        Vector3 boxMin = bound.min;
+        Vector3 boxMax = bound.max;
+        Color boxColor = Color.red;
+        Gizmos.DrawBox(boxMin, boxMax, boxColor);
+    }
 }

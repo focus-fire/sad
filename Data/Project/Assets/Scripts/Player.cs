@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Player : SadBehaviour
 {
     private int m_PrimaryAttackDamage = 100;
-    private float m_MoveSpeed = 0.5f;
+    private float m_MoveSpeed = 1f;
 
     void Awake()
     {
@@ -38,12 +38,6 @@ public class Player : SadBehaviour
             Log.Warn("LMB Clicked!!!");
             PrimaryAttack();
         }
-
-        if (Input.GetMouseButton(MouseButton.Right))
-        {
-            Log.Warn("Right Mouse Pressed!!!");
-            transform.Translate(new Vector3(-m_MoveSpeed, -m_MoveSpeed, -m_MoveSpeed));
-        }
     }
 
     /// <summary>
@@ -54,15 +48,20 @@ public class Player : SadBehaviour
         // Fire Raycast from current position to infinity (and beyond!), where the player is aiming
         Vector3 initialFiringPos = transform.position;
         // Currently fires directly in front of the player, not where they're aiming
-        Vector3 firingDirection = new Vector3(transform.position.x, transform.position.y, transform.position.z * SadMath.Infinity);
-        bool hit;
+        Vector3 firingDirection1 = new Vector3(transform.position.x, transform.position.y, transform.position.z * SadMath.Infinity);
+        Vector3 firingDirection2 = new Vector3(-transform.position.x, transform.position.y, -transform.position.z * SadMath.Infinity);
+        Vector3 firingDirection3 = new Vector3(-transform.position.x, transform.position.y, transform.position.z * SadMath.Infinity);
+        Vector3 firingDirection4 = new Vector3(transform.position.x, transform.position.y, -transform.position.z * SadMath.Infinity);
 
         // Check if any enemies are hit by the player's attack
         for (int i = 0; i < GameManager.Instance.Enemies.Count; ++i)
         {
-            hit = Raycast.Intersects(initialFiringPos, firingDirection, GameManager.Instance.Enemies[i]);
+            bool hit1 = Raycast.Intersects(initialFiringPos, firingDirection1, GameManager.Instance.Enemies[i]);
+            bool hit2 = Raycast.Intersects(initialFiringPos, firingDirection2, GameManager.Instance.Enemies[i]);
+            bool hit3 = Raycast.Intersects(initialFiringPos, firingDirection3, GameManager.Instance.Enemies[i]);
+            bool hit4 = Raycast.Intersects(initialFiringPos, firingDirection4, GameManager.Instance.Enemies[i]);
 
-            if (hit)
+            if (hit1 || hit2 || hit3 || hit4)
                 GameManager.Instance.Enemies[i].TakeDamage(m_PrimaryAttackDamage);
         }
     }

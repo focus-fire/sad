@@ -22,11 +22,12 @@ public class GameManager : SadBehaviour
             Instance = this;
 
         // Instantiate member variables
-        Entity e = FindEntityWithName("TestCube"); // The Player
+        Entity e = FindEntityWithName("Player"); // The Player
         Player = e.GetScriptComponent<Player>();
+        Player.transform.position = Vector3.zero;
 
-        m_MinSpawnRange = -50;
-        m_MaxSpawnRange = 50;
+        m_MinSpawnRange = -10;
+        m_MaxSpawnRange = 10;
 
         Log.Debug($"Player info: {Player.GUID}");
 
@@ -64,16 +65,16 @@ public class GameManager : SadBehaviour
         // TODO: Instantiate enemies with models and provide spawn locations.
 
         // Instantiate new Entity (without model)
-        Entity enemyCube = Instantiate("EnemyCube");
+        Entity enemyEntity = InstantiateWithModelWithPosition("Enemy", "Ghost_Mob.fbx", MGenRandomEnemyLocation());
 
         // Add Enemy script to newly generated Entity
-        enemyCube.AddScriptComponent<Enemy>();
-        Enemy e = enemyCube.GetScriptComponent<Enemy>();
-        e.transform.position = MGenRandomEnemyLocation();
+        enemyEntity.AddScriptComponent<Enemy>();
+        Enemy enemy = enemyEntity.GetScriptComponent<Enemy>();
+        enemy.transform.Scale(new Vector3(0.1f));
 
-        Log.Debug($"Found an enemy with {e?.Health} health @ {e.transform.position}");
+        Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
 
-        Enemies.Add(e);
+        Enemies.Add(enemy);
     }
 
     /// <summary>

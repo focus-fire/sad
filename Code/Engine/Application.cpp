@@ -34,9 +34,10 @@
 
 sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
-float sad::Application::s_DeltaTime;
 sad::GameCamera* sad::Application::s_GameCamera;
 sad::EditorCamera* sad::Application::s_EditorCamera;
+
+float sad::Application::s_DeltaTime;
 
 sad::Application::Application()
 {
@@ -53,6 +54,9 @@ sad::Application::Application()
 	s_GameCamera = new sad::GameCamera();
 
 	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
+
+	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
+	core::InitializeListener("ResetLevel", resetLevel);
 }
 
 sad::Application::~Application()
@@ -138,6 +142,21 @@ void sad::Application::EngineStart()
 	Teardown();
 }
 
+void sad::Application::LevelReset()
+{
+	// Stop the game
+	m_IsGameOn = false;
+
+	// Clear the registry
+	sad::ecs::Registry::GetEntityWorld().clear();
+
+	// Import Level and GUIDs 
+	delete m_CurrentLevel;
+	m_CurrentLevel = LevelManager::ImportLevel();
+	SAD_ASSERT(m_CurrentLevel, "Failed to load a level");
+	m_CurrentLevel->Start();
+}
+
 void sad::Application::PollEvents(bool& isWindowClosed)
 {
 	InputManager& input = InputManager::GetInstance();
@@ -209,8 +228,6 @@ void sad::Application::Teardown()
 { 
 	sad::cs::ScriptingEngine::RuntimeStop();
 	sad::cs::ScriptingEngine::Teardown();
-
-	LevelManager::ExportLevel();
 
 	m_Editor->Teardown();
 

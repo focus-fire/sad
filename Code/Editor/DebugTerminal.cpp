@@ -35,6 +35,6 @@ void cap::DebugTerminal::Render()
 {
 	if (!m_IsVisible)
 		return;
-	
+
 	m_IsVisible = m_Terminal.show();
 }

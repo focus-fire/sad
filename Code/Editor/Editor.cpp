@@ -15,6 +15,7 @@
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
 #include <Engine/Camera.h>
+#include <Engine/LevelManager.h>
 
 #include <Game/Time.h>
 
@@ -65,6 +66,23 @@ void cap::Editor::Clear()
 	ImGuizmo::BeginFrame();
 }
 
+const float rightColumnWidth = 250.0f;
+const float windowTopEdge = 0.0f;
+const float windowLeftEdge = 0.0f;
+const float gameWindowX = windowLeftEdge;
+const float gameWindowY = windowTopEdge;
+const float gameWindowRightEdge = 1025.0f;
+const float playWindowX = gameWindowRightEdge;
+const float playWindowY = windowTopEdge;
+const float playWindowHeight = 65.0f;
+const float listWindowX = gameWindowRightEdge;
+const float listWindowY = playWindowHeight;
+const float listWindowHeight = 390.0f;
+const float transformWindowX = gameWindowRightEdge;
+const float transformWindowY = listWindowY + listWindowHeight;
+const float transformWindowHeight = 125.0f;
+
+
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
 	bool showGameWindow = true;
@@ -85,7 +103,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	}
 
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
-	ImGui::SetWindowPos(ImVec2(50.0, 25.0), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(gameWindowX, gameWindowY), ImGuiCond_Once);
 
 	// Pass frameBuffer texture to be rendered in window
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();
@@ -141,8 +159,8 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 	float viewManipulateTop = windowPos.y;
 
 	ImGui::Begin("Transform", 0);
-	ImGui::SetWindowPos(ImVec2(1150.0f, 115.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(250.0f, 125.0f), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(transformWindowX, transformWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, transformWindowHeight), ImGuiCond_Once);
 
 	// Check for hotkey to update gizmo operation for particular object
 	if (transformDecomposition)
@@ -196,32 +214,45 @@ std::vector<glm::vec3> cap::Editor::RenderGizmos(float* modelMatrix, bool transf
 void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
-
-	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+	PanelAndButton();
+	EditorControls();
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
+void cap::Editor::PanelAndButton()
+{
+	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
 	ImGui::Begin("Action Panel");
-	ImGui::SetWindowPos(ImVec2(1150.0f, 35.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(125.0f, 65.0f), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Once);
 	if (ButtonCenteredOnLine(currentMode))
 	{
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
 		core::SignalEvent("OnToggleEngineMode");
+	}
+	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	{
+		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+		core::SignalEvent("OnToggleEngineMode");
+		core::SignalEvent("ResetLevel");
+	}
+	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+	{
+		sad::LevelManager::ExportLevel();
 	}
 	ImGui::End();
 
 	// Really scuffed way to list entities, included mainly for debugging
 	// Cycles through available names and lists them in the editor
 	ImGui::Begin("Scuffed Entity List");
-	ImGui::SetWindowPos(ImVec2(1150.0f, 265.0f), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(200.0f, 225.0f), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Once);
 	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
 	for (auto [entity, name] : view.each())
 		ImGui::Text(name.m_Name.c_str());
 	ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0.5f */)
@@ -236,6 +267,31 @@ bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + off);
 
 	return ImGui::Button(label);
+}
+
+/**
+ * @brief 
+ * Controls
+ * ctrl+s : Save state
+ * ctrl+b : Switch editor mode
+*/
+void cap::Editor::EditorControls()
+{
+	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
+	{
+		if (!m_IsEditorInPlayMode && ImGui::IsKeyPressed(ImGuiKey_S))
+		{
+			sad::LevelManager::ExportLevel();
+			m_IsEditorInPlayMode = false;
+			core::Log(ELogType::Trace, "Saved");
+		}
+
+		if (ImGui::IsKeyPressed(ImGuiKey_P))
+		{
+			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+			core::SignalEvent("OnToggleEngineMode");
+		}
+	}
 }
 
 void cap::Editor::Teardown()

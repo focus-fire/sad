@@ -8,5 +8,6 @@ var searchData=
   ['levelsnapshotinput_100',['LevelSnapshotInput',['../classsad_1_1LevelSnapshotInput.html',1,'sad']]],
   ['levelsnapshotoutput_101',['LevelSnapshotOutput',['../classsad_1_1LevelSnapshotOutput.html',1,'sad']]],
   ['linerenderer_102',['LineRenderer',['../structsad_1_1LineRenderer.html',1,'sad']]],
-  ['level_20defaults_103',['Level Defaults',['../md_Docs_ApplicationFileDefault.html',1,'']]]
+  ['lockinputs_103',['LockInputs',['../classsad_1_1InputManager.html#acaf8b9fb6602e2f2e91f10c577153cb3',1,'sad::InputManager']]],
+  ['level_20defaults_104',['Level Defaults',['../md_Docs_ApplicationFileDefault.html',1,'']]]
 ];

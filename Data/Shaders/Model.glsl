@@ -76,5 +76,5 @@ void main()
         specular = vec4(0.0f, 0.0f, 0.0f, 0.0f);
     }
 
-    out_FragColor = ambient * diffuse * specular;
+    out_FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }

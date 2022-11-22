@@ -41,6 +41,7 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 		glm::vec3 max = glm::vec3(aabb.mMax[0], aabb.mMax[1], aabb.mMax[2]);
 		BoundComponent bound = entity.GetComponent<BoundComponent>();
 		bound.m_Bound->SetMinMax(min, max);
+		bound.m_Bound->SetSizeRatio(transformComponent.m_Transform->GetScale());
 
 		// Mark the RenderablePrimitive as clean 
 		modelResourceComponent.m_IsResourceDirty = false;

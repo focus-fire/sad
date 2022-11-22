@@ -145,6 +145,7 @@ void sad::Application::PollEvents(bool& isWindowClosed)
 
 	while (SDL_PollEvent(&event)) 
 	{
+        input.UpdateTicks();
 		m_Editor->CatchSDLEvents(event);
 		input.CatchMouseEvents(event);
 		input.CatchKeyboardEvents(event);

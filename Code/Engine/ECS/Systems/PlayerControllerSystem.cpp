@@ -136,8 +136,13 @@ void sad::ecs::PlayerControllerSystem::Update(EntityWorld& world)
 
 	for (auto [controllerComponent, transformComponent] : editorView.each())
 	{
-		PlayerControls(input, transformComponent, moveSpeedMultiplier);
-		EditorControls(input, transformComponent, moveSpeedMultiplier);
+		// In editor mode, prevents player movement when ctrl is held to prevent hotkey conflicts
+		if (!input.GetKey(sad::KeyCode::LCtrl) && !input.GetKey(sad::KeyCode::RCtrl))
+		{
+			PlayerControls(input, transformComponent, moveSpeedMultiplier);
+			EditorControls(input, transformComponent, moveSpeedMultiplier);
+		}
+			
 	}
 	
 }

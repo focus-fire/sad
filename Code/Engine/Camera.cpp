@@ -7,7 +7,7 @@
 
 glm::vec3 sad::Camera::cameraPosition;
 glm::vec3 sad::Camera::cameraEulers;
-
+glm::vec3 sad::Camera::cameraForward;
 
 glm::mat4 sad::Camera::GetProjectionMatrix()
 {
@@ -32,6 +32,7 @@ glm::mat4 sad::Camera::GetViewMatrix()
 	// Calculate the new "up" vector by doing cross product of the right and forwards vectors
 	glm::vec3 up{ glm::cross(right, forwards) };
 
+	cameraForward = cameraPosition + forwards;
 	// Return the appropriate lookAt vector. (Camera position, Camera forward direction, Camera's "up" direction).
 	return glm::lookAt(cameraPosition, cameraPosition + forwards, up);
 }

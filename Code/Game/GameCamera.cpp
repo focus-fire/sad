@@ -14,6 +14,9 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
+float sad::GameCamera::walkDirection;
+bool sad::GameCamera::walking;
+int sad::GameCamera::wasdState;
 
 void sad::GameCamera::Update()
 {
@@ -58,6 +61,96 @@ void sad::GameCamera::CurrentCameraState()
 	// TODO: Probably don't need to grab the instance every update
 	InputManager& input = InputManager::GetInstance();
 
+    // Capture player state
+    walkDirection = -cameraEulers.y;
+    wasdState = 0;
+    walking = false;
+
+    // Handles forward/backward movement using W and S
+    if (input.GetKey(sad::KeyCode::W))
+    {
+        wasdState += 1;
+    }
+
+    if (input.GetKey(sad::KeyCode::S))
+    {
+        wasdState += 4;
+    }
+
+    // Handles left/right movement using A and D
+    if (input.GetKey(sad::KeyCode::A))
+    {
+        wasdState += 2;
+    }
+
+    if (input.GetKey(sad::KeyCode::D))
+    {
+        wasdState += 8;
+    }
+
+    // TODO: Have to move this somwhere else to handle pointer position and visibility
+    if (input.GetKey(sad::KeyCode::Escape))
+    {
+        SDL_SetRelativeMouseMode(SDL_FALSE);
+        SDL_WarpMouseInWindow(NULL, NULL, NULL);
+    }
+    // Interpret WASD state
+    switch (wasdState)
+    {
+    case 1:
+    case 11:
+        // Forwards
+        walking = true;
+        walkDirection += 90;
+        break;
+    case 3:
+        // Left-forwards
+        walking = true;
+        walkDirection += 45;
+        break;
+    case 2:
+    case 7:
+        // Left
+        walking = true;
+        break;
+    case 6:
+        // Left-backwards
+        walking = true;
+        walkDirection += 315;
+        break;
+    case 4:
+    case 14:
+        // Backwards
+        walking = true;
+        walkDirection += 270;
+        break;
+    case 12:
+        // Right-backwards
+        walking = true;
+        walkDirection += 225;
+        break;
+    case 8:
+    case 13:
+        // Right
+        walking = true;
+        walkDirection += 180;
+        break;
+    case 9:
+        // Right-forwards
+        walking = true;
+        walkDirection += 135;
+    }
+
+    if (walking)
+    {
+        // Update the camera position based on direction vector. 0.01f is the constant movespeed
+        cameraPosition += 0.01f * glm::vec3{
+            glm::cos(glm::radians(walkDirection)),
+            0.0,
+            glm::sin(glm::radians(walkDirection))
+        };
+    }
+
 	ecs::EntityWorld& world = ecs::Registry::GetEntityWorld();
 
 	// Get all entities with renderableObject, transform and scripting Components
@@ -69,8 +162,8 @@ void sad::GameCamera::CurrentCameraState()
 		// Update the game camera position based on the player object's transform and apply rotation to the player object based on camera's yaw
 		if (entityScriptClassName == "Player")
 		{
-			sad::GameCamera::cameraPosition = transformComponent.m_Transform->GetPosition();
-			transformComponent.m_Transform->SetRotation(glm::toQuat(glm::orientate3(glm::vec3(0, 0, cameraEulers.y * 0.1f))));
+			transformComponent.m_Transform->SetPosition(sad::GameCamera::cameraPosition);
+            transformComponent.m_Transform->SetRotation(glm::toQuat(glm::orientate3(cameraForward)));
 		}
 	}
 }

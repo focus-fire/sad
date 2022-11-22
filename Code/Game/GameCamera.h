@@ -28,5 +28,9 @@ namespace sad
 		*/
 		void CurrentCameraState() override;
 
+	private:
+		static int wasdState;
+		static bool walking;
+		static float walkDirection;
 	};
 }

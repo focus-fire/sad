@@ -40,5 +40,7 @@ namespace sad
 		*/
 		static glm::vec3 cameraEulers;
 
+		static glm::vec3 cameraForward;
+
 	};
 }

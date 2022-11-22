@@ -32,7 +32,7 @@ public class Player : SadBehaviour
 
     void Update()
     {
-        Move();
+        //Move();
 
         // INPUT TESTS
         if (Input.GetButton(ControllerButton.South))

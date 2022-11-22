@@ -12,7 +12,6 @@ public class Enemy : SadBehaviour
         Damage = 5;
 
         Quaternion quatStart = Quaternion.LookAt(Vector3.zero, Vector3.zero, Vector3.zero);
-
     }
 
     void Update() 

@@ -14,7 +14,7 @@ namespace sad
 	* @brief Handles Game Camera rotation and position.
 	*/
 
-	static class GameCamera : public Camera
+	class GameCamera : public Camera
 	{
 	public:
 

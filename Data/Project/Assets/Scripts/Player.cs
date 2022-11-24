@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Player : SadBehaviour
 {
-    private int m_PrimaryAttackDamage = 100;
+    public int PrimaryAttackDamage = 100;
     private float m_MoveSpeed = 1f;
 
     void Awake()
@@ -62,7 +62,7 @@ public class Player : SadBehaviour
             bool hit4 = Raycast.Intersects(initialFiringPos, firingDirection4, GameManager.Instance.Enemies[i]);
 
             if (hit1 || hit2 || hit3 || hit4)
-                GameManager.Instance.Enemies[i].TakeDamage(m_PrimaryAttackDamage);
+                GameManager.Instance.Enemies[i].TakeDamage(PrimaryAttackDamage);
         }
     }
 

@@ -35,10 +35,10 @@ namespace sad
 		 * @brief Return a pointer to the entity pool, mark as inactive
 		 * @param entity 
 		*/
-		void ReturnToPool(ecs::Entity* entity);
+		void ReturnToPool(ecs::Entity entity);
 
 	private:
-		ObjectPooler() 
+		ObjectPooler()
 		{
 			for (int i = 0; i < m_PoolSize; i++)
 			{
@@ -53,29 +53,12 @@ namespace sad
 		/**
 		 * @brief Doubles the entity pool size
 		*/
-		void ExpandEntityPool()
-		{
-			for (int i = 0; i < m_PoolSize; i++)
-			{
-				m_Pool.push_back(PoolObject());
-			}
-			m_PoolSize *= 2;
-		}
+		void ExpandEntityPool();
 
 		/**
 		 * @brief Return the first available index, return -1 if not found
 		 * @return 
 		*/
-		int GetAvailableIndex()
-		{
-			int i;
-			for (i = 0; i < m_PoolSize; i++)
-			{
-				if (m_Pool[i].isAvailable == true)
-					return i;
-			}
-			ExpandEntityPool();
-			return i+1;
-		}
+		int GetAvailableIndex();
 	};
 }

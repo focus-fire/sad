@@ -1,4 +1,5 @@
 ﻿using Sad;
+using System;
 using System.Collections.Generic;
 
 public class GameManager : SadBehaviour
@@ -9,6 +10,8 @@ public class GameManager : SadBehaviour
     public Player Player;
 
     private int m_CurrentWave;
+    private int m_MinSpawnRange;
+    private int m_MaxSpawnRange;
 
     void Awake()
     {
@@ -19,8 +22,12 @@ public class GameManager : SadBehaviour
             Instance = this;
 
         // Instantiate member variables
-        Entity e = FindEntityWithName("TestCube");
+        Entity e = FindEntityWithName("Player"); // The Player
         Player = e.GetScriptComponent<Player>();
+        Player.transform.position = Vector3.zero;
+
+        m_MinSpawnRange = -10;
+        m_MaxSpawnRange = 10;
 
         Log.Debug($"Player info: {Player.GUID}");
 
@@ -57,19 +64,29 @@ public class GameManager : SadBehaviour
     {
         // TODO: Instantiate enemies with models and provide spawn locations.
 
-        // Testing Instantiation
-        Entity EnemyCube = Instantiate("EnemyCube");
-        Log.Debug($"Instantiated an entity with GUID => {EnemyCube?.GUID}");
+        // Instantiate new Entity (without model)
+        Entity enemyEntity = InstantiateWithModelWithPosition("Enemy", "Ghost_Mob.fbx", MGenRandomEnemyLocation());
 
-        // Testing Finds
-        Entity foundEnemyCube = FindEntityWithName("EnemyCube");
-        Log.Debug($"Found a component with GUID => {foundEnemyCube?.GUID}");
+        // Add Enemy script to newly generated Entity
+        enemyEntity.AddScriptComponent<Enemy>();
+        Enemy enemy = enemyEntity.GetScriptComponent<Enemy>();
+        enemy.transform.Scale(new Vector3(0.1f));
 
-        // Testing Script Adding/Getting
-        foundEnemyCube.AddScriptComponent<Enemy>();
-        Enemy e = foundEnemyCube.GetScriptComponent<Enemy>();
-        Log.Debug($"Found an enemy with {e?.Health} health");
+        Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
 
-        Enemies.Add(e);
+        Enemies.Add(enemy);
+    }
+
+    /// <summary>
+    /// Randomly generate an enemy spawn location on X- and Z-axis within a specified range.
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 MGenRandomEnemyLocation()
+    {
+        Random rand = new Random();
+        int x = rand.Next(m_MinSpawnRange, m_MaxSpawnRange);
+        int z = rand.Next(m_MinSpawnRange, m_MaxSpawnRange);
+
+        return new Vector3(x, 0, z);
     }
 }

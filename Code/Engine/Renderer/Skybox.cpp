@@ -39,12 +39,12 @@ void sad::rad::Skybox::SetSkybox()
             GL_CALL(glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data
             ));
-            stbi_image_free(data);
         } else
         {
             core::Log(ELogType::Warn, "Skybox texture at location: '{}' was not properly loaded", path);
-            stbi_image_free(data);
         }
+
+        stbi_image_free(data);
     }
 
     GL_CALL(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR));

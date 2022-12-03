@@ -105,13 +105,11 @@ void sad::rad::Skybox::Draw()
 
 void sad::rad::Skybox::Bind() const
 {
-    //GL_CALL(glBindVertexArray(m_RendererId));
     GL_CALL(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId));
 }
 
 void sad::rad::Skybox::Unbind() const
 {
-    //GL_CALL(glBindVertexArray(0));
     GL_CALL(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
 

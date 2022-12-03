@@ -198,10 +198,9 @@ void sad::Application::PollEvents(bool& isWindowClosed)
 
 void sad::Application::Update(float dt)
 {
-	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
-
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
+	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 

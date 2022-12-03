@@ -5,7 +5,6 @@
 #include "Application.h"
 
 #include "Scripting/ScriptingEngine.h"
-#include "ObjectPooler.h"
 
 #include "ECS/Entity.h"
 #include "ECS/Components/ComponentTypes.h"
@@ -116,7 +115,6 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 	entity.AddComponent<ecs::BoundComponent>(bound);
 
 	m_EntityMap[guid] = entity;
-	auto x = sad::ObjectPooler::GetInstance().GetFromPool();
 
 	return entity;
 }
@@ -150,8 +148,6 @@ bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 
 	// Remove the entity from the registry
 	sad::ecs::Registry::EraseEntityHandle(entity);
-
-	sad::ObjectPooler::GetInstance().ReturnToPool(&entity);
 
 	return true;
 }

@@ -51,10 +51,10 @@ uniform Model u_Model;
 void main()
 {
     // Variables that could be uniforms
-    float shininess = 2.0f;
+    float shininess = 1.0f;
 
     // Ambient
-    float ambientStrength = 12.0f;
+    float ambientStrength = 20.0f;
     vec4 ambient = u_Model.Ambient * texture(u_Texture, v_TexCoord) * ambientStrength;
 
     // Diffuse
@@ -65,7 +65,7 @@ void main()
     vec4 diffuse = u_Model.Diffuse * diff * diffuseStrength;
 
     // Specular
-    float specularStrength = 1.5f;
+    float specularStrength = 2.0f;
     vec3 viewDir = normalize(u_ViewPosition - vec3(v_FragPos));
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), shininess);

@@ -22,6 +22,7 @@
 #include "Renderer/FrameBuffer.h"
 #include "Renderer/ShaderResource.h"
 #include "Renderer/Sample/Cube.h"
+#include "Renderer/Skybox.h"
 
 #include "ResourceManager.h"
 #include "AudioManager.h"
@@ -57,6 +58,8 @@ sad::Application::Application()
 
 	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
 	core::InitializeListener("ResetLevel", resetLevel);
+
+	m_Skybox = new rad::Skybox();
 }
 
 sad::Application::~Application()
@@ -70,6 +73,7 @@ sad::Application::~Application()
 
 	delete s_EditorCamera;
 	delete s_GameCamera;
+	delete m_Skybox;
 }
 
 void sad::Application::EngineStart()
@@ -82,6 +86,9 @@ void sad::Application::EngineStart()
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
+
+	// Skybox
+	m_Skybox->SetSkybox();
 
 	// Initialize Scripting
 	cs::ScriptingEngine::Start();
@@ -191,9 +198,10 @@ void sad::Application::PollEvents(bool& isWindowClosed)
 
 void sad::Application::Update(float dt)
 {
+	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
+
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
-	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 
@@ -201,6 +209,8 @@ void sad::Application::Update(float dt)
 
 	// Second 'pass' to recolor outside the framebuffer
 	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
+
+	m_Skybox->Draw();
 
 	// Update events subscribed to the update loop
 	core::UpdateEvents();
@@ -211,7 +221,7 @@ void sad::Application::Update(float dt)
 	m_CurrentLevel->Update(world);
 
 	// Update GameCamera
-	sad::rad::RenderBuddy::GetCameraInstance()->Update();
+	rad::RenderBuddy::GetCameraInstance()->Update();
 
 	// Unbind framebuffer for next pass
 	rad::RenderBuddy::UnbindFrameBuffer();

@@ -15,6 +15,8 @@ public class Enemy : SadBehaviour
 	private float m_SpeedUpDown;
 	private float m_DistanceUpDown;
 
+    private bool m_IsActive = false;
+
 	void Awake() 
     { 
         // Testing updates to enemy public variables
@@ -29,8 +31,21 @@ public class Enemy : SadBehaviour
 		m_StartingHeight = transform.position.y;
     }
 
+    public void SetActive(bool active)
+    {
+        m_IsActive = active;
+    }
+
+    public void SetStartingHeight(float height)
+    {
+        m_StartingHeight = height;
+    }
+
     void Update() 
     {
+        if (!m_IsActive)
+            return;
+
         Move();
     }
 
@@ -52,9 +67,10 @@ public class Enemy : SadBehaviour
     {
         // Enemy kills itself after removing itself from list of existing Enemies
         Log.Debug($"Enemy#{this?.GUID} got dead.");
-        this.RemoveScriptComponent<Enemy>();
-        GameManager.Instance.Enemies.Remove(this);
-        Destroy(this);
+        GameManager.Instance.m_enemyPool.ReturnEnemyToPool(this);
+        //this.RemoveScriptComponent<Enemy>();
+        //GameManager.Instance.Enemies.Remove(this);
+        //Destroy(this);
     }
 
 	void EnemyBobbing() 

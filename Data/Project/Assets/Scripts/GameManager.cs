@@ -13,6 +13,8 @@ public class GameManager : SadBehaviour
     private int m_MinSpawnRange;
     private int m_MaxSpawnRange;
 
+    public ObjectPool m_enemyPool = new ObjectPool(5);
+
     void Awake()
     {
         // Instantiate Singleton
@@ -65,12 +67,14 @@ public class GameManager : SadBehaviour
         // TODO: Instantiate enemies with models and provide spawn locations.
 
         // Instantiate new Entity (without model)
-        Entity enemyEntity = InstantiateWithModelWithPosition("Enemy", "Ghost_Mob.fbx", MGenRandomEnemyLocation());
+        /*Entity enemyEntity = InstantiateWithModelWithPosition("Enemy", "Ghost_Mob.fbx", MGenRandomEnemyLocation());
 
         // Add Enemy script to newly generated Entity
         enemyEntity.AddScriptComponent<Enemy>();
         Enemy enemy = enemyEntity.GetScriptComponent<Enemy>();
-        enemy.transform.Scale(new Vector3(0.1f));
+        enemy.transform.Scale(new Vector3(0.1f));*/
+
+        Enemy enemy = m_enemyPool.GetEnemyFromPool();
 
         Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
 
@@ -81,7 +85,7 @@ public class GameManager : SadBehaviour
     /// Randomly generate an enemy spawn location on X- and Z-axis within a specified range.
     /// </summary>
     /// <returns></returns>
-    private Vector3 MGenRandomEnemyLocation()
+    public Vector3 MGenRandomEnemyLocation()
     {
         Random rand = new Random();
         int x = rand.Next(m_MinSpawnRange, m_MaxSpawnRange);

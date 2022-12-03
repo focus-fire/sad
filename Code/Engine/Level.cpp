@@ -105,40 +105,38 @@ sad::ecs::Entity sad::Level::InstantiateEntity(const std::string& name)
 
 sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, const std::string& name, core::Guid guid /* = core::Guid::CreateGuid() */)
 {
-	core::Log(ELogType::Info, "Instantiate from handle");
-	ecs::Entity* entity = sad::ObjectPooler::GetInstance().GetFromPool();
+	ecs::Entity entity = ecs::Entity(handle);
 	core::Pointer<sad::Transform> transform = core::CreatePointer<sad::Transform>();
 	core::Pointer<sad::Bound> bound = core::CreatePointer<sad::Bound>(*transform.get());
 
 	// All entities should have a GUID, Transform, and Bound
-	entity->AddComponent<ecs::GuidComponent>(guid);
-	entity->AddComponent<ecs::NameComponent>(name);
-	entity->AddComponent<ecs::TransformComponent>(transform);
-	entity->AddComponent<ecs::BoundComponent>(bound);
+	entity.AddComponent<ecs::GuidComponent>(guid);
+	entity.AddComponent<ecs::NameComponent>(name);
+	entity.AddComponent<ecs::TransformComponent>(transform);
+	entity.AddComponent<ecs::BoundComponent>(bound);
 
-	m_EntityMap[guid] = *entity;
+	m_EntityMap[guid] = entity;
+	auto x = sad::ObjectPooler::GetInstance().GetFromPool();
 
-	return *entity;
+	return entity;
 }
 
 sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle, core::Guid guid /* = core::Guid::CreateGuid() */)
 {
-	ecs::Entity* entity = sad::ObjectPooler::GetInstance().GetFromPool();
+	ecs::Entity entity = ecs::Entity(handle);
 
-	if (!entity->HasComponent<ecs::GuidComponent>())
+	if (!entity.HasComponent<ecs::GuidComponent>())
 	{
-		entity->OverwriteComponent<ecs::GuidComponent>({ guid });
+		entity.OverwriteComponent<ecs::GuidComponent>({ guid });
 
-		m_EntityMap[guid] = *entity;
+		m_EntityMap[guid] = entity;
 	}
 
-	return *entity;
+	return entity;
 }
 
 bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 {
-	sad::ObjectPooler::GetInstance().ReturnToPool(entity);
-
 	if (m_EntityMap.find(entity.GetGuid()) == m_EntityMap.end())
 		return false;
 
@@ -150,10 +148,10 @@ bool sad::Level::DestroyEntity(sad::ecs::Entity entity)
 	// Unbind the entity from the level's entity map
 	m_EntityMap.erase(entity.GetGuid());
 
-	//// Remove the entity from the registry
-	//sad::ecs::Registry::EraseEntityHandle(entity);
+	// Remove the entity from the registry
+	sad::ecs::Registry::EraseEntityHandle(entity);
 
-	
+	sad::ObjectPooler::GetInstance().ReturnToPool(&entity);
 
 	return true;
 }

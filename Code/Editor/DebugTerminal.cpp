@@ -5,6 +5,8 @@
 #include <imterm/terminal.hpp>
 #include <imterm/utils.hpp>
 
+#include <Engine/Application.h>
+
 cap::DebugTerminal::DebugTerminal(DebugTerminalCommandItems commands)
 	: m_Terminal(ImTerm::terminal<DebugTerminalHelper>(commands))
 	, m_TerminalCommands(commands)
@@ -28,7 +30,8 @@ void cap::DebugTerminal::Start()
 	core::AddLoggingSink(m_TerminalSinkPtr);
 	core::Log(ELogType::Info, "Welcome to the sadEngine!");
 
-	m_Terminal.set_size(ImVec2(650.0f, 300.0f));
+	float terminalWindowWidth = sad::Application::s_MainWindow->GetWidth();
+	m_Terminal.set_size(ImVec2(terminalWindowWidth, 300.0f));
 }
 
 void cap::DebugTerminal::Render()

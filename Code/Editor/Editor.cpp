@@ -68,15 +68,10 @@ const float windowLeftEdge = 0.0f;
 const float gameWindowX = windowLeftEdge;
 const float gameWindowY = windowTopEdge;
 const float gameWindowRightEdge = 1025.0f;
-const float playWindowX = gameWindowRightEdge;
 const float playWindowY = windowTopEdge;
-const float playWindowHeight = 65.0f;
-const float listWindowX = gameWindowRightEdge;
+const float playWindowHeight = 100.0f;
 const float listWindowY = playWindowHeight;
-const float listWindowHeight = 390.0f;
-const float transformWindowX = gameWindowRightEdge;
-const float transformWindowY = listWindowY + listWindowHeight;
-const float transformWindowHeight = 125.0f;
+const float listWindowHeight = 355.0f;
 
 
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
@@ -99,7 +94,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	}
 
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
-	ImGui::SetWindowPos(ImVec2(gameWindowX, gameWindowY), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(gameWindowX, gameWindowY), ImGuiCond_Always);
 
 	// Pass frameBuffer texture to be rendered in window
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();
@@ -130,9 +125,10 @@ void cap::Editor::Render()
 void cap::Editor::PanelAndButton()
 {
 	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
+	const float playWindowX = sad::Application::s_MainWindow->GetWidth() - rightColumnWidth;
 	ImGui::Begin("Action Panel");
-	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Once);
+	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Always);
 	if (ButtonCenteredOnLine(currentMode))
 	{
 		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
@@ -153,8 +149,9 @@ void cap::Editor::PanelAndButton()
 	// Really scuffed way to list entities, included mainly for debugging
 	// Cycles through available names and lists them in the editor
 	ImGui::Begin("Entity List");
-	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Once);
+	const float listWindowX = sad::Application::s_MainWindow->GetWidth() - rightColumnWidth;
+	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Always);
 	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
 	for (auto [entity, name] : view.each())
 		ImGui::Text(name.m_Name.c_str());

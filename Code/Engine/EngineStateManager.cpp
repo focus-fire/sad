@@ -9,8 +9,9 @@ sad::EngineStateManager::EngineStateManager(EEngineMode mode /* = EEngineMode::E
 	: m_EngineMode(mode)
 {
 	std::function<void(void)> toggleEngineFunction = std::bind(&EngineStateManager::ToggleEngineMode, this);
-	std::function<void(void)> onToggleCamera = std::bind(&EngineStateManager::OnToggleCamera, this);
 	core::InitializeListener("OnToggleEngineMode", toggleEngineFunction);
+
+	std::function<void(void)> onToggleCamera = std::bind(&EngineStateManager::OnToggleCamera, this);
 	core::InitializeListener("OnToggleEngineMode", onToggleCamera);
 }
 

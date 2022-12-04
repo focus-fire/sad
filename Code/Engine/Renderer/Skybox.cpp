@@ -93,6 +93,7 @@ void sad::rad::Skybox::Draw()
     glm::mat4 projectionMatrix = rad::RenderBuddy::GetCameraInstance()->GetProjectionMatrix();
     m_SkyboxShader->SetUniformMatrix4fv("u_ViewMatrix", glm::value_ptr(viewMatrix));
     m_SkyboxShader->SetUniformMatrix4fv("u_ProjectionMatrix", glm::value_ptr(projectionMatrix));
+    m_SkyboxShader->SetUniform1i("u_CubeTexture", 0);
     rad::RenderBuddy::DrawIndexed(m_VertexArray, m_IndexBuffer);
 
     m_SkyboxShader->Unbind();
@@ -105,6 +106,7 @@ void sad::rad::Skybox::Draw()
 
 void sad::rad::Skybox::Bind() const
 {
+	GL_CALL(glActiveTexture(GL_TEXTURE0));
     GL_CALL(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId));
 }
 

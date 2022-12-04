@@ -72,10 +72,9 @@ namespace sad
 		/**
 		 * @brief Imports an enitity handle into the level cache with a GUIDComponent
 		 * @param handle The entt handle corresponding with the imported entity
-		 * @param guid Native GUID for the entity, default parameter value will generate one automatically
 		 * @return Reference to the imported entity
 		*/
-		ecs::Entity ImportEntityFromHandle(entt::entity handle, core::Guid guid = core::Guid::CreateGuid());
+		ecs::Entity ImportEntityFromHandle(entt::entity handle);
 
 	public:
 		/**

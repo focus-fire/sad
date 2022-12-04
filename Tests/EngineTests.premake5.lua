@@ -16,6 +16,7 @@ project "EngineTests"
         "%{prj.location}/../Vendor/spdlog/include",
         "%{prj.location}/../Vendor/glm",
         "%{prj.location}/../Vendor/entt/single_include",
+        "%{prj.location}/../Vendor/json/single_include",
     }
 
     vpaths {

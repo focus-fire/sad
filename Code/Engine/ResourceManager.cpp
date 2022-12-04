@@ -212,6 +212,9 @@ void sad::ResourceManager::SendDataToFactory(const EResourceType& resourceType, 
 	case EResourceType::Level:
 		ResourceFactory::CreateResource<LevelResource>(resourceData);
 		break;
+	case EResourceType::Font:
+		ResourceFactory::CreateResource<FontResource>(resourceData);
+		break;
 	case EResourceType::Ignore:
 		break;
 	case EResourceType::None:
@@ -229,7 +232,7 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 
 	using String = core::StringUtils;
 
-	if (String::Equals(ext, ".fbx"))
+	if (String::Equals(ext, ".fbx") || String::Equals(ext, ".obj") || String::Equals(ext, ".blend"))
 		return EResourceType::Model;
 	
 	if (String::Equals(ext, ".png") || String::Equals(ext, ".jpg"))
@@ -243,6 +246,9 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 
 	if (String::Equals(ext, ".json"))
 		return EResourceType::Level;
+
+	if (String::Equals(ext, ".ttf"))
+		return EResourceType::Font;
 
 	if (String::Equals(ext, ".cs") 
 		|| String::Equals(ext, ".lua")

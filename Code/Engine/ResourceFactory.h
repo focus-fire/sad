@@ -14,6 +14,7 @@
 #include "LevelResource.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
+#include "FontResource.h"
 
 namespace sad
 {
@@ -111,6 +112,17 @@ namespace sad
 			core::Pointer<LevelResource> levelResource = core::CreatePointer<LevelResource>(data);
 			ResourceManager::AddResource<LevelResource>(levelResource);
 			core::Log(ELogType::Trace, "[ResourceFactory] Created a LevelResource with name {}", data.Name);
+		}
+
+		/**
+		 * @brief Factory construction for FontResource
+		*/
+		template<>
+		static void CreateResource<FontResource>(const Resource::ResourceData& data)
+		{
+			core::Pointer<FontResource> fontResource = core::CreatePointer<FontResource>(data);
+			ResourceManager::AddResource<FontResource>(fontResource);
+			core::Log(ELogType::Trace, "[ResourceFactory] Created a FontResource with name {}", data.Name);
 		}
 	};
 }

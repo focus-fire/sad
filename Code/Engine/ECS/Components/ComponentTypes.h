@@ -2,11 +2,11 @@
 
 /* Non-Serialized */
 
-#include "GuidComponent.h"
 #include "RenderableObjectComponent.h"
 
 /* Serialized */
 
+#include "GuidComponent.h"
 #include "NameComponent.h"
 #include "ScriptComponent.h"
 #include "TransformComponent.h"
@@ -16,6 +16,7 @@
 #include "PointLightComponent.h"
 
 #define SERIALIZED_COMPONENT_TYPES \
+	sad::ecs::GuidComponent,\
 	sad::ecs::NameComponent,\
 	sad::ecs::ScriptComponent,\
 	sad::ecs::TransformComponent,\

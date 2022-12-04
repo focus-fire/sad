@@ -249,7 +249,11 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 		|| String::Equals(ext, ".pdb") 
 		|| String::Equals(ext, ".dll") 
 		|| String::Equals(ext, ".csproj")
-		|| String::Equals(ext, ".cache"))
+		|| String::Equals(ext, ".cache")
+		|| String::Equals (ext, ".rsp"))
+		return EResourceType::Ignore;
+
+	if (String::Equals(fileName, "Makefile"))
 		return EResourceType::Ignore;
 
 	const std::string strFilePath = filePath.string();

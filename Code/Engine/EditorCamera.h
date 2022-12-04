@@ -14,7 +14,7 @@ namespace sad
 	* @brief Handles Editor Camera rotation and position. Also takes in keyboard and mouse input to calculate rotation and movement 
 	*/
 
-	static class EditorCamera : public Camera
+	class EditorCamera : public Camera
 	{
 	public:
 

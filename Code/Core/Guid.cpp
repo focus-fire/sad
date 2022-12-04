@@ -53,29 +53,26 @@ core::Guid::Guid()
 	: m_StringGuid()
 { }
 
-#ifdef _SAD_WINDOWS
-core::Guid::Guid(GUID guid)
+core::Guid::Guid(NativeGuid guid)
 	: m_Guid(guid)
 {
+#ifdef _SAD_WINDOWS
 	unsigned char* str;
 	RPC_STATUS status = UuidToStringA(&guid, &str);
 	SAD_ASSERT(status == RPC_S_OK, "Failed to convert GUID to string");
 
 	m_StringGuid = std::string((char*) str);
 	RpcStringFreeA(&str);
-}
 #else
-core::Guid::Guid(uuid_t uuid)
-{ 
-	uuid_copy(m_Guid, uuid);
+	uuid_copy(m_Guid, guid);
 
 	char str[37];
-	uuid_unparse_lower(uuid, str);
+	uuid_unparse_lower(guid, str);
 	SAD_ASSERT(str, "Failed to convert GUID to string");
 
 	m_StringGuid = std::string(str);
-}
 #endif
+}
 
 int core::Guid::CompareGuid(const Guid& a, const Guid& b)
 {
@@ -90,7 +87,16 @@ int core::Guid::CompareGuid(const Guid& a, const Guid& b)
 	result = UuidCompare(&aGuid.m_Guid, &bGuid.m_Guid, &status);
 	SAD_ASSERT(status == RPC_S_OK, "Failed to compare GUIDs");
 #else 
-	result = uuid_compare(a.m_Guid, b.m_Guid);
+
+	// Note: These have to be reconstructed from unsigned char* to uuid_t on Mac.
+	//	     Potentially worth further investigation, but this seems to be the only fix atm.
+	uuid_t aUUID, bUUID;
+	int aResult = uuid_parse(a.ToString().c_str(), aUUID);
+	int bResult = uuid_parse(b.ToString().c_str(), bUUID);
+	SAD_ASSERT(aResult == 0, "Failed to recreate Unix GUID");
+	SAD_ASSERT(bResult == 0, "Failed to recreate Unix GUID");
+
+	result = uuid_compare(aUUID, bUUID);
 #endif
 
 	return result;

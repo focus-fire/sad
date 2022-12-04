@@ -41,6 +41,13 @@ namespace sad::rad
 			std::vector<unsigned int> Indices;
 			std::vector<MeshTexture> Textures;
 			MeshColor Colors;
+
+			MeshData(std::vector<MeshVertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture> textures, MeshColor colors)
+				: Vertices(vertices)
+				, Indices(indices)
+				, Textures(textures)
+				, Colors(colors)
+			{ }
 		};
 
 		Mesh(const MeshData& meshData);

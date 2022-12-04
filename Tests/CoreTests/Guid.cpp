@@ -27,25 +27,25 @@ TEST_CASE("Guids can be properly compared")
 	{
 		const core::Guid firstGuid = core::Guid::CreateGuid();
 		const core::Guid secondGuid = core::Guid::CreateGuid();
-		REQUIRE_FALSE(firstGuid == secondGuid);
+		REQUIRE_FALSE((firstGuid == secondGuid));
 
 		const core::Guid firstGuidCopy = firstGuid;
-		REQUIRE(firstGuid == firstGuidCopy);
+		REQUIRE((firstGuid == firstGuidCopy));
 	}
 
 	SECTION("mutable guids can be compared")
 	{
 		core::Guid firstGuid = core::Guid::CreateGuid();
-		core::Guid secondGuid = core::Guid::CreateGuid();
+ 		core::Guid secondGuid = core::Guid::CreateGuid();
 
-		REQUIRE_FALSE(firstGuid == secondGuid);
-		REQUIRE_FALSE(firstGuid.Equals(secondGuid));
-		REQUIRE_FALSE(core::StringUtils::Equals(firstGuid.ToString(), secondGuid.ToString()));
+ 		REQUIRE_FALSE((firstGuid == secondGuid));
+ 		REQUIRE_FALSE(firstGuid.Equals(secondGuid));
+ 		REQUIRE_FALSE(core::StringUtils::Equals(firstGuid.ToString(), secondGuid.ToString()));
 
-		core::Guid firstGuidCopy = firstGuid;
+ 		core::Guid firstGuidCopy = firstGuid;
 
-		REQUIRE(firstGuid == firstGuidCopy);
-		REQUIRE(firstGuid.Equals(firstGuidCopy));
-		REQUIRE(core::StringUtils::Equals(firstGuid.ToString(), firstGuidCopy.ToString()));
+ 		REQUIRE((firstGuid == firstGuidCopy));
+ 		REQUIRE(firstGuid.Equals(firstGuidCopy));
+ 		REQUIRE(core::StringUtils::Equals(firstGuid.ToString(), firstGuidCopy.ToString()));
 	}
 }

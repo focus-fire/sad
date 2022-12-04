@@ -25,8 +25,9 @@ cap::Editor::Editor()
 	, m_GizmoSystem(new cap::GizmoSystem())
 	, m_ShowGameWindow(true)
 	, m_GameWindowTitle("Default - sadEngine")
-	, m_IsEditorInPlayMode(false)
 	, m_CanEditorBePaused(false)
+	, m_CanEditorBePlayed(true)
+	, m_CanEditorBeStopped(false)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -119,7 +120,9 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
-	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
+
+	// If the editor cannot be 'played' it is running
+	pog::Time::TimeScale = !m_CanEditorBePlayed ? 1.0f : 0.0f;
 	
 	// Renderable Panels
 	ActionPanel();
@@ -154,16 +157,13 @@ void cap::Editor::EditorControls()
 {
 	if (ImGui::IsKeyDown(ImGuiKey_LeftCtrl))
 	{
-		if (!m_IsEditorInPlayMode && ImGui::IsKeyPressed(ImGuiKey_S))
-		{
+		// Only allow ctl+S to save when the editor hasn't been started
+		if (m_CanEditorBePlayed && !m_CanEditorBeStopped && ImGui::IsKeyPressed(ImGuiKey_S))
 			sad::LevelManager::ExportLevel();
-			m_IsEditorInPlayMode = false;
-			core::Log(ELogType::Trace, "Saved");
-		}
 
 		if (ImGui::IsKeyPressed(ImGuiKey_P))
 		{
-			m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
+			m_CanEditorBePlayed = !m_CanEditorBePlayed;
 			core::SignalEvent("OnToggleEngineMode");
 		}
 	}
@@ -217,7 +217,7 @@ void cap::Editor::ActionPanel()
 void cap::Editor::PlayButton()
 {
 	bool disabled = false;
-	if (m_IsEditorInPlayMode && m_CanEditorBePaused)
+	if (!m_CanEditorBePlayed && m_CanEditorBePaused)
 	{
 		disabled = true;
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
@@ -225,18 +225,17 @@ void cap::Editor::PlayButton()
 	}
 
 	// Current editor mode, "Pause" or "Play"
-	if (ButtonCenteredOnLine("Play") && !m_IsEditorInPlayMode  && !m_CanEditorBePaused)
+	if (ButtonCenteredOnLine("Play") && m_CanEditorBePlayed  && !m_CanEditorBePaused)
 	{
 		// Ensure that each time the editor toggles INTO play mode, the level is exported
-		sad::LevelManager::ExportLevel();
+		// This way, if the editor can be stopped (it is running) the level doesn't exit when they resume play
+		if (!m_CanEditorBeStopped)
+			sad::LevelManager::ExportLevel();
 
 		// Only allow toggling the play mode if the editor can be paused
+		m_CanEditorBePlayed = false;
 		m_CanEditorBePaused = true;
-
-		// Start the game 
-		m_IsEditorInPlayMode = true;
-
-		core::Log(ELogType::Debug, "Started the game...");
+		m_CanEditorBeStopped = true;
 
 		core::SignalEvent("OnToggleEngineMode");
 	}
@@ -262,9 +261,8 @@ void cap::Editor::PauseButton()
 	{
 		// Allow the editor to be played again
 		m_CanEditorBePaused = false;
-		m_IsEditorInPlayMode = false;
-
-		core::Log(ELogType::Debug, "Paused the game...");
+		m_CanEditorBePlayed = true;
+		m_CanEditorBeStopped = true;
 
 		core::SignalEvent("OnToggleEngineMode");
 	}
@@ -279,24 +277,25 @@ void cap::Editor::PauseButton()
 void cap::Editor::StopButton()
 {
 	bool disabled = false;
-	if (!m_IsEditorInPlayMode)
+	if (!m_CanEditorBeStopped)
 	{
 		disabled = true;
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
 	}
 
-	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	if (ButtonCenteredOnLine("Stop") && m_CanEditorBeStopped)
 	{
 		// When the editor is in pause it's already using the editor camera/controls
 		// Therefore, the engine mode only needs to actually be toggled when 'Stop' is pressed from the game
 		if (m_CanEditorBePaused)
 			core::SignalEvent("OnToggleEngineMode");
 
-		m_IsEditorInPlayMode = false;
+		// Stop the editor and reset available buttons
+		m_CanEditorBePlayed = true;
 		m_CanEditorBePaused = false;
+		m_CanEditorBeStopped = false;
 
-		core::Log(ELogType::Debug, "Stopped the game...");
 		core::SignalEvent("ResetLevel");
 	}
 
@@ -310,14 +309,16 @@ void cap::Editor::StopButton()
 void cap::Editor::SaveButton()
 {
 	bool disabled = false;
-	if (m_IsEditorInPlayMode)
+
+	// Only allow saving if the editor is outside of game mode
+	if (m_CanEditorBeStopped)
 	{
 		disabled = true;
 		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
 		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
 	}
 
-	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+	if (ButtonCenteredOnLine("Save") && !m_CanEditorBeStopped)
 		sad::LevelManager::ExportLevel();
 
 	if (disabled)

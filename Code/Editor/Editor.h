@@ -59,7 +59,8 @@ namespace cap
 		float m_GameWindowHeight;
 		std::string m_GameWindowTitle;
 
-		bool m_IsEditorInPlayMode;
 		bool m_CanEditorBePaused;
+		bool m_CanEditorBeStopped;
+		bool m_CanEditorBePlayed;
 	};
 }

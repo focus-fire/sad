@@ -10,12 +10,15 @@
 #include <entt/entt.hpp>
 
 #include <Engine/Application.h>
+#include <Engine/Camera.h>
+#include <Engine/LevelManager.h>
+#include <Engine/ResourceManager.h>
+#include <Engine/FontResource.h>
+
 #include <Engine/Scripting/ScriptingEngine.h>
 #include <Engine/ECS/Components/NameComponent.h>
 #include <Engine/ECS/Components/TransformComponent.h>
 #include <Engine/ECS/Components/RenderableObjectComponent.h>
-#include <Engine/Camera.h>
-#include <Engine/LevelManager.h>
 
 #include <Game/Time.h>
 
@@ -45,6 +48,17 @@ cap::Editor::~Editor()
 
 void cap::Editor::Start()
 {
+	// Configure editor fonts
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	// Load Noto Sans font
+	sad::FontResource* notoSansFont = sad::ResourceManager::GetResource<sad::FontResource>("NotoSans-Regular.ttf");
+	m_NotoSans = io.Fonts->AddFontFromFileTTF(notoSansFont->GetResourceAbsolutePath().c_str(), 16.0f);
+	SAD_ASSERT(m_NotoSans, "Failed to load Editor font from ResourceManager");
+
+	m_Default = io.Fonts->AddFontDefault();
+	SAD_ASSERT(m_Default, "Failed to load default ImGui font");
+
 	ImGui_ImplSDL2_InitForOpenGL(sad::Application::s_MainWindow->GetSDLWindow(), sad::Application::s_MainWindow->GetGLContext());
 	ImGui_ImplOpenGL3_Init("#version 150");
 
@@ -64,23 +78,23 @@ void cap::Editor::Clear()
 	ImGuizmo::BeginFrame();
 }
 
-const float rightColumnWidth = 250.0f;
-const float windowTopEdge = 0.0f;
-const float windowLeftEdge = 0.0f;
-const float gameWindowX = windowLeftEdge;
-const float gameWindowY = windowTopEdge;
-const float gameWindowRightEdge = 1025.0f;
-const float playWindowY = windowTopEdge;
-const float playWindowHeight = 100.0f;
-const float listWindowY = playWindowHeight;
-const float listWindowHeight = 355.0f;
+const float c_RightColumnWidth = 250.0f;
+const float c_WindowTopEdge = 0.0f;
+const float c_WindowLeftEdge = 0.0f;
+const float c_GameWindowX = c_WindowLeftEdge;
+const float c_GameWindowY = c_WindowTopEdge;
+const float c_GameWindowRightEdge = 1025.0f;
+const float c_PlayWindowY = c_WindowTopEdge;
+const float c_PlayWindowHeight = 100.0f;
+const float c_ListWindowY = c_PlayWindowHeight;
+const float c_ListWindowHeight = 355.0f;
 
 void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 {
 	bool showGameWindow = true;
 
 	// Set the window size once when the window opens
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.83f, 0.83f, 0.83f));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, (ImVec4)ImColor(0.13f, 0.13f, 0.13f));
 
 	ImGui::Begin(m_GameWindowTitle.c_str(), &showGameWindow, m_GizmoSystem->s_GameWindowFlags);
 	ImGui::PopStyleColor();
@@ -95,7 +109,7 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	}
 
 	ImGui::SetWindowSize(ImVec2(m_GameWindowWidth / 1.25, m_GameWindowHeight / 1.25), ImGuiCond_Always);
-	ImGui::SetWindowPos(ImVec2(gameWindowX, gameWindowY), ImGuiCond_Always);
+	ImGui::SetWindowPos(ImVec2(c_GameWindowX, c_GameWindowY), ImGuiCond_Always);
 
 	// Pass frameBuffer texture to be rendered in window
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();
@@ -113,7 +127,9 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 
 void cap::Editor::Render()
 {
+	ImGui::PushFont(m_Default);
 	m_DebugTerminal->Render();
+	ImGui::PopFont();
 
 	// If the editor cannot be 'played' it is running
 	pog::Time::TimeScale = !m_CanEditorBePlayed ? 1.0f : 0.0f;
@@ -174,9 +190,9 @@ void cap::Editor::EntityListPanel()
 	// Really scuffed way to list entities, included mainly for debugging
 	// Cycles through available names and lists them in the editor
 	ImGui::Begin("Entity List");
-	const float listWindowX = sad::Application::s_MainWindow->GetWidth() - rightColumnWidth;
-	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Always);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Always);
+	const float listWindowX = sad::Application::s_MainWindow->GetWidth() - c_RightColumnWidth;
+	ImGui::SetWindowPos(ImVec2(listWindowX, c_ListWindowY), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(c_RightColumnWidth, c_ListWindowHeight), ImGuiCond_Always);
 
 	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
 	for (auto [entity, name] : view.each())
@@ -190,9 +206,9 @@ void cap::Editor::EntityListPanel()
 void cap::Editor::ActionPanel()
 {
 	ImGui::Begin("Action Panel");
-	const float playWindowX = sad::Application::s_MainWindow->GetWidth() - rightColumnWidth;
-	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Always);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Always);
+	const float playWindowX = sad::Application::s_MainWindow->GetWidth() - c_RightColumnWidth;
+	ImGui::SetWindowPos(ImVec2(playWindowX, c_PlayWindowY), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(c_RightColumnWidth, c_PlayWindowHeight), ImGuiCond_Always);
 
 	// Play button for the editor, starts the game time
 	PlayButton();

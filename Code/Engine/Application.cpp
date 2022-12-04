@@ -76,11 +76,11 @@ sad::Application::~Application()
 
 void sad::Application::EngineStart()
 {
-	// Launch editor 
-	m_Editor->Start();
-
 	// Import Resources
 	ResourceManager::Import();
+
+	// Launch editor 
+	m_Editor->Start();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
@@ -200,14 +200,14 @@ void sad::Application::Update(float dt)
 {
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
-	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
+	rad::RenderBuddy::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 
 	rad::RenderBuddy::BindFrameBuffer();
 
 	// Second 'pass' to recolor outside the framebuffer
-	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
+	rad::RenderBuddy::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
 	// Render skybox as cubemap 'behind' scene
 	m_Skybox->Draw();

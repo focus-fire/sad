@@ -50,9 +50,12 @@ namespace cap
 			void StopButton();
 			void SaveButton();
 
-		sad::Level* m_CurrentLevelContext;
-		DebugTerminal* m_DebugTerminal;
-		GizmoSystem* m_GizmoSystem;
+		sad::Level* m_CurrentLevelContext = nullptr;
+		DebugTerminal* m_DebugTerminal = nullptr;
+		GizmoSystem* m_GizmoSystem = nullptr;
+
+		ImFont* m_NotoSans = nullptr;
+		ImFont* m_Default = nullptr;
 
 		bool m_ShowGameWindow;
 		float m_GameWindowWidth;

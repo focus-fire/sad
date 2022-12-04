@@ -31,6 +31,7 @@ namespace sad
 			Texture,
 			Shader,
 			Level,
+			Font,
 			Ignore   // Used for .dll/.pdb/.cs files required for scripting
 		};
 

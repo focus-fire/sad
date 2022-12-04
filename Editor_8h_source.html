@@ -102,30 +102,42 @@ $(function() {
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">RenderGameWindow</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> frameBufferTextureId);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordtype">void</span> Render();</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">void</span> PanelAndButton();</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="comment">// TODO: Maybe make an ImGuiHelpers class with static returns for things like this? </span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">bool</span> ButtonCenteredOnLine(<span class="keyword">const</span> <span class="keywordtype">char</span>* label, <span class="keywordtype">float</span> alignment = 0.5f);</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">EditorControls</a>();</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> Teardown();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classsad_1_1Level.html">sad::Level</a>* m_CurrentLevelContext;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <a class="code" href="classcap_1_1DebugTerminal.html">DebugTerminal</a>* m_DebugTerminal;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <a class="code" href="classcap_1_1GizmoSystem.html">GizmoSystem</a>* m_GizmoSystem;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keywordtype">bool</span> m_ShowGameWindow;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordtype">float</span> m_GameWindowWidth;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keywordtype">float</span> m_GameWindowHeight;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::string m_GameWindowTitle;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">bool</span> m_IsEditorInPlayMode;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    };</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="comment">// TODO: Maybe make an ImGuiHelpers class with static returns for things like this? </span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">bool</span> ButtonCenteredOnLine(<span class="keyword">const</span> <span class="keywordtype">char</span>* label, <span class="keywordtype">float</span> alignment = 0.5f);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">EditorControls</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <span class="keywordtype">void</span> Teardown();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> EntityListPanel();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">void</span> ActionPanel();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordtype">void</span> PlayButton();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keywordtype">void</span> PauseButton();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordtype">void</span> StopButton();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordtype">void</span> SaveButton();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classsad_1_1Level.html">sad::Level</a>* m_CurrentLevelContext = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <a class="code" href="classcap_1_1DebugTerminal.html">DebugTerminal</a>* m_DebugTerminal = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="classcap_1_1GizmoSystem.html">GizmoSystem</a>* m_GizmoSystem = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        ImFont* m_NotoSans = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        ImFont* m_Default = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">bool</span> m_ShowGameWindow;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">float</span> m_GameWindowWidth;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordtype">float</span> m_GameWindowHeight;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        std::string m_GameWindowTitle;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">bool</span> m_CanEditorBePaused;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">bool</span> m_CanEditorBeStopped;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keywordtype">bool</span> m_CanEditorBePlayed;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    };</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclasscap_1_1Editor_html_a5f086c3fdda59e6c05af4af301b0c904"><div class="ttname"><a href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">cap::Editor::EditorControls</a></div><div class="ttdeci">void EditorControls()</div><div class="ttdoc">Controls ctrl+s : Save state ctrl+b : Switch editor mode.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:181</div></div>
-<div class="ttc" id="aclasscap_1_1Editor_html_a14c93bf45ceb93d5854f211d7f6a41d1"><div class="ttname"><a href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">cap::Editor::RenderGameWindow</a></div><div class="ttdeci">void RenderGameWindow(unsigned int frameBufferTextureId)</div><div class="ttdoc">Renders a panel with the game's current render embedded into it.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:77</div></div>
+<div class="ttc" id="aclasscap_1_1Editor_html_a5f086c3fdda59e6c05af4af301b0c904"><div class="ttname"><a href="classcap_1_1Editor.html#a5f086c3fdda59e6c05af4af301b0c904">cap::Editor::EditorControls</a></div><div class="ttdeci">void EditorControls()</div><div class="ttdef"><b>Definition:</b> Editor.cpp:165</div></div>
+<div class="ttc" id="aclasscap_1_1Editor_html_a14c93bf45ceb93d5854f211d7f6a41d1"><div class="ttname"><a href="classcap_1_1Editor.html#a14c93bf45ceb93d5854f211d7f6a41d1">cap::Editor::RenderGameWindow</a></div><div class="ttdeci">void RenderGameWindow(unsigned int frameBufferTextureId)</div><div class="ttdoc">Renders a panel with the game's current render embedded into it.</div><div class="ttdef"><b>Definition:</b> Editor.cpp:92</div></div>
 <div class="ttc" id="aclasssad_1_1Level_html"><div class="ttname"><a href="classsad_1_1Level.html">sad::Level</a></div><div class="ttdef"><b>Definition:</b> Level.h:14</div></div>
 <div class="ttc" id="aclasscap_1_1GizmoSystem_html"><div class="ttname"><a href="classcap_1_1GizmoSystem.html">cap::GizmoSystem</a></div><div class="ttdef"><b>Definition:</b> GizmoSystem.h:10</div></div>
 <div class="ttc" id="aclasscap_1_1DebugTerminal_html"><div class="ttname"><a href="classcap_1_1DebugTerminal.html">cap::DebugTerminal</a></div><div class="ttdoc">ImTerm terminal used to debug the engine, game, and editor.</div><div class="ttdef"><b>Definition:</b> DebugTerminal.h:10</div></div>

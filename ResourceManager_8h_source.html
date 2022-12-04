@@ -100,109 +100,110 @@ $(function() {
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            Texture,</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            Shader,</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="classsad_1_1Level.html">Level</a>,</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            Ignore   <span class="comment">// Used for .dll/.pdb/.cs files required for scripting</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        };</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">const</span> std::string c_ResourceFilePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(<span class="stringliteral">&quot;Resources.sad.meta&quot;</span>);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">const</span> std::string c_ResourceFileHeader = <span class="stringliteral">&quot;GUID,Name,Path&quot;</span>;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        std::unordered_map&lt;core::Guid, core::Pointer&lt;Resource&gt;&gt; m_ResourceLookup;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        std::unordered_set&lt;std::string&gt; m_CachedResourcesFromFile;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>(<a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>&amp; other) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>&amp; GetInstance();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceManager.html#af8219231dc5016e996215d952b0556d1">Import</a>();</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">void</span> MImport();</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordtype">bool</span> ImportResources();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordtype">void</span> FindResourcesInDataDirectory();</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        <span class="keywordtype">void</span> ExportUncachedResources();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        <span class="keywordtype">void</span> ExportAllResources();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        EResourceType CheckResourceType(<span class="keyword">const</span> std::string&amp; fileName);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        <span class="keywordtype">void</span> SendDataToFactory(<span class="keyword">const</span> EResourceType&amp; resourceType, <span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; resourceData);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">  110</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">ResourceType</a> = std::enable_if&lt;std::is_base_of&lt;Resource, T&gt;::value&gt;;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">  118</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">AddResource</a>(<span class="keyword">const</span> core::Pointer&lt;T&gt;&amp; resource)</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        {</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            GetInstance().MAddResource&lt;T&gt;(resource);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00130"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">  130</a></span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">GetResource</a>(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">core::Guid</a>&amp; guid)</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        {</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <span class="keywordflow">return</span> GetInstance().MGetResource&lt;T&gt;(guid);</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">  142</a></span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">GetResource</a>(<span class="keyword">const</span> std::string&amp; name)</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        {</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordflow">return</span> GetInstance().MGetResource&lt;T&gt;(name);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        }</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        </div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordtype">void</span> MAddResource(<span class="keyword">const</span> core::Pointer&lt;T&gt;&amp; resource)</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        {</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            SAD_ASSERT(resource, <span class="stringliteral">&quot;Attempting to instert a null resource!&quot;</span>)</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            m_ResourceLookup.emplace(resource-&gt;GetResourceGuid(), resource);</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;        }</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        template&lt;class T, typename = <a class="code" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">ResourceType</a>&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        T* MGetResource(const core::Guid&amp; guid)</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        {</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;            SAD_ASSERT(!guid.IsNull(), <span class="stringliteral">&quot;Attempting to retrieve a resource with a null GUID!&quot;</span>);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceManager] Attempting to retrieve resource with GUID {}&quot;</span>, guid);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            <span class="keyword">auto</span> it = m_ResourceLookup.find(guid);</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keywordflow">return</span> it != m_ResourceLookup.end() ? <span class="keyword">dynamic_cast&lt;</span>T*<span class="keyword">&gt;</span>(it-&gt;second.get()) : <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;        }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        T* MGetResource(<span class="keyword">const</span> std::string&amp; name)</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        {</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;            SAD_ASSERT(!name.empty(), <span class="stringliteral">&quot;Attempting to retrieve a resource with an empty string!&quot;</span>);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceManager] Attempting to retrieve resource with name {}&quot;</span>, name);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; it : m_ResourceLookup)</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            {</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                std::string resourceName = it.second-&gt;GetResourceFileName();</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160; </div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a>(name, resourceName))</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">dynamic_cast&lt;</span>T*<span class="keyword">&gt;</span>(it.second.get());</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            }</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160; </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;        }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    };</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;}</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            Font,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            Ignore   <span class="comment">// Used for .dll/.pdb/.cs files required for scripting</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        };</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">const</span> std::string c_ResourceFilePath = <a class="code" href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a>(<span class="stringliteral">&quot;Resources.sad.meta&quot;</span>);</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">const</span> std::string c_ResourceFileHeader = <span class="stringliteral">&quot;GUID,Name,Path&quot;</span>;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::unordered_map&lt;core::Guid, core::Pointer&lt;Resource&gt;&gt; m_ResourceLookup;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        std::unordered_set&lt;std::string&gt; m_CachedResourcesFromFile;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>(<a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>&amp; other) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1ResourceManager.html">ResourceManager</a>&amp; GetInstance();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceManager.html#af8219231dc5016e996215d952b0556d1">Import</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keywordtype">void</span> MImport();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordtype">bool</span> ImportResources();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordtype">void</span> FindResourcesInDataDirectory();</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keywordtype">void</span> ExportUncachedResources();</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        <span class="keywordtype">void</span> ExportAllResources();</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        EResourceType CheckResourceType(<span class="keyword">const</span> std::string&amp; fileName);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <span class="keywordtype">void</span> SendDataToFactory(<span class="keyword">const</span> EResourceType&amp; resourceType, <span class="keyword">const</span> <a class="code" href="structsad_1_1Resource_1_1ResourceData.html">Resource::ResourceData</a>&amp; resourceData);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">  111</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">ResourceType</a> = std::enable_if&lt;std::is_base_of&lt;Resource, T&gt;::value&gt;;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">  119</a></span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">AddResource</a>(<span class="keyword">const</span> core::Pointer&lt;T&gt;&amp; resource)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            GetInstance().MAddResource&lt;T&gt;(resource);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;        }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00131"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">  131</a></span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">GetResource</a>(<span class="keyword">const</span> <a class="code" href="classcore_1_1Guid.html">core::Guid</a>&amp; guid)</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        {</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            <span class="keywordflow">return</span> GetInstance().MGetResource&lt;T&gt;(guid);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00143"></a><span class="lineno"><a class="line" href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">  143</a></span>&#160;        <span class="keyword">static</span> T* <a class="code" href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">GetResource</a>(<span class="keyword">const</span> std::string&amp; name)</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordflow">return</span> GetInstance().MGetResource&lt;T&gt;(name);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;        }</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        <span class="keywordtype">void</span> MAddResource(<span class="keyword">const</span> core::Pointer&lt;T&gt;&amp; resource)</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        {</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            SAD_ASSERT(resource, <span class="stringliteral">&quot;Attempting to instert a null resource!&quot;</span>)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            m_ResourceLookup.emplace(resource-&gt;GetResourceGuid(), resource);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        }</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        template&lt;class T, typename = <a class="code" href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">ResourceType</a>&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        T* MGetResource(const core::Guid&amp; guid)</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        {</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            SAD_ASSERT(!guid.IsNull(), <span class="stringliteral">&quot;Attempting to retrieve a resource with a null GUID!&quot;</span>);</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceManager] Attempting to retrieve resource with GUID {}&quot;</span>, guid);</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            <span class="keyword">auto</span> it = m_ResourceLookup.find(guid);</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            <span class="keywordflow">return</span> it != m_ResourceLookup.end() ? <span class="keyword">dynamic_cast&lt;</span>T*<span class="keyword">&gt;</span>(it-&gt;second.get()) : <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">typename</span> = ResourceType&lt;T&gt;&gt;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        T* MGetResource(<span class="keyword">const</span> std::string&amp; name)</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        {</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;            SAD_ASSERT(!name.empty(), <span class="stringliteral">&quot;Attempting to retrieve a resource with an empty string!&quot;</span>);</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            core::Log(ELogType::Trace, <span class="stringliteral">&quot;[ResourceManager] Attempting to retrieve resource with name {}&quot;</span>, name);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; it : m_ResourceLookup)</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;            {</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                std::string resourceName = it.second-&gt;GetResourceFileName();</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a>(name, resourceName))</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                    <span class="keywordflow">return</span> <span class="keyword">dynamic_cast&lt;</span>T*<span class="keyword">&gt;</span>(it.second.get());</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            }</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;        }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    };</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasscore_1_1Guid_html"><div class="ttname"><a href="classcore_1_1Guid.html">core::Guid</a></div><div class="ttdoc">Globally Unique Identifier, often used to identify things.</div><div class="ttdef"><b>Definition:</b> Guid.h:34</div></div>
 <div class="ttc" id="aclasscore_1_1StringUtils_html_ac4816d66982d1938afa67255711c08e9"><div class="ttname"><a href="classcore_1_1StringUtils.html#ac4816d66982d1938afa67255711c08e9">core::StringUtils::Equals</a></div><div class="ttdeci">static bool Equals(const std::string &amp;a, const std::string &amp;b)</div><div class="ttdoc">Compares two strings for equality.</div><div class="ttdef"><b>Definition:</b> StringUtils.cpp:5</div></div>
-<div class="ttc" id="aclasssad_1_1ResourceManager_html_a72881960812d1852c294269830d8f176"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">sad::ResourceManager::AddResource</a></div><div class="ttdeci">static void AddResource(const core::Pointer&lt; T &gt; &amp;resource)</div><div class="ttdoc">Adds a smart pointer for a resource into the ResourceManager.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:118</div></div>
+<div class="ttc" id="aclasssad_1_1ResourceManager_html_a72881960812d1852c294269830d8f176"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a72881960812d1852c294269830d8f176">sad::ResourceManager::AddResource</a></div><div class="ttdeci">static void AddResource(const core::Pointer&lt; T &gt; &amp;resource)</div><div class="ttdoc">Adds a smart pointer for a resource into the ResourceManager.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:119</div></div>
 <div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>
 <div class="ttc" id="aclasssad_1_1ResourceManager_html"><div class="ttname"><a href="classsad_1_1ResourceManager.html">sad::ResourceManager</a></div><div class="ttdoc">Determines the allocation, storage, and management of resources throughout the engine.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:18</div></div>
 <div class="ttc" id="aclasssad_1_1Level_html"><div class="ttname"><a href="classsad_1_1Level.html">sad::Level</a></div><div class="ttdef"><b>Definition:</b> Level.h:14</div></div>
-<div class="ttc" id="aclasssad_1_1ResourceManager_html_a198829062873786779142e7680282442"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">sad::ResourceManager::ResourceType</a></div><div class="ttdeci">std::enable_if&lt; std::is_base_of&lt; Resource, T &gt;::value &gt; ResourceType</div><div class="ttdoc">Type trait ensuring that passed template parameters inherit from Resource.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:110</div></div>
+<div class="ttc" id="aclasssad_1_1ResourceManager_html_a198829062873786779142e7680282442"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a198829062873786779142e7680282442">sad::ResourceManager::ResourceType</a></div><div class="ttdeci">std::enable_if&lt; std::is_base_of&lt; Resource, T &gt;::value &gt; ResourceType</div><div class="ttdoc">Type trait ensuring that passed template parameters inherit from Resource.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:111</div></div>
 <div class="ttc" id="aclasscore_1_1FileUtils_html_ad41e13f5d8a19329cd94dc7e59c93e2e"><div class="ttname"><a href="classcore_1_1FileUtils.html#ad41e13f5d8a19329cd94dc7e59c93e2e">core::FileUtils::GetPathInsideDataDirectory</a></div><div class="ttdeci">static std::string GetPathInsideDataDirectory(const std::string &amp;path)</div><div class="ttdoc">Retrieves a platform-specific absolute path inside the data directory of the engine ('sad/Data/PATH')</div><div class="ttdef"><b>Definition:</b> FileUtils.cpp:145</div></div>
 <div class="ttc" id="astructsad_1_1Resource_1_1ResourceData_html"><div class="ttname"><a href="structsad_1_1Resource_1_1ResourceData.html">sad::Resource::ResourceData</a></div><div class="ttdoc">Holds data common to the serialization and deserialization of all resource types.</div><div class="ttdef"><b>Definition:</b> Resource.h:17</div></div>
-<div class="ttc" id="aclasssad_1_1ResourceManager_html_a076470ec77a48c98813876eb54233c0a"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">sad::ResourceManager::GetResource</a></div><div class="ttdeci">static T * GetResource(const std::string &amp;name)</div><div class="ttdoc">Retrieve a resource from the ResourceManager by a valid name.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:142</div></div>
-<div class="ttc" id="aclasssad_1_1ResourceManager_html_a9e68fe69a1771c5246864f246437c9b4"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">sad::ResourceManager::GetResource</a></div><div class="ttdeci">static T * GetResource(const core::Guid &amp;guid)</div><div class="ttdoc">Retrieve a resource from the ResourceManager by a valid GUID.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:130</div></div>
+<div class="ttc" id="aclasssad_1_1ResourceManager_html_a076470ec77a48c98813876eb54233c0a"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a076470ec77a48c98813876eb54233c0a">sad::ResourceManager::GetResource</a></div><div class="ttdeci">static T * GetResource(const std::string &amp;name)</div><div class="ttdoc">Retrieve a resource from the ResourceManager by a valid name.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:143</div></div>
+<div class="ttc" id="aclasssad_1_1ResourceManager_html_a9e68fe69a1771c5246864f246437c9b4"><div class="ttname"><a href="classsad_1_1ResourceManager.html#a9e68fe69a1771c5246864f246437c9b4">sad::ResourceManager::GetResource</a></div><div class="ttdeci">static T * GetResource(const core::Guid &amp;guid)</div><div class="ttdoc">Retrieve a resource from the ResourceManager by a valid GUID.</div><div class="ttdef"><b>Definition:</b> ResourceManager.h:131</div></div>
 <div class="ttc" id="aclasssad_1_1ResourceManager_html_af8219231dc5016e996215d952b0556d1"><div class="ttname"><a href="classsad_1_1ResourceManager.html#af8219231dc5016e996215d952b0556d1">sad::ResourceManager::Import</a></div><div class="ttdeci">static void Import()</div><div class="ttdoc">Singleton access for MImport()</div><div class="ttdef"><b>Definition:</b> ResourceManager.cpp:17</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

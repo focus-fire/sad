@@ -110,9 +110,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> (ecs::Enti
 <tr class="memitem:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a785ce1dba6fdd3b6edc20e1172fd6a69">DestroyEntityByName</a> (const std::string &amp;name)</td></tr>
 <tr class="memdesc:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys an entity from the registry and from the level cache with a particular name.  <a href="classsad_1_1Level.html#a785ce1dba6fdd3b6edc20e1172fd6a69">More...</a><br /></td></tr>
 <tr class="separator:a785ce1dba6fdd3b6edc20e1172fd6a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a247bdc06187bcaaa5fa062ae563c67be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a247bdc06187bcaaa5fa062ae563c67be">ImportEntityFromHandle</a> (entt::entity handle, <a class="el" href="classcore_1_1Guid.html">core::Guid</a> guid=<a class="el" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a>())</td></tr>
-<tr class="memdesc:a247bdc06187bcaaa5fa062ae563c67be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports an enitity handle into the level cache with a GUIDComponent.  <a href="classsad_1_1Level.html#a247bdc06187bcaaa5fa062ae563c67be">More...</a><br /></td></tr>
-<tr class="separator:a247bdc06187bcaaa5fa062ae563c67be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f1a487ea41748973af68b70325f5667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classsad_1_1ecs_1_1Entity.html">ecs::Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1Level.html#a7f1a487ea41748973af68b70325f5667">ImportEntityFromHandle</a> (entt::entity handle)</td></tr>
+<tr class="memdesc:a7f1a487ea41748973af68b70325f5667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports an enitity handle into the level cache with a GUIDComponent.  <a href="classsad_1_1Level.html#a7f1a487ea41748973af68b70325f5667">More...</a><br /></td></tr>
+<tr class="separator:a7f1a487ea41748973af68b70325f5667"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -176,8 +176,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
-<a id="a247bdc06187bcaaa5fa062ae563c67be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a247bdc06187bcaaa5fa062ae563c67be">&#9670;&nbsp;</a></span>ImportEntityFromHandle()</h2>
+<a id="a7f1a487ea41748973af68b70325f5667"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f1a487ea41748973af68b70325f5667">&#9670;&nbsp;</a></span>ImportEntityFromHandle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,18 +186,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
           <td class="memname"><a class="el" href="classsad_1_1ecs_1_1Entity.html">sad::ecs::Entity</a> sad::Level::ImportEntityFromHandle </td>
           <td>(</td>
           <td class="paramtype">entt::entity&#160;</td>
-          <td class="paramname"><em>handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcore_1_1Guid.html">core::Guid</a>&#160;</td>
-          <td class="paramname"><em>guid</em> = <code><a class="el" href="classcore_1_1Guid.html#a15965f9af8e7ebcf466e98b74d97c1c8">core::Guid::CreateGuid</a>()</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -206,7 +196,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>The entt handle corresponding with the imported entity </td></tr>
-    <tr><td class="paramname">guid</td><td>Native GUID for the entity, default parameter value will generate one automatically </td></tr>
   </table>
   </dd>
 </dl>

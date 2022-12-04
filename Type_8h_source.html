@@ -93,11 +93,14 @@ $(function() {
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">inline</span> std::string Demangle(<span class="keyword">const</span> <span class="keywordtype">char</span>* typeName) { <span class="keywordflow">return</span> typeName; }</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">inline</span> std::string_view Demangle(<span class="keyword">const</span> <span class="keywordtype">char</span>* typeName) { <span class="keywordflow">return</span> typeName; }</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">inline</span> std::string_view Typeof() { <span class="keywordflow">return</span> Demangle(<span class="keyword">typeid</span>(T).name()); }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">inline</span> std::string_view Typeof() </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordflow">return</span> Demangle(<span class="keyword">typeid</span>(T).name());</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

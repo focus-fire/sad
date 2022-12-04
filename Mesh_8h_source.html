@@ -113,28 +113,35 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            std::vector&lt;unsigned int&gt; Indices;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            std::vector&lt;MeshTexture&gt; Textures;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <a class="code" href="structsad_1_1rad_1_1MeshColor.html">MeshColor</a> Colors;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        };</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <a class="code" href="classsad_1_1rad_1_1Mesh.html">Mesh</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1rad_1_1Mesh_1_1MeshData.html">MeshData</a>&amp; meshData);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        ~<a class="code" href="classsad_1_1rad_1_1Mesh.html">Mesh</a>();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <a class="code" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a>* GetVertexArray() { <span class="keywordflow">return</span> m_VertexArray; }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <a class="code" href="classsad_1_1rad_1_1IndexBuffer.html">IndexBuffer</a>* GetIndexBuffer() { <span class="keywordflow">return</span> m_IndexBuffer; }</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        std::vector&lt;MeshVertex&gt; Vertices;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        std::vector&lt;unsigned int&gt; Indices;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        std::vector&lt;MeshTexture&gt; Textures;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        MeshColor Colors;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        VertexArray* m_VertexArray;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        VertexBuffer* m_VertexBuffer;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        IndexBuffer* m_IndexBuffer;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> MSetupMesh();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;}</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <a class="code" href="structsad_1_1rad_1_1Mesh_1_1MeshData.html">MeshData</a>(std::vector&lt;MeshVertex&gt; vertices, std::vector&lt;unsigned int&gt; indices, std::vector&lt;MeshTexture&gt; textures, <a class="code" href="structsad_1_1rad_1_1MeshColor.html">MeshColor</a> colors)</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                : Vertices(vertices)</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                , Indices(indices)</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                , Textures(textures)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                , Colors(colors)</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            { }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        };</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <a class="code" href="classsad_1_1rad_1_1Mesh.html">Mesh</a>(<span class="keyword">const</span> <a class="code" href="structsad_1_1rad_1_1Mesh_1_1MeshData.html">MeshData</a>&amp; meshData);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        ~<a class="code" href="classsad_1_1rad_1_1Mesh.html">Mesh</a>();</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a>* GetVertexArray() { <span class="keywordflow">return</span> m_VertexArray; }</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <a class="code" href="classsad_1_1rad_1_1IndexBuffer.html">IndexBuffer</a>* GetIndexBuffer() { <span class="keywordflow">return</span> m_IndexBuffer; }</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        std::vector&lt;MeshVertex&gt; Vertices;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        std::vector&lt;unsigned int&gt; Indices;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        std::vector&lt;MeshTexture&gt; Textures;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        MeshColor Colors;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        VertexArray* m_VertexArray;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        VertexBuffer* m_VertexBuffer;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        IndexBuffer* m_IndexBuffer;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">void</span> MSetupMesh();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    };</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructsad_1_1rad_1_1MeshVertex_html"><div class="ttname"><a href="structsad_1_1rad_1_1MeshVertex.html">sad::rad::MeshVertex</a></div><div class="ttdef"><b>Definition:</b> Mesh.h:13</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1VertexArray_html"><div class="ttname"><a href="classsad_1_1rad_1_1VertexArray.html">sad::rad::VertexArray</a></div><div class="ttdef"><b>Definition:</b> VertexArray.h:8</div></div>

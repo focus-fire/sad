@@ -26,6 +26,7 @@ cap::Editor::Editor()
 	, m_ShowGameWindow(true)
 	, m_GameWindowTitle("Default - sadEngine")
 	, m_IsEditorInPlayMode(false)
+	, m_CanEditorBePaused(false)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -105,7 +106,6 @@ void cap::Editor::RenderGameWindow(unsigned int frameBufferTextureId)
 	ImVec2 availableSize = ImGui::GetContentRegionAvail();
 	ImGui::Image(INT_TO_VOIDP(frameBufferTextureId), availableSize, ImVec2(0, 1), ImVec2(1, 0));
 
-	// TODO: Abstract into interaction mode class
 	// Rendering gizmos must be completed while framebuffer is still being rendered
 	// This allows the grid and all gizmos to properly appear in the game window
 	if (sad::Application::s_EngineState->GetEngineMode() == sad::EEngineMode::Editor)
@@ -120,46 +120,16 @@ void cap::Editor::Render()
 {
 	m_DebugTerminal->Render();
 	pog::Time::TimeScale = m_IsEditorInPlayMode ? 1.0f : 0.0f;
-	PanelAndButton();
+	
+	// Renderable Panels
+	ActionPanel();
+	EntityListPanel();
 	EditorControls();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void cap::Editor::PanelAndButton()
-{
-	const char* currentMode = m_IsEditorInPlayMode ? "Pause" : "Play";
-	ImGui::Begin("Action Panel");
-	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Once);
-	if (ButtonCenteredOnLine(currentMode))
-	{
-		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
-		core::SignalEvent("OnToggleEngineMode");
-	}
-	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
-	{
-		m_IsEditorInPlayMode = !m_IsEditorInPlayMode;
-		core::SignalEvent("OnToggleEngineMode");
-		core::SignalEvent("ResetLevel");
-	}
-	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
-	{
-		sad::LevelManager::ExportLevel();
-	}
-	ImGui::End();
-
-	// Really scuffed way to list entities, included mainly for debugging
-	// Cycles through available names and lists them in the editor
-	ImGui::Begin("Entity List");
-	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Once);
-	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
-	for (auto [entity, name] : view.each())
-		ImGui::Text(name.m_Name.c_str());
-	ImGui::End();
-}
 
 bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0.5f */)
 {
@@ -176,7 +146,6 @@ bool cap::Editor::ButtonCenteredOnLine(const char* label, float alignment /* = 0
 }
 
 /**
- * @brief 
  * Controls
  * ctrl+s : Save state
  * ctrl+b : Switch editor mode
@@ -205,4 +174,155 @@ void cap::Editor::Teardown()
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL2_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void cap::Editor::EntityListPanel()
+{
+	// Really scuffed way to list entities, included mainly for debugging
+	// Cycles through available names and lists them in the editor
+	ImGui::Begin("Entity List");
+	ImGui::SetWindowPos(ImVec2(listWindowX, listWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, listWindowHeight), ImGuiCond_Once);
+
+	auto view = sad::ecs::Registry::GetEntityWorld().view<sad::ecs::NameComponent>();
+	for (auto [entity, name] : view.each())
+	{
+		ImGui::Text(name.m_Name.c_str());
+	}
+
+	ImGui::End();
+}
+
+void cap::Editor::ActionPanel()
+{
+	ImGui::Begin("Action Panel");
+	ImGui::SetWindowPos(ImVec2(playWindowX, playWindowY), ImGuiCond_Once);
+	ImGui::SetWindowSize(ImVec2(rightColumnWidth, playWindowHeight), ImGuiCond_Once);
+
+	// Play button for the editor, starts the game time
+	PlayButton();
+
+	// Pause button for the editor, pauses the game time and pops the player into editor mode
+	PauseButton();
+
+	// Stop button for the editor, triggers a level reset
+	StopButton();
+
+	// Basic save button for the editor, only applicable outside of play mode
+	SaveButton();
+
+	ImGui::End();
+}
+
+void cap::Editor::PlayButton()
+{
+	bool disabled = false;
+	if (m_IsEditorInPlayMode && m_CanEditorBePaused)
+	{
+		disabled = true;
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+
+	// Current editor mode, "Pause" or "Play"
+	if (ButtonCenteredOnLine("Play") && !m_IsEditorInPlayMode  && !m_CanEditorBePaused)
+	{
+		// Ensure that each time the editor toggles INTO play mode, the level is exported
+		sad::LevelManager::ExportLevel();
+
+		// Only allow toggling the play mode if the editor can be paused
+		m_CanEditorBePaused = true;
+
+		// Start the game 
+		m_IsEditorInPlayMode = true;
+
+		core::Log(ELogType::Debug, "Started the game...");
+
+		core::SignalEvent("OnToggleEngineMode");
+	}
+
+	if (disabled)
+	{
+		ImGui::PopItemFlag();
+		ImGui::PopStyleVar();
+	}
+}
+
+void cap::Editor::PauseButton()
+{
+	bool disabled = false;
+	if (!m_CanEditorBePaused)
+	{
+		disabled = true;
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+
+	if (ButtonCenteredOnLine("Pause") && m_CanEditorBePaused)
+	{
+		// Allow the editor to be played again
+		m_CanEditorBePaused = false;
+		m_IsEditorInPlayMode = false;
+
+		core::Log(ELogType::Debug, "Paused the game...");
+
+		core::SignalEvent("OnToggleEngineMode");
+	}
+
+	if (disabled)
+	{
+		ImGui::PopItemFlag();
+		ImGui::PopStyleVar();
+	}
+}
+
+void cap::Editor::StopButton()
+{
+	bool disabled = false;
+	if (!m_IsEditorInPlayMode)
+	{
+		disabled = true;
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+
+	if (ButtonCenteredOnLine("Stop") && m_IsEditorInPlayMode)
+	{
+		// When the editor is in pause it's already using the editor camera/controls
+		// Therefore, the engine mode only needs to actually be toggled when 'Stop' is pressed from the game
+		if (m_CanEditorBePaused)
+			core::SignalEvent("OnToggleEngineMode");
+
+		m_IsEditorInPlayMode = false;
+		m_CanEditorBePaused = false;
+
+		core::Log(ELogType::Debug, "Stopped the game...");
+		core::SignalEvent("ResetLevel");
+	}
+
+	if (disabled)
+	{
+		ImGui::PopItemFlag();
+		ImGui::PopStyleVar();
+	}
+}
+
+void cap::Editor::SaveButton()
+{
+	bool disabled = false;
+	if (m_IsEditorInPlayMode)
+	{
+		disabled = true;
+		ImGui::PushItemFlag(ImGuiItemFlags_Disabled, true);
+		ImGui::PushStyleVar(ImGuiStyleVar_Alpha, ImGui::GetStyle().Alpha * 0.5f);
+	}
+
+	if (ButtonCenteredOnLine("Save") && !m_IsEditorInPlayMode)
+		sad::LevelManager::ExportLevel();
+
+	if (disabled)
+	{
+		ImGui::PopItemFlag();
+		ImGui::PopStyleVar();
+	}
 }

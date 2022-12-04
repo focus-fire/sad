@@ -25,8 +25,11 @@ sad::rad::TextureResource::TextureResource(const Resource::ResourceData& resourc
 	if (type == ETextureType::Normal)
 		InitializeNormalTexture(resourceData.AbsolutePath);
 
+	// No specific intialization written for CubeMaps
+	// The only cube map created is used in Skybox.cpp
+	// This is mainly used to ensure that TextureResources get cached properly in the ResourceManager
 	if (type == ETextureType::CubeMap)
-		InitializeCubeMapTexture();
+		return;
 }
 
 sad::rad::TextureResource::TextureResource(int width, int height)
@@ -98,7 +101,3 @@ void sad::rad::TextureResource::InitializeNormalTexture(const std::string& absol
 		stbi_image_free(m_LocalBuffer);
 }
 
-void sad::rad::TextureResource::InitializeCubeMapTexture()
-{
-	core::Log(ELogType::Warn, "No initialization written for CubeMap/Skybox textures yet!");
-}

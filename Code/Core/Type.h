@@ -26,11 +26,14 @@ inline std::string_view Demangle(const char * typeName)
 /**
  * @brief Passes string through demangling if the compiler isn't GCC
 */
-inline std::string Demangle(const char* typeName) { return typeName; }
+inline std::string_view Demangle(const char* typeName) { return typeName; }
 #endif
 
 /**
  * @brief Extracts the demangled typeinfo for a type
 */
 template <typename T>
-inline std::string_view Typeof() { return Demangle(typeid(T).name()); }
+inline std::string_view Typeof() 
+{
+    return Demangle(typeid(T).name());
+}

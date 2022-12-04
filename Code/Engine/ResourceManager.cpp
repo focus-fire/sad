@@ -229,7 +229,7 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 
 	using String = core::StringUtils;
 
-	if (String::Equals(ext, ".fbx"))
+	if (String::Equals(ext, ".fbx") || String::Equals(ext, ".obj") || String::Equals(ext, ".blend"))
 		return EResourceType::Model;
 	
 	if (String::Equals(ext, ".png") || String::Equals(ext, ".jpg"))

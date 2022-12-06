@@ -78,7 +78,7 @@ public class Player : SadBehaviour
         // TODO: Integrate camera rotations
 
         // Move Forward
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.L))
         {
             transform.position += Vector3.forward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
@@ -110,7 +110,7 @@ public class Player : SadBehaviour
     {
         Vector3 lineStart = transform.position;
         Vector3 lineEnd = Vector3.up * 2.0f;
-        Color lineColor = Color.magenta;
+        Color lineColor = Color.red;
         Gizmos.DrawLine(lineStart, lineEnd, lineColor);
 
         Vector3 rayStart = transform.position;

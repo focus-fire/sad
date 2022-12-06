@@ -30,6 +30,7 @@ project "Game"
         "%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}/../Vendor/assimp/include",
         "%{prj.location}/../Vendor/mono/include",
+		"%{prj.location}/../Vendor/filewatch/",
         "%{prj.location}",
     }
 
@@ -43,7 +44,7 @@ project "Game"
 		"ImGuizmo",
 
 		-- CS Projects
-		"SadProject",
+		-- "SadProject",
 		"SadCSFramework",
     }
 

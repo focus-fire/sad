@@ -29,6 +29,9 @@ VENDOR_DIR = os.path.join(PROJECT_DIR, 'Vendor')
 
 SAD_CS_FRAMEWORK_DIR = os.path.join(CODE_DIR, 'SadCSFramework')
 
+DATA_DIR = os.path.abspath(os.path.join(PROJECT_DIR, 'Data'))
+DATA_PROJECT_DIR = os.path.abspath(os.path.join(DATA_DIR, 'Project'))
+
 
 """
 Memes

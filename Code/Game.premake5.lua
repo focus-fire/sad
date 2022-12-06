@@ -44,7 +44,7 @@ project "Game"
 		"ImGuizmo",
 
 		-- CS Projects
-		-- "SadProject",
+		"SadProject",
 		"SadCSFramework",
     }
 

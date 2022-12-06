@@ -17,26 +17,24 @@ public class Player : SadBehaviour
     {
         Move();
 
-        // INPUT TESTS
-        if (Input.GetButton(ControllerButton.South))
-        {
-            Log.Warn("South Button On!!!");
-        }
-
-        // Isn't working properly, possibly related to delay/syncing across scripting-engine communication
         if (Input.GetKeyPressed(KeyCode.Space))
         {
-            Log.Warn("Space Key Pressed!!!");
+            Log.Warn("Space Key Pressed");
         }
 
-        // Isn't working properly, possibly related to delay/syncing across scripting-engine communication
         if (Input.GetKeyReleased(KeyCode.Space))
         {
-            Log.Warn("Space Key Released!!!");
+            Log.Warn("Space Key Release");
         }
 
         if (Input.GetMouseButtonPressed(MouseButton.Left))
         {
+            PrimaryAttack();
+        }
+
+        if (Input.GetButton(ControllerButton.South))
+        {
+            Log.Warn("South Button On");
             PrimaryAttack();
         }
     }
@@ -119,7 +117,7 @@ public class Player : SadBehaviour
 
         Vector3 boxMin = bound.min;
         Vector3 boxMax = bound.max;
-        Color boxColor = Color.red;
+        Color boxColor = Color.magenta;
         Gizmos.DrawBox(boxMin, boxMax, boxColor);
     }
 }

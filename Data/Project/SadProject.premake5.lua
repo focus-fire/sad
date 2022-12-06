@@ -1,13 +1,3 @@
-workspace "SadProject"
-	architecture "x86_64"
-	startproject "SadProject"
-
-	configurations { "Debug" }
-
-	flags { "MultiProcessorCompile" }
-
-	include "../../Code/SadCSFramework/SadCSFramework.premake5.lua"
-
 project "SadProject"
     kind "SharedLib"
     language "C#"

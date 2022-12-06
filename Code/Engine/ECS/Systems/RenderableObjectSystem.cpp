@@ -12,7 +12,7 @@
 #include <Engine/ECS/Components/ComponentTypes.h>
 
 void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
-{ 
+{
 	CreateRenderableModels(world);
 
 	CreateRenderablePrimitives(world);
@@ -42,28 +42,27 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 		bound.m_Bound->SetMinMax(min, max);
 		bound.m_Bound->SetSizeRatio(transformComponent.m_Transform->GetScale());
 
-		// Mark the RenderablePrimitive as clean 
+		// Mark the RenderablePrimitive as clean
 		modelResourceComponent.m_IsResourceDirty = false;
 	}
 }
 
 void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& world)
 {
-	auto view = world.view<PrimitiveResourceComponent, BoundComponent, TransformComponent>();
-	for (auto [handle, primitiveResourceComponent, boundComponent, transformComponent] : view.each())
+	auto view = world.view<PrimitiveResourceComponent>();
+	for (auto [handle, primitiveResourceComponent] : view.each())
 	{
 		// Skip updating the resource if it isn't dirty
 		if (!primitiveResourceComponent.m_IsResourceDirty)
 			continue;
 
 		ecs::Entity entity = ecs::Entity(handle);
-		
+
 		core::Pointer<RenderablePrimitive> renderable = core::CreatePointer<RenderablePrimitive>(primitiveResourceComponent.m_Primitive.get());
 		SAD_ASSERT(renderable, "Failed to create RenderablePrimitive from ModelResource");
 		entity.AddComponent<RenderablePrimitiveComponent>(renderable);
-		boundComponent.m_Bound->SetSizeRatio(transformComponent.m_Transform->GetScale());
 
-		// Mark the RenderablePrimitive as clean 
+		// Mark the RenderablePrimitive as clean
 		primitiveResourceComponent.m_IsResourceDirty = false;
 	}
 }

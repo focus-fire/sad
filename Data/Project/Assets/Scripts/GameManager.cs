@@ -42,7 +42,13 @@ public class GameManager : SadBehaviour
     void Update()
     {
         if (Enemies.Count == 0)
+        {
             MSpawnWave();
+            if (m_CurrentWave % 2 == 0)
+            {
+                Upgrade();
+            }
+        }          
     }
 
     /// <summary>
@@ -57,10 +63,6 @@ public class GameManager : SadBehaviour
         for (int i = 0; i <= m_CurrentWave; i++)
         {
             MSpawnEnemy();
-            if (m_CurrentWave % 2 == 0)
-            {
-                Upgrade();
-            }
         }
     }
 

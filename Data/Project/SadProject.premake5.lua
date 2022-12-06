@@ -6,6 +6,8 @@ workspace "SadProject"
 
 	flags { "MultiProcessorCompile" }
 
+	include "../../Code/SadCSFramework/SadCSFramework.premake5.lua"
+
 project "SadProject"
     kind "SharedLib"
     language "C#"

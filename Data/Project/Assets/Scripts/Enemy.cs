@@ -51,8 +51,6 @@ public class Enemy : SadBehaviour
     public void Die()
     {
         // Enemy kills itself after removing itself from list of existing Enemies
-        Log.Debug($"Enemy#{this?.GUID} got dead.");
-        //this.RemoveScriptComponent<Enemy>();
         GameManager.Instance.Enemies.Remove(this);
         Destroy(this);
         Audio.PlaySFX("oof.wav");

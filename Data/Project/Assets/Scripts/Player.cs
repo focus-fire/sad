@@ -81,8 +81,6 @@ public class Player : SadBehaviour
 
     void Move()
     {
-        // TODO: Integrate camera rotations
-
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {

@@ -15,45 +15,17 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>portable</DebugType>
     <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Debug\</BaseIntermediateOutputPath>
+    <OutputPath>..\..\Data\Project\Data\Project\Resources\SadCSFramework\</OutputPath>
+    <BaseIntermediateOutputPath>..\..\Data\Project\Data\Project\Resources\SadCSFramework\Obj\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>_SAD_WINDOWS;_SAD_DEBUG;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>none</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Release\</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>_SAD_WINDOWS;_SAD_RELEASE;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|x64' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Data\Project\Resources\SadCSFramework\</OutputPath>
-    <BaseIntermediateOutputPath>..\..\Data\Project\Resources\SadCSFramework\Obj\Test\</BaseIntermediateOutputPath>
-    <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>_SAD_WINDOWS;_SAD_TEST;_SAD_ENABLE_LOGGING;_SAD_ENABLE_ASSERTS;_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
+    <DefineConstants>_WINDOWS;_CRT_SECURE_NO_WARNINGS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-  </ItemGroup>
-  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Test|x64' ">
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sad\Audio.cs" />

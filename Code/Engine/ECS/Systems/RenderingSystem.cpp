@@ -68,10 +68,11 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		shader->SetUniformMatrix4fv("u_ModelViewMatrix", glm::value_ptr(modelViewMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 
-		glm::vec3 lightDirection = glm::vec4(0.0f, 50.0f, 0.0f, 0.0f);
+		glm::vec3 lightDirection = glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
 		shader->SetUniform3fv("u_LightDirection", glm::value_ptr(lightDirection));
 
-		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(currentCamera->cameraPosition));
+		glm::vec3 cameraPosition = glm::vec3(0.0f, 10.0f, 0.0f);
+		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(cameraPosition));
 
 		std::vector<core::Pointer<rad::Mesh>> modelMeshes = model.GetMeshes();
 		for (unsigned int i = 0; i < modelMeshes.size(); i++)

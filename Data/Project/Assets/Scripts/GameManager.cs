@@ -27,15 +27,13 @@ public class GameManager : SadBehaviour
         Player = e.GetScriptComponent<Player>();
         Player.transform.position = Vector3.zero;
 
-        m_MinSpawnRange = 10;
+        m_MinSpawnRange = -20;
         m_MaxSpawnRange = 20;
 
-        Log.Debug($"Player info: {Player.GUID}");
+        //Log.Debug($"Player info: {Player.GUID}");
 
         Enemies = new List<Enemy>();
         m_CurrentWave = 0;
-
-        Log.Debug($"GameManager created! Current Wave: {m_CurrentWave}");
 
         MSpawnEnemy();
     }
@@ -85,7 +83,7 @@ public class GameManager : SadBehaviour
         Enemy enemy = enemyEntity.GetScriptComponent<Enemy>();
         enemy.transform.Scale(new Vector3(0.1f));
 
-        Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
+        //Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
 
         Enemies.Add(enemy);
     }
@@ -115,7 +113,7 @@ public class GameManager : SadBehaviour
         {
             if (Enemies[i].bound.Intersects(Player))
             {
-                Log.Debug("Take damage here! Player is hit!");
+                Log.Debug("Player is hit!");
                 Player.TakeDamage(Enemies[i].Damage);
                 Enemies[i].Die();
             }

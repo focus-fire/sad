@@ -143,6 +143,7 @@ void cap::DebugTerminalHelper::InstantiateSprite(argument_type& arg)
 
 	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
 	entity.AddComponent<sad::ecs::SpriteResourceComponent>(spriteResourceComponent);
+	entity.RemoveComponent<sad::ecs::BoundComponent>();
 }
 
 void cap::DebugTerminalHelper::Destroy(argument_type& arg)

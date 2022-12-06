@@ -109,7 +109,7 @@ void sad::ecs::RenderingSystem::RenderSprites(EntityWorld& world)
 
 		// Spawn all sprites in the center of the viewport
 		// TODO: Have editable 2D transforms for sprites
-		glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(width / 2, height / 2, 0.0f));
+		glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(760, (height / 2) / 1.25f, 0.0f));
 		modelMatrix = glm::scale(modelMatrix, glm::vec3(100.0f, 100.0f, 0.0f));
 		glm::mat4 projectionMatrix = glm::ortho(0.0f, width, height, 0.0f, -1.0f, 1.0f);
 

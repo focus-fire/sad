@@ -49,8 +49,8 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 
 void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& world)
 {
-	auto view = world.view<PrimitiveResourceComponent>();
-	for (auto [handle, primitiveResourceComponent] : view.each())
+	auto view = world.view<PrimitiveResourceComponent, BoundComponent, TransformComponent>();
+	for (auto [handle, primitiveResourceComponent, boundComponent, transformComponent] : view.each())
 	{
 		// Skip updating the resource if it isn't dirty
 		if (!primitiveResourceComponent.m_IsResourceDirty)
@@ -61,6 +61,7 @@ void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& w
 		core::Pointer<RenderablePrimitive> renderable = core::CreatePointer<RenderablePrimitive>(primitiveResourceComponent.m_Primitive.get());
 		SAD_ASSERT(renderable, "Failed to create RenderablePrimitive from ModelResource");
 		entity.AddComponent<RenderablePrimitiveComponent>(renderable);
+		boundComponent.m_Bound->SetSizeRatio(transformComponent.m_Transform->GetScale());
 
 		// Mark the RenderablePrimitive as clean 
 		primitiveResourceComponent.m_IsResourceDirty = false;

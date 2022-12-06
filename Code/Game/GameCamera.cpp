@@ -69,7 +69,7 @@ void sad::GameCamera::CurrentCameraState()
 		if (entityScriptClassName == "Player")
 		{
 			sad::GameCamera::cameraPosition = transformComponent.m_Transform->GetPosition();
-			transformComponent.m_Transform->SetRotation(glm::toQuat(glm::orientate3(glm::vec3(0, 0, cameraEulers.y * 0.1f))));
+			transformComponent.m_Transform->SetRotation(glm::quat(glm::vec3(0, glm::radians(cameraEulers.y), 0)));
 		}
 	}
 }

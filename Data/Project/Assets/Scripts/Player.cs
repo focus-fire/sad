@@ -1,5 +1,6 @@
 using Sad;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class Player : SadBehaviour
 {
@@ -49,22 +50,20 @@ public class Player : SadBehaviour
     {
         // Fire Raycast from current position to infinity (and beyond!), where the player is aiming
         Vector3 initialFiringPos = transform.position;
+
         // Currently fires directly in front of the player, not where they're aiming
-        Vector3 firingDirection1 = new Vector3(transform.position.x, transform.position.y, transform.position.z * SadMath.Infinity);
-        Vector3 firingDirection2 = new Vector3(-transform.position.x, transform.position.y, -transform.position.z * SadMath.Infinity);
-        Vector3 firingDirection3 = new Vector3(-transform.position.x, transform.position.y, transform.position.z * SadMath.Infinity);
-        Vector3 firingDirection4 = new Vector3(transform.position.x, transform.position.y, -transform.position.z * SadMath.Infinity);
+        Vector3 firingDirection5 = Vector3.Normalize(transform.forward) * 10000.0f;
 
         // Check if any enemies are hit by the player's attack
         for (int i = 0; i < GameManager.Instance.Enemies.Count; ++i)
         {
-            bool hit1 = Raycast.Intersects(initialFiringPos, firingDirection1, GameManager.Instance.Enemies[i]);
-            bool hit2 = Raycast.Intersects(initialFiringPos, firingDirection2, GameManager.Instance.Enemies[i]);
-            bool hit3 = Raycast.Intersects(initialFiringPos, firingDirection3, GameManager.Instance.Enemies[i]);
-            bool hit4 = Raycast.Intersects(initialFiringPos, firingDirection4, GameManager.Instance.Enemies[i]);
+            bool hit = Raycast.Intersects(initialFiringPos, firingDirection5, GameManager.Instance.Enemies[i]);
 
-            if (hit1 || hit2 || hit3 || hit4)
+            if (hit)
+            { 
+                if (hit) Log.Debug("HIT");
                 GameManager.Instance.Enemies[i].TakeDamage(PrimaryAttackDamage);
+            }
         }
     }
 
@@ -97,28 +96,28 @@ public class Player : SadBehaviour
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Vector3.forward * Time.dt * m_MoveSpeed;
+            transform.position += transform.forward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.right * Time.dt * m_MoveSpeed;
+            transform.position += transform.right * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
-        // Move Right
+        // Move Backward 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.backward * Time.dt * m_MoveSpeed;
+            transform.position += transform.backward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
-        // Move Backward
+        // Move Right 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.left * Time.dt * m_MoveSpeed;
+            transform.position += transform.left * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
     }
@@ -126,14 +125,9 @@ public class Player : SadBehaviour
     void DrawGizmos()
     {
         Vector3 lineStart = transform.position;
-        Vector3 lineEnd = Vector3.up * 2.0f;
+        Vector3 lineEnd = Vector3.Normalize(transform.forward) * 10000.0f;
         Color lineColor = Color.magenta;
         Gizmos.DrawLine(lineStart, lineEnd, lineColor);
-
-        Vector3 rayStart = transform.position;
-        Vector3 rayEnd = Vector3.forward * SadMath.Infinity;
-        Color rayColour = Color.green;
-        Gizmos.DrawLine(rayStart, rayEnd, rayColour);
 
         Vector3 boxMin = bound.min;
         Vector3 boxMax = bound.max;

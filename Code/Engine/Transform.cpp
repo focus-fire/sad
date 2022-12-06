@@ -4,18 +4,23 @@
 
 #include <glm/gtc/type_ptr.hpp> 
 #include <glm/gtc/matrix_inverse.hpp>
+#include <glm/gtx/transform.hpp>
 
 sad::Transform::Transform(glm::vec3 position, glm::quat rotation, glm::vec3 scale)
 	: m_Position(position)
 	, m_Rotation(rotation)
 	, m_Scale(scale)
-{ }
+	, m_TransformMatrix()
+{ 
+}
 
 sad::Transform::Transform(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale)
 	: m_Position(position)
 	, m_Rotation(glm::radians(rotation))
 	, m_Scale(scale)
-{ }
+	, m_TransformMatrix()
+{ 
+}
 
 glm::mat4 sad::Transform::GetTransformMatrix()
 { 

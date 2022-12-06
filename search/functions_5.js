@@ -10,7 +10,7 @@ var searchData=
   ['getdatadirectory_309',['GetDataDirectory',['../classcore_1_1FileUtils.html#ab5d26947b939edc3171e312ceb9c05e0',1,'core::FileUtils']]],
   ['getdeltatime_310',['GetDeltaTime',['../classpog_1_1Time.html#a3bbffefa9ea13a9f98488a4079d6c00e',1,'pog::Time']]],
   ['getenginemode_311',['GetEngineMode',['../classsad_1_1EngineStateManager.html#a9f8f1cc58d95f39f60a0e5c154636550',1,'sad::EngineStateManager']]],
-  ['getentitybyguid_312',['GetEntityByGuid',['../classsad_1_1Level.html#a6eb008d9a8389093f6ea82f2380b95f3',1,'sad::Level::GetEntityByGuid(const core::NativeGuid &amp;guid)'],['../classsad_1_1Level.html#a24cf5dff87704da954fab080edd5911f',1,'sad::Level::GetEntityByGuid(const core::Guid &amp;guid)']]],
+  ['getentitybyguid_312',['GetEntityByGuid',['../classsad_1_1Level.html#a24cf5dff87704da954fab080edd5911f',1,'sad::Level::GetEntityByGuid(const core::Guid &amp;guid)'],['../classsad_1_1Level.html#a6eb008d9a8389093f6ea82f2380b95f3',1,'sad::Level::GetEntityByGuid(const core::NativeGuid &amp;guid)']]],
   ['getentitybyname_313',['GetEntityByName',['../classsad_1_1Level.html#a798f6ed8e2b7870084e48a027cf78f69',1,'sad::Level']]],
   ['getguid_314',['GetGuid',['../classsad_1_1ecs_1_1Entity.html#af64edcb63ab792b2af6412dde8b6c375',1,'sad::ecs::Entity']]],
   ['gethandle_315',['GetHandle',['../classsad_1_1ecs_1_1Entity.html#aafcf08b8cf54e9baffadd1e1afb06756',1,'sad::ecs::Entity']]],

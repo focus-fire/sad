@@ -37,8 +37,6 @@ public class Player : SadBehaviour
 
         if (Input.GetMouseButtonPressed(MouseButton.Left))
         {
-            // Shoot raycast forward
-            Log.Warn("LMB Clicked!!!");
             PrimaryAttack();
         }
     }
@@ -61,7 +59,6 @@ public class Player : SadBehaviour
 
             if (hit)
             { 
-                if (hit) Log.Debug("HIT");
                 GameManager.Instance.Enemies[i].TakeDamage(PrimaryAttackDamage);
             }
         }
@@ -71,7 +68,7 @@ public class Player : SadBehaviour
     {
         PlayerHealth -= incomingDamage;
 
-        Log.Debug($"PLAYER HEALTH: {PlayerHealth}");
+        Log.Debug($"Current player health: {PlayerHealth}");
 
         if (PlayerHealth <= 0)
             Die();
@@ -79,7 +76,7 @@ public class Player : SadBehaviour
 
     void Die()
     {
-        Log.Debug("YOU DEAD! BYE BYE!");
+        Log.Debug("You are dead!");
     }
 
     void Move()

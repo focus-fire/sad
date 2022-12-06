@@ -17,6 +17,8 @@ void sad::ecs::RenderingSystem::Draw(EntityWorld& world)
 	RenderPrimitives(world);
 
 	RenderModels(world);
+
+	RenderSprites(world);
 }
 
 void sad::ecs::RenderingSystem::RenderPrimitives(EntityWorld& world)
@@ -66,10 +68,11 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 		shader->SetUniformMatrix4fv("u_ModelViewMatrix", glm::value_ptr(modelViewMatrix));
 		shader->SetUniformMatrix4fv("u_MvpMatrix", glm::value_ptr(mvpMatrix));
 
-		glm::vec3 lightDirection = glm::vec4(0.0f, 50.0f, 0.0f, 0.0f);
+		glm::vec3 lightDirection = glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
 		shader->SetUniform3fv("u_LightDirection", glm::value_ptr(lightDirection));
 
-		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(currentCamera->cameraPosition));
+		glm::vec3 cameraPosition = glm::vec3(0.0f, 10.0f, 0.0f);
+		shader->SetUniform3fv("u_ViewPosition", glm::value_ptr(cameraPosition));
 
 		std::vector<core::Pointer<rad::Mesh>> modelMeshes = model.GetMeshes();
 		for (unsigned int i = 0; i < modelMeshes.size(); i++)
@@ -84,6 +87,40 @@ void sad::ecs::RenderingSystem::RenderModels(EntityWorld& world)
 
 			rad::RenderBuddy::DrawMesh(currentMesh);
 		}
+
+		shader->Unbind();
+	}
+}
+
+void sad::ecs::RenderingSystem::RenderSprites(EntityWorld& world)
+{
+	auto view = world.view<const RenderableSpriteComponent, const TransformComponent>();
+	for (auto [handle, spriteComponent, transformComponent] : view.each())
+	{
+		core::Pointer<RenderableSprite> sprite = spriteComponent.m_RenderableSprite;
+		Transform* transform = transformComponent.m_Transform.get();
+
+		rad::VertexArray* vertexArray = sprite->GetVertexArray();
+		rad::ShaderResource* shader = sprite->GetShader();
+		rad::TextureResource* texture = sprite->GetTexture();
+
+		float width = static_cast<float>(Application::s_MainWindow->GetWidth());
+		float height = static_cast<float>(Application::s_MainWindow->GetHeight());
+
+		// Spawn all sprites in the center of the viewport
+		// TODO: Have editable 2D transforms for sprites
+		glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(760, (height / 2) / 1.25f, 0.0f));
+		modelMatrix = glm::scale(modelMatrix, glm::vec3(100.0f, 100.0f, 0.0f));
+		glm::mat4 projectionMatrix = glm::ortho(0.0f, width, height, 0.0f, -1.0f, 1.0f);
+
+		shader->Bind();
+		shader->SetUniformMatrix4fv("model", glm::value_ptr(modelMatrix));
+		shader->SetUniformMatrix4fv("projection", glm::value_ptr(projectionMatrix));
+		shader->SetUniform3fv("spriteColor", glm::value_ptr(glm::vec3(1.0f, 1.0f, 1.0f)));
+		shader->SetUniform1i("image", 0);
+		texture->Bind(0);
+
+		rad::RenderBuddy::DrawTriangles(vertexArray, 6);
 
 		shader->Unbind();
 	}

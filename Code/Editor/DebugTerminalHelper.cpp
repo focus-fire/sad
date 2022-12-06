@@ -8,6 +8,7 @@
 #include <Engine/PointLight.h>
 #include <Engine/Scripting/ScriptingEngine.h>
 #include <Engine/ECS/Components/ComponentTypes.h>
+#include <Engine/Renderer/TextureResource.h>
 
 cap::DebugTerminalHelper::DebugTerminalHelper()
 {
@@ -19,6 +20,7 @@ cap::DebugTerminalHelper::DebugTerminalHelper()
 	add_command_({ "instantiate", "Instantiates an entity with a name", Instantiate, NoCompletion });
 	add_command_({ "instantiate_model", "Instantiates an entity with a name and model", InstantiateModel, NoCompletion });
 	add_command_({ "instantiate_shape", "Instantiates an entity with a name and shape", InstantiateShape, NoCompletion });
+	add_command_({ "instantiate_sprite", "Instantiates an entity with a name and sprite", InstantiateSprite, NoCompletion });
 	add_command_({ "destroy", "Destroys an entity in the level with a name", Destroy, NoCompletion });
 	add_command_({ "bind_script", "Binds a script to an entity in the level", BindScriptToEntity, NoCompletion });
 	add_command_({ "unbind_script", "Unbinds a script to an entity in the level", UnbindScriptFromEntity, NoCompletion });
@@ -114,6 +116,34 @@ void cap::DebugTerminalHelper::InstantiateShape(argument_type& arg)
 	// Instantiate an entity and provide it the resource component
 	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
 	entity.AddComponent<sad::ecs::PrimitiveResourceComponent>(primitiveResourceComponent);
+}
+
+void cap::DebugTerminalHelper::InstantiateSprite(argument_type& arg)
+{
+	if (arg.command_line.size() < 3)
+	{
+		core::Log(ELogType::Error, "[Terminal] usage: instantiate_sprite <entity_name> <sprite_name>");
+		return;
+	}
+	
+	std::string name = std::move(arg.command_line[1]);
+	std::string spriteName = std::move(arg.command_line[2]);
+
+	sad::rad::TextureResource* sprite = sad::ResourceManager::GetResource<sad::rad::TextureResource>(spriteName);
+	if (!sprite)
+	{
+		core::Log(ELogType::Error, "[Terminal] Target sprite {}, was not found in assets");
+		return;
+	}
+
+	// TODO: Add validation for sprite names
+	sad::ecs::SpriteResourceComponent spriteResourceComponent;
+	spriteResourceComponent.m_SpriteName = spriteName;
+	spriteResourceComponent.m_IsResourceDirty = true;
+
+	sad::ecs::Entity entity = sad::cs::ScriptingEngine::GetCurrentLevelInstance()->InstantiateEntity(name);
+	entity.AddComponent<sad::ecs::SpriteResourceComponent>(spriteResourceComponent);
+	entity.RemoveComponent<sad::ecs::BoundComponent>();
 }
 
 void cap::DebugTerminalHelper::Destroy(argument_type& arg)

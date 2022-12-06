@@ -4,6 +4,7 @@
 
 #include <Engine/RenderableModel.h>
 #include <Engine/RenderablePrimitive.h>
+#include <Engine/RenderableSprite.h>
 
 namespace sad::ecs
 {
@@ -21,5 +22,13 @@ namespace sad::ecs
 	struct RenderablePrimitiveComponent
 	{
 		core::Pointer<RenderablePrimitive> m_Primitive;
+	};
+
+	/**
+	 * @brief Contains a pointer for a RenderableSprite
+	 */
+	struct RenderableSpriteComponent
+	{
+		core::Pointer<RenderableSprite> m_RenderableSprite;
 	};
 }

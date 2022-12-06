@@ -22,5 +22,10 @@ namespace sad::ecs
 		 * @brief Performs drawing on entities containing a RenderableModel
 		*/
 		static void RenderModels(EntityWorld& world);
+
+		/**
+		 * @brief Performs drawing on entities containing a RenderableSprite
+		 */
+		static void RenderSprites(EntityWorld& world);
 	};
 }

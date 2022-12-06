@@ -75,3 +75,10 @@ void sad::rad::Renderer::DrawLines(VertexArray* vertexArray, unsigned int vertex
 
 	GL_CALL(glDrawArrays(GL_LINES, 0, vertexCount));
 }
+
+void sad::rad::Renderer::DrawTriangles(VertexArray* vertexArray, unsigned int triangleCount) const
+{
+	vertexArray->Bind();
+
+	GL_CALL(glDrawArrays(GL_TRIANGLES, 0, triangleCount));
+}

@@ -68,6 +68,13 @@ namespace cap
 		 * @usage instantiate_shape <entity_name> <shape>
 		*/
 		static void InstantiateShape(argument_type& arg);
+
+		/**
+		 * @brief Instantiates an entity in the level with a RenderableSprite attached to it
+		 *
+		 * @usage instantiate_sprite <entity_name> <sprite_name>
+		*/
+		static void InstantiateSprite(argument_type& arg);
 		
 		/**
 		 * @brief Destroys an entity in the level with a particular name 

@@ -24,5 +24,10 @@ namespace sad::ecs
 		 * @brief Turns PrimitiveResources into RenderablePrimitives 
 		*/
 		static void CreateRenderablePrimitives(EntityWorld& world);
+
+		/**
+		 * @brief Turns SpriteResources into RenderableSprites
+		 */
+		static void CreateRenderableSprites(EntityWorld& world);
 	};
 }

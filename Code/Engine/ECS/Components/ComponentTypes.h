@@ -23,6 +23,7 @@
 	sad::ecs::BoundComponent,\
 	sad::ecs::PrimitiveResourceComponent,\
 	sad::ecs::ModelResourceComponent,\
+	sad::ecs::SpriteResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\
 	sad::ecs::EditorControllerComponent,\
 	sad::ecs::PointLightComponent

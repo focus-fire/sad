@@ -1,4 +1,5 @@
-﻿using Sad;
+﻿using Microsoft.Win32;
+using Sad;
 using System;
 using System.Collections.Generic;
 
@@ -49,6 +50,9 @@ public class GameManager : SadBehaviour
                 Upgrade();
             }
         }          
+
+        if (Enemies.Count != 0)
+            CheckHitPlayer();
     }
 
     /// <summary>
@@ -103,5 +107,14 @@ public class GameManager : SadBehaviour
         int z = rand.Next(m_MinSpawnRange, m_MaxSpawnRange);
 
         return new Vector3(x, 0, z);
+    }
+
+    private void CheckHitPlayer()
+    {
+        foreach (Enemy enemy in Enemies)
+        {
+            if (enemy.bound.Intersects(Player))
+                Log.Debug("Take damage here! Player is hit!");
+        }
     }
 }

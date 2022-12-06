@@ -103,6 +103,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearColor</b> (const
 <tr class="memitem:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367">DrawLines</a> (<a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *vertexArray, unsigned int vertexCount) const</td></tr>
 <tr class="memdesc:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws lines bound to the passed index array.  <a href="classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367">More...</a><br /></td></tr>
 <tr class="separator:ae9e896e05ba8298d1596ee3a2bb5d367"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91525ab94287917ce5848503ab04ebeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsad_1_1rad_1_1Renderer.html#a91525ab94287917ce5848503ab04ebeb">DrawTriangles</a> (<a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *vertexArray, unsigned int triangleCount) const</td></tr>
+<tr class="memdesc:a91525ab94287917ce5848503ab04ebeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws triangles bound to the passed vertex array.  <a href="classsad_1_1rad_1_1Renderer.html#a91525ab94287917ce5848503ab04ebeb">More...</a><br /></td></tr>
+<tr class="separator:a91525ab94287917ce5848503ab04ebeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2fc59fc7637a8809204a5049581d2b49"></a>
@@ -199,6 +202,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ClearColor</b> (const
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mesh</td><td><a class="el" href="classsad_1_1rad_1_1Mesh.html">Mesh</a> wrapper for the geometry of a <a class="el" href="classsad_1_1RenderableModel.html">RenderableModel</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a91525ab94287917ce5848503ab04ebeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91525ab94287917ce5848503ab04ebeb">&#9670;&nbsp;</a></span>DrawTriangles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sad::rad::Renderer::DrawTriangles </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classsad_1_1rad_1_1VertexArray.html">VertexArray</a> *&#160;</td>
+          <td class="paramname"><em>vertexArray</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>triangleCount</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws triangles bound to the passed vertex array. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">vertexArray</td><td>VAO wrapper for the triangles in GL </td></tr>
+    <tr><td class="paramname">triangleCount</td><td>Number of triangles to render </td></tr>
   </table>
   </dd>
 </dl>

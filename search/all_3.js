@@ -12,5 +12,6 @@ var searchData=
   ['drawdebugline_39',['DrawDebugLine',['../classsad_1_1rad_1_1RenderBuddy.html#ae0abd44f38460df204ee40e03f923c41',1,'sad::rad::RenderBuddy']]],
   ['drawindexed_40',['DrawIndexed',['../classsad_1_1rad_1_1RenderBuddy.html#aed89001c77082b99d3ec13101c35314c',1,'sad::rad::RenderBuddy::DrawIndexed()'],['../classsad_1_1rad_1_1Renderer.html#a2fc59fc7637a8809204a5049581d2b49',1,'sad::rad::Renderer::DrawIndexed()']]],
   ['drawlines_41',['DrawLines',['../classsad_1_1rad_1_1RenderBuddy.html#a9aafb6ae5ba4366ef39c1f6a1d5aa436',1,'sad::rad::RenderBuddy::DrawLines()'],['../classsad_1_1rad_1_1Renderer.html#ae9e896e05ba8298d1596ee3a2bb5d367',1,'sad::rad::Renderer::DrawLines()']]],
-  ['drawmesh_42',['DrawMesh',['../classsad_1_1rad_1_1RenderBuddy.html#ae90532dcbae94bb871e0514cb20c04f9',1,'sad::rad::RenderBuddy::DrawMesh()'],['../classsad_1_1rad_1_1Renderer.html#a796947cead6db09bc5e725290d61714d',1,'sad::rad::Renderer::DrawMesh()']]]
+  ['drawmesh_42',['DrawMesh',['../classsad_1_1rad_1_1RenderBuddy.html#ae90532dcbae94bb871e0514cb20c04f9',1,'sad::rad::RenderBuddy::DrawMesh()'],['../classsad_1_1rad_1_1Renderer.html#a796947cead6db09bc5e725290d61714d',1,'sad::rad::Renderer::DrawMesh()']]],
+  ['drawtriangles_43',['DrawTriangles',['../classsad_1_1rad_1_1RenderBuddy.html#a993c94e44e791dba5708810ad6216b0b',1,'sad::rad::RenderBuddy::DrawTriangles()'],['../classsad_1_1rad_1_1Renderer.html#a91525ab94287917ce5848503ab04ebeb',1,'sad::rad::Renderer::DrawTriangles()']]]
 ];

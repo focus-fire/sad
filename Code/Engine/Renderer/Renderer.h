@@ -46,6 +46,13 @@ namespace sad::rad
 		*/
 		void DrawLines(VertexArray* vertexArray, unsigned int vertexCount) const;
 
+		/**
+		 * @brief Draws triangles bound to the passed vertex array
+		 * @param vertexArray VAO wrapper for the triangles in GL
+		 * @param triangleCount Number of triangles to render
+		 */
+		void DrawTriangles(VertexArray* vertexArray, unsigned int triangleCount) const;
+
 	private:
 		FrameBuffer* m_FrameBuffer;
 		TextureResource* m_FrameBufferTexture;

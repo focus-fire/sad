@@ -50,6 +50,13 @@ namespace sad::rad
 		static void DrawMesh(rad::Mesh* mesh) { s_Renderer.DrawMesh(mesh); }
 
 		/**
+		 * @brief Draws triangles bound to the passed vertex array
+		 * @param vertexArray VAO wrapper for the triangles in GL
+		 * @param triangleCount Number of triangles to render
+		 */
+		static void DrawTriangles(VertexArray* vertexArray, unsigned int triangleCount) { s_Renderer.DrawTriangles(vertexArray, triangleCount); }
+
+		/**
 		 * @brief Renders a flat debug line
 		 * @param from Position where the line starts rendering
 		 * @param to Position where the line finishes rendering

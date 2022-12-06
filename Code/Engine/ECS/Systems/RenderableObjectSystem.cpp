@@ -16,6 +16,8 @@ void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
 	CreateRenderableModels(world);
 
 	CreateRenderablePrimitives(world);
+
+	CreateRenderableSprites(world);
 }
 
 void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world)
@@ -64,5 +66,23 @@ void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& w
 
 		// Mark the RenderablePrimitive as clean
 		primitiveResourceComponent.m_IsResourceDirty = false;
+	}
+}
+
+void sad::ecs::RenderableObjectSystem::CreateRenderableSprites(EntityWorld& world)
+{
+	auto view = world.view<SpriteResourceComponent>();
+	for (auto [handle, spriteResourceComponent] : view.each())
+	{
+		if (!spriteResourceComponent.m_IsResourceDirty)
+			continue;
+
+		ecs::Entity entity = ecs::Entity(handle);
+
+		core::Pointer<RenderableSprite> renderable = core::CreatePointer<RenderableSprite>(spriteResourceComponent.m_SpriteName);
+		SAD_ASSERT(renderable, "Failed to create RenderableSprite from SpriteResource");
+		entity.AddComponent<RenderableSpriteComponent>(renderable);
+
+		spriteResourceComponent.m_IsResourceDirty = false;
 	}
 }

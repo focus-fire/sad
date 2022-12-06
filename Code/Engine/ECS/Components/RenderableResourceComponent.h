@@ -32,6 +32,15 @@ namespace sad::ecs
 		bool m_IsResourceDirty;
 	};
 
+	/**
+	 * @brief Contains name for a sprite attached to a particular RenderableSprite
+	 */
+	struct SpriteResourceComponent
+	{
+		std::string m_SpriteName;
+		bool m_IsResourceDirty;
+	};
+
 	inline void to_json(nlohmann::json& JSON, const sad::ecs::ModelResourceComponent& renderableResource)
 	{
 		JSON =
@@ -68,5 +77,21 @@ namespace sad::ecs
 			primitiveResource.m_Primitive = core::CreatePointer<PrimitiveResource>(std::move(CubeGeometry));
 			primitiveResource.m_IsResourceDirty = true;
 		}
+	}
+
+	inline void to_json(nlohmann::json& JSON, const sad::ecs::SpriteResourceComponent& spriteResource)
+	{
+		JSON =
+		{
+			{ "SpriteFileName", spriteResource.m_SpriteName },
+		};
+	}
+
+	inline void from_json(const nlohmann::json& JSON, sad::ecs::SpriteResourceComponent& spriteResource)
+	{
+		std::string spriteFileName = JSON["SpriteFileName"];
+
+		spriteResource.m_SpriteName = spriteFileName;
+		spriteResource.m_IsResourceDirty = true;
 	}
 }

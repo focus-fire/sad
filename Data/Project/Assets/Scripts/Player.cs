@@ -4,11 +4,13 @@ using System.Diagnostics;
 
 public class Player : SadBehaviour
 {
-    private int m_PrimaryAttackDamage = 100;
+    public int PlayerHealth = 100;
+    public int PrimaryAttackDamage = 50;
     private float m_MoveSpeed = 1f;
 
     void Awake()
     {
+        PlayerHealth = 100;
     }
 
     void Update()
@@ -50,26 +52,34 @@ public class Player : SadBehaviour
         Vector3 initialFiringPos = transform.position;
 
         // Currently fires directly in front of the player, not where they're aiming
-        Vector3 firingDirection5 = Vector3.Normalize(transform.forward) * 10000.0f;
+        Vector3 firingDirection = Vector3.Normalize(transform.forward) * 10000.0f;
 
         // Check if any enemies are hit by the player's attack
         for (int i = 0; i < GameManager.Instance.Enemies.Count; ++i)
         {
-            bool hit5 = Raycast.Intersects(initialFiringPos, firingDirection5, GameManager.Instance.Enemies[i]);
+            bool hit = Raycast.Intersects(initialFiringPos, firingDirection, GameManager.Instance.Enemies[i]);
 
-            if (hit5)
+            if (hit)
             { 
-                if (hit5) Log.Debug("HIT");
-                GameManager.Instance.Enemies[i].TakeDamage(m_PrimaryAttackDamage);
+                if (hit) Log.Debug("HIT");
+                GameManager.Instance.Enemies[i].TakeDamage(PrimaryAttackDamage);
             }
         }
     }
 
-    /// <summary>
-    /// Offhand attack that is performed on (?) input.
-    /// </summary>
-    void OffhandAttack()
+    public void TakeDamage(int incomingDamage)
     {
+        PlayerHealth -= incomingDamage;
+
+        Log.Debug($"PLAYER HEALTH: {PlayerHealth}");
+
+        if (PlayerHealth <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Log.Debug("YOU DEAD! BYE BYE!");
     }
 
     void Move()
@@ -79,28 +89,28 @@ public class Player : SadBehaviour
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.forward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += transform.right * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.right * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Backward 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += transform.backward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.backward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Right 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += transform.left * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.left * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
     }

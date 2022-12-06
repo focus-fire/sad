@@ -285,7 +285,7 @@ namespace sad::cs
 	static void GetRotation(core::NativeGuid guid, glm::quat* outRotation)
 	{
 		ecs::Entity entity = GetEntityInLevelByGUID(guid);
-		*outRotation = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetPosition();
+		*outRotation = entity.GetComponent<ecs::TransformComponent>().m_Transform->GetRotation();
 	}
 
 	static void SetRotation(core::NativeGuid guid, glm::quat* rotation)

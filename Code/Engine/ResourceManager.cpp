@@ -4,9 +4,15 @@
 
 #include <Core/FileUtils.h>
 
+#include <Engine/Application.h>
+
 #include "ResourceFactory.h"
 #include "RenderableResource.h"
 #include "Renderer/ShaderResource.h"
+
+const std::string sad::ResourceManager::c_ResourceFilePath = core::FileUtils::GetPathInsideDataDirectory("Resources.sad.meta");
+core::Pointer<filewatch::FileWatch<std::string>> sad::ResourceManager::s_ResourceFileWatcher;
+bool sad::ResourceManager::s_ResourceReloadInProgress;
 
 sad::ResourceManager& sad::ResourceManager::GetInstance()
 {
@@ -56,6 +62,14 @@ void sad::ResourceManager::MImport()
 		// This overwrites the previous Resources.sad.meta file with new data
 		ExportAllResources();
 	}
+
+	// If the file watcher isn't initialized, start it
+	if (!s_ResourceFileWatcher)
+	{
+		s_ResourceFileWatcher = core::CreatePointer<filewatch::FileWatch<std::string>>(c_ResourceFileWatchPath, OnResourceFileSystemEvent);
+	}
+
+	s_ResourceReloadInProgress = false;
 }
 
 bool sad::ResourceManager::ImportResources()
@@ -271,4 +285,19 @@ sad::ResourceManager::EResourceType sad::ResourceManager::CheckResourceType(cons
 	core::Log(ELogType::Warn, "[ResourceManager] {} is being processed as a resource but {} is not a valid type yet, it will be ignored.", fileName, ext);
 
 	return EResourceType::None;
+}
+
+void sad::ResourceManager::OnResourceFileSystemEvent(const std::string& filePath, const filewatch::Event eventType)
+{
+	if (!s_ResourceReloadInProgress && eventType == filewatch::Event::added)
+	{
+		s_ResourceReloadInProgress = true;
+
+		Application::s_ThreadQueue->SubmitToApplicationThreadQueue([]()
+		{
+			s_ResourceFileWatcher.reset();
+			core::Log(ELogType::Info, "Detected new resources in the Data directory... reimporting");
+			ResourceManager::Import();
+		});
+	}
 }

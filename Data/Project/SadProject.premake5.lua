@@ -1,3 +1,11 @@
+workspace "SadProject"
+	architecture "x86_64"
+	startproject "SadProject"
+
+	configurations { "Debug" }
+
+	flags { "MultiProcessorCompile" }
+
 project "SadProject"
     kind "SharedLib"
     language "C#"

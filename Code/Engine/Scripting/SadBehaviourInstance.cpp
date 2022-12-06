@@ -18,7 +18,6 @@ sad::cs::SadBehaviourInstance::SadBehaviourInstance(core::Pointer<ScriptClass> s
 	m_Update = sadBehaviourScript->GetMethod("Update", 0);
 	m_DrawGizmos = sadBehaviourScript->GetMethod("DrawGizmos", 0);
 
-
 	// Initialize all SadBehaviours with their entity's guid
 	{
 		core::Guid guid = entity.GetGuid();

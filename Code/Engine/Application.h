@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <thread>
+#include <vector>
 
 #include <Editor/Editor.h>
 
@@ -12,6 +13,7 @@
 
 #include "Level.h"
 #include "Window.h"
+#include "ThreadQueue.h"
 #include "RenderableResource.h"
 #include "AudioResource.h"
 #include "EngineStateManager.h"
@@ -72,10 +74,13 @@ namespace sad
 
 		static GameCamera* s_GameCamera;
 
+		static ThreadQueue* s_ThreadQueue;
+
 	private:
 		cap::Editor* m_Editor = nullptr;
 		Level* m_CurrentLevel;
 		rad::Skybox* m_Skybox;
+
 
 		bool m_IsGameOn = false;
 	};

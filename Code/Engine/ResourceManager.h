@@ -1,5 +1,7 @@
 #pragma once
 
+#include <FileWatch.hpp>
+
 #include <utility>
 #include <unordered_map>
 #include <unordered_set>
@@ -36,8 +38,13 @@ namespace sad
 		};
 
 	private:
-		const std::string c_ResourceFilePath = core::FileUtils::GetPathInsideDataDirectory("Resources.sad.meta");
+		const std::string c_ResourceFileWatchPath = core::FileUtils::GetPathInsideDataDirectory("");
 		const std::string c_ResourceFileHeader = "GUID,Name,Path";
+
+		static const std::string c_ResourceFilePath;
+
+		static core::Pointer<filewatch::FileWatch<std::string>> s_ResourceFileWatcher;
+		static bool s_ResourceReloadInProgress;
 
 		/**
 		 * @brief Main lookup for instantiated resources
@@ -101,6 +108,8 @@ namespace sad
 		 * @param resourceData Mandatory ResourceData struct that initializes the resource
 		*/
 		void SendDataToFactory(const EResourceType& resourceType, const Resource::ResourceData& resourceData);
+
+		static void OnResourceFileSystemEvent(const std::string& filePath, const filewatch::Event eventType);
 
 	public:
 		/**

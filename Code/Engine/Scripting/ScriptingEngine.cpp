@@ -4,6 +4,7 @@
 
 #include <mono/metadata/assembly.h>
 
+#include <Engine/Application.h>
 #include <Engine/ECS/Components/ComponentTypes.h>
 
 #include "ScriptingBridge.h"
@@ -30,7 +31,8 @@ void sad::cs::ScriptingEngine::Start()
 
 	// Load the Project assembly with the game's scripts
 	std::string projectAssemblyPath = core::FileUtils::GetPathInsideDataDirectory("Project/Resources/SadProject/SadProject.dll");
-	LoadProjectAssembly(projectAssemblyPath);
+	std::string fileWatcherPath = core::FileUtils::GetPathInsideDataDirectory("Project/Assets/Scripts");
+	LoadProjectAssembly(projectAssemblyPath, fileWatcherPath);
 
 	// Cache classes in assembly
 	CacheAssemblySadBehaviours();
@@ -87,7 +89,7 @@ void sad::cs::ScriptingEngine::TeardownMono()
 /// Assembly Loading/Unloading ///
 //////////////////////////////////
 
-void sad::cs::ScriptingEngine::LoadSadCSFrameworkAssembly(const std::string& filePath)
+bool sad::cs::ScriptingEngine::LoadSadCSFrameworkAssembly(const std::string& filePath)
 {
 	// Create domain for the SadCSFramework runtime
 	char appDomainName[] = "SadCSFrameworkScriptRuntime";
@@ -97,21 +99,43 @@ void sad::cs::ScriptingEngine::LoadSadCSFrameworkAssembly(const std::string& fil
 	// Save a reference to the assembly
 	s_ScriptingData->SadCSFrameworkAssemblyFilePath = filePath;
 	s_ScriptingData->SadCSFrameworkAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
-	SAD_ASSERT(s_ScriptingData->SadCSFrameworkAssembly, "Failed to load assembly for SadCSFramework");
+	if (!s_ScriptingData->SadCSFrameworkAssembly)
+		return false;
 
 	// Save a reference to image for the assembly
 	s_ScriptingData->SadCSFrameworkImage = mono_assembly_get_image(s_ScriptingData->SadCSFrameworkAssembly);
-	SAD_ASSERT(s_ScriptingData->SadCSFrameworkImage, "Failed to mount image for the SadCSFramework assembly");
+	return true;
 }
 
-void sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& filePath)
+bool sad::cs::ScriptingEngine::LoadProjectAssembly(const std::string& assemblyPath, const std::string& fileWatchPath)
 {
-	s_ScriptingData->ProjectAssemblyFilePath = filePath;
-	s_ScriptingData->ProjectAssembly = ScriptingEngineUtils::LoadCSharpAssembly(filePath);
-	SAD_ASSERT(s_ScriptingData->ProjectAssembly, "Failed to load project assembly");
+	s_ScriptingData->ProjectAssemblyFilePath = assemblyPath;
+	s_ScriptingData->ProjectAssemblyFileWatchPath = fileWatchPath;
+	s_ScriptingData->ProjectAssembly = ScriptingEngineUtils::LoadCSharpAssembly(assemblyPath);
+	if (!s_ScriptingData->ProjectAssembly)
+		return false;
 
 	s_ScriptingData->ProjectImage = mono_assembly_get_image(s_ScriptingData->ProjectAssembly);
-	SAD_ASSERT(s_ScriptingData->ProjectImage, "Failed to mount image for the requested project assembly");
+
+	// Enable file watcher and finish loading assembly
+	s_ScriptingData->ProjectAssemblyFileWatcher = core::CreatePointer<filewatch::FileWatch<std::string>>(fileWatchPath, OnProjectAssemblyFileSystemEvent);
+	s_ScriptingData->AssemblyReloadInProgress = false;
+	return true;
+}
+
+void sad::cs::ScriptingEngine::ReloadProjectAssembly()
+{
+	mono_domain_set(mono_get_root_domain(), false);
+	
+	mono_domain_unload(s_ScriptingData->AppDomain);
+
+	LoadSadCSFrameworkAssembly(s_ScriptingData->SadCSFrameworkAssemblyFilePath);
+	LoadProjectAssembly(s_ScriptingData->ProjectAssemblyFilePath, s_ScriptingData->ProjectAssemblyFileWatchPath);
+	CacheAssemblySadBehaviours();
+
+	ScriptingBridge::SetupEngineAPIComponents();
+
+	s_ScriptingData->SadBehaviourClass = ScriptClass("Sad", "SadBehaviour", true);
 }
 
 //////////////////
@@ -268,6 +292,7 @@ void sad::cs::ScriptingEngine::AddRuntimeSadBehaviourInstance(ecs::Entity entity
 void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
 {
 	s_ScriptingData->SadBehaviourScriptLookup.clear();
+	s_ScriptingData->SadBehaviourInstanceLookup.clear();
 
 	const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_ScriptingData->ProjectImage, MONO_TABLE_TYPEDEF);
 	int32_t numberOfTypes = mono_table_info_get_rows(typeDefinitionsTable);
@@ -300,6 +325,22 @@ void sad::cs::ScriptingEngine::CacheAssemblySadBehaviours()
 
 		s_ScriptingData->SadBehaviourScriptLookup[qualifiedName] = core::CreatePointer<ScriptClass>(nameSpace, className);
 		core::Log(ELogType::Trace, "[ScriptingEngine] Cached new SadBehaviour with qualified name {}", qualifiedName);
+	}
+}
+
+
+void sad::cs::ScriptingEngine::OnProjectAssemblyFileSystemEvent(const std::string& filePath, const filewatch::Event eventType)
+{
+	if (!s_ScriptingData->AssemblyReloadInProgress && eventType == filewatch::Event::modified)
+	{
+		s_ScriptingData->AssemblyReloadInProgress = true;
+		
+		Application::s_ThreadQueue->SubmitToApplicationThreadQueue([]()
+		{
+			core::Log(ELogType::Info, "Detected script changes, reloading assemblies");
+			s_ScriptingData->ProjectAssemblyFileWatcher.reset();
+			ScriptingEngine::ReloadProjectAssembly();
+		});
 	}
 }
 

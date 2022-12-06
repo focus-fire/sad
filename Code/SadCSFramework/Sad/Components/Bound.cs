@@ -1,4 +1,6 @@
-﻿namespace Sad
+﻿using System;
+
+namespace Sad
 {
     public class Bound : Component
     {
@@ -24,6 +26,11 @@
                 Internal.Bound.GetBoundMax(EntityGuid, out Vector3 boundMax);
                 return boundMax;
             }
+        }
+
+        public bool Intersects(Entity target)
+        {
+            return Internal.Bound.Intersects(EntityGuid, target.GUID); 
         }
     }
 }

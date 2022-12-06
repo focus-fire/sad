@@ -10,6 +10,18 @@ sad::Bound::Bound(glm::vec3 center, glm::vec3 size)
 	SetSize(size);
 }
 
+sad::Bound::Bound(glm::vec3 center, glm::vec3 size, glm::vec3 sizeDiff, glm::quat rot)
+	: m_Center()
+	, m_Extents()
+	, m_SizeDifference()
+	, m_rotation()
+{
+	SetSizeDiff(sizeDiff);
+	SetCenter(center);
+	SetSize(size);
+	SetRotation(rot);
+}
+
 sad::Bound::Bound(Transform transform)
 	: m_Center()
 	, m_Extents()

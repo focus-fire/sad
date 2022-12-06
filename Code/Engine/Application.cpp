@@ -37,6 +37,7 @@ sad::Window* sad::Application::s_MainWindow;
 sad::EngineStateManager* sad::Application::s_EngineState;
 sad::GameCamera* sad::Application::s_GameCamera;
 sad::EditorCamera* sad::Application::s_EditorCamera;
+sad::ThreadQueue* sad::Application::s_ThreadQueue;
 
 float sad::Application::s_DeltaTime;
 
@@ -47,8 +48,11 @@ sad::Application::Application()
 	s_MainWindow->CreateGLContext();
 
 	s_EngineState = new EngineStateManager();
+	s_ThreadQueue = new ThreadQueue();
+
 	s_EditorCamera = new sad::EditorCamera();
 	s_GameCamera = new sad::GameCamera();
+
 	
 	// Set the default camera instance to the editor camera
 	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
@@ -64,14 +68,15 @@ sad::Application::~Application()
 {
 	delete s_MainWindow;
 	delete s_EngineState;
+	delete s_ThreadQueue;
+
 	delete m_Editor;
-	
 	// Allocated in LevelManager::ImportLevel()
 	delete m_CurrentLevel;
+	delete m_Skybox;
 
 	delete s_EditorCamera;
 	delete s_GameCamera;
-	delete m_Skybox;
 }
 
 void sad::Application::EngineStart()
@@ -211,6 +216,9 @@ void sad::Application::Update(float dt)
 
 	// Render skybox as cubemap 'behind' scene
 	m_Skybox->Draw();
+
+	// Execute threads
+	s_ThreadQueue->ExecuteApplicationThreadQueue();
 
 	// Update events subscribed to the update loop
 	core::UpdateEvents();

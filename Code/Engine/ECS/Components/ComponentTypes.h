@@ -23,6 +23,18 @@
 	sad::ecs::BoundComponent,\
 	sad::ecs::PrimitiveResourceComponent,\
 	sad::ecs::ModelResourceComponent,\
+	sad::ecs::PlayerControllerComponent,\
+	sad::ecs::EditorControllerComponent,\
+	sad::ecs::PointLightComponent
+
+#define NEW_SERIALIZED_COMPONENT_TYPES \
+	sad::ecs::GuidComponent,\
+	sad::ecs::NameComponent,\
+	sad::ecs::ScriptComponent,\
+	sad::ecs::TransformComponent,\
+	sad::ecs::BoundComponent,\
+	sad::ecs::PrimitiveResourceComponent,\
+	sad::ecs::ModelResourceComponent,\
 	sad::ecs::SpriteResourceComponent,\
 	sad::ecs::PlayerControllerComponent,\
 	sad::ecs::EditorControllerComponent,\

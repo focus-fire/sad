@@ -80,7 +80,7 @@ bool sad::LevelManager::ExportLevel(int saveFileId)
 	// Prepare an export of the snapsho
 	LevelSnapshotOutput jsonLevelOutput;
 	entt::basic_snapshot snapshot = entt::basic_snapshot(sad::ecs::Registry::GetEntityWorld());
-	snapshot.entities(jsonLevelOutput).component<SERIALIZED_COMPONENT_TYPES>(jsonLevelOutput);
+	snapshot.entities(jsonLevelOutput).component<NEW_SERIALIZED_COMPONENT_TYPES>(jsonLevelOutput);
 	jsonLevelOutput.Close();
 
 	// Write the export to the save file

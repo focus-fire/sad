@@ -14,6 +14,7 @@ namespace sad
 	{
 	public:
 		explicit Bound(glm::vec3 center, glm::vec3 size);
+		explicit Bound(glm::vec3 center, glm::vec3 size, glm::vec3 sizeDiff, glm::quat rot);
 		explicit Bound(Transform transform);
 
 		/**
@@ -40,6 +41,9 @@ namespace sad
 		glm::vec3 GetBoundMax() { return m_Center + m_Extents; }
 		glm::vec3 GetBoundMin() { return m_Center - m_Extents; }
 
+		glm::vec3 GetSizeDiff() { return m_SizeDifference; }
+		glm::vec3 SetSizeDiff(glm::vec3 sizeDiff) { return m_SizeDifference = sizeDiff; }
+
 	private:
 		/**
 		 * @brief Checks another bound's max and min vectors to check for overlap or intersection.
@@ -51,6 +55,6 @@ namespace sad
 		glm::vec3 m_Extents;
 		glm::vec3 m_Size;
 		glm::quat m_rotation;
-		glm::vec3 m_SizeDifference;
+		glm::vec3 m_SizeDifference = glm::vec3(0, 0, 0);
 	};
 }

@@ -27,6 +27,7 @@ project "Editor"
 		"%{prj.location}/../Vendor/ImTerm/include",
         "%{prj.location}/../Vendor/json/single_include",
         "%{prj.location}/../Vendor/mono/include",
+		"%{prj.location}/../Vendor/filewatch/",
         "%{prj.location}",
     }
 

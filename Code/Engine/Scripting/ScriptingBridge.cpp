@@ -356,6 +356,17 @@ namespace sad::cs
 		*outMax = entity.GetComponent<ecs::BoundComponent>().m_Bound->GetBoundMax();
 	}
 
+	static bool Intersects(core::NativeGuid aGuid, core::NativeGuid bGuid)
+	{
+		ecs::Entity aEntity = GetEntityInLevelByGUID(aGuid);
+		ecs::Entity bEntity = GetEntityInLevelByGUID(bGuid);
+
+		ecs::BoundComponent aBound = aEntity.GetComponent<ecs::BoundComponent>();
+		ecs::BoundComponent bBound = bEntity.GetComponent<ecs::BoundComponent>();
+
+		return aBound.m_Bound->Intersects(*bBound.m_Bound.get());
+	}
+
 	/////////////
 	/// Input ///
 	/////////////
@@ -542,6 +553,7 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 	// Bound
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMin);
 	SAD_CSF_ADD_INTERNAL("Bound", GetBoundMax);
+	SAD_CSF_ADD_INTERNAL("Bound", Intersects);
 
 	// Inputs
 	SAD_CSF_ADD_INTERNAL("Input", GetButton);
@@ -570,6 +582,10 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()
 {
+	s_EntityECSFunctions.AddComponents.clear();
+	s_EntityECSFunctions.HasComponents.clear();
+	s_EntityECSFunctions.RemoveComponents.clear();
+
 	RegisterManagedComponent<ecs::TransformComponent>(true);
 	RegisterManagedComponent<ecs::BoundComponent>(true);
 }

@@ -133,6 +133,9 @@ namespace Sad
 
             [MethodImplAttribute(MethodImplOptions.InternalCall)]
             internal extern static void GetBoundMin(Guid entityGuid, out Vector3 boundMin);
+
+            [MethodImplAttribute(MethodImplOptions.InternalCall)]
+            internal extern static bool Intersects(Guid aGuid, Guid bGuid);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
-﻿using Sad;
+﻿using Microsoft.Win32;
+using Sad;
 using System;
 using System.Collections.Generic;
 
@@ -26,8 +27,8 @@ public class GameManager : SadBehaviour
         Player = e.GetScriptComponent<Player>();
         Player.transform.position = Vector3.zero;
 
-        m_MinSpawnRange = -10;
-        m_MaxSpawnRange = 10;
+        m_MinSpawnRange = 10;
+        m_MaxSpawnRange = 20;
 
         Log.Debug($"Player info: {Player.GUID}");
 
@@ -42,7 +43,16 @@ public class GameManager : SadBehaviour
     void Update()
     {
         if (Enemies.Count == 0)
+        {
             MSpawnWave();
+            if (m_CurrentWave % 2 == 0)
+            {
+                Upgrade();
+            }
+        }          
+
+        if (Enemies.Count != 0)
+            CheckHitPlayer();
     }
 
     /// <summary>
@@ -54,7 +64,10 @@ public class GameManager : SadBehaviour
         Log.Debug($"Spawning new Wave of enemies! Current Wave: {m_CurrentWave}");
 
         // TODO: Logic for # of enemies spawned. Temporarily spawn only 1 enemy.
-        MSpawnEnemy();
+        for (int i = 0; i <= m_CurrentWave; i++)
+        {
+            MSpawnEnemy();
+        }
     }
 
     /// <summary>
@@ -77,6 +90,12 @@ public class GameManager : SadBehaviour
         Enemies.Add(enemy);
     }
 
+    private void Upgrade()
+    {
+        Player.PrimaryAttackDamage = Player.PrimaryAttackDamage + 50;
+        Log.Debug($"Wave: {m_CurrentWave}\nPlayer damage upgraded: {Player.PrimaryAttackDamage}");
+    }
+
     /// <summary>
     /// Randomly generate an enemy spawn location on X- and Z-axis within a specified range.
     /// </summary>
@@ -88,5 +107,18 @@ public class GameManager : SadBehaviour
         int z = rand.Next(m_MinSpawnRange, m_MaxSpawnRange);
 
         return new Vector3(x, 0, z);
+    }
+
+    private void CheckHitPlayer()
+    {
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            if (Enemies[i].bound.Intersects(Player))
+            {
+                Log.Debug("Take damage here! Player is hit!");
+                Player.TakeDamage(Enemies[i].Damage);
+                Enemies[i].Die();
+            }
+        }
     }
 }

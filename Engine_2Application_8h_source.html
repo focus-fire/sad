@@ -73,76 +73,82 @@ $(function() {
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once </span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;thread&gt;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;Editor/Editor.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;ECS/Entity.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;Renderer/Renderer.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Renderer/Skybox.h&quot;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Scripting/ScriptingEngine.h&quot;</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;RenderablePrimitive.h&quot;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;Level.h&quot;</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Window.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;RenderableResource.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;AudioResource.h&quot;</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;EngineStateManager.h&quot;</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;Engine/EditorCamera.h&quot;</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;Game/GameCamera.h&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">struct </span>SDL_Window;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;Editor/Editor.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;ECS/Entity.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;Renderer/Renderer.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;Renderer/Skybox.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;Scripting/ScriptingEngine.h&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;RenderablePrimitive.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;Level.h&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;Window.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &quot;ThreadQueue.h&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &quot;RenderableResource.h&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;AudioResource.h&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;EngineStateManager.h&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;Engine/EditorCamera.h&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &quot;Game/GameCamera.h&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="classsad_1_1Application.html">   29</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1Application.html">Application</a></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Application.html">Application</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classsad_1_1Application.html">Application</a>();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">EngineStart</a>();</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#aa9668bfb125aac2ac2f3e6d0322340ce">LevelReset</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">   48</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">Start</a>() = 0;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88">PollEvents</a>(<span class="keywordtype">bool</span>&amp; isClosed);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">Update</a>(<span class="keywordtype">float</span> dt);</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a6cbe61aab56a05959c6d9e25d449df72">Teardown</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1Window.html">Window</a>* s_MainWindow;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1EngineStateManager.html">EngineStateManager</a>* s_EngineState;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> s_DeltaTime;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">struct </span>SDL_Window;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacesad.html">sad</a></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classsad_1_1Application.html">   31</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classsad_1_1Application.html">Application</a></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">explicit</span> <a class="code" href="classsad_1_1Application.html">Application</a>();</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keyword">virtual</span> ~<a class="code" href="classsad_1_1Application.html">Application</a>();</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">EngineStart</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#aa9668bfb125aac2ac2f3e6d0322340ce">LevelReset</a>();</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">   50</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">Start</a>() = 0;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88">PollEvents</a>(<span class="keywordtype">bool</span>&amp; isClosed);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">Update</a>(<span class="keywordtype">float</span> dt);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classsad_1_1Application.html#a6cbe61aab56a05959c6d9e25d449df72">Teardown</a>();</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1Window.html">Window</a>* s_MainWindow;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1EngineStateManager.html">EngineStateManager</a>* s_EngineState;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1EditorCamera.html">EditorCamera</a>* s_EditorCamera;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">float</span> s_DeltaTime;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1GameCamera.html">GameCamera</a>* s_GameCamera;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1EditorCamera.html">EditorCamera</a>* s_EditorCamera;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <a class="code" href="classcap_1_1Editor.html">cap::Editor</a>* m_Editor = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <a class="code" href="classsad_1_1Level.html">Level</a>* m_CurrentLevel;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <a class="code" href="classsad_1_1rad_1_1Skybox.html">rad::Skybox</a>* m_Skybox;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <span class="keywordtype">bool</span> m_IsGameOn = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    };</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1GameCamera.html">GameCamera</a>* s_GameCamera;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">static</span> <a class="code" href="classsad_1_1ThreadQueue.html">ThreadQueue</a>* s_ThreadQueue;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="classcap_1_1Editor.html">cap::Editor</a>* m_Editor = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="classsad_1_1Level.html">Level</a>* m_CurrentLevel;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        <a class="code" href="classsad_1_1rad_1_1Skybox.html">rad::Skybox</a>* m_Skybox;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordtype">bool</span> m_IsGameOn = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}</div>
 <div class="ttc" id="aclasscap_1_1Editor_html"><div class="ttname"><a href="classcap_1_1Editor.html">cap::Editor</a></div><div class="ttdef"><b>Definition:</b> Editor.h:19</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html"><div class="ttname"><a href="classsad_1_1Application.html">sad::Application</a></div><div class="ttdoc">Base class for all lifecycle specific methods for the Engine/Game projects.</div><div class="ttdef"><b>Definition:</b> Application.h:30</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html"><div class="ttname"><a href="classsad_1_1Application.html">sad::Application</a></div><div class="ttdoc">Base class for all lifecycle specific methods for the Engine/Game projects.</div><div class="ttdef"><b>Definition:</b> Application.h:32</div></div>
 <div class="ttc" id="aclasssad_1_1Application_html_a649ef7196503f7390806784aa6981b67"><div class="ttname"><a href="classsad_1_1Application.html#a649ef7196503f7390806784aa6981b67">sad::Application::Start</a></div><div class="ttdeci">virtual void Start()=0</div><div class="ttdoc">Starting point for applications aside from the engine.</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html_a6cbe61aab56a05959c6d9e25d449df72"><div class="ttname"><a href="classsad_1_1Application.html#a6cbe61aab56a05959c6d9e25d449df72">sad::Application::Teardown</a></div><div class="ttdeci">virtual void Teardown()</div><div class="ttdoc">Destruction method that tears down the services associated with the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:237</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html_a8b942d22e5f39cf8b6e8e4041e76ee9f"><div class="ttname"><a href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">sad::Application::EngineStart</a></div><div class="ttdeci">void EngineStart()</div><div class="ttdoc">Entrypoint for the engine application that initializes systems.</div><div class="ttdef"><b>Definition:</b> Application.cpp:77</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html_aa9668bfb125aac2ac2f3e6d0322340ce"><div class="ttname"><a href="classsad_1_1Application.html#aa9668bfb125aac2ac2f3e6d0322340ce">sad::Application::LevelReset</a></div><div class="ttdeci">void LevelReset()</div><div class="ttdoc">Resets the level back to the last saved instance.</div><div class="ttdef"><b>Definition:</b> Application.cpp:152</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html_ad436b67432b7e80fc7bcc08c50bcd8c3"><div class="ttname"><a href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">sad::Application::Update</a></div><div class="ttdeci">virtual void Update(float dt)</div><div class="ttdoc">Main update loop for the Engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:199</div></div>
-<div class="ttc" id="aclasssad_1_1Application_html_afd6f427e090858e9a126bbe158362a88"><div class="ttname"><a href="classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88">sad::Application::PollEvents</a></div><div class="ttdeci">void PollEvents(bool &amp;isClosed)</div><div class="ttdoc">Lifecycle method that polls for window events and submits events to required systems.</div><div class="ttdef"><b>Definition:</b> Application.cpp:167</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html_a6cbe61aab56a05959c6d9e25d449df72"><div class="ttname"><a href="classsad_1_1Application.html#a6cbe61aab56a05959c6d9e25d449df72">sad::Application::Teardown</a></div><div class="ttdeci">virtual void Teardown()</div><div class="ttdoc">Destruction method that tears down the services associated with the engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:245</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html_a8b942d22e5f39cf8b6e8e4041e76ee9f"><div class="ttname"><a href="classsad_1_1Application.html#a8b942d22e5f39cf8b6e8e4041e76ee9f">sad::Application::EngineStart</a></div><div class="ttdeci">void EngineStart()</div><div class="ttdoc">Entrypoint for the engine application that initializes systems.</div><div class="ttdef"><b>Definition:</b> Application.cpp:82</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html_aa9668bfb125aac2ac2f3e6d0322340ce"><div class="ttname"><a href="classsad_1_1Application.html#aa9668bfb125aac2ac2f3e6d0322340ce">sad::Application::LevelReset</a></div><div class="ttdeci">void LevelReset()</div><div class="ttdoc">Resets the level back to the last saved instance.</div><div class="ttdef"><b>Definition:</b> Application.cpp:157</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html_ad436b67432b7e80fc7bcc08c50bcd8c3"><div class="ttname"><a href="classsad_1_1Application.html#ad436b67432b7e80fc7bcc08c50bcd8c3">sad::Application::Update</a></div><div class="ttdeci">virtual void Update(float dt)</div><div class="ttdoc">Main update loop for the Engine.</div><div class="ttdef"><b>Definition:</b> Application.cpp:204</div></div>
+<div class="ttc" id="aclasssad_1_1Application_html_afd6f427e090858e9a126bbe158362a88"><div class="ttname"><a href="classsad_1_1Application.html#afd6f427e090858e9a126bbe158362a88">sad::Application::PollEvents</a></div><div class="ttdeci">void PollEvents(bool &amp;isClosed)</div><div class="ttdoc">Lifecycle method that polls for window events and submits events to required systems.</div><div class="ttdef"><b>Definition:</b> Application.cpp:172</div></div>
 <div class="ttc" id="aclasssad_1_1EditorCamera_html"><div class="ttname"><a href="classsad_1_1EditorCamera.html">sad::EditorCamera</a></div><div class="ttdef"><b>Definition:</b> EditorCamera.h:18</div></div>
 <div class="ttc" id="aclasssad_1_1EngineStateManager_html"><div class="ttname"><a href="classsad_1_1EngineStateManager.html">sad::EngineStateManager</a></div><div class="ttdoc">Holds the current state of the engine.</div><div class="ttdef"><b>Definition:</b> EngineStateManager.h:17</div></div>
 <div class="ttc" id="aclasssad_1_1GameCamera_html"><div class="ttname"><a href="classsad_1_1GameCamera.html">sad::GameCamera</a></div><div class="ttdef"><b>Definition:</b> GameCamera.h:18</div></div>
 <div class="ttc" id="aclasssad_1_1Level_html"><div class="ttname"><a href="classsad_1_1Level.html">sad::Level</a></div><div class="ttdef"><b>Definition:</b> Level.h:15</div></div>
+<div class="ttc" id="aclasssad_1_1ThreadQueue_html"><div class="ttname"><a href="classsad_1_1ThreadQueue.html">sad::ThreadQueue</a></div><div class="ttdef"><b>Definition:</b> ThreadQueue.h:10</div></div>
 <div class="ttc" id="aclasssad_1_1Window_html"><div class="ttname"><a href="classsad_1_1Window.html">sad::Window</a></div><div class="ttdef"><b>Definition:</b> Window.h:35</div></div>
 <div class="ttc" id="aclasssad_1_1rad_1_1Skybox_html"><div class="ttname"><a href="classsad_1_1rad_1_1Skybox.html">sad::rad::Skybox</a></div><div class="ttdef"><b>Definition:</b> Skybox.h:15</div></div>
 <div class="ttc" id="anamespacesad_html"><div class="ttname"><a href="namespacesad.html">sad</a></div><div class="ttdoc">The one and only, contains the engine's core features and functionality.</div></div>

@@ -69,7 +69,6 @@ namespace sad::ecs
 		sizeDiff = glm::vec3(JSON["BoundSizeDiff"]["x"], JSON["BoundSizeDiff"]["y"], JSON["BoundSizeDiff"]["z"]);
 		rotation = glm::quat(JSON["BoundRotation"]["x"], JSON["BoundRotation"]["y"], JSON["BoundRotation"]["z"], JSON["BoundRotation"]["w"]);
 
-		//boundComponent.m_Bound = core::CreatePointer<Bound>(center, size);
 		boundComponent.m_Bound = core::CreatePointer<Bound>(center, size, sizeDiff, rotation);
 	}
 }

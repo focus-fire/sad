@@ -47,19 +47,17 @@ sad::Application::Application()
 	s_MainWindow->CreateGLContext();
 
 	s_EngineState = new EngineStateManager();
-
-	m_Editor = new cap::Editor;
-
 	s_EditorCamera = new sad::EditorCamera();
-
 	s_GameCamera = new sad::GameCamera();
-
+	
+	// Set the default camera instance to the editor camera
 	sad::rad::RenderBuddy::SetCameraInstance(s_EditorCamera);
 
-	std::function<void(void)> resetLevel = std::bind(&sad::Application::LevelReset, this);
-	core::InitializeListener("ResetLevel", resetLevel);
-
+	m_Editor = new cap::Editor;
 	m_Skybox = new rad::Skybox();
+
+	// Initialize event listener for detecting a reset/stop for the currently running game
+	core::InitializeListener("ResetLevel", std::bind(&sad::Application::LevelReset, this));
 }
 
 sad::Application::~Application()
@@ -78,11 +76,11 @@ sad::Application::~Application()
 
 void sad::Application::EngineStart()
 {
-	// Launch editor 
-	m_Editor->Start();
-
 	// Import Resources
 	ResourceManager::Import();
+
+	// Launch editor 
+	m_Editor->Start();
 
 	// Initialize the renderer and save a pointer to the FrameBuffer for the editor
 	rad::RenderBuddy::Start();
@@ -137,7 +135,9 @@ void sad::Application::EngineStart()
 
 			// Only start updating the game if `Start` has been called`
 			if (m_IsGameOn)
+			{
 				this->Update(s_DeltaTime);
+			}
 		}
 
 		// Engine Update
@@ -200,15 +200,16 @@ void sad::Application::Update(float dt)
 {
 	// First 'pass' sets up the framebuffer
 	// This clear color is the background for the game
-	rad::RenderBuddy::ClearColor(glm::vec4(0.85f, 0.85f, 0.85f, 1.0f));
+	rad::RenderBuddy::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 	m_Editor->Clear();
 
 	// Capture the current render in the framebuffer 
 	rad::RenderBuddy::BindFrameBuffer();
 
 	// Second 'pass' to recolor outside the framebuffer
-	rad::RenderBuddy::ClearColor(glm::vec4(0.45f, 0.55f, 0.60f, 1.0f));
+	rad::RenderBuddy::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
+	// Render skybox as cubemap 'behind' scene
 	m_Skybox->Draw();
 
 	// Update events subscribed to the update loop

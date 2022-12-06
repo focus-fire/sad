@@ -8,7 +8,7 @@
 #include <Engine/Application.h>
 
 cap::DebugTerminal::DebugTerminal(DebugTerminalCommandItems commands)
-	: m_Terminal(ImTerm::terminal<DebugTerminalHelper>(commands))
+	: m_Terminal(ImTerm::terminal<DebugTerminalHelper>(commands, "sadTerminal"))
 	, m_TerminalCommands(commands)
 	, m_IsVisible(true)
 {
@@ -31,7 +31,7 @@ void cap::DebugTerminal::Start()
 	core::Log(ELogType::Info, "Welcome to the sadEngine!");
 
 	float terminalWindowWidth = sad::Application::s_MainWindow->GetWidth();
-	m_Terminal.set_size(ImVec2(terminalWindowWidth, 300.0f));
+	m_Terminal.set_size(ImVec2(terminalWindowWidth, 325.0f));
 }
 
 void cap::DebugTerminal::Render()

@@ -7,7 +7,6 @@
 
 namespace sad::rad
 {
-	static Camera* s_CurrentCamera;
 	/**
 	 * @brief That little pal that renders things
 	*/
@@ -66,16 +65,20 @@ namespace sad::rad
 		*/
 		static void DrawDebugBox(glm::vec3 min, glm::vec3 max, glm::vec4 color);
 
-		/*
-		* @brief Sets the current camera in the game
-		* @param camera Pointer to camera class
+		/**
+		 * @brief Sets the current camera in the game
+		 * @param camera Pointer to camera class
 		*/
 		static void SetCameraInstance(Camera* camera) { s_CurrentCamera = camera; }
 
+		/**
+	     * @brief Retrieves the current instance of the Camera class
+		 * @return Pointer to the instance of the Camera currently being controlled
+		*/
 		static Camera* GetCameraInstance() { return s_CurrentCamera; }
 
 	private:
 		static Renderer s_Renderer;
-
+		static Camera* s_CurrentCamera;
 	};
 }

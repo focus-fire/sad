@@ -18,6 +18,7 @@
 #include "VertexBuffer.h"
 
 sad::rad::Renderer sad::rad::RenderBuddy::s_Renderer = sad::rad::Renderer();
+sad::Camera* sad::rad::RenderBuddy::s_CurrentCamera = nullptr;
 
 void sad::rad::RenderBuddy::DrawDebugLine(glm::vec3 from, glm::vec3 to, glm::vec4 color)
 {

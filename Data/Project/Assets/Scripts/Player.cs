@@ -52,12 +52,12 @@ public class Player : SadBehaviour
         Vector3 initialFiringPos = transform.position;
 
         // Currently fires directly in front of the player, not where they're aiming
-        Vector3 firingDirection5 = Vector3.Normalize(transform.forward) * 10000.0f;
+        Vector3 firingDirection = Vector3.Normalize(transform.forward) * 10000.0f;
 
         // Check if any enemies are hit by the player's attack
         for (int i = 0; i < GameManager.Instance.Enemies.Count; ++i)
         {
-            bool hit = Raycast.Intersects(initialFiringPos, firingDirection5, GameManager.Instance.Enemies[i]);
+            bool hit = Raycast.Intersects(initialFiringPos, firingDirection, GameManager.Instance.Enemies[i]);
 
             if (hit)
             { 
@@ -71,7 +71,7 @@ public class Player : SadBehaviour
     {
         PlayerHealth -= incomingDamage;
 
-        Log.Debug($"Player took {incomingDamage} damage! New Health is {PlayerHealth}");
+        Log.Debug($"PLAYER HEALTH: {PlayerHealth}");
 
         if (PlayerHealth <= 0)
             Die();
@@ -79,14 +79,7 @@ public class Player : SadBehaviour
 
     void Die()
     {
-        Log.Debug("You dead! Bye Bye!");
-    }
-
-    bool Hit()
-    {
-        //Check for collision
-        //if colliding return true
-        return false;
+        Log.Debug("YOU DEAD! BYE BYE!");
     }
 
     void Move()

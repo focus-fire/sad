@@ -22,7 +22,7 @@ public class Enemy : SadBehaviour
         Damage = 5;
 
         m_RotSpeed = 0.5f;
-	    m_MoveSpeed = 0.5f;
+	    m_MoveSpeed = 2.0f;
 
 		m_SpeedUpDown = 0.5f;
 		m_DistanceUpDown = 0.5f;
@@ -48,13 +48,14 @@ public class Enemy : SadBehaviour
             Die();
 	}
 
-    void Die()
+    public void Die()
     {
         // Enemy kills itself after removing itself from list of existing Enemies
         Log.Debug($"Enemy#{this?.GUID} got dead.");
-        this.RemoveScriptComponent<Enemy>();
+        //this.RemoveScriptComponent<Enemy>();
         GameManager.Instance.Enemies.Remove(this);
         Destroy(this);
+        Audio.PlaySFX("oof.wav");
     }
 
 	void EnemyBobbing() 

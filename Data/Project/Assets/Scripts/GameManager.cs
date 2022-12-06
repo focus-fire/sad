@@ -27,8 +27,8 @@ public class GameManager : SadBehaviour
         Player = e.GetScriptComponent<Player>();
         Player.transform.position = Vector3.zero;
 
-        m_MinSpawnRange = -10;
-        m_MaxSpawnRange = 10;
+        m_MinSpawnRange = 10;
+        m_MaxSpawnRange = 20;
 
         Log.Debug($"Player info: {Player.GUID}");
 
@@ -111,10 +111,14 @@ public class GameManager : SadBehaviour
 
     private void CheckHitPlayer()
     {
-        foreach (Enemy enemy in Enemies)
+        for (int i = 0; i < Enemies.Count; i++)
         {
-            if (enemy.bound.Intersects(Player))
+            if (Enemies[i].bound.Intersects(Player))
+            {
                 Log.Debug("Take damage here! Player is hit!");
+                Player.TakeDamage(Enemies[i].Damage);
+                Enemies[i].Die();
+            }
         }
     }
 }

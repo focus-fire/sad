@@ -35,7 +35,7 @@ project "imgui"
     includedirs { includes }
 
     defines {
-        "IMGUI_IMPL_OPENGL_LOADER_GLAD",
+        "IMGUI_IMPL_OPENGL_LOADER_GLAD"
     }
 
     filter "system:windows"

@@ -308,7 +308,7 @@ MonoObject* sad::cs::ScriptingEngine::InstantiateClass(MonoClass* monoClass)
 	MonoObject* classInstance = mono_object_new(s_ScriptingData->AppDomain, monoClass);
 	SAD_ASSERT(classInstance, "Mono failed to allocate a new object-type for a class");
 
-	// Actually calls the default constructor for HelloWorld
+	// Actually calls the default constructor 
 	// Preferable to make the assumption that all SadCSFramework classes will be default constructible
 	// If a constructor isn't explicitly constructed at all the C# compiler adds one 
 	// Otherwise ensure one exists in the event multiple constructors are used   
@@ -319,19 +319,17 @@ MonoObject* sad::cs::ScriptingEngine::InstantiateClass(MonoClass* monoClass)
 
 bool sad::cs::ScriptingEngine::SadBehaviourExists(const std::string& qualifiedName)
 {
-	return s_ScriptingData->SadBehaviourScriptLookup.find(qualifiedName) != s_ScriptingData->SadBehaviourScriptLookup.end();
+	return s_ScriptingData->SadBehaviourScriptLookup.contains(qualifiedName);
 }
 
 bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid)
 {
-	return s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
+	return s_ScriptingData->SadBehaviourInstanceLookup.contains(guid);
 }
 
 bool sad::cs::ScriptingEngine::SadBehaviourInstanceExists(const core::Guid& guid, const std::string& qualifiedName)
 {
-	bool exists = s_ScriptingData->SadBehaviourInstanceLookup.find(guid) != s_ScriptingData->SadBehaviourInstanceLookup.end();
-
-	if (!exists)
+	if (!SadBehaviourInstanceExists(guid))
 		return false;
 
 	// Check if the passed script name and the script name on the SadBehaviour are the same

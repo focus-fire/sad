@@ -5,6 +5,7 @@
 #include <mono/metadata/metadata.h>
 
 #include <Core/Log.h>
+#include <Core/Type.h>
 
 #include "ScriptingEngine.h"
 
@@ -60,7 +61,8 @@ namespace sad::cs
 		static void RegisterManagedComponent(bool removeComponentSuffix = false)
 		{
 			// Type name in the form 'struct sad::ecs::Component'
-			std::string_view type = typeid(T).name();
+			std::string_view type = Typeof<T>();
+
 			size_t finalNamespacePos = type.find_last_of(':');
 			std::string_view structName = type.substr(finalNamespacePos + 1);
 

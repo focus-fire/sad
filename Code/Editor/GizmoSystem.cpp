@@ -18,10 +18,9 @@
 
 ImGuiWindowFlags cap::GizmoSystem::s_GameWindowFlags; 
 
-const float transformWindowX = 1025.0f;
-const float transformWindowY = 65.0f + 390.0f;
-const float transformWindowHeight = 125.0f;
-const float rightColumnWidth = 250.0f;
+const float c_TransformWindowY = 65.0f + 390.0f;
+const float c_TransformWindowHeight = 125.0f;
+const float c_RightColumnWidth = 250.0f;
 
 namespace 
 {
@@ -74,9 +73,10 @@ std::vector<glm::vec3> cap::GizmoSystem::UpdateGizmos(float* modelMatrix, bool t
 	float viewManipulateRight = windowPos.x + ImGui::GetWindowWidth();
 	float viewManipulateTop = windowPos.y;
 
-	ImGui::Begin("Transform", 0);
-	ImGui::SetWindowPos(ImVec2(transformWindowX, transformWindowY), ImGuiCond_Once);
-	ImGui::SetWindowSize(ImVec2(rightColumnWidth, transformWindowHeight), ImGuiCond_Once);
+	ImGui::Begin("Inspector", 0);
+	float transformWindowX = sad::Application::s_MainWindow->GetWidth() - c_RightColumnWidth;
+	ImGui::SetWindowPos(ImVec2(transformWindowX, c_TransformWindowY), ImGuiCond_Always);
+	ImGui::SetWindowSize(ImVec2(c_RightColumnWidth, c_TransformWindowHeight), ImGuiCond_Always);
 
 	// Check for hotkey to update gizmo operation for particular object
 	if (transformDecomposition)

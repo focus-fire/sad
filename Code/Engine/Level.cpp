@@ -114,21 +114,27 @@ sad::ecs::Entity sad::Level::InstantiateEntityFromHandle(entt::entity handle, co
 	entity.AddComponent<ecs::TransformComponent>(transform);
 	entity.AddComponent<ecs::BoundComponent>(bound);
 
+	// Add entity to level map
 	m_EntityMap[guid] = entity;
 
 	return entity;
 }
 
-sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle, core::Guid guid /* = core::Guid::CreateGuid() */)
+sad::ecs::Entity sad::Level::ImportEntityFromHandle(entt::entity handle)
 {
 	ecs::Entity entity = ecs::Entity(handle);
+	core::Guid guid;
 
-	if (!entity.HasComponent<ecs::GuidComponent>())
-	{
-		entity.OverwriteComponent<ecs::GuidComponent>({ guid });
+	// Retrieve GUID from entity being imported if it exists (required for re-importing/stopping levels)
+	// Add GUID components if they don't exist on entities (required for adding components in levels)
+	// This acts more like a failsafe, since all entities are provided a GUID if they are imported without one
+	if (entity.HasComponent<ecs::GuidComponent>())
+		guid = entity.GetComponent<ecs::GuidComponent>().m_GUID;
+	else 
+		guid = entity.AddComponent<ecs::GuidComponent>(core::Guid::CreateGuid()).m_GUID;
 
-		m_EntityMap[guid] = entity;
-	}
+	// Always append entity GUIDs to the map on import
+	m_EntityMap[guid] = entity;
 
 	return entity;
 }

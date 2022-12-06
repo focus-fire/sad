@@ -21,6 +21,8 @@ void sad::rad::Renderer::Start()
 	GL_CALL(glEnable(GL_BLEND));
 	GL_CALL(glEnable(GL_CULL_FACE));
 	GL_CALL(glEnable(GL_DEPTH_TEST));
+	GL_CALL(glCullFace(GL_BACK));
+	GL_CALL(glFrontFace(GL_CCW));
 
 	// Create framebuffer 
 	m_FrameBuffer = new sad::rad::FrameBuffer(mainWindow->GetWidth(), mainWindow->GetHeight());

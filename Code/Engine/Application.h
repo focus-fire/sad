@@ -6,7 +6,9 @@
 
 #include "ECS/Entity.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Skybox.h"
 #include "Scripting/ScriptingEngine.h"
+#include "RenderablePrimitive.h"
 
 #include "Level.h"
 #include "Window.h"
@@ -73,6 +75,7 @@ namespace sad
 	private:
 		cap::Editor* m_Editor = nullptr;
 		Level* m_CurrentLevel;
+		rad::Skybox* m_Skybox;
 
 		bool m_IsGameOn = false;
 	};

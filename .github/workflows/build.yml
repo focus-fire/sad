@@ -35,7 +35,7 @@ jobs:
         run: python3 .\Scripts\bet.py --build vs2022
 
       - name: Run msbuild
-        run: msbuild sad.sln -interactive:False -property:Configuration=Debug
+        run: msbuild sad.sln -interactive:False -property:Configuration=Debug -m
 
   win32-release:
     name: Win32 Release
@@ -58,7 +58,7 @@ jobs:
         run: python3 .\Scripts\bet.py --build vs2022
 
       - name: Run msbuild
-        run: msbuild sad.sln -interactive:False -property:Configuration=Release
+        run: msbuild sad.sln -interactive:False -property:Configuration=Release -m
 
   macos-debug:
     name: MacOS Debug

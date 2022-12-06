@@ -30,9 +30,9 @@ namespace sad::ecs
 			{
 				"BoundSize",
 				{
-					{"x", size.x},
-					{"y", size.y},
-					{"z", size.z}
+					{"x", size.x == 0.0f ? 0.0f : size.x },
+					{"y", size.y == 0.0f ? 0.0f : size.y },
+					{"z", size.z == 0.0f ? 0.0f : size.z }
 				}
 			}
 		};

@@ -18,7 +18,7 @@ public class Enemy : SadBehaviour
 	void Awake() 
     { 
         // Testing updates to enemy public variables
-        Health = 50;
+        Health = 100;
         Damage = 5;
 
         m_RotSpeed = 0.5f;

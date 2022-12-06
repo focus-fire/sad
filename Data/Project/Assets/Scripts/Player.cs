@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 public class Player : SadBehaviour
 {
-    private int m_PrimaryAttackDamage = 100;
+    public int PlayerHealth = 100;
+    public int PrimaryAttackDamage = 50;
     private float m_MoveSpeed = 1f;
 
     void Awake()
     {
+        PlayerHealth = 100;
     }
 
     void Update()
@@ -62,15 +64,30 @@ public class Player : SadBehaviour
             bool hit4 = Raycast.Intersects(initialFiringPos, firingDirection4, GameManager.Instance.Enemies[i]);
 
             if (hit1 || hit2 || hit3 || hit4)
-                GameManager.Instance.Enemies[i].TakeDamage(m_PrimaryAttackDamage);
+                GameManager.Instance.Enemies[i].TakeDamage(PrimaryAttackDamage);
         }
     }
 
-    /// <summary>
-    /// Offhand attack that is performed on (?) input.
-    /// </summary>
-    void OffhandAttack()
+    public void TakeDamage(int incomingDamage)
     {
+        PlayerHealth -= incomingDamage;
+
+        Log.Debug($"Player took {incomingDamage} damage! New Health is {PlayerHealth}");
+
+        if (PlayerHealth <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Log.Debug("You dead! Bye Bye!");
+    }
+
+    bool Hit()
+    {
+        //Check for collision
+        //if colliding return true
+        return false;
     }
 
     void Move()

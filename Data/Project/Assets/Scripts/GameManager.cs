@@ -54,7 +54,14 @@ public class GameManager : SadBehaviour
         Log.Debug($"Spawning new Wave of enemies! Current Wave: {m_CurrentWave}");
 
         // TODO: Logic for # of enemies spawned. Temporarily spawn only 1 enemy.
-        MSpawnEnemy();
+        for (int i = 0; i <= m_CurrentWave; i++)
+        {
+            MSpawnEnemy();
+            if (m_CurrentWave % 2 == 0)
+            {
+                Upgrade();
+            }
+        }
     }
 
     /// <summary>
@@ -75,6 +82,12 @@ public class GameManager : SadBehaviour
         Log.Debug($"Found an enemy with {enemy?.Health} health @ {enemy.transform.position}");
 
         Enemies.Add(enemy);
+    }
+
+    private void Upgrade()
+    {
+        Player.PrimaryAttackDamage = Player.PrimaryAttackDamage + 50;
+        Log.Debug($"Wave: {m_CurrentWave}\nPlayer damage upgraded: {Player.PrimaryAttackDamage}");
     }
 
     /// <summary>

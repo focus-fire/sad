@@ -31,6 +31,7 @@ void sad::rad::Mesh::MSetupMesh()
 	m_VertexAttributes.AddMeshVertexAttribute(3, (void*) 0); // Position - vec3
 	m_VertexAttributes.AddMeshVertexAttribute(3, (void*) offsetof(MeshVertex, Normal)); // Normal - vec3
 	m_VertexAttributes.AddMeshVertexAttribute(2, (void*) offsetof(MeshVertex, TexCoords)); // TexCoord - vec2
+	m_VertexAttributes.AddMeshVertexAttribute(3, (void*) offsetof(MeshVertex, Color));
 	m_VertexArray->AddBufferWithMeshAttributes(*m_VertexBuffer, m_VertexAttributes, stride);
 
 	m_IndexBuffer = new IndexBuffer(&Indices[0], Indices.size());

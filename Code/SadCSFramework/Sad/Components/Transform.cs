@@ -2,6 +2,38 @@
 {
     public class Transform : Component
     {
+        public Vector3 backward 
+        {
+            get
+            {
+                return rotation * Vector3.backward;
+            }
+        }
+
+        public Vector3 forward
+        {
+            get
+            {
+                return rotation * Vector3.forward;
+            }
+        }
+
+        public Vector3 right
+        {
+            get
+            {
+                return rotation * Vector3.right;
+            }
+        }
+
+        public Vector3 left
+        {
+            get
+            {
+                return rotation * Vector3.left;
+            }
+        }
+
         /// <summary>
         /// Retrieves the current position for an entity's transform  
         /// </summary>

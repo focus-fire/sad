@@ -103,6 +103,14 @@ sad::rad::Mesh::MeshData sad::RenderableModel::MProcessMesh(aiMesh* mesh, const 
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
 		}
 
+		if (mesh->HasVertexColors(0))
+		{
+			glm::vec3 verColor;
+			verColor.x = mesh->mColors[0][i].r;
+			verColor.y = mesh->mColors[0][i].g;
+			verColor.z = mesh->mColors[0][i].b;
+			vertex.Color = verColor;
+		}
 		vertices.push_back(vertex);
 	} 
 

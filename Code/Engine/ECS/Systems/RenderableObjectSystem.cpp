@@ -12,7 +12,7 @@
 #include <Engine/ECS/Components/ComponentTypes.h>
 
 void sad::ecs::RenderableObjectSystem::Update(EntityWorld& world)
-{ 
+{
 	CreateRenderableModels(world);
 
 	CreateRenderablePrimitives(world);
@@ -42,7 +42,7 @@ void sad::ecs::RenderableObjectSystem::CreateRenderableModels(EntityWorld& world
 		bound.m_Bound->SetMinMax(min, max);
 		bound.m_Bound->SetSizeRatio(transformComponent.m_Transform->GetScale());
 
-		// Mark the RenderablePrimitive as clean 
+		// Mark the RenderablePrimitive as clean
 		modelResourceComponent.m_IsResourceDirty = false;
 	}
 }
@@ -57,12 +57,12 @@ void sad::ecs::RenderableObjectSystem::CreateRenderablePrimitives(EntityWorld& w
 			continue;
 
 		ecs::Entity entity = ecs::Entity(handle);
-		
+
 		core::Pointer<RenderablePrimitive> renderable = core::CreatePointer<RenderablePrimitive>(primitiveResourceComponent.m_Primitive.get());
 		SAD_ASSERT(renderable, "Failed to create RenderablePrimitive from ModelResource");
 		entity.AddComponent<RenderablePrimitiveComponent>(renderable);
 
-		// Mark the RenderablePrimitive as clean 
+		// Mark the RenderablePrimitive as clean
 		primitiveResourceComponent.m_IsResourceDirty = false;
 	}
 }

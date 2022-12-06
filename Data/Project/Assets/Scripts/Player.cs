@@ -96,28 +96,28 @@ public class Player : SadBehaviour
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += transform.forward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.forward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += transform.right * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.right * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Backward 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += transform.backward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.backward * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
 
         // Move Right 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += transform.left * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.left * Time.dt * m_MoveSpeed;
             Audio.PlaySFX("step.wav");
         }
     }

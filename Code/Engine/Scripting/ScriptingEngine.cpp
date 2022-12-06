@@ -337,7 +337,7 @@ void sad::cs::ScriptingEngine::OnProjectAssemblyFileSystemEvent(const std::strin
 		
 		Application::s_ThreadQueue->SubmitToApplicationThreadQueue([]()
 		{
-			core::Log(ELogType::Info, "Reloaded scripts!");
+			core::Log(ELogType::Info, "Detected script changes, reloading assemblies");
 			s_ScriptingData->ProjectAssemblyFileWatcher.reset();
 			ScriptingEngine::ReloadProjectAssembly();
 		});

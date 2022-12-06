@@ -168,7 +168,10 @@ void cap::Editor::EditorControls()
 	{
 		// Only allow ctl+S to save when the editor hasn't been started
 		if (m_CanEditorBePlayed && !m_CanEditorBeStopped && ImGui::IsKeyPressed(ImGuiKey_S))
+		{
+			core::Log(ELogType::Info, "Saved level to Data directory");
 			sad::LevelManager::ExportLevel();
+		}
 
 		if (ImGui::IsKeyPressed(ImGuiKey_P))
 		{

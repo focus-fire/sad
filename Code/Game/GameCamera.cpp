@@ -11,14 +11,12 @@
 
 #include "GameCamera.h"
 
-
 #define GLM_ENABLE_EXPERIMENTAL
 
 sad::GameCamera::GameCamera() : input (InputManager::GetInstance()) {}
 
 void sad::GameCamera::Update()
 {
-
 	// Change mouse/camera state
 	if (input.GetKeyReleased(sad::KeyCode::Escape))
 	{
@@ -55,7 +53,6 @@ void sad::GameCamera::Update()
 		float delta_y{ static_cast<float>(mouse_y - 450.0) };
 		cameraEulers.x = std::max(std::min(cameraEulers.x + delta_y * 0.05f, 45.0f), -45.0f);
 	}
-
 }
 
 void sad::GameCamera::CurrentCameraState()

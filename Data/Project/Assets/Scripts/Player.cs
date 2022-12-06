@@ -1,5 +1,6 @@
 using Sad;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class Player : SadBehaviour
 {
@@ -80,28 +81,32 @@ public class Player : SadBehaviour
         // Move Forward
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Vector3.forward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.forward * Time.dt * m_MoveSpeed;
+            Log.Debug($"FORWARD: {transform.rotation}");
             Audio.PlaySFX("step.wav");
         }
 
         // Move Left
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.right * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.right * Time.dt * m_MoveSpeed;
+            Log.Debug($"LEFT: {transform.rotation}");
             Audio.PlaySFX("step.wav");
         }
 
-        // Move Right
+        // Move Backward 
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.backward * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.backward * Time.dt * m_MoveSpeed;
+            Log.Debug($"BACKWARD: {transform.rotation}");
             Audio.PlaySFX("step.wav");
         }
 
-        // Move Backward
+        // Move Right 
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.left * Time.dt * m_MoveSpeed;
+            transform.position += transform.rotation * Vector3.left * Time.dt * m_MoveSpeed;
+            Log.Debug($"RIGHT: {transform.rotation}");
             Audio.PlaySFX("step.wav");
         }
     }

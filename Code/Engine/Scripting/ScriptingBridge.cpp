@@ -570,6 +570,10 @@ void sad::cs::ScriptingBridge::SetupEngineAPIFunctions()
 
 void sad::cs::ScriptingBridge::SetupEngineAPIComponents()
 {
+	s_EntityECSFunctions.AddComponents.clear();
+	s_EntityECSFunctions.HasComponents.clear();
+	s_EntityECSFunctions.RemoveComponents.clear();
+
 	RegisterManagedComponent<ecs::TransformComponent>(true);
 	RegisterManagedComponent<ecs::BoundComponent>(true);
 }

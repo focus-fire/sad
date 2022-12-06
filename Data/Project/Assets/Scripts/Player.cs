@@ -109,7 +109,7 @@ public class Player : SadBehaviour
     {
         Vector3 lineStart = transform.position;
         Vector3 lineEnd = Vector3.Normalize(transform.forward) * 10000.0f;
-        Color lineColor = Color.magenta;
+        Color lineColor = Color.blue;
         Gizmos.DrawLine(lineStart, lineEnd, lineColor);
 
         Vector3 boxMin = bound.min;

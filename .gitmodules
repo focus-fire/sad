@@ -22,3 +22,6 @@
 [submodule "Vendor/ImGuizmo"]
 	path = Vendor/ImGuizmo
 	url = https://github.com/CedricGuillemet/ImGuizmo
+[submodule "Vendor/filewatch"]
+	path = Vendor/filewatch
+	url = https://github.com/ThomasMonkman/filewatch.git

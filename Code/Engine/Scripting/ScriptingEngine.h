@@ -3,6 +3,7 @@
 #include <unordered_map>
 
 #include <mono/jit/jit.h>
+#include <FileWatch.hpp>
 
 #include <Core/Memory.h>
 #include <Engine/Level.h>
@@ -36,6 +37,7 @@ namespace sad::cs
 			MonoImage* SadCSFrameworkImage = nullptr;
 
 			std::string ProjectAssemblyFilePath;
+			std::string ProjectAssemblyFileWatchPath;
 			MonoAssembly* ProjectAssembly = nullptr;
 			MonoImage* ProjectImage = nullptr;
 
@@ -51,6 +53,10 @@ namespace sad::cs
 			/// Level Data
 
 			Level* CurrentLevelInstance = nullptr;
+
+			/// Hot Reloading
+			core::Pointer<filewatch::FileWatch<std::string>> ProjectAssemblyFileWatcher;
+			bool AssemblyReloadInProgress = false;
 		};
 
 	public:
@@ -97,17 +103,22 @@ namespace sad::cs
 		 * @brief Loads the assembly for the SadCSFramework into the scripting engine
 		 * @param filePath Path to the .dll with the SadCSFramework binaries
 		*/
-		static void LoadSadCSFrameworkAssembly(const std::string& filePath);
+		static bool LoadSadCSFrameworkAssembly(const std::string& filePath);
 
 		/**
 		 * @brief Loads the assembly for the current scripting project into the scripting engine
-		 * @param filePath Path to the .dll with the project's binaries 
+		 * @param assemblyPath Path to the .dll with the project's binaries 
+		 * @param fileWatchPath Path for FileWatch to look for changes 
 		*/
-		static void LoadProjectAssembly(const std::string& filePath);
+		static bool LoadProjectAssembly(const std::string& assemblyPath, const std::string& fileWatchPath);
+
+		static void ReloadProjectAssembly();
 
 		/**
 		 * @brief Caches all SadBehaviours detected in target asesmbly into the scripting engine's ScriptLookup 
 		*/
 		static void CacheAssemblySadBehaviours();
+
+		static void OnProjectAssemblyFileSystemEvent(const std::string& filePath, const filewatch::Event eventType);
 	};
 }

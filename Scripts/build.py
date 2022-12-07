@@ -13,7 +13,6 @@ def build(toolset):
     # Premake Paths
     premake = os.path.abspath(os.path.join(SCRIPT_DIR, 'premake5/premake5'))
     premake_config = os.path.abspath(os.path.join(PROJECT_DIR, 'premake5.lua'))
-    sad_project_premake_config = os.path.abspath(os.path.join(DATA_PROJECT_DIR, 'SadProject.premake5.lua'))
 
     # Add or include more premake toolsets here
     # Refer to premake5 documentation for available toolsets
@@ -33,11 +32,4 @@ def build(toolset):
     else:
         bet_err("Uh oh, awkward... something went wrong while executing the build.")
         return
-
-    premake_cmd = subprocess.run([premake, toolset, f"--file={sad_project_premake_config}"], shell=SUBPROCESS_USE_SHELL)
-
-    if premake_cmd.returncode == 0:
-        bet_log("bet! Successfully built project files.")
-    else:
-        bet_err("Uh oh, awkward... something went wrong while executing the build.")
 
